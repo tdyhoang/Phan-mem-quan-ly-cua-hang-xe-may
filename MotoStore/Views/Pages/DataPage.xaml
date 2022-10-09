@@ -1,0 +1,37 @@
+﻿<ui:UiPage
+    x:Class="MotoStore.Views.Pages.DataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MotoStore.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:MotoStore.Models"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Data"
+    d:DataContext="{d:DesignInstance local:DataPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid Margin="56,0">
+        <ui:VirtualizingItemsControl
+            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}">
+            <StackPanel Orientation="Vertical">
+                <ui:CardAction
+                    Icon="DocumentBulletList20"
+                    Content="Danh sách xe" />
+                <ui:CardAction
+                    Icon="PeopleList20"
+                    Content="Danh sách nhân viên" />
+                <ui:CardAction
+                    Icon="PeopleQueue20"
+                    Content="Danh sách khách hàng" />
+                <ui:CardAction
+                    Icon="PeopleCall20"
+                    Content="Nhà cung cấp" />
+            </StackPanel>
+        </ui:VirtualizingItemsControl>
+    </Grid>
+</ui:UiPage>
