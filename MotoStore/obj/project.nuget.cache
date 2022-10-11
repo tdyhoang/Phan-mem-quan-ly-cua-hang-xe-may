@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "edZauY3fBx4U510WaGtft5wAiyxMs7K6tBVYahnUyqIo3wmQNy1BZXMhxKLG8zyCouBZqDn6yBdpPcCa/4FYwQ==",
+  "dgSpecHash": "iM6yQ2iozOJmGjG2YBlAnowY8C1RNR/H2cOVVY+HBt1WhaRBFO/PLCjJgyl4Pcih9NNyD/j9B7FWQ41IHq53UA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\huyha\\source\\repos\\MotoStore\\MotoStore\\MotoStore.csproj",
+  "projectFilePath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\huyha\source\repos\MotoStore\MotoStore\obj\Debug\net6.0-windows\
+C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\
 MotoStore
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\huyha\source\repos\MotoStore\MotoStore\App.xaml
+C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\App.xaml
 5627693423
 1882702876
 19-1731445018
 2221782563950
 Views\Container.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\DataPage.xaml;Views\Pages\ReportPage.xaml;Views\Pages\SettingsPage.xaml;
 
-True
+False
 

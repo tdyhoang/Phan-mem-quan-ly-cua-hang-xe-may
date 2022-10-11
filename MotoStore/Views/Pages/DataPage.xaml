@@ -12,26 +12,119 @@
                                      IsDesignTimeCreatable=False}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Scrollable="True"
     mc:Ignorable="d">
 
-    <Grid Margin="56,0">
-        <ui:VirtualizingItemsControl
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}">
-            <StackPanel Orientation="Vertical">
-                <ui:CardAction
-                    Icon="DocumentBulletList20"
-                    Content="Danh sách xe" />
-                <ui:CardAction
-                    Icon="PeopleList20"
-                    Content="Danh sách nhân viên" />
-                <ui:CardAction
-                    Icon="PeopleQueue20"
-                    Content="Danh sách khách hàng" />
-                <ui:CardAction
-                    Icon="PeopleCall20"
-                    Content="Nhà cung cấp" />
-            </StackPanel>
-        </ui:VirtualizingItemsControl>
-    </Grid>
+    <VirtualizingStackPanel
+        x:Name="RootPanel"
+        Margin="18,0,18,18"
+        IsVirtualizing="True"
+        VirtualizationMode="Recycling">
+        <Grid Margin="56,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Expander Grid.Row="0" Margin="0,8,0,0">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ui:SymbolIcon
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Symbol="DocumentBulletList20" />
+                        <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="Danh sách xe" />
+                    </Grid>
+                </Expander.Header>
+                <TextBlock TextWrapping="Wrap">
+                Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua</TextBlock>
+            </Expander>
+            <Expander Grid.Row="1" Margin="0,8,0,0">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ui:SymbolIcon
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Symbol="PeopleList20" />
+                        <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="Danh sách nhân viên" />
+                    </Grid>
+                </Expander.Header>
+                <TextBlock TextWrapping="Wrap">
+                Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua</TextBlock>
+            </Expander>
+            <Expander Grid.Row="2" Margin="0,8,0,0">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ui:SymbolIcon
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Symbol="PeopleQueue20" />
+                        <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="Danh sách khách hàng" />
+                    </Grid>
+                </Expander.Header>
+                <TextBlock TextWrapping="Wrap">
+                Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua</TextBlock>
+            </Expander>
+            <Expander Grid.Row="3" Margin="0,8,0,0">
+                <Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ui:SymbolIcon
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Symbol="PeopleCall20" />
+                        <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Text="Nhà cung cấp" />
+                    </Grid>
+                </Expander.Header>
+                <TextBlock TextWrapping="Wrap">
+                Lorem ipsum dolor sit amet, consectetur<LineBreak />
+                adipisicing elit, sed do eiusmod tempor incididunt ut<LineBreak />
+                labore et dolore magna aliqua</TextBlock>
+            </Expander>
+        </Grid>
+    </VirtualizingStackPanel>
 </ui:UiPage>

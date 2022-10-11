@@ -1554,11 +1554,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\huyha\\source\\repos\\MotoStore\\MotoStore\\MotoStore.csproj",
+      "projectUniqueName": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
       "projectName": "MotoStore",
-      "projectPath": "C:\\Users\\huyha\\source\\repos\\MotoStore\\MotoStore\\MotoStore.csproj",
+      "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
       "packagesPath": "C:\\Users\\huyha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\huyha\\source\\repos\\MotoStore\\MotoStore\\obj\\",
+      "outputPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\huyha\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\MotoStore",
+    "\\MotoStore\\Helpers",
+    "\\MotoStore\\Models",
+    "\\MotoStore\\Services",
+    "\\MotoStore\\ViewModels",
+    "\\MotoStore\\Views",
+    "\\MotoStore\\Views\\Pages"
+  ],
+  "PreviewInSolutionExplorer": false
+}
