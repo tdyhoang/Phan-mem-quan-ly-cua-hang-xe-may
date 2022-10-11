@@ -14,7 +14,7 @@
 
 // assign:
 - Commands: Hoàng
-- Models: 
+- Models:
 - Views: Hoàng
 - ViewModels: Hoàng
-- Databases: 
+- Database:
