@@ -1,11 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MotoStore.Models;
 using MotoStore.Services;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Threading;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
@@ -71,12 +76,44 @@ namespace MotoStore
             return _host.Services.GetService(typeof(T)) as T;
         }
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var vCulture = new CultureInfo("vi-VN");
+
+            Thread.CurrentThread.CurrentCulture = vCulture;
+            Thread.CurrentThread.CurrentUICulture = vCulture;
+            CultureInfo.DefaultThreadCurrentCulture = vCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+            typeof(FrameworkElement),
+            new FrameworkPropertyMetadata(
+            XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
+
+            base.OnStartup(e);
+        }
+
         /// <summary>
         /// Occurs when the application is loading.
         /// </summary>
         private async void OnStartup(object sender, StartupEventArgs e)
         {
             await _host.StartAsync();
+
+            LiveCharts.Configure(config =>
+                config
+                    // registers SkiaSharp as the library backend
+                    .AddSkiaSharp()
+
+                    // adds the default supported types
+                    .AddDefaultMappers());
+
+            // register mappers
+            //.HasMap<City>((city, point) =>
+            //{
+            //    point.PrimaryValue = city.Population;
+            //    point.SecondaryValue = point.Context.Index;
+            //}));
         }
 
         /// <summary>
