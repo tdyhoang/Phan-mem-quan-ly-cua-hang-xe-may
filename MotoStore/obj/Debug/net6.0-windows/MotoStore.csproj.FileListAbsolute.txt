@@ -150,7 +150,6 @@ D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Microsoft
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Microsoft.Extensions.Options.dll
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Microsoft.Extensions.Primitives.dll
-D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Microsoft.Toolkit.Mvvm.dll
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Wpf.Ui.dll
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\MotoStore.csproj.AssemblyReference.cache
@@ -197,3 +196,9 @@ D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\Pages\Das
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\Pages\DataPage.baml
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\Pages\ReportPage.baml
 D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\Pages\SettingsPage.baml
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\CommunityToolkit.Mvvm.dll
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\System.Diagnostics.EventLog.dll
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\System.Text.Encodings.Web.dll
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\System.Text.Json.dll
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

@@ -1,7 +1,7 @@
 ﻿using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Common.Interfaces;
 using System.Collections.Generic;
 
@@ -20,7 +20,7 @@ namespace MotoStore.ViewModels
         {
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OnCounterIncrement()
         {
             Counter++;

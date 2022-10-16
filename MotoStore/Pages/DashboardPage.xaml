@@ -21,7 +21,6 @@
             <ui:Button
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
-                Command="{Binding ViewModel.OnCounterIncrementCommand, Mode=OneWay}"
                 Margin="5,0"
                 Content="Đăng xuất"
                 Icon="SignOut24"
@@ -29,7 +28,6 @@
             <ui:Button
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
-                Command="{Binding ViewModel.OnCounterIncrementCommand, Mode=OneWay}"
                 Content="Đổi tài khoản"
              />
 

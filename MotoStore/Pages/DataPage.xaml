@@ -16,127 +16,47 @@
     mc:Ignorable="d">
 
     <Grid Margin="56,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <Expander Grid.Row="0" Margin="0,8,0,0">
-            <Expander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:SymbolIcon
-                        Grid.Column="0"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Symbol="DocumentBulletList20" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="Danh sách xe" />
-                </Grid>
-            </Expander.Header>
-            <TextBlock TextWrapping="Wrap">
-                Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute
-                irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui
-                deserunt mollit anim id est laborum.</TextBlock>
-        </Expander>
-        <Expander Grid.Row="1" Margin="0,8,0,0">
-            <Expander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:SymbolIcon
-                        Grid.Column="0"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Symbol="ContactCard20" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="Danh sách nhân viên" />
-                </Grid>
-            </Expander.Header>
-            <TextBlock TextWrapping="Wrap">
-                Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute
-                irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui
-                deserunt mollit anim id est laborum.</TextBlock>
-        </Expander>
-        <Expander Grid.Row="2" Margin="0,8,0,0">
-            <Expander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:SymbolIcon
-                        Grid.Column="0"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Symbol="PeopleQueue20" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="Danh sách khách hàng" />
-                </Grid>
-            </Expander.Header>
-            <TextBlock TextWrapping="Wrap">
-                Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute
-                irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui
-                deserunt mollit anim id est laborum.</TextBlock>
-        </Expander>
-        <Expander Grid.Row="3" Margin="0,8,0,0">
-            <Expander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ui:SymbolIcon
-                        Grid.Column="0"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Symbol="PeopleCall20" />
-                    <TextBlock
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Text="Nhà cung cấp" />
-                </Grid>
-            </Expander.Header>
-            <TextBlock TextWrapping="Wrap">
-                Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute
-                irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui
-                deserunt mollit anim id est laborum.</TextBlock>
-        </Expander>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <ui:CardAction
+                Margin="0,2"
+                Icon="DocumentBulletList20"
+                Tag="vehicleslist">
+                <TextBlock
+                    FontSize="13"
+                    FontWeight="Medium"
+                    Text="Danh sách xe" />
+            </ui:CardAction>
+            <ui:CardAction
+                Margin="0,2"
+                Icon="ContactCard20"
+                Tag="employeeslist">
+                <TextBlock
+                    FontSize="13"
+                    FontWeight="Medium"
+                    Text="Danh sách nhân viên" />
+            </ui:CardAction>
+            <ui:CardAction
+                Margin="0,2"
+                Icon="PeopleQueue20"
+                Tag="customerslist">
+                <TextBlock
+                    FontSize="13"
+                    FontWeight="Medium"
+                    Text="Danh sách khách hàng" />
+            </ui:CardAction>
+            <ui:CardAction
+                Margin="0,2"
+                Icon="PeopleCall20"
+                Tag="supplierslist">
+                <TextBlock
+                    FontSize="13"
+                    FontWeight="Medium"
+                    Text="Nhà cung cấp" />
+            </ui:CardAction>
+        </StackPanel>
     </Grid>
 </ui:UiPage>

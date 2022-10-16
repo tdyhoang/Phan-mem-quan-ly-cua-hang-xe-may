@@ -1,5 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels
@@ -17,7 +17,7 @@ namespace MotoStore.ViewModels
         {
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OnCounterIncrement()
         {
             Counter++;
