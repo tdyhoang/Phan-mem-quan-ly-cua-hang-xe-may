@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Pages\ReportPage.xaml.cs">
+    <Compile Update="Views\Pages\ReportPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -15,16 +15,16 @@
     <Page Update="Views\Container.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DashboardPage.xaml">
+    <Page Update="Views\Pages\DashboardPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DataPage.xaml">
+    <Page Update="Views\Pages\DataPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\ReportPage.xaml">
+    <Page Update="Views\Pages\ReportPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\SettingsPage.xaml">
+    <Page Update="Views\Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
