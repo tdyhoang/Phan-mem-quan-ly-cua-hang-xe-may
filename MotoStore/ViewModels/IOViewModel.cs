@@ -4,7 +4,7 @@ using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels
 {
-    public partial class ReportViewModel : ObservableObject, INavigationAware
+    public partial class IOViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         private int _counter = 0;
