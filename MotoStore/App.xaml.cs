@@ -60,6 +60,8 @@ namespace MotoStore
                 services.AddScoped<ViewModels.SettingsViewModel>();
                 services.AddScoped<Views.Pages.ReportPage>();
                 services.AddScoped<ViewModels.ReportViewModel>();
+                services.AddScoped<Views.Pages.IOPage>();
+                services.AddScoped<ViewModels.IOViewModel>();
 
                 // Configuration
                 services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

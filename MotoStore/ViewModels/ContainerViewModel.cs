@@ -45,6 +45,13 @@ namespace MotoStore.ViewModels
                 },
                 new NavigationItem()
                 {
+                    Content = "Nhập xuất",
+                    PageTag = "io",
+                    Icon = SymbolRegular.Stream24,
+                    PageType = typeof(Views.Pages.IOPage)
+                },
+                new NavigationItem()
+                {
                     Content = "Danh mục",
                     PageTag = "data",
                     Icon = SymbolRegular.DataHistogram24,

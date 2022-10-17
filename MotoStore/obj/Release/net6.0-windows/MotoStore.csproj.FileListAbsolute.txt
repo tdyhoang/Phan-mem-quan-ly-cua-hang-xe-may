@@ -1,0 +1,13 @@
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\MotoStore.csproj.AssemblyReference.cache
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\App.baml
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Container.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Pages\DashboardPage.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Pages\DataPage.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Pages\IOPage.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Pages\ReportPage.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\Views\Pages\SettingsPage.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\App.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\MotoStore_Content.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\MotoStore_MarkupCompile.cache
+D:\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Release\net6.0-windows\MotoStore_MarkupCompile.lref
