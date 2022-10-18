@@ -1,20 +1,26 @@
 # Phan mem quan ly cua hang xe may
+*Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
  
-// todo:
+## How to use the newly changed Toolkit
+- Replace `using Windows.Toolkit.Mvvm` with `using CommunityToolkit.Mvvm`
+- Use `RelayCommand` instead of `ICommand`
+
+## TODO
 - Dashboard View
 - Login Page
 - Database
 - Click & Navigating Commands
 
-// design ideas:
+## Design ideas:
 - Dashboard Page:
-	+ Báo cáo doanh thu = chart
+    + Báo cáo doanh thu bằng chart
 	+ Các chức năng cho account: đổi mật khẩu, đăng xuất
 	+ Shortcut tới các page khác
 
-// assign:
-- Commands: Hoàng
-- Models:
-- Views: Hoàng
-- ViewModels: Hoàng
-- Database:
+## Assign:
+- Commands: `Hoàng`
+- Models: `Hoàng`
+- Views: `Hoàng`
+- ViewModels: `Hoàng`
+- Database: `Đạt`
+- Login: `Dũng`
