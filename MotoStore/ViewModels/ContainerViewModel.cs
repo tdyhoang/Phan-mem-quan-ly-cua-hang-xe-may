@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MotoStore.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -11,6 +13,9 @@ namespace MotoStore.ViewModels
     public partial class ContainerViewModel : ObservableObject
     {
         private bool _isInitialized = false;
+
+        [ObservableProperty]
+        private IEnumerable<DataColor> _colors;
 
         [ObservableProperty]
         private string _applicationTitle = String.Empty;
