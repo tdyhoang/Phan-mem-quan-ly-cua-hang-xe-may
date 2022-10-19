@@ -34,6 +34,7 @@ namespace MotoStore.ViewModels
                 DataTable dt = new DataTable("KhachHang");
                 sda.Fill(dt);
                 CustomerDataView = dt.DefaultView;
+                con.Close();
             }
         }
     }

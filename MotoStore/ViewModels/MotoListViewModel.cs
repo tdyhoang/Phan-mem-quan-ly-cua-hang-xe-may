@@ -34,6 +34,7 @@ namespace MotoStore.ViewModels
                 DataTable dt = new DataTable("MatHang");
                 sda.Fill(dt);
                 MotoDataView = dt.DefaultView;
+                con.Close();
             }
         }
     }

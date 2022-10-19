@@ -4,6 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Wpf.Ui.Common.Interfaces;
 using System.Collections.Generic;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using System;
+using System.Windows;
+using System.Threading.Tasks;
+using MotoStore.Properties;
 
 namespace MotoStore.ViewModels
 {
@@ -11,6 +17,7 @@ namespace MotoStore.ViewModels
     {
         [ObservableProperty]
         private int _counter = 0;
+        private string _txtServerName;
 
         public void OnNavigatedTo()
         {
@@ -20,10 +27,42 @@ namespace MotoStore.ViewModels
         {
         }
 
-        [RelayCommand]
-        private void OnCounterIncrement()
+        public string TxtServerName
         {
-            Counter++;
+            get => _txtServerName;
+            set => SetProperty(ref _txtServerName, value);
+        }
+
+        [RelayCommand]
+        private void ConnectToServer()
+        {
+            string OldServerName = ConfigurationManager.ConnectionStrings["ServerName"].ConnectionString;
+            string NewServerName = TxtServerName;
+            string OldConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+            string NewConString = OldConString.Replace("Data Source=" + OldServerName, "Data Source=" + NewServerName);
+
+            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            cfa.ConnectionStrings.ConnectionStrings["ServerName"].ConnectionString = NewServerName;
+            cfa.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString = NewConString;
+            cfa.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
+
+            var csb = new SqlConnectionStringBuilder(NewConString);
+            csb.ConnectTimeout = 5;
+
+            try
+            {
+                using(var con = new SqlConnection(NewConString))
+                {
+                    con.Open();
+                    con.Close();
+                }
+                MessageBox.Show("Kết nối thành công!");
+            }
+            catch
+            {
+                MessageBox.Show("Sai tên server CSDL, vui lòng nhập lại!");
+            }
         }
 
         public ISeries[] Chart1 { get; set; }

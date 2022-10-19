@@ -19,7 +19,6 @@ namespace MotoStore.Views.Pages
         public DataPage(ViewModels.DataViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {
             ViewModel = viewModel;
-            DataContext = this;
 
             InitializeComponent();
             SetPageService(pageService);

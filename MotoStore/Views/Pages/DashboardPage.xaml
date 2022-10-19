@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MotoStore.Views.Pages"
+    xmlns:model="clr-namespace:MotoStore.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
@@ -37,36 +38,31 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto"
                 </Grid.RowDefinitions>
 
+                <Grid Grid.ColumnSpan="2">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Nhập tên server" />
+                        <ui:TextBox Name="txtServerName" Text="{Binding ViewModel.TxtServerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" MinWidth="200" />
+                        <ui:Button Content="Kết nối" HorizontalAlignment="Center" Command="{Binding ViewModel.ConnectToServerCommand}" />
+                    </StackPanel>
+                </Grid>
+                
                 <lvc:CartesianChart
-                    Grid.Column="0" Grid.Row="0"
+                    Grid.Column="0" Grid.Row="1"
                     Series="{Binding ViewModel.Chart1}"
                     XAxes="{Binding ViewModel.XAxes1}"
                     YAxes="{Binding ViewModel.YAxes1}"
                     ZoomMode="X">
                 </lvc:CartesianChart>
                 <lvc:CartesianChart
-                    Grid.Column="0" Grid.Row="1"
+                    Grid.Column="1" Grid.Row="1"
                     Series="{Binding ViewModel.Chart2}"
                     XAxes="{Binding ViewModel.XAxes2}"
                     YAxes="{Binding ViewModel.YAxes2}"
-                    ZoomMode="X">
-                </lvc:CartesianChart>
-                <lvc:CartesianChart
-                    Grid.Column="1" Grid.Row="0"
-                    Series="{Binding ViewModel.Chart3}"
-                    XAxes="{Binding ViewModel.XAxes3}"
-                    YAxes="{Binding ViewModel.YAxes3}"
-                    ZoomMode="X">
-                </lvc:CartesianChart>
-                <lvc:CartesianChart
-                    Grid.Column="1" Grid.Row="1"
-                    Series="{Binding ViewModel.Chart4}"
-                    XAxes="{Binding ViewModel.XAxes4}"
-                    YAxes="{Binding ViewModel.YAxes4}"
                     ZoomMode="X">
                 </lvc:CartesianChart>
             </Grid>

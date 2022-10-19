@@ -34,6 +34,7 @@ namespace MotoStore.ViewModels
                 DataTable dt = new DataTable("NhaSanXuat");
                 sda.Fill(dt);
                 SupplierDataView = dt.DefaultView;
+                con.Close();
             }
         }
     }

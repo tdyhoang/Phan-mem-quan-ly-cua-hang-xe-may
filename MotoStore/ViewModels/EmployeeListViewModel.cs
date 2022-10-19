@@ -34,6 +34,7 @@ namespace MotoStore.ViewModels
                 DataTable dt = new DataTable("NhanVien");
                 sda.Fill(dt);
                 EmployeeDataView = dt.DefaultView;
+                con.Close();
             }
         }
     }
