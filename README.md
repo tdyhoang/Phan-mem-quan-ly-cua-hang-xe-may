@@ -13,7 +13,7 @@
 
 ## Design ideas:
 - **Dashboard Page**:
-    + Báo cáo doanh thu bằng *chart*
+	+ Báo cáo doanh thu bằng *chart*
 	+ Các chức năng cho *account*: đổi mật khẩu, đăng xuất
 	+ *Shortcut* tới các page khác
 
@@ -28,9 +28,10 @@
 ## Building the app
 *Make sure to have finished those steps before building the app*
 - **Step 1**: In `Tools->NuGet Package Manager->Manage NuGet Packages for Solution...` make sure to have installed *all* those Packages:
-    - `CommunityToolkit.Mvvm` by `Microsoft`
+	- `CommunityToolkit.Mvvm` by `Microsoft`
 	- `LiveChartsCore.SkiaSharpView.WPF` by `BetoRodriguez`
 	- `Microsoft.Data.SqlClient` by `Microsoft`
 	- `Microsoft.Extensions.Hosting` by `Microsoft`
 	- `WPF-UI` by `lepo.co`
-- ~~**Step 2**: Go to `App.config` replace the string `LINK\SQLExpress` after `DataSource=` with your *SQL server name*~~ Not neccessary anymore after the last update
+- **Step 2**: Connect to your local *SQL Server* (using SSMS, remember the *Server name*), go to `File->Open->File...`, the file is located in `.\MotoStore\Databases\DatabasePMQLCHBXM.sql`. Run the code (Ctrl+A->F5) and that's it.
+- **Step 3**: Build the sln, remember to enter the server name before trying to access the *Data Page* (Dữ Liệu)
