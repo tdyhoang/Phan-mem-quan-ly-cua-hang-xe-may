@@ -46,7 +46,7 @@
             },
             "LiveChartsCore.SkiaSharpView.WPF": {
               "target": "Package",
-              "version": "[2.0.0-beta.501, )"
+              "version": "[2.0.0-beta.514, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",

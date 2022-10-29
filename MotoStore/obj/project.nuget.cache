@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Rj2y4IRdysd+jvSvAe5fLY3b8CQJkK7edBsHu+UqypANgIF4HatTNiyPM5Hje0GjscWR9TN019S9U4rkQ4rYeA==",
+  "dgSpecHash": "NfX7G+sw5zXPxscqDrQk9VOElc5n9FY2A9lr54iwrZ2kuWkkOY22PT5YAeQ+mmDDSGcH3Mj07B3adEV5AxnExA==",
   "success": true,
   "projectFilePath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
   "expectedPackageFiles": [
@@ -10,9 +10,9 @@
     "C:\\Users\\huyha\\.nuget\\packages\\harfbuzzsharp\\2.8.2.3\\harfbuzzsharp.2.8.2.3.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\2.8.2.3\\harfbuzzsharp.nativeassets.macos.2.8.2.3.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\harfbuzzsharp.nativeassets.win32\\2.8.2.3\\harfbuzzsharp.nativeassets.win32.2.8.2.3.nupkg.sha512",
-    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore\\2.0.0-beta.501\\livechartscore.2.0.0-beta.501.nupkg.sha512",
-    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore.skiasharpview\\2.0.0-beta.501\\livechartscore.skiasharpview.2.0.0-beta.501.nupkg.sha512",
-    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore.skiasharpview.wpf\\2.0.0-beta.501\\livechartscore.skiasharpview.wpf.2.0.0-beta.501.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore\\2.0.0-beta.514\\livechartscore.2.0.0-beta.514.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore.skiasharpview\\2.0.0-beta.514\\livechartscore.skiasharpview.2.0.0-beta.514.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\livechartscore.skiasharpview.wpf\\2.0.0-beta.514\\livechartscore.skiasharpview.wpf.2.0.0-beta.514.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.0-preview1.22279.3\\microsoft.data.sqlclient.5.1.0-preview1.22279.3.nupkg.sha512",

@@ -12,7 +12,7 @@
         <DataGrid.Columns>
             <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=MaNV}" />
             <DataGridTextColumn Header="Họ tên" Binding="{Binding Path=HoTenNV}" />
-            <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh}" />
+            <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
             <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" />
             <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Path=DiaChi}" />
             <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=SDT}" />

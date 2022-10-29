@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
+using System.IO;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels

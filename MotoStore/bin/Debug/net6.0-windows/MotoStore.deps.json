@@ -9,7 +9,7 @@
       "MotoStore/1.0.0": {
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.0.0",
-          "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-beta.501",
+          "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-beta.514",
           "Microsoft.Data.SqlClient": "5.1.0-preview1.22279.3",
           "Microsoft.Extensions.Hosting": "7.0.0-rc.2.22472.3",
           "WPF-UI": "2.0.3"
@@ -100,7 +100,7 @@
           }
         }
       },
-      "LiveChartsCore/2.0.0-beta.501": {
+      "LiveChartsCore/2.0.0-beta.514": {
         "runtime": {
           "lib/net6.0/LiveChartsCore.dll": {
             "assemblyVersion": "2.0.0.0",
@@ -108,9 +108,9 @@
           }
         }
       },
-      "LiveChartsCore.SkiaSharpView/2.0.0-beta.501": {
+      "LiveChartsCore.SkiaSharpView/2.0.0-beta.514": {
         "dependencies": {
-          "LiveChartsCore": "2.0.0-beta.501",
+          "LiveChartsCore": "2.0.0-beta.514",
           "SkiaSharp": "2.88.3",
           "SkiaSharp.HarfBuzz": "2.88.3"
         },
@@ -121,9 +121,9 @@
           }
         }
       },
-      "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.501": {
+      "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.514": {
         "dependencies": {
-          "LiveChartsCore.SkiaSharpView": "2.0.0-beta.501",
+          "LiveChartsCore.SkiaSharpView": "2.0.0-beta.514",
           "SkiaSharp.Views.WPF": "2.88.3"
         },
         "runtime": {
@@ -992,26 +992,26 @@
       "path": "harfbuzzsharp.nativeassets.win32/2.8.2.3",
       "hashPath": "harfbuzzsharp.nativeassets.win32.2.8.2.3.nupkg.sha512"
     },
-    "LiveChartsCore/2.0.0-beta.501": {
+    "LiveChartsCore/2.0.0-beta.514": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Xm7AmIvThFTR00bpsl7D9PETHKDCMDM30zJzgvr6apC0BZRoI/O6kv6GDFA5jEkFcJrT9Vm4+Cw1MNAxI2fi8A==",
-      "path": "livechartscore/2.0.0-beta.501",
-      "hashPath": "livechartscore.2.0.0-beta.501.nupkg.sha512"
+      "sha512": "sha512-bdZ7bEQz/Unn37sglxvFrIwcztOUv3Ej4pvTJAfm4bNdNuiPrDiTc8oESqfRNxfJrKv8OLMJUUKQFxv0dL3HyA==",
+      "path": "livechartscore/2.0.0-beta.514",
+      "hashPath": "livechartscore.2.0.0-beta.514.nupkg.sha512"
     },
-    "LiveChartsCore.SkiaSharpView/2.0.0-beta.501": {
+    "LiveChartsCore.SkiaSharpView/2.0.0-beta.514": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Lx8Nk2AbeYw6ePnE8PlaOcSk/CSo7HiI/Im9mRl05Mgn8BcI6OiO8rM/0vCAMOTjKEjCRv2fGqYU05D0jvN0fg==",
-      "path": "livechartscore.skiasharpview/2.0.0-beta.501",
-      "hashPath": "livechartscore.skiasharpview.2.0.0-beta.501.nupkg.sha512"
+      "sha512": "sha512-q1QKQisiPuCQJc3eKrkA4t78mL+i5hlG8DNWYgWk1v3fLAt0d69J5QUO8isgI530Hv51WSeBESw+YYrUBapyWg==",
+      "path": "livechartscore.skiasharpview/2.0.0-beta.514",
+      "hashPath": "livechartscore.skiasharpview.2.0.0-beta.514.nupkg.sha512"
     },
-    "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.501": {
+    "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.514": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-9BhVFcz9o3FzESzF1dov/s3q3mCTWpvkKPmjkiT4JOUnEtxLT/MSUxIMnrzA44ZGvTE5+eBstt9Q3Sc0/ACk6g==",
-      "path": "livechartscore.skiasharpview.wpf/2.0.0-beta.501",
-      "hashPath": "livechartscore.skiasharpview.wpf.2.0.0-beta.501.nupkg.sha512"
+      "sha512": "sha512-5whlarGgLrbaim8Bfk/nGaVZ3GX66UPI5lJ53/AOrNlWGbZ/jCJ/9J05lVG/3CTV0l6TPHi67bSwNATxxLp6Zw==",
+      "path": "livechartscore.skiasharpview.wpf/2.0.0-beta.514",
+      "hashPath": "livechartscore.skiasharpview.wpf.2.0.0-beta.514.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
