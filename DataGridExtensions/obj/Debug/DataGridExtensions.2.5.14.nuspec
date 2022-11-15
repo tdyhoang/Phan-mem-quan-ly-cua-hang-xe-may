@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>DataGridExtensions</id>
+    <version>2.5.14</version>
+    <title>Data Grid Extensions</title>
+    <authors>Tom Englert</authors>
+    <license type="file">License</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>Icon.png</icon>
+    <projectUrl>https://github.com/dotnet/DataGridExtensions</projectUrl>
+    <description>This package contains useful extensions for the MS DataGrid (System.Windows.Controls.DataGrid).
+The current version supports the following features:
+- Add filtering capabilities to the DataGrid.
+- Correctly apply initial sorting criteria.
+- Easy to use\r\n- Easy to customize
+- Attaches to the existing DataGrid</description>
+    <releaseNotes>https://raw.githubusercontent.com/dotnet/DataGridExtensions/master/ReleaseNotes.md</releaseNotes>
+    <copyright>Copyright (c) .NET Foundation and Contributors.</copyright>
+    <tags>DGX DataGrid Filter</tags>
+    <repository type="git" url="https://github.com/dotnet/DataGridExtensions.git" />
+    <dependencies>
+      <group targetFramework="net5.0-windows7.0">
+        <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="1.1.39" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net5.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\huyha\Downloads\DataGridExtensions-2.5.14\src\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.dll" target="lib\net5.0-windows7.0\DataGridExtensions.dll" />
+    <file src="C:\Users\huyha\Downloads\DataGridExtensions-2.5.14\src\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.xml" target="lib\net5.0-windows7.0\DataGridExtensions.xml" />
+    <file src="C:\Users\huyha\Downloads\DataGridExtensions-2.5.14\Icon.png" target="\Icon.png" />
+    <file src="C:\Users\huyha\Downloads\DataGridExtensions-2.5.14\License" target="\License" />
+  </files>
+</package>

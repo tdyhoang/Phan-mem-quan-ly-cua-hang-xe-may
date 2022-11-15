@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>DataGridExtensions.snk</AssemblyOriginatorKeyFile>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>License</PackageLicenseFile>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/dotnet/DataGridExtensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnet/DataGridExtensions.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>DGX DataGrid Filter</PackageTags>
+    <PackageReleaseNotes>https://raw.githubusercontent.com/dotnet/DataGridExtensions/master/ReleaseNotes.md</PackageReleaseNotes>
+    <Title>Data Grid Extensions</Title>
+    <Description>This package contains useful extensions for the MS DataGrid (System.Windows.Controls.DataGrid).
+The current version supports the following features:
+- Add filtering capabilities to the DataGrid.
+- Correctly apply initial sorting criteria.
+- Easy to use\r\n- Easy to customize
+- Attaches to the existing DataGrid</Description>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ILMerge.Fody" Version="1.22.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Fody" Version="6.6.0" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nullable.Extended.Analyzer" Version="1.10.4539">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Throttle.Fody" Version="1.7.0" PrivateAssets="All" />
+    <PackageReference Include="TomsToolbox.Composition.Ninject" Version="2.8.4" />
+    <PackageReference Include="TomsToolbox.Wpf" Version="2.8.4" PrivateAssets="All" />
+    <PackageReference Include="TomsToolbox.Wpf.Composition" Version="2.8.4" />
+    <PackageReference Include="TomsToolbox.Wpf.Styles" Version="2.8.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Icon.png" Link="Icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\License" Link="License" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

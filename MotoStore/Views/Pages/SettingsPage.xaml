@@ -12,6 +12,7 @@
                                      IsDesignTimeCreatable=False}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    d:Background="{DynamicResource ApplicationBackgroundBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <ui:UiPage.Resources>
@@ -26,14 +27,14 @@
         <TextBlock Margin="0,12,0,0" Text="Nền" />
         <RadioButton
             Margin="0,12,0,0"
-            Command="{Binding ViewModel.OnChangeThemeCommand, Mode=OneWay}"
+            Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
             CommandParameter="theme_light"
             Content="Sáng"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
         <RadioButton
             Margin="0,8,0,0"
-            Command="{Binding ViewModel.OnChangeThemeCommand, Mode=OneWay}"
+            Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
             CommandParameter="theme_dark"
             Content="Tối"
             GroupName="themeSelect"

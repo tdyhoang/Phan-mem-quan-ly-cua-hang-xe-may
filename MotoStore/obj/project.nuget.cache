@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NfX7G+sw5zXPxscqDrQk9VOElc5n9FY2A9lr54iwrZ2kuWkkOY22PT5YAeQ+mmDDSGcH3Mj07B3adEV5AxnExA==",
+  "dgSpecHash": "H8/21mM+SGRUjowSMs9lPyNOXF6oFLjasX0LzD8GnV8kZiVOZmA+kUYNgH8yysSjLrt+LVbZe1c43EoWTvI8Mg==",
   "success": true,
   "projectFilePath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,8 @@
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\ninject\\3.3.6\\ninject.3.3.6.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\skiasharp\\2.88.3\\skiasharp.2.88.3.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\skiasharp.harfbuzz\\2.88.3\\skiasharp.harfbuzz.2.88.3.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.3\\skiasharp.nativeassets.macos.2.88.3.nupkg.sha512",
@@ -74,6 +76,8 @@
     "C:\\Users\\huyha\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
@@ -90,7 +94,15 @@
     "C:\\Users\\huyha\\.nuget\\packages\\system.text.json\\7.0.0-rc.2.22472.3\\system.text.json.7.0.0-rc.2.22472.3.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.composition\\2.8.4\\tomstoolbox.composition.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.composition.ninject\\2.8.4\\tomstoolbox.composition.ninject.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.essentials\\2.8.4\\tomstoolbox.essentials.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.observablecollections\\2.8.4\\tomstoolbox.observablecollections.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.wpf\\2.8.4\\tomstoolbox.wpf.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.wpf.composition\\2.8.4\\tomstoolbox.wpf.composition.2.8.4.nupkg.sha512",
+    "C:\\Users\\huyha\\.nuget\\packages\\tomstoolbox.wpf.styles\\2.8.4\\tomstoolbox.wpf.styles.2.8.4.nupkg.sha512",
     "C:\\Users\\huyha\\.nuget\\packages\\wpf-ui\\2.0.3\\wpf-ui.2.0.3.nupkg.sha512"
   ],
   "logs": []

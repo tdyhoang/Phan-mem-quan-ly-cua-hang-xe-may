@@ -16,9 +16,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         public SupplierListPage(ViewModels.SupplierListViewModel viewModel)
         {
             ViewModel = viewModel;
+            ViewModel.FillDataGrid();
 
             InitializeComponent();
-            ViewModel.FillDataGrid();
             grdSupplier.ItemsSource = ViewModel.SupplierDataView;
         }
     }

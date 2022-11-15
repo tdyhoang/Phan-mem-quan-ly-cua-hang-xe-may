@@ -5,6 +5,8 @@ using System.Data;
 using Wpf.Ui.Common.Interfaces;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
+using System.Drawing;
+using Wpf.Ui.Mvvm.Interfaces;
 
 namespace MotoStore.ViewModels
 {
@@ -12,6 +14,7 @@ namespace MotoStore.ViewModels
     {
         public void OnNavigatedTo()
         {
+            FillDataGrid();
         }
 
         public void OnNavigatedFrom()

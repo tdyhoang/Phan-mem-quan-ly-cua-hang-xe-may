@@ -9,9 +9,15 @@
       "MotoStore/1.0.0": {
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.0.0",
+          "DataGridExtensions": "1.0.0",
+          "Demo": "1.0.0",
           "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-beta.514",
           "Microsoft.Data.SqlClient": "5.1.0-preview1.22279.3",
           "Microsoft.Extensions.Hosting": "7.0.0-rc.2.22472.3",
+          "TomsToolbox.Composition.Ninject": "2.8.4",
+          "TomsToolbox.Wpf": "2.8.4",
+          "TomsToolbox.Wpf.Composition": "2.8.4",
+          "TomsToolbox.Wpf.Styles": "2.8.4",
           "WPF-UI": "2.0.3"
         },
         "runtime": {
@@ -651,6 +657,26 @@
         }
       },
       "Microsoft.Win32.SystemEvents/6.0.0": {},
+      "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
+        "runtime": {
+          "lib/net5.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.39.4716"
+          }
+        }
+      },
+      "Ninject/3.3.6": {
+        "dependencies": {
+          "System.Reflection.Emit.ILGeneration": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Ninject.dll": {
+            "assemblyVersion": "3.3.6.0",
+            "fileVersion": "3.3.6.0"
+          }
+        }
+      },
       "SkiaSharp/2.88.3": {
         "dependencies": {
           "SkiaSharp.NativeAssets.Win32": "2.88.3",
@@ -814,6 +840,21 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Reflection.Emit.ILGeneration/4.3.0": {
+        "dependencies": {
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Primitives": "4.3.0",
+          "System.Runtime": "4.3.0"
+        }
+      },
+      "System.Reflection.Emit.Lightweight/4.3.0": {
+        "dependencies": {
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Emit.ILGeneration": "4.3.0",
+          "System.Reflection.Primitives": "4.3.0",
+          "System.Runtime": "4.3.0"
+        }
+      },
       "System.Reflection.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",
@@ -926,9 +967,93 @@
         }
       },
       "System.Threading.Tasks.Extensions/4.5.4": {},
+      "System.ValueTuple/4.5.0": {},
       "System.Windows.Extensions/5.0.0": {
         "dependencies": {
           "System.Drawing.Common": "6.0.0"
+        }
+      },
+      "TomsToolbox.Composition/2.8.4": {
+        "dependencies": {
+          "TomsToolbox.Essentials": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0/TomsToolbox.Composition.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.Composition.Ninject/2.8.4": {
+        "dependencies": {
+          "Ninject": "3.3.6",
+          "System.ValueTuple": "4.5.0",
+          "TomsToolbox.Composition": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0/TomsToolbox.Composition.Ninject.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.Essentials/2.8.4": {
+        "runtime": {
+          "lib/net6.0/TomsToolbox.Essentials.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.ObservableCollections/2.8.4": {
+        "dependencies": {
+          "TomsToolbox.Essentials": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0/TomsToolbox.ObservableCollections.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.Wpf/2.8.4": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39",
+          "TomsToolbox.Essentials": "2.8.4",
+          "TomsToolbox.ObservableCollections": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/TomsToolbox.Wpf.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.Wpf.Composition/2.8.4": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39",
+          "TomsToolbox.Composition": "2.8.4",
+          "TomsToolbox.Essentials": "2.8.4",
+          "TomsToolbox.Wpf": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/TomsToolbox.Wpf.Composition.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
+        }
+      },
+      "TomsToolbox.Wpf.Styles/2.8.4": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39",
+          "TomsToolbox.Essentials": "2.8.4",
+          "TomsToolbox.Wpf": "2.8.4"
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/TomsToolbox.Wpf.Styles.dll": {
+            "assemblyVersion": "2.8.4.0",
+            "fileVersion": "2.8.4.0"
+          }
         }
       },
       "WPF-UI/2.0.3": {
@@ -940,6 +1065,22 @@
             "assemblyVersion": "2.0.3.0",
             "fileVersion": "2.0.3.0"
           }
+        }
+      },
+      "DataGridExtensions/1.0.0": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39",
+          "TomsToolbox.Composition.Ninject": "2.8.4",
+          "TomsToolbox.Wpf.Composition": "2.8.4",
+          "TomsToolbox.Wpf.Styles": "2.8.4"
+        },
+        "runtime": {
+          "DataGridExtensions.dll": {}
+        }
+      },
+      "Demo/1.0.0": {
+        "runtime": {
+          "Demo.exe": {}
         }
       }
     }
@@ -1307,6 +1448,20 @@
       "path": "microsoft.win32.systemevents/6.0.0",
       "hashPath": "microsoft.win32.systemevents.6.0.0.nupkg.sha512"
     },
+    "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8PZKqw9QOcu42xk8puY4P1+EXHL9YGOR9b7qhaYx5cILHul456H073tj99vyPcCt0W0781T9RwHqkx507ZyUpQ==",
+      "path": "microsoft.xaml.behaviors.wpf/1.1.39",
+      "hashPath": "microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
+    },
+    "Ninject/3.3.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-93avazUpbRL3IdwvTQF0DKSQB26TeqwMGhZsQNxi/RLSYewhxBkdGDhwWe9DAIRF1+zKDVMv3XkBk8HobKU6wA==",
+      "path": "ninject/3.3.6",
+      "hashPath": "ninject.3.3.6.nupkg.sha512"
+    },
     "SkiaSharp/2.88.3": {
       "type": "package",
       "serviceable": true,
@@ -1440,6 +1595,20 @@
       "path": "system.reflection/4.3.0",
       "hashPath": "system.reflection.4.3.0.nupkg.sha512"
     },
+    "System.Reflection.Emit.ILGeneration/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-59tBslAk9733NXLrUJrwNZEzbMAcu8k344OYo+wfSVygcgZ9lgBdGIzH/nrg3LYhXceynyvTc8t5/GD4Ri0/ng==",
+      "path": "system.reflection.emit.ilgeneration/4.3.0",
+      "hashPath": "system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512"
+    },
+    "System.Reflection.Emit.Lightweight/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oadVHGSMsTmZsAF864QYN1t1QzZjIcuKU3l2S9cZOwDdDueNTrqq1yRj7koFfIGEnKpt6NjpL3rOzRhs4ryOgA==",
+      "path": "system.reflection.emit.lightweight/4.3.0",
+      "hashPath": "system.reflection.emit.lightweight.4.3.0.nupkg.sha512"
+    },
     "System.Reflection.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1552,6 +1721,13 @@
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
+    },
     "System.Windows.Extensions/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -1559,12 +1735,71 @@
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
     },
+    "TomsToolbox.Composition/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X950/9efkhOn4P/JGQLmdPQznCjpzMR6ohM5493zJMGPOymr0CHUshDB2BjnAYe5boCTst+03DC7A2z/AXOHdg==",
+      "path": "tomstoolbox.composition/2.8.4",
+      "hashPath": "tomstoolbox.composition.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.Composition.Ninject/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-78u3R2zYmWMcFl7sZ7fe5mn3szrZFDmbU0WUQEV1BIiAx1irXU4gAAvNdZKJZfrpgOlvs/x65OCbaosNeZoEVg==",
+      "path": "tomstoolbox.composition.ninject/2.8.4",
+      "hashPath": "tomstoolbox.composition.ninject.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.Essentials/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1q3CbKZVAIXfBoTPK3twLchOYcbtIIszdPzUtl8OXzGAnOhUFji51LNJUjZwCWShpTo7496uUVRuU9qOUE2AHg==",
+      "path": "tomstoolbox.essentials/2.8.4",
+      "hashPath": "tomstoolbox.essentials.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.ObservableCollections/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xpDsJ1iy/6ppxNzPtFw7LE2anBjwdDmp90Z9w9bAHAZdfsUajhjc5W1KM2fERhN4pDFOaLWXTsjEbytm6Eh2eQ==",
+      "path": "tomstoolbox.observablecollections/2.8.4",
+      "hashPath": "tomstoolbox.observablecollections.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.Wpf/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yvJneQLRMWhqPSiViDApqKsfkk45jvt7hEQXqNi4r/9+pQhHMj+uY7JkGXVqDq5K84H3yuO8LQ1G3Uy88xapWA==",
+      "path": "tomstoolbox.wpf/2.8.4",
+      "hashPath": "tomstoolbox.wpf.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.Wpf.Composition/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-l3dq9s43KmvZpd/wLEHU34mgNVY15Sd52jYMXYx0aFOFUQ84PxXIf1KZ4oGm9tNZg3zhXNBXURrDWFmbPXO7GQ==",
+      "path": "tomstoolbox.wpf.composition/2.8.4",
+      "hashPath": "tomstoolbox.wpf.composition.2.8.4.nupkg.sha512"
+    },
+    "TomsToolbox.Wpf.Styles/2.8.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LPLllZ821nFuYU7Q/jSzl4ogB/3rtRQ3K/QRs1scbWOuJtyhDXHWBhc+BlfFzvaA6Eih0IFwiK8i+Cx9i5eK0w==",
+      "path": "tomstoolbox.wpf.styles/2.8.4",
+      "hashPath": "tomstoolbox.wpf.styles.2.8.4.nupkg.sha512"
+    },
     "WPF-UI/2.0.3": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-1e9Q8pQGfi9YFp3WavKZjXyLYohIjXxk5q0NqEaamofVgIdxRxwqrkWha584FBUISRBBT/qFOrl97YBl5bs30Q==",
       "path": "wpf-ui/2.0.3",
       "hashPath": "wpf-ui.2.0.3.nupkg.sha512"
+    },
+    "DataGridExtensions/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Demo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

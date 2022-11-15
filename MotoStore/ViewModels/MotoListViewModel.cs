@@ -12,6 +12,7 @@ namespace MotoStore.ViewModels
     {
         public void OnNavigatedTo()
         {
+            FillDataGrid();
         }
 
         public void OnNavigatedFrom()

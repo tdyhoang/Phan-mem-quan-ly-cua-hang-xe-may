@@ -46,11 +46,19 @@
                 <Grid Grid.ColumnSpan="2">
                     <StackPanel HorizontalAlignment="Center">
                         <TextBlock Text="Nhập tên server" />
-                        <ui:TextBox Name="txtServerName" Text="{Binding ViewModel.TxtServerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" MinWidth="200" />
+                        <ui:TextBox
+                            Name="txtServerName"
+                            Text="{Binding ViewModel.TxtServerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalAlignment="Center"
+                            MinWidth="200">
+                            <ui:TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding ViewModel.ConnectToServerCommand}" />
+                            </ui:TextBox.InputBindings>
+                        </ui:TextBox>
                         <ui:Button Content="Kết nối" HorizontalAlignment="Center" Command="{Binding ViewModel.ConnectToServerCommand}" />
                     </StackPanel>
                 </Grid>
-                
+                <!--
                 <lvc:CartesianChart
                     Grid.Column="0" Grid.Row="1"
                     Series="{Binding ViewModel.Chart1}"
@@ -65,6 +73,7 @@
                     YAxes="{Binding ViewModel.YAxes2}"
                     ZoomMode="X">
                 </lvc:CartesianChart>
+                -->
             </Grid>
         </DockPanel>
     </Grid>

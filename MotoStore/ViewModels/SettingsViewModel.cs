@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MotoStore.Models;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Wpf.Ui.Common.Interfaces;
 
@@ -15,6 +17,9 @@ namespace MotoStore.ViewModels
 
         [ObservableProperty]
         private Wpf.Ui.Appearance.ThemeType _currentTheme = Wpf.Ui.Appearance.ThemeType.Unknown;
+
+        [ObservableProperty]
+        private IEnumerable<DataColor> _colors;
 
         public void OnNavigatedTo()
         {

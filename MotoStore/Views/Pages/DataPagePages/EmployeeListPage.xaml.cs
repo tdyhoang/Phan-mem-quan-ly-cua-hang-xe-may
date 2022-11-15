@@ -1,4 +1,9 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Navigation;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.Views.Pages.DataPagePages
@@ -16,9 +21,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         public EmployeeListPage(ViewModels.EmployeeListViewModel viewModel)
         {
             ViewModel = viewModel;
+            ViewModel.FillDataGrid();
 
             InitializeComponent();
-            ViewModel.FillDataGrid();
             grdEmployee.ItemsSource = ViewModel.EmployeeDataView;
         }
     }

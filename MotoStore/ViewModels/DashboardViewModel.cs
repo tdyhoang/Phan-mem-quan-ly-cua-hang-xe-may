@@ -25,6 +25,11 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedFrom()
         {
+            if (App.Current.Properties["IsConnected"] is null || !(bool)App.Current.Properties["IsConnected"])
+            {
+                MessageBox.Show("Vui lòng kết nối tới server CSDL trước khi tiếp tục!");
+                // Cancel navigating
+            }
         }
 
         public string TxtServerName
@@ -57,11 +62,13 @@ namespace MotoStore.ViewModels
                     con.Open();
                     con.Close();
                 }
-                MessageBox.Show("Kết nối thành công!");
+                System.Windows.MessageBox.Show("Kết nối thành công!");
+                App.Current.Properties["IsConnected"] = true;
             }
             catch
             {
-                MessageBox.Show("Sai tên server CSDL, vui lòng nhập lại!");
+                System.Windows.MessageBox.Show("Sai tên server CSDL, vui lòng nhập lại!");
+                App.Current.Properties["IsConnected"] = false;
             }
         }
 

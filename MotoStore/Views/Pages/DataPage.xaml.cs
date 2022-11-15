@@ -3,6 +3,7 @@ using System;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using Wpf.Ui.Mvvm.Services;
 
 namespace MotoStore.Views.Pages
 {
@@ -21,6 +22,7 @@ namespace MotoStore.Views.Pages
             ViewModel = viewModel;
 
             InitializeComponent();
+
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(DataNavigation);

@@ -8,13 +8,17 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Controls;
+using System.Windows.Navigation;
+using Wpf.Ui.Controls.Navigation;
+using System.ComponentModel.Design.Serialization;
+using System.Windows.Controls;
+using Wpf.Ui.Mvvm.Contracts;
+using Wpf.Ui.Mvvm.Services;
 
 namespace MotoStore.ViewModels
 {
     public partial class DataViewModel : ObservableObject, INavigationAware
     {
-        private bool _isInitialized = false;
-
         [ObservableProperty]
         private IEnumerable<DataColor> _colors;
 
@@ -23,8 +27,7 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedTo()
         {
-            if (!_isInitialized)
-                InitializeViewModel();
+            InitializeViewModel();
         }
 
         public void OnNavigatedFrom()
@@ -33,6 +36,12 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
+            if (App.Current.Properties["IsConnected"] is null || !(bool)App.Current.Properties["IsConnected"])
+            {
+                NavigationItems.Clear();
+                return;
+            }
+
             NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
@@ -64,8 +73,6 @@ namespace MotoStore.ViewModels
                     PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
                 }
             };
-
-            _isInitialized = true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.Views.Pages.DataPagePages
@@ -16,9 +17,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         public CustomerListPage(ViewModels.CustomerListViewModel viewModel)
         {
             ViewModel = viewModel;
+            ViewModel.FillDataGrid();
 
             InitializeComponent();
-            ViewModel.FillDataGrid();
             grdCustomer.ItemsSource = ViewModel.CustomerDataView;
         }
     }
