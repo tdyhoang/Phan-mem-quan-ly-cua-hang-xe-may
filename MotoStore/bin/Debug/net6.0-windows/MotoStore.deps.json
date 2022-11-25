@@ -9,7 +9,7 @@
       "MotoStore/1.0.0": {
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.0.0",
-          "DataGridExtensions": "1.0.0",
+          "DataGridExtensions": "2.5.14",
           "Demo": "1.0.0",
           "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-beta.514",
           "MaterialDesignThemes": "4.7.0-ci364",
@@ -68,6 +68,17 @@
           "lib/net6.0/CommunityToolkit.Mvvm.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.1"
+          }
+        }
+      },
+      "DataGridExtensions/2.5.14": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/DataGridExtensions.dll": {
+            "assemblyVersion": "2.5.14.0",
+            "fileVersion": "2.5.14.0"
           }
         }
       },
@@ -1217,17 +1228,6 @@
           }
         }
       },
-      "DataGridExtensions/1.0.0": {
-        "dependencies": {
-          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39",
-          "TomsToolbox.Composition.Ninject": "2.8.4",
-          "TomsToolbox.Wpf.Composition": "2.8.4",
-          "TomsToolbox.Wpf.Styles": "2.8.4"
-        },
-        "runtime": {
-          "DataGridExtensions.dll": {}
-        }
-      },
       "Demo/1.0.0": {
         "runtime": {
           "Demo.exe": {}
@@ -1261,6 +1261,13 @@
       "sha512": "sha512-Jiu2g5WUdXRwzhJkHB+B4JBKP5A5+fp8xKiW/ZQo5PI+DruI7MbPEcK9K/Aw0YzTiWRuG6CBluzYIWN5Eo7BkQ==",
       "path": "communitytoolkit.mvvm/8.0.0",
       "hashPath": "communitytoolkit.mvvm.8.0.0.nupkg.sha512"
+    },
+    "DataGridExtensions/2.5.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-INd7qzE0E4PCfJWB94xrdnCMC/FcAj971rZ/iAxlXoBFIpxFxm+DgJtgOd7rcQOAjZIUfbIjNHMPc0WqJBzQHg==",
+      "path": "datagridextensions/2.5.14",
+      "hashPath": "datagridextensions.2.5.14.nupkg.sha512"
     },
     "HarfBuzzSharp/2.8.2.3": {
       "type": "package",
@@ -2045,11 +2052,6 @@
       "sha512": "sha512-1e9Q8pQGfi9YFp3WavKZjXyLYohIjXxk5q0NqEaamofVgIdxRxwqrkWha584FBUISRBBT/qFOrl97YBl5bs30Q==",
       "path": "wpf-ui/2.0.3",
       "hashPath": "wpf-ui.2.0.3.nupkg.sha512"
-    },
-    "DataGridExtensions/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "Demo/1.0.0": {
       "type": "project",

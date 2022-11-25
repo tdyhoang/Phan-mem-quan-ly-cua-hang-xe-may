@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "3odu1wGzIdsG5dn/MNDDncyrND3gOciyA7i0HFQeRsp/mZUhkFs8J4D3C7+/vwS5bOokzAPTDKTE+vsgM7n/aA==",
+  "dgSpecHash": "1Dgs+xjL71zkk1BRLmC8/xFIdFzWySAH5jv5Qc1B5s55vob/qH/laPDVkNy4cIyWyin6dHkBjwy6CqM7NjAyJQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\communitytoolkit.mvvm\\8.0.0\\communitytoolkit.mvvm.8.0.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\datagridextensions\\2.5.14\\datagridextensions.2.5.14.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\harfbuzzsharp\\2.8.2.3\\harfbuzzsharp.2.8.2.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\2.8.2.3\\harfbuzzsharp.nativeassets.macos.2.8.2.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\harfbuzzsharp.nativeassets.win32\\2.8.2.3\\harfbuzzsharp.nativeassets.win32.2.8.2.3.nupkg.sha512",
@@ -120,5 +121,12 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\tomstoolbox.wpf.styles\\2.8.4\\tomstoolbox.wpf.styles.2.8.4.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\wpf-ui\\2.0.3\\wpf-ui.2.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

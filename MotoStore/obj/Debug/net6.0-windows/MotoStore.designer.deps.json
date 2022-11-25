@@ -48,6 +48,17 @@
           }
         }
       },
+      "DataGridExtensions/2.5.14": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/DataGridExtensions.dll": {
+            "assemblyVersion": "2.5.14.0",
+            "fileVersion": "2.5.14.0"
+          }
+        }
+      },
       "HarfBuzzSharp/2.8.2.3": {
         "dependencies": {
           "HarfBuzzSharp.NativeAssets.Win32": "2.8.2.3",
@@ -1410,6 +1421,13 @@
       "sha512": "sha512-Jiu2g5WUdXRwzhJkHB+B4JBKP5A5+fp8xKiW/ZQo5PI+DruI7MbPEcK9K/Aw0YzTiWRuG6CBluzYIWN5Eo7BkQ==",
       "path": "communitytoolkit.mvvm/8.0.0",
       "hashPath": "communitytoolkit.mvvm.8.0.0.nupkg.sha512"
+    },
+    "DataGridExtensions/2.5.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-INd7qzE0E4PCfJWB94xrdnCMC/FcAj971rZ/iAxlXoBFIpxFxm+DgJtgOd7rcQOAjZIUfbIjNHMPc0WqJBzQHg==",
+      "path": "datagridextensions/2.5.14",
+      "hashPath": "datagridextensions.2.5.14.nupkg.sha512"
     },
     "HarfBuzzSharp/2.8.2.3": {
       "type": "package",
