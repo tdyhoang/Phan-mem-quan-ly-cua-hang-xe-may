@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\
 MotoStore
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\App.xaml
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\App.xaml
 13-780745141
 1882702876
 48852483860
-2641520368672
+2641129667397
 Resources\MainResource.xaml;Views\Container.xaml;Views\Pages\DashboardPage.xaml;Views\Pages\DataPage.xaml;Views\Pages\DataPagePages\CustomerListPage.xaml;Views\Pages\DataPagePages\EmployeeListPage.xaml;Views\Pages\DataPagePages\MotoListPage.xaml;Views\Pages\DataPagePages\SupplierListPage.xaml;Views\Pages\IOPage.xaml;Views\Pages\ReportPage.xaml;Views\Pages\SettingsPage.xaml;Views\UserControls\ControlBarUserControl.xaml;Views\Windows\LoginWindow.xaml;
 
 True

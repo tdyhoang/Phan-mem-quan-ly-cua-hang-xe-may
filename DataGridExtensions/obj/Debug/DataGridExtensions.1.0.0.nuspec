@@ -17,7 +17,7 @@ The current version supports the following features:
 - Attaches to the existing DataGrid</description>
     <releaseNotes>https://raw.githubusercontent.com/dotnet/DataGridExtensions/master/ReleaseNotes.md</releaseNotes>
     <tags>DGX DataGrid Filter</tags>
-    <repository type="git" url="https://github.com/dotnet/DataGridExtensions.git" commit="da09a270f0d06df67b3bf0bb4b65cb0084bbce32" />
+    <repository type="git" url="https://github.com/dotnet/DataGridExtensions.git" commit="29435eb11f6c470aa651a3783dbaea12bd349f84" />
     <dependencies>
       <group targetFramework="net5.0-windows7.0">
         <dependency id="Microsoft.Xaml.Behaviors.Wpf" version="1.1.39" exclude="Build,Analyzers" />
@@ -33,9 +33,9 @@ The current version supports the following features:
     </frameworkReferences>
   </metadata>
   <files>
-    <file src="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.dll" target="lib\net5.0-windows7.0\DataGridExtensions.dll" />
-    <file src="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.xml" target="lib\net5.0-windows7.0\DataGridExtensions.xml" />
-    <file src="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\Icon.png" target="\Icon.png" />
-    <file src="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\License" target="\License" />
+    <file src="C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.dll" target="lib\net5.0-windows7.0\DataGridExtensions.dll" />
+    <file src="C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\DataGridExtensions\bin\Debug\net5.0-windows\DataGridExtensions.xml" target="lib\net5.0-windows7.0\DataGridExtensions.xml" />
+    <file src="C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\Icon.png" target="\Icon.png" />
+    <file src="C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\License" target="\License" />
   </files>
 </package>

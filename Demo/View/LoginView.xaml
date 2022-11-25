@@ -36,11 +36,6 @@
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="LOG IN"
-                               FontSize="20"
-                               Foreground="Black"
-                               FontFamily="Montserrat"
-                               Margin="30,5,0,0"/>
                     <Button x:Name="btnMinimize"
                             BorderThickness="0"
                             Content="-"
@@ -68,15 +63,15 @@
                             Grid.Row="2"
                             Orientation="Vertical"
                             Margin="0,10,0,0">
-                    <TextBlock Text="QUẢN LÝ CỬA HÀNG XE MÁY"
+                    <TextBlock x:Name="txtQLYCHXM" Text="QUẢN LÝ CỬA HÀNG XE MÁY"
                                
-                               FontSize="25"
-                               Foreground="Black" Width="600"
-                               FontFamily="Montserrat"
+                               FontSize="24"
+                               Foreground="Black" Width="504"
+                               FontFamily="Times New Roman"
                                FontWeight="Medium"
-                              Height="60"
+                              Height="40"
                                Margin="0,0,0,0" RenderTransformOrigin="0.463,0.48"/>
-                    <TextBlock Text="Tên tài khoản:"
+                    <TextBlock x:Name="txtTenTK" Text="Tên Tài Khoản:"
                                
                                FontSize="20"
                                Foreground="Black" Width="350"
@@ -87,7 +82,7 @@
                     <TextBox x:Name="txtUser"
                              FontSize="20"
                              FontWeight="Medium"
-                             FontFamily="Montserrat" 
+                             FontFamily="Times New Roman" 
                              Foreground="White"
                              CaretBrush="LightGray"
                              BorderBrush="DarkGray"
@@ -101,11 +96,11 @@
                                         Stretch="Uniform"
                                        AlignmentX="Left" />
                         </TextBox.Background>
-                             
-                             
-                        
+
+
+
                     </TextBox>
-                    <TextBlock Text="Mật Khẩu:"
+                    <TextBlock x:Name="txtMatKhau" Text="Mật Khẩu:"
                                
                                FontSize="20"
                                Foreground="Black" Width="350"
@@ -113,57 +108,15 @@
                                FontWeight="Medium"
                               HorizontalAlignment="Center" Height="40"
                                Margin="0,50,0,0"/>
-                    <TextBox x:Name="txtPass"
-                             FontSize="20"
-                             FontWeight="Medium"
-                             FontFamily="Montserrat" 
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,10"
-                             Height="30"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0"
-                             VerticalContentAlignment="Center" RenderTransformOrigin="0.494,0.062">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user_logo.png"
-                                        Stretch="Uniform"
-                                       AlignmentX="Left" />
-                        </TextBox.Background>
-
-
-
-                    </TextBox>
-
-                    <Button x:Name="btnLogin"
-                            BorderThickness="0"
-                            Content="LOG IN"
-                            Background="DarkGray"
-                            FontSize="20"
-                            Foreground="Black"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"    
-                            Grid.Column="2"    
-                            Click="btnLogin_Click" 
-                            Margin="0,50,0,0" Width="120">
-                    </Button>
+                    <PasswordBox x:Name="txtPassword" Height="35" Width="355" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="20" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontFamily="Times New Roman"/>
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
-                                Margin="0,15,0,0">
-                        <TextBlock Text="Forgot Password?"
-                               Foreground="Black"
-                               FontSize="20"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"/>
-                        <TextBlock Text="Reset"
-                               Foreground="White"
-                               FontSize="20"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               Cursor="Hand"
-                               Margin="8,0,0,0"/>
-                    </StackPanel>
+                                Margin="0,15,0,0"/>
                 </StackPanel>
+                <Button x:Name="buttonQuenMK" Content="Quên Mật Khẩu ?" HorizontalAlignment="Center" Height="30" Margin="0,451,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.557,0.026" FontSize="16" FontFamily="Times New Roman" Click="buttonQuenMK_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <Button x:Name="buttonLanguage" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="146" Click="buttonLanguage_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <Button x:Name="buttonDangNhap" Content="Đăng Nhập" HorizontalAlignment="Center" Height="31" Margin="0,401,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" FontFamily="Times New Roman" FontSize="16" Click="buttonDangNhap_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <Label x:Name="lblNnguHienTai" Content="Ngôn Ngữ Hiện Tại:" HorizontalAlignment="Left" Height="26" Margin="24,0,0,0" VerticalAlignment="Center" Width="132" FontFamily="Times New Roman" FontSize="14"/>
             </Grid>
         </Border>
     </Border>

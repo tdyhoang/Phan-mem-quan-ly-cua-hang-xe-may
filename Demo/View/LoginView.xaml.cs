@@ -36,9 +36,57 @@ namespace Demo.View
         {
             Application.Current.Shutdown();
         }
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+
+        private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            switch (buttonLanguage.Content)
+            {
+                case "Tiếng Việt":
+                    buttonLanguage.Content = "English";
+                    txtTenTK.Text = "Username:";
+                    txtMatKhau.Text = "Password:";
+                    buttonDangNhap.Content = "Login";
+                    buttonQuenMK.Content = "Forgot Password ?";
+                    txtQLYCHXM.FontSize = 23;
+                    txtQLYCHXM.Text = "MOTORCYCLE SHOP MANAGER";
+                    lblNnguHienTai.Content = "Current Language:";
+                    break;
+                case "English":
+                    buttonLanguage.Content = "Tiếng Việt";
+                    txtTenTK.Text = "Tên Tài Khoản:";
+                    txtMatKhau.Text = "Mật Khẩu:";
+                    buttonDangNhap.Content = "Đăng Nhập";
+                    buttonQuenMK.Content = "Quên Mật Khẩu ?";
+                    txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
+                    lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
+                    break;
+            }
+
         }
+        private void buttonDangNhap_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if(string.IsNullOrEmpty(txtUser.Text)==true||string.IsNullOrEmpty(txtPassword.Password))
+            {     if (buttonLanguage.Content=="English")
+                {
+                    MessageBox.Show("Please fill in all fields completely and correctly!");
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng điền đầy đủ thông tin!");
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        private void buttonQuenMK_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        
     }
 }
