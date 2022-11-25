@@ -1,5 +1,11 @@
 ﻿using System.Data;
+using System.Windows;
+using System.Linq;
 using Wpf.Ui.Common.Interfaces;
+using MotoStore.Databases;
+using MotoStore.Models;
+using System.Collections.Generic;
+using System;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -16,10 +22,18 @@ namespace MotoStore.Views.Pages.DataPagePages
         public MotoListPage(ViewModels.MotoListViewModel viewModel)
         {
             ViewModel = viewModel;
-            ViewModel.FillDataGrid();
-
             InitializeComponent();
-            grdMoto.ItemsSource = ViewModel.MotoDataView;
+
+            try
+            {
+                MainDatabase con = new MainDatabase();
+                List<MatHang> TableData = con.MatHangs.ToList();
+                grdMoto.ItemsSource = TableData;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

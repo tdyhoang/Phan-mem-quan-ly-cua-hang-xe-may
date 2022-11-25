@@ -20,7 +20,7 @@ The current version supports the following features:
 - Easy to use\r\n- Easy to customize
 - Attaches to the existing DataGrid")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da09a270f0d06df67b3bf0bb4b65cb0084bbce32")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataGridExtensions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataGridExtensions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

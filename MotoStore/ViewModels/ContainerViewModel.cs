@@ -45,6 +45,7 @@ namespace MotoStore.ViewModels
 
         public ContainerViewModel()
         {
+            // Login Window
             /*LoadedWindowCommand = new RelayCommand<Window>((p) => {
                 Isloaded = true;
                 if (p == null)
@@ -53,10 +54,8 @@ namespace MotoStore.ViewModels
                 LoginViewModel loginViewModel = new LoginViewModel();
                 LoginWindow loginWindow = new LoginWindow(loginViewModel);
                 bool? isOpened = loginWindow.ShowDialog();
-                    MessageBox.Show(isOpened.ToString());
+                MessageBox.Show(isOpened.ToString());
 
-                if (loginWindow.DataContext == null)
-                    return;
                 var loginVM = loginWindow.DataContext as LoginViewModel;
 
                 if (loginVM.IsLogin)
@@ -67,14 +66,14 @@ namespace MotoStore.ViewModels
                 }
                 else
                 {
-                    p.Close();
+                    p.Hide();
                 }
             }
             );*/
+            //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
+
             if (!_isInitialized)
                 InitializeViewModel();
-
-            //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
         }
 
         private void InitializeViewModel()
