@@ -13,8 +13,11 @@ Create table KhachHang
 	   DiaChi VARCHAR(40),
 	   SDT  VARCHAR(10),
 	   Email VARCHAR(30),
-	   LoaiKH VARCHAR(10),         /*Vip, Than Quen, ...*/
+	   LoaiKH VARCHAR(10),         
 	   constraint PK_MaKH primary key(MAKH)
+	   /*Vip - Dc Giam Gia 10%
+	     Than Quen - Dc Giam Gia 5%
+	     Thuong - Ko Dc Giam Gia*/
 )
 
 alter table KhachHang add constraint Check_GT check(GioiTinh='Nam' or GioiTinh='Nu')
@@ -94,27 +97,41 @@ alter table ThongTinBaoHanh add constraint FK_TTBH_MaMH foreign key(MaMH) refere
 alter table ThongTinBaoHanh add constraint FK_TTBH_MaKH foreign key(MaKH) references KhachHang(MaKH)
 alter table ThongTinBaoHanh add constraint FK_TTBH_MaNV foreign key(MaNV) references NhanVien(MaNV)
 
-create table Users
+/*Chỉ người quản lý mới có tài khoản và mật khẩu*/
+create table UserADMIN
 (
-  MaNV char(7),
+  UserID varchar(4),
   UserName varchar(15),
   Password varchar(15),
-  ChucVu varchar(10),
-  constraint PK_Users_MaNV primary key(MaNV)
+  constraint PK_UserID primary key(UserID)
 )
 
-alter table Users add constraint FK_Users_MaNV foreign key(MaNV) references NhanVien(MaNV)
+Insert into UserADMIN values('ID01','Ngquanly1','123456ABCDEF')
 
-/* Create table Admin
-(
-    
-) */
+create table DonDatHang
+( 
+  MaDonDH varchar(10),
+  SoDonDH int,
+  MaMH  char(7),
+  SoLuongHang int,
+  MaKH char(7),
+  MaNV char(7),
+  NGDH smalldatetime, /*Ngày Đặt Hàng*/
+  constraint PK_MaDonDH primary key(MaDonDH)
+)
+
+alter table DonDatHang add constraint FK_MaMHDDH foreign key(MaMH) references MATHANG(MaMH)
+alter table DonDatHang add constraint FK_MaKHDDH foreign key(MaKH) references KHACHHANG(MaKH)
+alter table DonDatHang add constraint FK_MaNVDDH foreign key(MaNV) references NHANVIEN(MaNV)
+
+Insert into DonDatHang values('DDH01',1,'MH03',1,'KH006','NV02','25/11/2022')
 
 Insert into KhachHang values('KH001','Nguyen Van A','11/9/1979','Nam','34/34B Nguyen Trai, Q1, TpHCM','0876890495','NguyenVanA79@gmail.com','Vip')
 Insert into KhachHang values('KH002','Nguyen Van B','9/11/1997','Nam','873 Le Hong Phong, Q5, TpHCM','0867850847','NguyenVanB97@gmail.com','Thuong')
 Insert into KhachHang values('KH003','Tran Ngoc Han','22/6/2000','Nu','23/5 Nguyen Trai, Q5, TpHCM','0876890495','HanTran2k@gmail.com','Than quen')
 Insert into KhachHang values('KH004','Nguyen Van Tam','6/4/1971','Nam','50/34 Le Dai Hanh, Q10, TpHCM','0917325476','Tamnguyen71@gmail.com','Thuong')
 Insert into KhachHang values('KH005','Phan Thi Thanh','31/12/1981','Nu','34 Truong Dinh, Q3, TpHCM','0948531923','ThanhTP311281@gmail.com','Than quen')
+Insert into KhachHang values('KH006','Do Ngoc Khai','4/3/2001','Nam','215 Nguyen Xien, Q9, TpHCM','0876180684','DNKSBTC@gmail.com','Thuong')
 
 select *from KhachHang
 
@@ -134,3 +151,17 @@ Insert into NhaSanXuat values('Honda','(30.2)18943170','HondaMotorJapan@gmail.co
 
 select *from NhaSanXuat
 
+Insert into MatHang values('MH01','Sirius 110cc',21500000,26500000,13,'Yamaha','NhatBan','Mau Do Den','Con Moi')
+Insert into MatHang values('MH02','Sirius 50cc',10000000,13500000,15,'Yamaha','NhatBan','Mau Den Nham','Con Moi')
+Insert into MatHang values('MH03','Honda Air Blade',33500000,40500000,7,'Honda','NhatBan','Mau Vang Den','Con Moi')
+Insert into MatHang values('MH04','Exciter 150cc',38500000,45000000,5,'Yamaha','VietNam','Mau Den','Con Moi')
+Insert into MatHang values('MH05','Raider F150',21500000,27500000,10,'Suzuki','VietNam','Mau Do Den','Con Moi')
+
+select *from MatHang
+
+Insert into HoaDon values('HD01','MH01','KH003','NV04','19/8/2021',1,0,26500000)
+Insert into HoaDon values('HD02','MH03','KH005','NV05','17/10/2022',1,5,40500000*0.95)
+Insert into HoaDon values('HD03','MH04','KH001','NV05','15/10/2022',1,10,45000000*0.9)
+
+Insert into ThongTinBaoHanh values('BH01','MH01','KH003','NV04','10/7/2021','Loi tu NSX, Hu tay con')
+Insert into ThongTinBaoHanh values('BH02','MH02','KH004','NV02','12/7/2021','Thay nhot dinh ki')
