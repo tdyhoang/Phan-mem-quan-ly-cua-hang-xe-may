@@ -24,7 +24,10 @@
         <ui:DataGrid Name="grdMoto"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
-                     AutoGenerateColumns="False">
+                     AutoGenerateColumns="False"
+                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                     ItemsSource="{Binding Path=MotoDataView}">
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã mặt hàng" Binding="{Binding Path=MaMH, Mode=OneWay}" />
                 <DataGridTextColumn Header="Tên mặt hàng" Binding="{Binding Path=TenMH}" />

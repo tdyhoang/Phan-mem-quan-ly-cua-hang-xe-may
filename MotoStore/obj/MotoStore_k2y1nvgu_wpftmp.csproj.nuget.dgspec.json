@@ -1,0 +1,244 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\DataGridExtensions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\DataGridExtensions.csproj",
+        "projectName": "DataGridExtensions",
+        "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\DataGridExtensions.csproj",
+        "packagesPath": "C:\\Users\\huyha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "configFilePaths": [
+          "C:\\Users\\huyha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "dependencies": {
+            "Fody": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.6.0, )"
+            },
+            "ILMerge.Fody": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.22.0, )"
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Microsoft.Xaml.Behaviors.Wpf": {
+              "target": "Package",
+              "version": "[1.1.39, )"
+            },
+            "Nullable.Extended.Analyzer": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.10.4539, )"
+            },
+            "Throttle.Fody": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "TomsToolbox.Composition.Ninject": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf.Composition": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf.Styles": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
+        "projectName": "Demo",
+        "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
+        "projectName": "MotoStore",
+        "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
+        "packagesPath": "C:\\Users\\huyha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\huyha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
+            "projectReferences": {
+              "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\DataGridExtensions.csproj": {
+                "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\DataGridExtensions\\DataGridExtensions.csproj"
+              },
+              "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
+                "projectPath": "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "LiveChartsCore.SkiaSharpView.WPF": {
+              "target": "Package",
+              "version": "[2.0.0-beta.514, )"
+            },
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[4.7.0-ci364, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.0-preview1.22279.3, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[7.0.0-rc.2.22472.3, )"
+            },
+            "Microsoft.Xaml.Behaviors.Wpf": {
+              "target": "Package",
+              "version": "[1.1.39, )"
+            },
+            "TomsToolbox.Composition.Ninject": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf.Composition": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "TomsToolbox.Wpf.Styles": {
+              "target": "Package",
+              "version": "[2.8.4, )"
+            },
+            "WPF-UI": {
+              "target": "Package",
+              "version": "[2.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

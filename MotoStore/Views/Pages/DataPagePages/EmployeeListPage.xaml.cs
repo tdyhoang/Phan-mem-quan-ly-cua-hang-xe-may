@@ -1,6 +1,10 @@
-﻿using System;
+﻿using MotoStore.Databases;
+using MotoStore.Models;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
@@ -21,10 +25,19 @@ namespace MotoStore.Views.Pages.DataPagePages
         public EmployeeListPage(ViewModels.EmployeeListViewModel viewModel)
         {
             ViewModel = viewModel;
-            ViewModel.FillDataGrid();
 
             InitializeComponent();
-            grdEmployee.ItemsSource = ViewModel.EmployeeDataView;
+
+            try
+            {
+                MainDatabase con = new MainDatabase();
+                List<NhanVien> TableData = con.NhanViens.ToList();
+                grdEmployee.ItemsSource = TableData;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

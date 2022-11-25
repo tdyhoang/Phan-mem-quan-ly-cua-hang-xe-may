@@ -46,7 +46,7 @@ The current version supports the following features:
     <PackageReference Include="TomsToolbox.Wpf.Styles" Version="2.8.4" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Icon.png" Link="Icon.png" Pack="true" PackagePath="\" />
-    <None Include="..\..\License" Link="License" Pack="true" PackagePath="\" />
+    <None Include="..\..\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\Icon.png" Link="Icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\Assets\License" Link="License" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>

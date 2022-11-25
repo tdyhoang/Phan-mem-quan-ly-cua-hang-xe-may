@@ -10,11 +10,20 @@ using System;
 using System.Windows;
 using System.Threading.Tasks;
 using MotoStore.Properties;
+using Wpf.Ui.Mvvm.Contracts;
+using System.Windows.Input;
 
 namespace MotoStore.ViewModels
 {
     public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
+        private readonly INavigationService _navigationService;
+
+        public DashboardViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
         [ObservableProperty]
         private int _counter = 0;
         private string _txtServerName;
@@ -25,11 +34,6 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedFrom()
         {
-            if (App.Current.Properties["IsConnected"] is null || !(bool)App.Current.Properties["IsConnected"])
-            {
-                MessageBox.Show("Vui lòng kết nối tới server CSDL trước khi tiếp tục!");
-                // Cancel navigating
-            }
         }
 
         public string TxtServerName

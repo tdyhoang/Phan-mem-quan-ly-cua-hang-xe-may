@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:MotoStore.ViewModels"
+                    xmlns:local="clr-namespace:MotoStore.Resources">
+    <viewmodel:ContainerViewModel x:Key="MainVM"></viewmodel:ContainerViewModel>
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+</ResourceDictionary>

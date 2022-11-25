@@ -14,11 +14,20 @@ using System.ComponentModel.Design.Serialization;
 using System.Windows.Controls;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using System.Windows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MotoStore.ViewModels
 {
     public partial class DataViewModel : ObservableObject, INavigationAware
     {
+        private readonly INavigationService _navigationService;
+
+        public DataViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
         [ObservableProperty]
         private IEnumerable<DataColor> _colors;
 
@@ -36,12 +45,6 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
-            if (App.Current.Properties["IsConnected"] is null || !(bool)App.Current.Properties["IsConnected"])
-            {
-                NavigationItems.Clear();
-                return;
-            }
-
             NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()

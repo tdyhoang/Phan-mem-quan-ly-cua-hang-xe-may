@@ -7,39 +7,33 @@ using System.Configuration;
 using Microsoft.Data.SqlClient;
 using System.Windows.Navigation;
 using DataGridExtensions;
-
+using MotoStore.Databases;
+using System.Collections.Generic;
+using MotoStore.Models;
+using System.Linq;
+using System.Windows;
 
 namespace MotoStore.ViewModels
 {
     public partial class EmployeeListViewModel : ObservableObject, INavigationAware
     {
+        public List<NhanVien> TableData;
+
         public void OnNavigatedTo()
         {
-            FillDataGrid();
+            try
+            {
+                MainDatabase con = new MainDatabase();
+                TableData = con.NhanViens.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        public DataView? EmployeeDataView;
-
-        public void FillDataGrid()
-        {
-            string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-            {
-                CmdString = "SELECT * FROM NhanVien";
-                SqlCommand cmd = new SqlCommand(CmdString, con);
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("NhanVien");
-                sda.Fill(dt);
-                EmployeeDataView = dt.DefaultView;
-                con.Close();
-            }
         }
     }
 }

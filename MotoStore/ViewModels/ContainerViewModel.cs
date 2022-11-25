@@ -1,17 +1,31 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MotoStore.Models;
+using MotoStore.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MotoStore.ViewModels
 {
     public partial class ContainerViewModel : ObservableObject
     {
+        public bool Isloaded = false;
+        public ICommand LoadedWindowCommand { get; set; }
+        public ICommand UnitCommand { get; set; }
+        public ICommand SuplierCommand { get; set; }
+        public ICommand CustomerCommand { get; set; }
+        public ICommand ObjectCommand { get; set; }
+        public ICommand UserCommand { get; set; }
+        public ICommand InputCommand { get; set; }
+        public ICommand OutputCommand { get; set; }
         private bool _isInitialized = false;
 
         [ObservableProperty]
@@ -29,10 +43,38 @@ namespace MotoStore.ViewModels
         [ObservableProperty]
         private ObservableCollection<MenuItem> _trayMenuItems = new();
 
-        public ContainerViewModel(INavigationService navigationService)
+        public ContainerViewModel()
         {
+            /*LoadedWindowCommand = new RelayCommand<Window>((p) => {
+                Isloaded = true;
+                if (p == null)
+                    return;
+                p.Hide();
+                LoginViewModel loginViewModel = new LoginViewModel();
+                LoginWindow loginWindow = new LoginWindow(loginViewModel);
+                bool? isOpened = loginWindow.ShowDialog();
+                    MessageBox.Show(isOpened.ToString());
+
+                if (loginWindow.DataContext == null)
+                    return;
+                var loginVM = loginWindow.DataContext as LoginViewModel;
+
+                if (loginVM.IsLogin)
+                {
+                    if (!_isInitialized)
+                        InitializeViewModel();
+                    p.Show();
+                }
+                else
+                {
+                    p.Close();
+                }
+            }
+            );*/
             if (!_isInitialized)
                 InitializeViewModel();
+
+            //MessageBox.Show(DataProvider.Ins.DB.Users.First().DisplayName);
         }
 
         private void InitializeViewModel()

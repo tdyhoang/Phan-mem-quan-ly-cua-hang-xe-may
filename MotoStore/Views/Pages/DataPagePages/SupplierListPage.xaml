@@ -24,7 +24,10 @@
         <ui:DataGrid Name="grdSupplier"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
-                     AutoGenerateColumns="False">
+                     AutoGenerateColumns="False"
+                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                     ItemsSource="{Binding Path=SupplierDataView}">
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Tên nhà sản xuất" Binding="{Binding Path=TenNSX}" />
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=SDT}" />

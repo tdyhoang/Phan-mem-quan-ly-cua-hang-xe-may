@@ -59,6 +59,8 @@ namespace MotoStore
                 services.AddScoped<ViewModels.ContainerViewModel>();
 
                 // Views and ViewModels
+                services.AddScoped<Views.Windows.LoginWindow>();
+                services.AddScoped<ViewModels.LoginViewModel>();
                 services.AddScoped<Views.Pages.DashboardPage>();
                 services.AddScoped<ViewModels.DashboardViewModel>();
                 services.AddScoped<Views.Pages.DataPage>();
