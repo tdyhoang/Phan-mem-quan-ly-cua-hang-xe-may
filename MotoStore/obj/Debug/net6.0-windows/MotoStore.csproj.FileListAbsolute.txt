@@ -393,7 +393,6 @@ C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\D
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\DataGridExtensions.dll
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Demo.exe
-C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\DataGridExtensions.xml
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Demo.pdb
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\bin\Debug\net6.0-windows\Demo.exe.config
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\MotoStore\obj\Debug\net6.0-windows\MotoStore.csproj.AssemblyReference.cache

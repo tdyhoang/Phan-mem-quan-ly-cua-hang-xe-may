@@ -69,7 +69,7 @@ namespace MotoStore.Views.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MotoStore;V1.0.0.0;component/views/usercontrols/controlbarusercontrol.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MotoStore;component/views/usercontrols/controlbarusercontrol.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\UserControls\ControlBarUserControl.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

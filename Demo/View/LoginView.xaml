@@ -90,7 +90,8 @@
                              Height="30"
                              Margin="0,5,0,0"
                              Padding="20,0,0,0"
-                             VerticalContentAlignment="Center">
+                             VerticalContentAlignment="Center"
+                             TabIndex="1">
                         <TextBox.Background>
                             <ImageBrush ImageSource="/Images/user_logo.png"
                                         Stretch="Uniform"
@@ -108,14 +109,14 @@
                                FontWeight="Medium"
                               HorizontalAlignment="Center" Height="40"
                                Margin="0,50,0,0"/>
-                    <PasswordBox x:Name="txtPassword" Height="35" Width="355" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="20" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontFamily="Times New Roman"/>
+                    <PasswordBox x:Name="txtPassword" Height="35" Width="355" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="20" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontFamily="Times New Roman" TabIndex="1"/>
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0"/>
                 </StackPanel>
-                <Button x:Name="buttonQuenMK" Content="Quên Mật Khẩu ?" HorizontalAlignment="Center" Height="30" Margin="0,451,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.557,0.026" FontSize="16" FontFamily="Times New Roman" Click="buttonQuenMK_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                <Button x:Name="buttonLanguage" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="146" Click="buttonLanguage_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                <Button x:Name="buttonDangNhap" Content="Đăng Nhập" HorizontalAlignment="Center" Height="31" Margin="0,401,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" FontFamily="Times New Roman" FontSize="16" Click="buttonDangNhap_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <Button x:Name="buttonDangNhap" Content="Đăng Nhập" HorizontalAlignment="Center" Height="31" Margin="0,401,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" FontFamily="Times New Roman" FontSize="16" Click="buttonDangNhap_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
+                <Button x:Name="buttonQuenMK" Content="Quên Mật Khẩu ?" HorizontalAlignment="Center" Height="30" Margin="0,451,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.557,0.026" FontSize="16" FontFamily="Times New Roman" Click="buttonQuenMK_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
+                <Button x:Name="buttonLanguage" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="146" Click="buttonLanguage_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
                 <Label x:Name="lblNnguHienTai" Content="Ngôn Ngữ Hiện Tại:" HorizontalAlignment="Left" Height="26" Margin="24,0,0,0" VerticalAlignment="Center" Width="132" FontFamily="Times New Roman" FontSize="14"/>
             </Grid>
         </Border>

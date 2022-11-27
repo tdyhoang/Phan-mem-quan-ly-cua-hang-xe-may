@@ -9,15 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Microsoft.Windows.Themes;
-using MotoStore.Helpers;
 using MotoStore.Models;
-using MotoStore.Resources;
-using MotoStore.ViewModels;
 using MotoStore.Views.Pages;
-using MotoStore.Views.Pages.DataPagePages;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Automation;
