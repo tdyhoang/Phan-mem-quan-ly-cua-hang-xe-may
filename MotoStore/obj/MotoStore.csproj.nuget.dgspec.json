@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {}
+    "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
+    "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
+        "projectUniqueName": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
         "projectName": "Demo",
-        "projectPath": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
+        "projectPath": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj",
         "frameworks": {
           "net472": {
             "projectReferences": {}
@@ -19,17 +19,17 @@
         "net472": {}
       }
     },
-    "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {
+    "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
+        "projectUniqueName": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
         "projectName": "MotoStore",
-        "projectPath": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\obj\\",
+        "projectPath": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\MotoStore.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\MotoStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,8 +43,8 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj"
+              "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj": {
+                "projectPath": "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\Demo\\Demo.csproj"
               }
             }
           }
@@ -143,7 +143,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
