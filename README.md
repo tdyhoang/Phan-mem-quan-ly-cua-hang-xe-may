@@ -36,7 +36,7 @@ Vài Điểm Đúc Kết Được Từ Buổi Review Đồ Án Thứ 4 ngày 23/
 - **Views**: `Hoàng`
 - **ViewModels**: `Hoàng`
 - **Database**: `Đạt`
-- **Login**: `Dũng`
+- **Login**: `Dũng`,`Đạt`
 
 ## Building the app
 *Make sure to have finished those steps before building the app*
