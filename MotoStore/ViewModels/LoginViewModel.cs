@@ -15,10 +15,12 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Security.Cryptography;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels
 {
-    public partial class LoginViewModel
+    public partial class LoginViewModel : ObservableObject, INavigationAware
     {
         public bool IsLogin { get; set; }
         private string _UserName;
@@ -31,6 +33,19 @@ namespace MotoStore.ViewModels
         public ICommand PasswordChangedCommand { get; set; }
         // mọi thứ xử lý sẽ nằm trong này
         public LoginViewModel()
+        {
+        }
+
+        public void OnNavigatedTo()
+        {
+            InitializeViewModel();
+        }
+
+        public void OnNavigatedFrom()
+        {
+        }
+
+        private void InitializeViewModel()
         {
             IsLogin = false;
             Password = "";
@@ -54,31 +69,6 @@ namespace MotoStore.ViewModels
              */
 
             string passEncode = MD5Hash(Base64Encode(Password));
-
-            string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-
-            string CmdString = string.Empty;
-
-            using (SqlConnection con = new SqlConnection(ConString))
-            {
-                CmdString = "SELECT UserName, Password FROM Users where UserName='" + UserName + "' and Password='" + Password + "'";
-                SqlCommand cmd = new SqlCommand(CmdString, con);
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Users");
-                sda.Fill(dt);
-                if (dt.Rows.Count > 0)
-                {
-                    IsLogin = true;
-
-                    p.Close();
-                    con.Close();
-                }
-                else
-                {
-                    IsLogin = false;
-                    MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
-                }
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

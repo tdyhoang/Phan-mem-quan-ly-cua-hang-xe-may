@@ -14,6 +14,7 @@ using System.Windows.Markup;
 using System.Windows.Threading;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using MotoStore.Services.Contracts;
 
 using Ninject;
 
@@ -44,6 +45,9 @@ namespace MotoStore
 
                 // Page resolver service
                 services.AddSingleton<IPageService, PageService>();
+
+                // Window resolver service
+                services.AddSingleton<IWindowService, WindowService>();
 
                 // Theme manipulation
                 services.AddSingleton<IThemeService, ThemeService>();

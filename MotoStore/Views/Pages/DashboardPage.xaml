@@ -29,7 +29,9 @@
             <ui:Button
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
-                Content="Đổi tài khoản"
+                Content="Đăng nhập"
+                Command="{Binding ViewModel.OpenWindowCommand}"
+                CommandParameter="open_window_login"
              />
 
             <Grid>
@@ -44,19 +46,6 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.ColumnSpan="2">
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="Nhập tên server" />
-                        <ui:TextBox
-                            Name="txtServerName"
-                            Text="{Binding ViewModel.TxtServerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            HorizontalAlignment="Center"
-                            MinWidth="200">
-                            <ui:TextBox.InputBindings>
-                                <KeyBinding Key="Return" Command="{Binding ViewModel.ConnectToServerCommand}" />
-                            </ui:TextBox.InputBindings>
-                        </ui:TextBox>
-                        <ui:Button Content="Kết nối" HorizontalAlignment="Center" Command="{Binding ViewModel.ConnectToServerCommand}" />
-                    </StackPanel>
                 </Grid>
                 <!--
                 <lvc:CartesianChart

@@ -12,21 +12,24 @@ using System.Threading.Tasks;
 using MotoStore.Properties;
 using Wpf.Ui.Mvvm.Contracts;
 using System.Windows.Input;
+using MotoStore.Services.Contracts;
 
 namespace MotoStore.ViewModels
 {
     public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
         private readonly INavigationService _navigationService;
+        private readonly IWindowService _windowService;
 
-        public DashboardViewModel(INavigationService navigationService)
+        private ICommand _openWindowCommand;
+
+        public ICommand OpenWindowCommand => _openWindowCommand ??= new RelayCommand<string>(OnOpenWindow);
+
+        public DashboardViewModel(INavigationService navigationService, IWindowService windowService)
         {
             _navigationService = navigationService;
+            _windowService = windowService;
         }
-
-        [ObservableProperty]
-        private int _counter = 0;
-        private string _txtServerName;
 
         public void OnNavigatedTo()
         {
@@ -36,43 +39,13 @@ namespace MotoStore.ViewModels
         {
         }
 
-        public string TxtServerName
+        private void OnOpenWindow(string parameter)
         {
-            get => _txtServerName;
-            set => SetProperty(ref _txtServerName, value);
-        }
-
-        [RelayCommand]
-        private void ConnectToServer()
-        {
-            string OldServerName = ConfigurationManager.ConnectionStrings["ServerName"].ConnectionString;
-            string NewServerName = TxtServerName;
-            string OldConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-            string NewConString = OldConString.Replace("Data Source=" + OldServerName, "Data Source=" + NewServerName);
-
-            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            cfa.ConnectionStrings.ConnectionStrings["ServerName"].ConnectionString = NewServerName;
-            cfa.ConnectionStrings.ConnectionStrings["ConString"].ConnectionString = NewConString;
-            cfa.Save();
-            ConfigurationManager.RefreshSection("connectionStrings");
-
-            var csb = new SqlConnectionStringBuilder(NewConString);
-            csb.ConnectTimeout = 5;
-
-            try
+            switch (parameter)
             {
-                using(var con = new SqlConnection(NewConString))
-                {
-                    con.Open();
-                    con.Close();
-                }
-                System.Windows.MessageBox.Show("Kết nối thành công!");
-                App.Current.Properties["IsConnected"] = true;
-            }
-            catch
-            {
-                System.Windows.MessageBox.Show("Sai tên server CSDL, vui lòng nhập lại!");
-                App.Current.Properties["IsConnected"] = false;
+                case "open_login_window":
+                    _windowService.Show<Views.Windows.LoginWindow>();
+                    return;
             }
         }
 
