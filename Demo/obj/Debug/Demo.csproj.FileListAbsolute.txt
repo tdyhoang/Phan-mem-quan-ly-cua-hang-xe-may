@@ -52,7 +52,9 @@ C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\Demo.csproj.CoreCompileInputs.cache
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\Demo.exe
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\Demo.pdb
-C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\QuenMatKhau.g.cs
-C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\QuenMatKhau.baml
-C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\GuiMa.g.cs
-C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\GuiMa.baml
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageQuenMatKhau.g.cs
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageQuenMatKhau.baml
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageChinh.g.cs
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageChinh.baml
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageGuiMa.g.cs
+C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\obj\Debug\PageGuiMa.baml

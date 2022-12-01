@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\Demo\App.xaml
-4828637909
+51838318246
 
-9-258590837
+9-1482850264
 13-1310406943
-GuiMa.xaml;MainWindow.xaml;QuenMatKhau.xaml;View\LoginView.xaml;
+MainWindow.xaml;PageChinh.xaml;PageGuiMa.xaml;PageQuenMatKhau.xaml;View\LoginView.xaml;
 
-True
+False
 
