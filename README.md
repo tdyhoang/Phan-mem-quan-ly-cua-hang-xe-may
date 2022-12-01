@@ -31,6 +31,7 @@
 ## Ý tưởng thiết kế
 - **Dashboard**
 	+ Các chức năng cho *account*: đăng nhập, đổi mật khẩu, đăng xuất
+	+ Tính năng đặt lịch, quản lý giờ giấc(Khi đến ngày đó sẽ có thông báo nhắc nhở)
 - **Data**
 	+ Sử dụng bảng, có các chức năng filter, sắp xếp, thêm xóa sửa
 
