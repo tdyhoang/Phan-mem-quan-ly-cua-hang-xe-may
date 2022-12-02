@@ -15,15 +15,40 @@
                 <ImageBrush ImageSource="/Images/motor_logo.png"></ImageBrush>
             </Border.Background>
             <Border CornerRadius="50"
-           Background="#888888"
-           BorderBrush="White"
+           Background="White"
+           BorderBrush="#9900CC"
            BorderThickness="5"
-            Opacity="0.90">
+            Opacity="0.83">
                 <Grid>
-                    <Label x:Name="lblThongBao" Content="Chúng tôi đã gửi mã 6 số về địa chỉ Email bạn cung cấp, xin hãy điền nó xuống dưới:" Height="35" Width="650" FontSize="18" FontWeight="Medium" FontFamily="Times New Roman"></Label>
-                    <TextBox x:Name="txtMa" Height="30" Width="150" Margin="0,100,0,0"></TextBox>
-                    <Button x:Name="buttonXacNhanGuiMa" Content="Xác Nhận" Height="30" Width="100" FontSize="19" FontFamily="Times New Roman" Margin="0,200,0,0" Click="buttonXacNhanGuiMa_Click"></Button>
-                    <Label x:Name="lbl" Height="30" Width="600" FontSize="20" FontWeight="Medium" Foreground="Red" FontFamily="Times New Roman" Margin="0,300,0,0" ></Label>
+                    <Label x:Name="lblThongBao" 
+                           Content="Chúng tôi đã gửi mã 6 số về địa chỉ Email bạn cung cấp, xin hãy điền nó xuống dưới:" 
+                           Height="35" Width="670" FontSize="17" FontWeight="Medium" 
+                           FontFamily="Great Vibes"></Label>
+                    <TextBox x:Name="txtMa" Height="30" Width="150" Margin="320,255,320,155"></TextBox>
+                    <Button x:Name="buttonXacNhanGuiMa" 
+                            Content="Xác Nhận" 
+                            FontWeight="Medium" 
+                            FontFamily="Great Vibes" 
+                            FontSize="22" 
+                            Height="35" 
+                            Width="105" 
+                            Margin="342,301,342,104" 
+                            Click="buttonXacNhanGuiMa_Click" 
+                            Background="#FF00BEFF">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="19"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Label x:Name="lbl" 
+                           Height="35" 
+                           Width="600" 
+                           FontSize="20" 
+                           FontWeight="Medium" 
+                           Foreground="Red" 
+                           FontFamily="Great Vibes"
+                           Margin="0,300,0,0" ></Label>
                 </Grid>
             </Border>
         </Border>

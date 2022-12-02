@@ -8,17 +8,18 @@
       d:DesignHeight="550" d:DesignWidth="800">
 
     <Grid>
-        <Border CornerRadius="50">
+        <Border CornerRadius="60">
             <Border.Background>
-                <ImageBrush ImageSource="/Images/motor_logo.png">
-
+                <ImageBrush 
+                    ImageSource="/Images/motor_logo.png">
                 </ImageBrush>
             </Border.Background>
-            <Border CornerRadius="50"
-           Background="#888888"
+            <Border CornerRadius="60"
            BorderBrush="White"
            BorderThickness="5"
-            Opacity="0.90">
+           Opacity="0.82" 
+           Background="White">
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
@@ -35,19 +36,33 @@
                         </Grid.ColumnDefinitions>
                     </Grid>
                     <StackPanel Width="350"
+                                Height="500"
                             Grid.Row="2"
                             Orientation="Vertical"
-                            Margin="0,10,0,0">
-                        <TextBlock x:Name="txtQLYCHXM" Text="QUẢN LÝ CỬA HÀNG XE MÁY"
-                               
-                               FontSize="24"
-                               Foreground="Black" Width="504"
-                               FontFamily="Times New Roman"
-                               FontWeight="Medium"
-                              Height="40"
-                               Margin="0,0,0,0" RenderTransformOrigin="0.463,0.48"/>
-                        <TextBlock x:Name="txtTenTK" Text="Tên Tài Khoản:"
-                               
+                            Margin="300,0,0,0">
+                        <TextBlock x:Name="txtQLYCHXM" 
+                                   Text=" QUẢN LÝ CỬA HÀNG XE MÁY"                               
+                               FontSize="23.25"
+                               Foreground="#9900CC" 
+                               Width="450"
+                               FontFamily="Great Vibes"
+                               FontWeight="Heavy"
+                               Height="40"
+                               RenderTransformOrigin="0.463,0.48"
+                                   Margin="0,0,0,0">
+                            <TextBlock.Background>
+                                <ImageBrush/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock x:Name="txtSlogan" 
+                                   Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý"
+                                   FontSize="13.15"
+                                   FontFamily="Great Vibes"
+                                   Foreground="#9900CC"
+                                   FontWeight="Bold"
+                                ></TextBlock>
+                        <TextBlock x:Name="txtTenTK" 
+                                   Text="Tên Tài Khoản:"                              
                                FontSize="20"
                                Foreground="Black" Width="350"
                                FontFamily="Montserrat"
@@ -58,9 +73,9 @@
                              FontSize="20"
                              FontWeight="Medium"
                              FontFamily="Times New Roman" 
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
+                             Foreground="Black"
+                             CaretBrush="Red"
+                             BorderBrush="#9900CC"
                              BorderThickness="0,0,0,10"
                              Height="30"
                              Margin="0,5,0,0"
@@ -89,34 +104,43 @@
                                      TabIndex="1"
                                      Padding="20,0,0,0"
                              VerticalContentAlignment="Center"
-                                     Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,10">
+                                     Foreground="Black"
+                             CaretBrush="Red"
+                             BorderBrush="#9900CC"
+                             BorderThickness="0,0,0,10"
+                                     PasswordChar="*">
                             <PasswordBox.Background>
                                 <ImageBrush ImageSource="/lock.png" 
                                             Stretch="Uniform" 
                                             AlignmentX="Left"/>
                             </PasswordBox.Background>
                         </PasswordBox>
+
+                        <Label x:Name="lblThongBao" Height="30" Width="300" FontSize="15" FontFamily="Great Vibes"
+                               Foreground="Red" 
+                               FontWeight="Medium" 
+                               Margin="-50,5,0,0"></Label>
+
                         <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center"
                                 Margin="0,15,0,0"
                                     />
-                        <Label x:Name="lblThongBao" Foreground="Red" Height="28" Width="300" FontSize="15" FontWeight="Heavy" FontFamily="Times New Roman" Margin="0,0,80,0"/>
                     </StackPanel>
+
                     <Button x:Name="buttonDangNhap" 
                             Content="Đăng Nhập" 
                             HorizontalAlignment="Center" 
                             Height="31" 
-                            Margin="0,401,0,0" 
+                            Margin="300,401,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="126" 
-                            FontFamily="Times New Roman" 
+                            FontFamily="Great Vibes"
+                            FontWeight="Medium"
                             FontSize="19" 
                             Click="buttonDangNhap_Click" 
-                            Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" 
+                            Background="#FF00D1FF"
+                            Foreground="Black"
                             TabIndex="1">
                         <Button.Resources>
                             <Style TargetType="Border">
@@ -128,25 +152,65 @@
                             Content="Quên Mật Khẩu ?" 
                             HorizontalAlignment="Center" 
                             Height="30" 
-                            Margin="0,451,0,0" 
+                            Margin="300,440,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="126" 
                             RenderTransformOrigin="0.557,0.026" 
-                            FontSize="16" 
-                            FontFamily="Times New Roman" 
+                            FontSize="15" 
+                            FontFamily="Great Vibes"                           
                             Click="buttonQuenMK_Click" 
-                            FontWeight="Medium"
-                            Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" 
-                            TabIndex="1">
+                            FontWeight="Medium" 
+                            TabIndex="1"
+                            >
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="20"/>
                             </Style>
                         </Button.Resources>
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF00C8FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
                     </Button>
-                    <Button x:Name="buttonLanguage" FontSize="19" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="146" Click="buttonLanguage_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
-                    <Label x:Name="lblNnguHienTai" Content="Ngôn Ngữ Hiện Tại:" HorizontalAlignment="Left" Height="26" Margin="24,0,0,0" VerticalAlignment="Center" Width="132" FontFamily="Times New Roman" FontSize="14"/>
+
+                    <Button x:Name="buttonLanguage" 
+                            FontSize="19" 
+                            FontWeight="Medium" 
+                            Content="Tiếng Việt" 
+                            HorizontalAlignment="Left" 
+                            Height="34" 
+                            Margin="17,3,0,0" 
+                            Grid.Row="1" 
+                            VerticalAlignment="Top" 
+                            Width="146" 
+                            Click="buttonLanguage_Click" 
+                            TabIndex="1" 
+                            Foreground="red" 
+                            Background="#FF00D1FF"
+                            FontFamily="Great Vibes"/>
+                    <Label x:Name="lblNnguHienTai" 
+                           Content="Ngôn Ngữ Hiện Tại:" 
+                           HorizontalAlignment="Left" 
+                           Height="30" Margin="24,0,0,0" 
+                           VerticalAlignment="Center" 
+                           Width="150"
+                           FontFamily="Great Vibes"
+                           FontWeight="Medium"
+                           FontSize="15"
+                           Foreground="#9900CC">
+                        <Label.Background>
+                            <ImageBrush/>
+                        </Label.Background>
+                    </Label>
+                    
+                    <Image Source="Images/logo2.png" 
+                           Margin="-45,144,578,82" 
+                           Grid.Row="1"
+                           Opacity="1"
+                           />
+
                 </Grid>
             </Border>
         </Border>

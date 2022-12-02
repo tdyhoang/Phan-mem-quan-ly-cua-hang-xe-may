@@ -128,7 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\motor_logo.png" />
-    <Resource Include="Images\User_logo.png" />
+    <Resource Include="Images\User_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IconLogo.png" />
@@ -138,6 +140,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

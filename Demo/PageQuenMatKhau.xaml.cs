@@ -24,16 +24,18 @@ namespace Demo
     /// </summary>
     public partial class PageQuenMatKhau : Page
     {
-        private PageChinh pgC; 
-        public PageQuenMatKhau()
+        static private PageChinh pgC; //Tạo biến kiểu PageChinh để có thể sử dụng trong class này
+        public PageQuenMatKhau(PageChinh pageChinh)
         {
             InitializeComponent();
-            pgC = new PageChinh();
+            pgC = pageChinh; //Gán biến pgC chính là tham số pageChinh được cõng theo
+            //Hàm Khởi Tạo của trang QuenMatKhau có cõng theo tham số là pageChinh thuộc kiểu PageChinh
         }
-        static public long ma;  //Đặt biến tĩnh để các Page sau có thể truy cập*/
-        static public PageGuiMa pgGM = new PageGuiMa();
+        static public long ma;  //Đặt biến tĩnh để các PageGuiMa có thể truy cập*/
+        public PageGuiMa pgGM = new PageGuiMa(pgC);
         static public string strEmail;
         static public string ngonngu = "Tiếng Việt";
+        private int flag = 0;
 
         private void buttonLanguageQMK_Click(object sender, RoutedEventArgs e)
         {
@@ -48,8 +50,20 @@ namespace Demo
                     lblXacNhandoiPass.Content = "Retype New Password:";
                     buttonXacNhan.Content = "Confirm";
                     buttonQuayLai.Content = "Back";
+                    if (flag == 1)
+                        lblThongBao.Content = "Please fill all of your fields fully!";
                     pgGM.lblThongBao.Content = "We had sent a code with 6 numbers to your Email, please fill it below:";
                     pgGM.buttonXacNhanGuiMa.Content = "Verify";
+                    pgC.lblNnguHienTai.Content = "Current Language:";
+                    pgC.buttonLanguage.Content = "English";
+                    pgC.txtTenTK.Text = "Username:";
+                    pgC.txtMatKhau.Text = "Password:";
+                    pgC.buttonDangNhap.Content = "Login";
+                    pgC.buttonQuenMK.FontSize = 14;
+                    pgC.buttonQuenMK.Content = "Forgot Password ?";
+                    pgC.txtQLYCHXM.FontSize = 22;
+                    pgC.txtQLYCHXM.Text = "MOTORCYCLE SHOP MANAGER";
+                    pgC.txtSlogan.Text = "We bring the best solution for manager";
                     break;
                 case "English":
                     lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
@@ -60,8 +74,18 @@ namespace Demo
                     lblXacNhandoiPass.Content = "Xác Nhận Mật Khẩu:";
                     buttonXacNhan.Content = "Xác Nhận";
                     buttonQuayLai.Content = "Quay Lại";
+                    if (flag == 1)
+                        lblThongBao.Content = "Vui lòng điền đầy đủ thông tin của bạn!";
                     pgGM.lblThongBao.Content = "Chúng tôi đã gửi mã 6 số về địa chỉ Email bạn cung cấp, xin hãy điền nó xuống dưới:";
                     pgGM.buttonXacNhanGuiMa.Content = "Xác Nhận";
+                    pgC.buttonLanguage.Content = "Tiếng Việt";
+                    pgC.txtTenTK.Text = "Tên Tài Khoản:";
+                    pgC.txtMatKhau.Text = "Mật Khẩu:";
+                    pgC.buttonDangNhap.Content = "Đăng Nhập";
+                    pgC.buttonQuenMK.Content = "Quên Mật Khẩu ?";
+                    pgC.txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
+                    pgC.txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý";
+                    pgC.lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
                     break;
             }
             ngonngu = buttonLanguage.Content.ToString();
@@ -69,35 +93,40 @@ namespace Demo
 
         private void buttonXacNhan_Click(object sender, RoutedEventArgs e)
         {
+            flag = 1;  //Báo hiệu nút Xác Nhận đã được click
             if (string.IsNullOrEmpty(txtEmail.Text) == true || string.IsNullOrEmpty(txtDoiPass.Password)==true||string.IsNullOrEmpty(txtXacNhanDoiPass.Password)==true)
             {
                 if (buttonLanguage.Content == "English")
-                {
                     lblThongBao.Content = "Please Fill All Fields Fully!";
-                }
                 else
-                {
                     lblThongBao.Content = "Vui Lòng Điền Đầy Đủ Thông Tin!";
-                }
             }
             else if(txtDoiPass.Password!=txtXacNhanDoiPass.Password)
             {
                 if (buttonLanguage.Content == "English")
-                {
                     lblThongBao.Content = "Password Retype Didn't Match New Password, Check Again!";
-                }
                 else
-                {
-                    lblThongBao.Content = "Mật Khẩu Xác Nhận Không Khớp Với Mật Khẩu Mới, Hãy Kiểm Tra Lại!";
-                }
+                    lblThongBao.Content = "Mật Khẩu Xác Nhận Không Khớp Với Mật Khẩu Mới, Kiểm Tra Lại!";
                 txtXacNhanDoiPass.Clear();
                 txtXacNhanDoiPass.Focus();
             }
             else
             {
                 GuiMail();
-                var Mainframe = Application.Current.MainWindow;
-                Mainframe.Content = pgGM;
+                var pageGuiMa = new PageGuiMa(pgC);
+                switch(buttonLanguage.Content)
+                {
+                    case "English":
+                        pageGuiMa.lblThongBao.Content = "We had sent a code with 6 numbers to your Email, fill it below:";
+                        pageGuiMa.buttonXacNhanGuiMa.Content = "Verify";
+                        break;
+                    case "Tiếng Việt":
+                        pageGuiMa.lblThongBao.Content = "Chúng tôi đã gửi mã 6 số về Email của bạn, điền nó xuống dưới:";
+                        pageGuiMa.buttonXacNhanGuiMa.Content = "Xác Nhận";
+                        break;
+                }
+                NavigationService.Navigate(pageGuiMa);
+                //Nếu thoả mãn hết các điều kiện kiểm tra thì chuyển hướng tiếp sang Trang GuiMa
             }
         }
 
@@ -126,51 +155,16 @@ namespace Demo
                 EnableSsl = true,
             };
             smtpClient1.Send(mess);
+
             /* Hàm này để ứng dụng gửi mã 6 số ngẫu nhiên
               về Email người Quản Lý để xác nhận thay đổi mật khẩu */
         }
 
         private void buttonQuayLai_Click(object sender, RoutedEventArgs e)
-        {
-            /* var q = NavigationCommands.BrowseBack;
-             NavigationService.Navigate(q); */
-            /*if (this.NavigationService.CanGoBack)
-            {
-                this.NavigationService.GoBack();
-            }
-            else
-            {
-                MessageBox.Show("No entries in back navigation history.");
-            }*/
-            //var Mainframe = Application.Current.MainWindow;
-            //this.NavigationService.Navigate(new Uri("PageChinh.xaml", UriKind.Relative));
+        { 
+            this.NavigationService.Navigate(pgC);
 
-
-
-            //LoginView.nav = this.NavigationService;
-
-            //this.NavigationService.Navigate(pgC);
-            NavigationService.GoBack();
-
-           /* LoginView.nav = this.NavigationService;
-            LoginView.nav.Navigate(new PageChinh()); */
-
-            //NavigationService.Navigate(new PageChinh());
-
-            /*NavigationService nav = NavigationService.GetNavigationService(this);
-            nav.Navigate(new Uri("PageChinh.xaml", UriKind.RelativeOrAbsolute));*/
-
-
-
-            //LoginView.Navigator.GoBack();
-            //NavigationService.Navigate(Uri);
-
-            /*var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.ChangeView(new Page1());*/
-            /*MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow.Visibility = Visibility.Visible;
-            Window win = (Window)this.Parent;
-            win.Close();*/
+            //Hàm này để Quay lại Trang Chính(pgC)
         }
     }
 }

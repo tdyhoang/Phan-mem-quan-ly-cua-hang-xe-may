@@ -8,42 +8,96 @@
       d:DesignHeight="550" d:DesignWidth="800">
 
     <Grid>
-        <Border CornerRadius="50">
+        <Border CornerRadius="60">
             <Border.Background>
                 <ImageBrush ImageSource="/Images/motor_logo.png"></ImageBrush>
             </Border.Background>
-            <Border CornerRadius="50"
-           Background="#888888"
-           BorderBrush="White"
+            <Border CornerRadius="60"
+           Background="White"
+          BorderBrush="White"
            BorderThickness="5"
-            Opacity="0.90">
+            Opacity="0.83">
                 <Grid>
-                    <Label x:Name="lblEmail" Content="Nhập Địa Chỉ Email:" Width="183" FontSize="20" FontFamily="Times New Roman" Margin="52,124,555,386"/>
-                    <TextBox x:Name="txtEmail" Height="31" Width="315" FontSize="16" Margin="280,124,195,385" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                    <Label x:Name="lbldoiPass" Content="Nhập Mật Khẩu Mới:" Width="183" FontSize="20" FontFamily="Times New Roman" Margin="50,205,556,293"/>
-                    <PasswordBox x:Name="txtDoiPass" Height="31" Width="315" FontSize="16" Margin="280,205,195,304" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"></PasswordBox>
-                    <Label x:Name="lblXacNhandoiPass" Content="Xác Nhận Mật Khẩu:" Width="180" FontSize="20" FontFamily="Times New Roman" Margin="52,293,558,207"/>
-                    <PasswordBox x:Name="txtXacNhanDoiPass" Height="31" Width="315" FontSize="16" Margin="280,293,195,216" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"></PasswordBox>
+                    <Label x:Name="lblEmail" Content="Nhập Địa Chỉ Email:" Width="183" FontSize="20" FontFamily="Great Vibes" Margin="52,124,555,386"/>
+                    <TextBox x:Name="txtEmail" 
+                             Height="31" 
+                             Width="315" 
+                             FontSize="16" 
+                             Margin="280,124,195,385" 
+                             Foreground="Black"
+                             CaretBrush="Red"
+                             BorderBrush="#9900CC"
+                             BorderThickness="0,0,0,5"/>
+                    <Label x:Name="lbldoiPass" Content="Nhập Mật Khẩu Mới:" FontSize="20" FontFamily="Great Vibes" Margin="50,205,541,293"/>
+                    <PasswordBox x:Name="txtDoiPass" 
+                                 Height="31" 
+                                 Width="315" 
+                                 FontSize="16" 
+                                 Margin="280,205,195,304" 
+                                 Foreground="Black"
+                             CaretBrush="Red"
+                             BorderBrush="#9900CC"
+                             BorderThickness="0,0,0,5"></PasswordBox>
+                    <Label x:Name="lblXacNhandoiPass" Content="Xác Nhận Mật Khẩu:" FontSize="20" FontFamily="Great Vibes" Margin="52,293,541,207"/>
+                    <PasswordBox x:Name="txtXacNhanDoiPass" 
+                                 Height="31" 
+                                 Width="315" 
+                                 FontSize="16" 
+                                 Margin="280,293,195,216" 
+                                 Foreground="Black"
+                             CaretBrush="Red"
+                             BorderBrush="#9900CC"
+                             BorderThickness="0,0,0,5"></PasswordBox>
                     <Button x:Name="buttonXacNhan" 
                             Content="Xác Nhận" 
                             FontWeight="Medium" 
-                            FontFamily="Times New Roman" 
+                            FontFamily="Great Vibes" 
                             FontSize="22" 
                             Height="35" 
                             Width="105" 
-                            Margin="355,370,327,133" 
+                            Margin="280,372,405,134" 
                             Click="buttonXacNhan_Click" 
-                            Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
+                            Background="#FF00BEFF">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="19"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button x:Name="buttonLanguage" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="30,43,0,0" FontFamily="Times New Roman" FontSize="20" VerticalAlignment="Top" Width="146" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Click="buttonLanguageQMK_Click" TabIndex="1"/>
-                    <Label x:Name="lblNnguHienTai" Content="Ngôn Ngữ Hiện Tại:" HorizontalAlignment="Left" Height="28" Margin="30,10,0,0" VerticalAlignment="Top" Width="146" FontFamily="Times New Roman" FontSize="16"/>
-                    <Button x:Name="buttonQuayLai" Width="120" Content="Quay Lại" FontFamily="Times New Roman" FontSize="24" Margin="625,43,45,463" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Click="buttonQuayLai_Click"/>
-                    <Label x:Name="lblThongBao" Height="35" Width="550" Margin="70,350,0,0" FontFamily="Times New Roman" FontSize="15" Foreground="Red"></Label>
+                    <Button x:Name="buttonLanguage" Foreground="red" 
+                            Background="#FF00D1FF" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,33,0,0" FontFamily="Great Vibes"
+                            FontWeight="Medium"
+                            FontSize="19" VerticalAlignment="Top" Width="146" Click="buttonLanguageQMK_Click" TabIndex="1"/>
+                    <Label x:Name="lblNnguHienTai" 
+                           Content="Ngôn Ngữ Hiện Tại:" 
+                           HorizontalAlignment="Left" 
+                           Height="30" 
+                           Margin="24,0,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="150" 
+                           FontFamily="Great Vibes"
+                           FontWeight="Medium"
+                           FontSize="15"
+                           Foreground="#9900CC"/>
+                    <Button x:Name="buttonQuayLai"
+                            Height="35"
+                            Width="105" 
+                            Content="Quay Lại" 
+                            FontFamily="Great Vibes" 
+                            FontWeight="Medium"
+                            FontSize="22" 
+                            Margin="475,372,195,134" 
+                            Background="#FF00D1FF" 
+                            Click="buttonQuayLai_Click"
+                            >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="19"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Label x:Name="lblThongBao" Height="35" Width="490" Margin="280,332,45,172" FontFamily="Great Vibes" FontWeight="Medium" FontSize="15" Foreground="Red"/>
                 </Grid>
             </Border>
         </Border>

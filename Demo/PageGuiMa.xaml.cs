@@ -23,9 +23,12 @@ namespace Demo
     /// </summary>
     public partial class PageGuiMa : Page
     {
-        public PageGuiMa()
+        private PageChinh pgC;
+        public PageGuiMa(PageChinh pageChinh)
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            pgC = pageChinh;
+            /*Giống như PageQuenMatKhau, dùng hàm khởi tạo cõng theo PageChinh để có thể Back về PageChinh*/
         }
 
         private void buttonXacNhanGuiMa_Click(object sender, RoutedEventArgs e)
@@ -35,7 +38,7 @@ namespace Demo
                 switch (PageQuenMatKhau.ngonngu)
                 {
                     case "Tiếng Việt":
-                        lbl.Content = "Vui Lòng Nhập Mã";
+                        lbl.Content = "Vui Lòng Nhập Mã!";
                         break;
                     case "English":
                         lbl.Content = "Please Fill The Code!";
@@ -44,14 +47,21 @@ namespace Demo
             }
             else if (PageQuenMatKhau.ma==long.Parse(txtMa.Text))
             {
-                if (PageQuenMatKhau.ngonngu != "English")
-                    lbl.Content = "Cập Nhật Mật Khẩu Mới Thành Công, Vui Lòng Đăng Nhập Lại!";
-                else
-                    lbl.Content = "Update New Password Successfully, Please Login Again!";
-                Thread.Sleep(3000);
-                var MainFr = Application.Current.MainWindow;
-                MainFr.Content = NavigationService.Navigate(new PageChinh());
-            }
+                this.NavigationService.Navigate(pgC);
+                switch(PageQuenMatKhau.ngonngu)
+                {
+                    case "English":
+                        pgC.lblThongBao.Content = "Change Password Successful";
+                    break;
+                    case "Tiếng Việt":
+                        pgC.lblThongBao.Content = "Đổi Mật Khẩu Thành Công";
+                        break;
+                }
+
+                /*Cập nhật mật khẩu mới lên DataBase
+                ==>*/
+
+        }
             else
             {
                 switch(PageQuenMatKhau.ngonngu)
