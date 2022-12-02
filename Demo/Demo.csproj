@@ -55,19 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\GuiMa.xaml.cs">
-      <DependentUpon>GuiMa.xaml</DependentUpon>
+    <Compile Include="PageChinh.xaml.cs">
+      <DependentUpon>PageChinh.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\QuenMatKhau.xaml.cs">
-      <DependentUpon>QuenMatKhau.xaml</DependentUpon>
+    <Compile Include="PageGuiMa.xaml.cs">
+      <DependentUpon>PageGuiMa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageQuenMatKhau.xaml.cs">
+      <DependentUpon>PageQuenMatKhau.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\GuiMa.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,7 +79,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\QuenMatKhau.xaml">
+    <Page Include="PageChinh.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageGuiMa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageQuenMatKhau.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,7 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\motor_logo.png" />
-    <Resource Include="Images\User_logo.png" />
+    <Resource Include="Images\User_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\IconLogo.png" />
@@ -130,7 +139,16 @@
     <Resource Include="Images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\lock.png" />
+    <Resource Include="lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

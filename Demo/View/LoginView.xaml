@@ -8,118 +8,50 @@
         Title="LoginView" Height="550" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        
-        MouseDown="Window_MouseDown">
-    <Border CornerRadius="50">
-        <Border.Background>
-            <ImageBrush ImageSource="/Images/motor_logo.png">
-
-            </ImageBrush>
-        </Border.Background>
-        <Border CornerRadius="50"
-           Background="#888888"
-           BorderBrush="White"
-           BorderThickness="5"
-            Opacity="0.90">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-
-
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="btnMinimize"
+        WindowStartupLocation="CenterScreen"  
+        MouseDown="Window_MouseDown"
+        Background="#9900CC">
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/PageChinh.xaml"/>
+        <Button x:Name="btnMinimize"
                             BorderThickness="0"
+                            Height="25"
+                            Width="40"
                             Content="-"
                             FontSize="30"
+                            FontWeight="Bold"
                             Background="Blue"
                             Foreground="Black"
                             FontFamily="Montserrat"
                             Cursor="Hand"    
                             Grid.Column="1" 
-                            Click="btnMinimize_Click" >
-                    </Button>
-                    <Button x:Name="btnClose"
+                            Click="btnMinimize_Click"
+                            Margin="600,0,-15,500">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="btnClose"
                             BorderThickness="0"
+                            Height="25"
+                            Width="40"
                             Content="X"
                             Background="Red"
-                            FontSize="20"
+                            FontSize="15"
+                            FontWeight="Bold"
                             Foreground="Black"
                             FontFamily="Montserrat"
                             Cursor="Hand"    
                             Grid.Column="2"    
-                            Click="btnClose_Click" >
-                    </Button>
-                </Grid>
-                <StackPanel Width="350"
-                            Grid.Row="2"
-                            Orientation="Vertical"
-                            Margin="0,10,0,0">
-                    <TextBlock x:Name="txtQLYCHXM" Text="QUẢN LÝ CỬA HÀNG XE MÁY"
-                               
-                               FontSize="24"
-                               Foreground="Black" Width="504"
-                               FontFamily="Times New Roman"
-                               FontWeight="Medium"
-                              Height="40"
-                               Margin="0,0,0,0" RenderTransformOrigin="0.463,0.48"/>
-                    <TextBlock x:Name="txtTenTK" Text="Tên Tài Khoản:"
-                               
-                               FontSize="20"
-                               Foreground="Black" Width="350"
-                               FontFamily="Montserrat"
-                               FontWeight="Medium"
-                              HorizontalAlignment="Center" Height="40"
-                               Margin="0,105,0,0"/>
-                    <TextBox x:Name="txtUser"
-                             FontSize="20"
-                             FontWeight="Medium"
-                             FontFamily="Times New Roman" 
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,10"
-                             Height="30"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0"
-                             VerticalContentAlignment="Center"
-                             TabIndex="1">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user_logo.png"
-                                        Stretch="Uniform"
-                                       AlignmentX="Left" />
-                        </TextBox.Background>
-
-
-
-                    </TextBox>
-                    <TextBlock x:Name="txtMatKhau" Text="Mật Khẩu:"
-                               
-                               FontSize="20"
-                               Foreground="Black" Width="350"
-                               FontFamily="Montserrat"
-                               FontWeight="Medium"
-                              HorizontalAlignment="Center" Height="40"
-                               Margin="0,50,0,0"/>
-                    <PasswordBox x:Name="txtPassword" Height="35" Width="355" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="20" Foreground="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" FontFamily="Times New Roman" TabIndex="1"/>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0,15,0,0"/>
-                </StackPanel>
-                <Button x:Name="buttonDangNhap" Content="Đăng Nhập" HorizontalAlignment="Center" Height="31" Margin="0,401,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" FontFamily="Times New Roman" FontSize="16" Click="buttonDangNhap_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
-                <Button x:Name="buttonQuenMK" Content="Quên Mật Khẩu ?" HorizontalAlignment="Center" Height="30" Margin="0,451,0,0" Grid.Row="1" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.557,0.026" FontSize="16" FontFamily="Times New Roman" Click="buttonQuenMK_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
-                <Button x:Name="buttonLanguage" Content="Tiếng Việt" HorizontalAlignment="Left" Height="34" Margin="17,3,0,0" Grid.Row="1" VerticalAlignment="Top" Width="146" Click="buttonLanguage_Click" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" TabIndex="1"/>
-                <Label x:Name="lblNnguHienTai" Content="Ngôn Ngữ Hiện Tại:" HorizontalAlignment="Left" Height="26" Margin="24,0,0,0" VerticalAlignment="Center" Width="132" FontFamily="Times New Roman" FontSize="14"/>
-            </Grid>
-        </Border>
-    </Border>
-
+                            Click="btnClose_Click"
+                            Margin="700,0,0,500">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
 </Window>
