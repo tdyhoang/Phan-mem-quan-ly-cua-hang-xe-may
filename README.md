@@ -32,9 +32,15 @@
 - **Dashboard**
 	+ Các chức năng cho *account*: đăng nhập, đổi mật khẩu, đăng xuất
 	+ Tính năng đặt lịch, quản lý giờ giấc(Khi đến ngày đó sẽ có thông báo nhắc nhở)
+	+ Tính năng hướng dẫn người dùng sử dụng phần mềm
+	+ Biểu đồ quản lý doanh thu theo(ngày, tháng, năm)
+	+ Biểu đồ quản lý nhân viên năng suất(có thể cần) 
+	+ 
 - **Data**
 	+ Sử dụng bảng, có các chức năng filter, sắp xếp, thêm xóa sửa
-
+        + Tìm kiếm có nhiều loại(tìm theo tên sp, tìm theo dạng sản phẩm(xe tay ga, xe số, xe điện, xe mô tô) tìm theo giá,...
+	+ 
+	
 ## Phân công
 - **Dashboard**:
 	+ **Login**: Dũng, Đạt
