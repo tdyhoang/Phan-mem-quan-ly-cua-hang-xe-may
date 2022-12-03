@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MotoStore.Models;
+namespace MotoStore.Databases;
 
-public partial class ThongTinBaoHanh
+public partial class DonDatHang
 {
-    public string MaBh { get; set; } = null!;
+    public string MaDonDh { get; set; } = null!;
+
+    public int? SoDonDh { get; set; }
 
     public string? MaMh { get; set; }
+
+    public int? SoLuongHang { get; set; }
 
     public string? MaKh { get; set; }
 
     public string? MaNv { get; set; }
 
-    public DateTime? ThoiGian { get; set; }
-
-    public string? GhiChu { get; set; }
+    public DateTime? Ngdh { get; set; }
 
     public virtual KhachHang? MaKhNavigation { get; set; }
 

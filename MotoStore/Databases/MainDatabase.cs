@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using MotoStore.Models;
 
 namespace MotoStore.Databases;
 
@@ -16,6 +15,8 @@ public partial class MainDatabase : DbContext
     {
     }
 
+    public virtual DbSet<DonDatHang> DonDatHangs { get; set; }
+
     public virtual DbSet<HoaDon> HoaDons { get; set; }
 
     public virtual DbSet<KhachHang> KhachHangs { get; set; }
@@ -28,13 +29,57 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<ThongTinBaoHanh> ThongTinBaoHanhs { get; set; }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserAdmin> UserAdmins { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Database=QLYCHBANXEMAY;TrustServerCertificate=True;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<DonDatHang>(entity =>
+        {
+            entity.HasKey(e => e.MaDonDh).HasName("PK_MaDonDH");
+
+            entity.ToTable("DonDatHang");
+
+            entity.Property(e => e.MaDonDh)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("MaDonDH");
+            entity.Property(e => e.MaKh)
+                .HasMaxLength(7)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("MaKH");
+            entity.Property(e => e.MaMh)
+                .HasMaxLength(7)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("MaMH");
+            entity.Property(e => e.MaNv)
+                .HasMaxLength(7)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("MaNV");
+            entity.Property(e => e.Ngdh)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NGDH");
+            entity.Property(e => e.SoDonDh).HasColumnName("SoDonDH");
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaKh)
+                .HasConstraintName("FK_MaKHDDH");
+
+            entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaMh)
+                .HasConstraintName("FK_MaMHDDH");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaNv)
+                .HasConstraintName("FK_MaNVDDH");
+        });
+
         modelBuilder.Entity<HoaDon>(entity =>
         {
             entity.HasKey(e => e.MaHd).HasName("PK_MaHD");
@@ -98,7 +143,8 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.GioiTinh)
                 .HasMaxLength(3)
-                .IsUnicode(false);
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.HoTenKh)
                 .HasMaxLength(30)
                 .IsUnicode(false)
@@ -199,7 +245,8 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.GioiTinh)
                 .HasMaxLength(3)
-                .IsUnicode(false);
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
                 .IsUnicode(false)
@@ -257,18 +304,24 @@ public partial class MainDatabase : DbContext
                 .HasConstraintName("FK_TTBH_MaNV");
         });
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<UserAdmin>(entity =>
         {
-            entity.HasKey(e => e.MaNv).HasName("PK_Users_MaNV");
+            entity.HasKey(e => e.UserId).HasName("PK_UserID");
 
+            entity.ToTable("UserADMIN");
+
+            entity.Property(e => e.UserId)
+                .HasMaxLength(4)
+                .IsUnicode(false)
+                .HasColumnName("UserID");
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
             entity.Property(e => e.MaNv)
                 .HasMaxLength(7)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("MaNV");
-            entity.Property(e => e.ChucVu)
-                .HasMaxLength(10)
-                .IsUnicode(false);
             entity.Property(e => e.Password)
                 .HasMaxLength(15)
                 .IsUnicode(false);
@@ -276,10 +329,9 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.MaNvNavigation).WithOne(p => p.User)
-                .HasForeignKey<User>(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Users_MaNV");
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.UserAdmins)
+                .HasForeignKey(d => d.MaNv)
+                .HasConstraintName("FK_MaNVAdmin");
         });
 
         OnModelCreatingPartial(modelBuilder);

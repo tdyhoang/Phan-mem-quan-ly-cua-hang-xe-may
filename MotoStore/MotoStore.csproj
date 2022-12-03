@@ -37,21 +37,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="TomsToolbox.Composition.Ninject" Version="2.8.4" />
-    <PackageReference Include="TomsToolbox.Wpf" Version="2.8.4" />
-    <PackageReference Include="TomsToolbox.Wpf.Composition" Version="2.8.4" />
-    <PackageReference Include="TomsToolbox.Wpf.Styles" Version="2.8.4" />
+    <PackageReference Include="TomsToolbox.Composition.Ninject" Version="2.8.5" />
+    <PackageReference Include="TomsToolbox.Wpf" Version="2.8.5" />
+    <PackageReference Include="TomsToolbox.Wpf.Composition" Version="2.8.5" />
+    <PackageReference Include="TomsToolbox.Wpf.Styles" Version="2.8.5" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0-rc.2.22472.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Demo\Demo.csproj" />
   </ItemGroup>
 
   <ItemGroup>
