@@ -11,6 +11,8 @@
 	+ `MotoStore\obj`
 - Chọn đúng những file mình đã sửa đổi, đôi khi có những file đc tạo tự động như file .g thì cứ tick
 - Mục đích là để tránh trường hợp ghi đè file của nhau dẫn đến mất code, mất thời gian để sửa
+- Ae chỉnh sửa phần nào thì tạo branch mang tên phần đó, commit lên đó trước rồi vào Pull requests -> Chọn New Pull request -> bên phần compare chọn branch vừa up lên của mình -> Chọn Create pull request  và chờ nó kiểm tra xem có conflict hay không. Nếu không thì chọn Merge pull request -> Confirm merge
+
 
 ### Về file Resources.resx
 - Mn nhớ sử dụng file này cho các tài nguyên liên quan tới giao diện như màu sắc, hình nền, icon... hoặc những chuỗi (string) được sử dụng nhiều nơi. Có thể xem đây là 1 thư viện tổng cho chương trình.
@@ -38,8 +40,8 @@
 	+ 
 - **Data**
 	+ Sử dụng bảng, có các chức năng filter, sắp xếp, thêm xóa sửa
-        + Tìm kiếm có nhiều loại(tìm theo tên sp, tìm theo dạng sản phẩm(xe tay ga, xe số, xe điện, xe mô tô) tìm theo giá,...
-	+ 
+        + Tìm kiếm có nhiều loại(tìm theo tên sp, tìm theo dạng sản phẩm(xe tay ga, xe số, xe điện, xe mô tô) tìm theo giá,...  
+	+ Thêm hình ảnh mô tả sản phẩm cho sinh động(có thể cần)
 	
 ## Phân công
 - **Dashboard**:
