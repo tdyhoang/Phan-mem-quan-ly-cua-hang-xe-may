@@ -101,12 +101,15 @@ alter table ThongTinBaoHanh add constraint FK_TTBH_MaNV foreign key(MaNV) refere
 create table UserADMIN
 (
   UserID varchar(4),
+  MaNV char(7),
   UserName varchar(15),
   Password varchar(15),
+  Email  Varchar(30),
   constraint PK_UserID primary key(UserID)
 )
 
-Insert into UserADMIN values('ID01','Ngquanly1','123456ABCDEF')
+alter table UserADMIN add constraint FK_MaNVAdmin foreign key(MaNV) references NhanVien(MaNV)
+Insert into UserADMIN values('ID01','NV100','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com')
 
 create table DonDatHang
 ( 
@@ -140,6 +143,7 @@ Insert into NhanVien values('NV02','Ngo Thanh Tuan','12/6/1980','Nam','45 Nguyen
 Insert into NhanVien values('NV03','Cao Thai Quy','12/1/1995','Nam','32/3 Tran Binh Trong, Q5, TpHCM','0913476343','QuyCao95@gmail.com','NVSuaXe',5000000,2000000)
 Insert into NhanVien values('NV04','Le Hoai Thuong','27/7/1998','Nu','65/19 Cao Ba Quat, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com','NVBanHang',5500000,2500000)
 Insert into NhanVien values('NV05','Nguyen Ba Sang','11/8/1996','Nam','23 Hoang Dieu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com','NVBanHang',6000000,2500000)
+Insert into NhanVien values('NV100','Phan Tan Trung','26/2/1989','Nam','125/2 Hoa Hung, Phuong 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com','NVQuanLy',12000000,3500000) /*Người quản lý*/
 
 select *from NhanVien
 
