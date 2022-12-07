@@ -16,6 +16,9 @@
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    MouseDown="Window_MouseDown"
+    ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
         <DockPanel>
@@ -25,34 +28,55 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ui:NavigationCompact
+                <ui:NavigationFluent
+                    Width="130"
                     x:Name="RootNavigation"
                     Grid.Column="0"
                     Footer="{Binding ViewModel.NavigationFooter, Mode=TwoWay}"
                     Frame="{Binding ElementName=RootFrame, Mode=OneWay}"
                     Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" />
 
-                <ui:TitleBar
-                    Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="42,0,0,0"
-                    Icon="pack://application:,,,/Assets/applicationIcon-256.png">
-                    <ui:TitleBar.Tray>
-                        <ui:NotifyIcon
-                            FocusOnLeftClick="True"
-                            Icon="pack://application:,,,/Assets/applicationIcon-256.png"
-                            MenuOnRightClick="True"
-                            TooltipText="MotoStore">
-                            <ui:NotifyIcon.Menu>
-                                <ContextMenu ItemsSource="{Binding ViewModel.TrayMenuItems, Mode=OneWay}" />
-                            </ui:NotifyIcon.Menu>
-                        </ui:NotifyIcon>
-                    </ui:TitleBar.Tray>
-                </ui:TitleBar>
-
                 <Grid Grid.Column="1">
+                    <Button x:Name="btnMinimize"
+                            BorderThickness="0"
+                            Height="25"
+                            Width="40"
+                            Content="-"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Background="Blue"
+                            Foreground="Black"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    
+                            Grid.Column="1" 
+                            Click="btnMinimize_Click"
+                            Margin="875,0,-15,620">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="btnClose"
+                            BorderThickness="0"
+                            Height="25"
+                            Width="40"
+                            Content="X"
+                            Background="Red"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    
+                            Grid.Column="2"    
+                            Click="btnClose_Click"
+                            Margin="920,0,0,620">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                     <Border
                         Margin="0,46,0,0"
                         Background="{DynamicResource ControlFillColorDefaultBrush}"
