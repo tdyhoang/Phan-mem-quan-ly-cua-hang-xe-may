@@ -13,6 +13,8 @@ using MotoStore.Properties;
 using Wpf.Ui.Mvvm.Contracts;
 using System.Windows.Input;
 using MotoStore.Services.Contracts;
+using System.Diagnostics;
+using System.Windows.Media.Imaging;
 
 namespace MotoStore.ViewModels
 {
@@ -20,6 +22,7 @@ namespace MotoStore.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IWindowService _windowService;
+        //ĐẶT BIẾN BOOL
 
         private ICommand _openWindowCommand;
 
@@ -33,6 +36,7 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedTo()
         {
+            //Check here
         }
 
         public void OnNavigatedFrom()
@@ -49,104 +53,106 @@ namespace MotoStore.ViewModels
             }
         }
 
-        public ISeries[] Chart1 { get; set; }
-            = new ISeries[]
-            {
-                new LineSeries<int>
-                {
-                    Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
-                },
-            };
 
-        public ISeries[] Chart2 { get; set; }
-            = new ISeries[]
-            {
-                new LineSeries<int>
-                {
-                    Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
-                },
-            };
-        public ISeries[] Chart3 { get; set; }
-            = new ISeries[]
-            {
-                new LineSeries<int>
-                {
-                    Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
-                },
-            };
-        public ISeries[] Chart4 { get; set; }
-            = new ISeries[]
-            {
-                new LineSeries<int>
-                {
-                    Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
-                },
-            };
 
-        public List<Axis> XAxes1 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
-            }
-        };
-        public List<Axis> XAxes2 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
-            }
-        };
-        public List<Axis> XAxes3 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
-            }
-        };
-        public List<Axis> XAxes4 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
-            }
-        };
+        /*  public ISeries[] Chart1 { get; set; }
+              = new ISeries[]
+              {
+                  new LineSeries<int>
+                  {
+                      Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
+                  },
+              };
 
-        public List<Axis> YAxes1 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labeler = Labelers.Currency
-            }
-        };
-        public List<Axis> YAxes2 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labeler = Labelers.Currency
-            }
-        };
-        public List<Axis> YAxes3 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labeler = Labelers.Currency
-            }
-        };
-        public List<Axis> YAxes4 { get; set; }
-        = new List<Axis>
-        {
-            new Axis
-            {
-                Labeler = Labelers.Currency
-            }
-        };
+          public ISeries[] Chart2 { get; set; }
+              = new ISeries[]
+              {
+                  new LineSeries<int>
+                  {
+                      Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
+                  },
+              };
+          public ISeries[] Chart3 { get; set; }
+              = new ISeries[]
+              {
+                  new LineSeries<int>
+                  {
+                      Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
+                  },
+              };
+          public ISeries[] Chart4 { get; set; }
+              = new ISeries[]
+              {
+                  new LineSeries<int>
+                  {
+                      Values = new int[] { 4, 6, 5, 3, -3, -1, 2 }
+                  },
+              };
+
+          public List<Axis> XAxes1 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
+              }
+          };
+          public List<Axis> XAxes2 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
+              }
+          };
+          public List<Axis> XAxes3 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
+              }
+          };
+          public List<Axis> XAxes4 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labels = new string[] { "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10" }
+              }
+          };
+
+          public List<Axis> YAxes1 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labeler = Labelers.Currency
+              }
+          };
+          public List<Axis> YAxes2 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labeler = Labelers.Currency
+              }
+          };
+          public List<Axis> YAxes3 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labeler = Labelers.Currency
+              }
+          };
+          public List<Axis> YAxes4 { get; set; }
+          = new List<Axis>
+          {
+              new Axis
+              {
+                  Labeler = Labelers.Currency
+              }
+          };*/
     }
 }
