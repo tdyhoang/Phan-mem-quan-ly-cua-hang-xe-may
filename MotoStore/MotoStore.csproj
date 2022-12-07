@@ -37,6 +37,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="TomsToolbox.Composition.Ninject" Version="2.8.4" />
     <PackageReference Include="TomsToolbox.Wpf" Version="2.8.4" />
     <PackageReference Include="TomsToolbox.Wpf.Composition" Version="2.8.4" />
@@ -48,6 +49,11 @@
   <ItemGroup>
     <None Remove="Assets\applicationIcon-1024.png" />
     <None Remove="Assets\applicationIcon-256.png" />
+    <None Remove="Views\Pages\dope.jpg" />
+    <None Remove="Views\Pages\lock.png" />
+    <None Remove="Views\Pages\logo2.png" />
+    <None Remove="Views\Pages\motor_logo.png" />
+    <None Remove="Views\Pages\User_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +63,11 @@
   <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
+    <Resource Include="Views\Pages\dope.jpg" />
+    <Resource Include="Views\Pages\lock.png" />
+    <Resource Include="Views\Pages\logo2.png" />
+    <Resource Include="Views\Pages\motor_logo.png" />
+    <Resource Include="Views\Pages\User_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -83,6 +94,9 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Views\Pages\anh3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Data.SqlClient;
 
 namespace Demo
 {
@@ -25,6 +26,8 @@ namespace Demo
     public partial class PageChinh : Page
     {
 
+       
+        
         public PageChinh()
         {
             InitializeComponent();
@@ -33,6 +36,7 @@ namespace Demo
     
         //static public PageChinh pgC;
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
+        static public bool DangNhap = false;
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
@@ -67,7 +71,7 @@ namespace Demo
             }
         }
         
-        private void buttonDangNhap_Click(object sender, RoutedEventArgs e)
+        public void buttonDangNhap_Click(object sender, RoutedEventArgs e)
         {
             
             flag = 1; //Báo hiệu nút Đăng Nhập đã được click
@@ -87,8 +91,51 @@ namespace Demo
             {
 
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
-
+                SqlConnection sqlcon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True");
+                try
+                {
+                    if (sqlcon.State == System.Data.ConnectionState.Closed)
+                        sqlcon.Open();
+                    string query = "Select COUNT(1) from UserADMIN where UserName=@UserName and Password=@Password";
+                    SqlCommand cmd = new SqlCommand(query, sqlcon);
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    cmd.Parameters.AddWithValue("@UserName",txtUser.Text);
+                    cmd.Parameters.AddWithValue("@Password", txtPassword.Password);
+                    int count=Convert.ToInt32(cmd.ExecuteScalar());
+                    if(count==1)
+                    {
+                        MessageBox.Show("Đăng Nhập Thành Công");
+                        Application.Current.Shutdown();
+                        DangNhap = true;
+                        CapNhat(DangNhap);
+                    }
+                    else
+                    {
+                        lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
+                    }
+                    
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    sqlcon.Close();
+                }
+                
             }
+        }
+        static public bool CapNhat(bool value)
+        {
+            if (value)
+                return true;
+            else
+                return false;
+        }
+        static public bool getDangNhap()
+        {
+            return DangNhap;
         }
 
         private void buttonQuenMK_Click(object sender, RoutedEventArgs e)

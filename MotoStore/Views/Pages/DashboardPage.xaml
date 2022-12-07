@@ -19,19 +19,101 @@
 
     <Grid Margin="56,0,0,0">
         <DockPanel>
+            
+            <Grid>
+                <Label x:Name="lblTen"
+                   Height="35"
+                   Width="240"
+                   Foreground="Black"
+                   FontFamily="Great Vibes"
+                   FontWeight="Medium"
+                   FontSize="25"
+                   Margin="0,0,0,450"></Label>
+               
+                <Border 
+                x:Name="borderAnh"
+                CornerRadius="25"
+                Height="100"
+                Width="150"
+                Margin="-80,-270,0,0"
+                Background="#9900CC">
+
+                        <Image x:Name="anhNhanVien"
+                   Height="90"
+                   Margin="0,5,1,5"/>
+                    </Border>
+
+                    <Label x:Name="lblChucVu"
+                   Height="35"
+                   Width="200"
+                   FontFamily="Great Vibes"
+                   FontWeight="Medium"
+                   FontSize="18"
+                   Foreground="Black"
+                   Margin="-30,-120,0,0"
+                   ></Label>
+
+                <Border
+                    x:Name="brdSoNV"
+                    CornerRadius="25"
+                    Height="100"
+                    Width="150"
+                    Margin="-80,40,0,0"
+                    Background="MediumPurple">
+                    <TextBlock
+                        FontFamily="Great Vibes"
+                        FontWeight="Medium"
+                        FontSize="22"
+                        Height="80"
+                        xml:space="preserve"> Số Nhân Viên<LineBreak/> Bạn Quản Lý:
+           5           <LineBreak/>
+                    </TextBlock>
+                </Border>
+
+                <Border
+                    x:Name="brdSoXe"
+                    CornerRadius="25"
+                    Height="100"
+                    Width="150"
+                    Margin="-80,300,0,0"
+                    Background="PowderBlue">
+                    <TextBlock
+                        FontFamily="Great Vibes"
+                        FontWeight="Medium"
+                        FontSize="22"
+                        Height="80"
+                        xml:space="preserve">       Số Xe<LineBreak/>    Trong Kho:
+          115           <LineBreak/>
+                    </TextBlock>
+                </Border>
+
+            </Grid>
+
+
+
             <ui:Button
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
                 Margin="5,0"
-                Content="Đăng xuất"
+                Content="Đăng Xuất"
+                FontWeight="Medium"
+                Height="35"
+                Width="135"
+                FontSize="17"
                 Icon="SignOut24"
                 Appearance="Danger" />
             <ui:Button
+                x:Name="buttonDangNhapDashBoard"
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
-                Content="Đăng nhập"
+                Content="Đăng Nhập"
+                Height="35"
+                Width="135"
+                FontWeight="Medium"
+                FontSize="17"
+                Background="#FF00D1FF"
                 Command="{Binding ViewModel.OpenWindowCommand}"
-                CommandParameter="open_window_login"
+                CommandParameter="open_window_login" Click="buttonDangNhapDashBoard_Click"
              />
 
             <Grid>
@@ -65,5 +147,26 @@
                 -->
             </Grid>
         </DockPanel>
+        <StackPanel x:Name="StkPanelLenLich"
+               Height="100"
+               Width="200"
+               Margin="150,200,0,0"
+        ></StackPanel>
+        
+        <Calendar
+            x:Name="Lich"
+            Height="260"
+            Width="240"
+            Margin="675,160,0,0"
+            SelectedDatesChanged="Lich_SelectedDatesChanged"
+            IsTodayHighlighted="True"></Calendar>
+        <Label
+            x:Name="lblGioHeThong"
+            Height="35"
+            Width="300"
+            Margin="675,460,0,0"
+            FontSize="20"
+            FontWeight="Medium"
+            Foreground="Black"></Label>
     </Grid>
 </ui:UiPage>

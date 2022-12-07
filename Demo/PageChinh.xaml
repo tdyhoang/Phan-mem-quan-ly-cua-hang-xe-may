@@ -5,15 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Demo"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="800">
+      d:DesignHeight="550" d:DesignWidth="800"
+      Background="White">
 
     <Grid>
         <Border CornerRadius="60">
-            <Border.Background>
-                <ImageBrush 
-                    ImageSource="/Images/motor_logo.png">
-                </ImageBrush>
-            </Border.Background>
+            
             <Border CornerRadius="60"
            BorderBrush="White"
            BorderThickness="5"
@@ -206,7 +203,7 @@
                     </Label>
                     
                     <Image Source="Images/logo2.png" 
-                           Margin="-45,144,578,82" 
+                           Margin="23,94,420,55" 
                            Grid.Row="1"
                            Opacity="1"
                            />
