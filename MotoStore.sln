@@ -4,11 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotoStore", "MotoStore\MotoStore.csproj", "{70820109-57F3-4A40-883A-EE3AE864181D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FCC600C5-46DB-429C-94AE-904F4DAB9245} = {FCC600C5-46DB-429C-94AE-904F4DAB9245}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{FCC600C5-46DB-429C-94AE-904F4DAB9245}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{A635348A-2295-4C2C-B41D-8353D356EF58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +17,10 @@ Global
 		{70820109-57F3-4A40-883A-EE3AE864181D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70820109-57F3-4A40-883A-EE3AE864181D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70820109-57F3-4A40-883A-EE3AE864181D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCC600C5-46DB-429C-94AE-904F4DAB9245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCC600C5-46DB-429C-94AE-904F4DAB9245}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCC600C5-46DB-429C-94AE-904F4DAB9245}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCC600C5-46DB-429C-94AE-904F4DAB9245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A635348A-2295-4C2C-B41D-8353D356EF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A635348A-2295-4C2C-B41D-8353D356EF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A635348A-2295-4C2C-B41D-8353D356EF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A635348A-2295-4C2C-B41D-8353D356EF58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

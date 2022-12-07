@@ -109,7 +109,6 @@ create table UserADMIN
 )
 
 alter table UserADMIN add constraint FK_MaNVAdmin foreign key(MaNV) references NhanVien(MaNV)
-Insert into UserADMIN values('ID01','NV100','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com')
 
 create table DonDatHang
 ( 
@@ -123,11 +122,9 @@ create table DonDatHang
   constraint PK_MaDonDH primary key(MaDonDH)
 )
 
-alter table DonDatHang add constraint FK_MaMHDDH foreign key(MaMH) references MATHANG(MaMH)
+alter table DonDatHang add constraint FK_MaMHDDH foreign key(MaMH) references MatHang(MaMH)
 alter table DonDatHang add constraint FK_MaKHDDH foreign key(MaKH) references KHACHHANG(MaKH)
 alter table DonDatHang add constraint FK_MaNVDDH foreign key(MaNV) references NHANVIEN(MaNV)
-
-Insert into DonDatHang values('DDH01',1,'MH03',1,'KH006','NV02','25/11/2022')
 
 Insert into KhachHang values('KH001','Nguyen Van A','11/9/1979','Nam','34/34B Nguyen Trai, Q1, TpHCM','0876890495','NguyenVanA79@gmail.com','Vip')
 Insert into KhachHang values('KH002','Nguyen Van B','9/11/1997','Nam','873 Le Hong Phong, Q5, TpHCM','0867850847','NguyenVanB97@gmail.com','Thuong')
@@ -169,3 +166,7 @@ Insert into HoaDon values('HD03','MH04','KH001','NV05','15/10/2022',1,10,4500000
 
 Insert into ThongTinBaoHanh values('BH01','MH01','KH003','NV04','10/7/2021','Loi tu NSX, Hu tay con')
 Insert into ThongTinBaoHanh values('BH02','MH02','KH004','NV02','12/7/2021','Thay nhot dinh ki')
+
+Insert into UserADMIN values('ID01','NV100','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com')
+
+Insert into DonDatHang values('DDH01',1,'MH03',1,'KH006','NV02','25/11/2022')

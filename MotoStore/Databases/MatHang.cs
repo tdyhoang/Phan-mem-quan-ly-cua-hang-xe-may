@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MotoStore.Models;
+namespace MotoStore.Databases;
 
 public partial class MatHang
 {
@@ -22,6 +22,8 @@ public partial class MatHang
     public string? MoTa { get; set; }
 
     public string? TinhTrang { get; set; }
+
+    public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
 

@@ -37,13 +37,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    
+ <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageReference Include="TomsToolbox.Composition.Ninject" Version="2.8.4" />
     <PackageReference Include="TomsToolbox.Wpf" Version="2.8.4" />
     <PackageReference Include="TomsToolbox.Wpf.Composition" Version="2.8.4" />
     <PackageReference Include="TomsToolbox.Wpf.Styles" Version="2.8.4" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0-rc.2.22472.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,10 +55,6 @@
     <None Remove="Views\Pages\logo2.png" />
     <None Remove="Views\Pages\motor_logo.png" />
     <None Remove="Views\Pages\User_logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Demo\Demo.csproj" />
   </ItemGroup>
 
   <ItemGroup>

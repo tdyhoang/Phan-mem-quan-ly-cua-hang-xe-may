@@ -14,6 +14,12 @@
       Title="IOPage">
 
     <Grid>
-        <ui:Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ViewModel.OpenDialogCommand}" Content="Open" />
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <Button x:Name="btnAddSPPage" Content="Sản Phẩm" MinWidth="100" Click="btnAddSPPage_Click" />
+            <Button x:Name="btnAddNVPage" Content="Nhân Viên" MinWidth="100" Click="btnAddNVPage_Click"/>
+            <Button x:Name="btnAddNSXPage" Content="Nhà Sản Xuất" MinWidth="100" Click="btnAddNSXPage_Click"/>
+            <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="100" Click="btnAddKhachHang_Click"/>
+        </StackPanel>
+        <Frame x:Name="IOMain" Margin="0,35,0,0" VerticalAlignment="Top" />
     </Grid>
 </ui:UiPage>

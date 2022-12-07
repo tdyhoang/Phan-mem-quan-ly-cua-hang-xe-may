@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MotoStore.Models;
+namespace MotoStore.Databases;
 
 public partial class NhaSanXuat
 {

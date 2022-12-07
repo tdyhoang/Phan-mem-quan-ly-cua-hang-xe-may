@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MotoStore.Models;
+namespace MotoStore.Databases;
 
 public partial class NhanVien
 {
@@ -25,9 +25,11 @@ public partial class NhanVien
 
     public decimal? Thuong { get; set; }
 
+    public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
+
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
 
     public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 
-    public virtual User? User { get; set; }
+    public virtual ICollection<UserAdmin> UserAdmins { get; } = new List<UserAdmin>();
 }
