@@ -9,38 +9,35 @@
       Title="IOSanPhamPage">
 
     <Grid>
-      
-        <Label x:Name="lbMaSanPham"
-               Content="Nhập Mã Xe: " 
-               Margin="26,36,623,370"
-               FontSize="15"
-               Foreground="Black"/>
-        <TextBox x:Name="txtMaSP" Margin="224,38,526,0" VerticalAlignment="Top"/>
+
+
         <Label x:Name="lbTenSP"
                Content="Tên Sản Phẩm: " 
-               Margin="24,96,625,310"
+               Margin="49,33,600,373"
                FontSize="15"
                Foreground="Black"/>
-        <TextBox x:Name="txtTenSP" Margin="224,93,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtTenSP" Margin="249,30,501,0" VerticalAlignment="Top"/>
         <Label x:Name="lbGia"
                Content="Giá: " 
-               Margin="24,146,620,260"
+               Margin="49,83,595,323"
                FontSize="15"
                Foreground="Black"/>
-        <TextBox x:Name="txtGiaSP" Margin="224,148,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtGiaSP" Margin="249,85,501,0" VerticalAlignment="Top"/>
         <Label x:Name="lbSoLuong"
                Content="Số Lượng: " 
-               Margin="24,203,620,203"
+               Margin="49,140,595,266"
                FontSize="15"
                Foreground="Black"/>
-        <TextBox x:Name="txtSoLuongSP" Margin="224,200,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtSoLuongSP" Margin="249,137,501,0" VerticalAlignment="Top"/>
         <Label x:Name="lbXuatXu"
                Content="Xuất Xứ: " 
-               Margin="24,262,620,144"
+               Margin="49,199,595,207"
                FontSize="15"
                Foreground="Black"/>
-        <TextBox x:Name="txtXuatXuSP" Margin="224,263,526,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnAddSP" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="599,114,0,0" VerticalAlignment="Top" Height="48" Width="117"/>
+        <TextBox x:Name="txtXuatXuSP" Margin="249,201,501,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddSP" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="302,388,0,0" VerticalAlignment="Top" Height="48" Width="117"/>
+        <Image x:Name="ImageSP" HorizontalAlignment="Left" Height="214" Margin="567,92,0,0" VerticalAlignment="Top" Width="230"/>
+        <Button x:Name="btnLoadImageSP" Content="Chọn ảnh Sản Phẩm" Margin="595,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.898,0.615" Click="btnLoadImageSP_Click"/>
 
     </Grid>
 </Page>

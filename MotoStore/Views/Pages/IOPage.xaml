@@ -19,6 +19,7 @@
             <Button x:Name="btnAddNVPage" Content="Nhân Viên" MinWidth="100" Click="btnAddNVPage_Click"/>
             <Button x:Name="btnAddNSXPage" Content="Nhà Sản Xuất" MinWidth="100" Click="btnAddNSXPage_Click"/>
             <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="100" Click="btnAddKhachHang_Click"/>
+            <Button x:Name="btnAddHoaDon" Content="Hóa Đơn" MinWidth="100" Click="btnAddHoaDon_Click"/>
         </StackPanel>
         <Frame x:Name="IOMain" Margin="0,35,0,0" VerticalAlignment="Top" />
     </Grid>
