@@ -58,9 +58,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Demo\Demo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\applicationIcon-1024.png" />
     <Resource Include="Assets\applicationIcon-256.png" />
-    <Resource Include="Views\Pages\dope.jpg" />
     <Resource Include="Views\Pages\lock.png" />
     <Resource Include="Views\Pages\logo2.png" />
     <Resource Include="Views\Pages\motor_logo.png" />
