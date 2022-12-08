@@ -123,8 +123,13 @@ namespace MotoStore.Views.Pages.LoginPages
 
                 MainDatabase mDb = new MainDatabase();
 
-                var user = mDb.UserAdmins.Where(s => s.UserName == txtUser.Text && s.Password == txtPassword.Password).FirstOrDefault();
-                if (user!=null)
+                bool isValid = false;
+
+                foreach (var user in mDb.UserAdmins.ToList())
+                    if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
+                        isValid = true;
+
+                if (isValid)
                 {
                     MessageBox.Show("dang nhap thanh cong");
                 }
