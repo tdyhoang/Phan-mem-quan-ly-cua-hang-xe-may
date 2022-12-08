@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels
@@ -13,6 +14,7 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedFrom()
         {
+
         }
     }
 }

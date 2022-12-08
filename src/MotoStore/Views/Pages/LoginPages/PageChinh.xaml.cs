@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using System.Data.SqlClient;
 using MotoStore.Database;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Security.Cryptography;
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -27,6 +28,7 @@ namespace MotoStore.Views.Pages.LoginPages
     /// </summary>
     public partial class PageChinh
     {
+        
         public PageChinh()
         {
             InitializeComponent();
@@ -35,7 +37,9 @@ namespace MotoStore.Views.Pages.LoginPages
     
         //static public PageChinh pgC;
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
-        static public bool DangNhap = false;
+        static public bool isValid = false;
+        static public string getTK;   //Đặt biến tĩnh public để PageDgNhapThanhCong có thể truy cập để lấy các thông tin cần thiết
+        static public string getMa;   //Tương tự như trên
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
@@ -69,10 +73,10 @@ namespace MotoStore.Views.Pages.LoginPages
                     break;
             }
         }
-        
+
         public void buttonDangNhap_Click(object sender, RoutedEventArgs e)
         {
-            
+
             flag = 1; //Báo hiệu nút Đăng Nhập đã được click
 
             if (string.IsNullOrEmpty(txtUser.Text) == true || string.IsNullOrEmpty(txtPassword.Password))
@@ -90,73 +94,26 @@ namespace MotoStore.Views.Pages.LoginPages
             {
 
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
-                /*SqlConnection sqlcon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True");
-                try
-                {
-                    if (sqlcon.State == System.Data.ConnectionState.Closed)
-                        sqlcon.Open();
-                    string query = "Select COUNT(1) from UserADMIN where UserName=@UserName and Password=@Password";
-                    SqlCommand cmd = new SqlCommand(query, sqlcon);
-                    cmd.CommandType = System.Data.CommandType.Text;
-                    cmd.Parameters.AddWithValue("@UserName",txtUser.Text);
-                    cmd.Parameters.AddWithValue("@Password", txtPassword.Password);
-                    int count=Convert.ToInt32(cmd.ExecuteScalar());
-                    if(count==1)
-                    {
-                        MessageBox.Show("Đăng Nhập Thành Công");
-                       
-                    }
-                    else
-                    {
-                        lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
-                    }
-                    
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    sqlcon.Close();
-                }*/
 
-                MainDatabase mDb = new MainDatabase();
-
-                bool isValid = false;
-
+                MainDatabase mDb = new MainDatabase();             
                 foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
+                    {
                         isValid = true;
+                        getTK = user.UserName.ToString();                       
+                        getMa = user.MaNv.ToString();   
+                        getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
+                    }
 
                 if (isValid)
                 {
-                    MessageBox.Show("dang nhap thanh cong");
+                    MessageBox.Show("Đăng Nhập Thành Công");                   
+                    this.NavigationService.Navigate(new PageDgNhapThanhCong());
                 }
                 else
-                    MessageBox.Show("dang nhap fail");
+                    lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
 
-              
-               /* if (txtPassword.Password.CompareTo((mDb.UserAdmins.Select(d => d.Password).ToString())) == 0)
-                {
-                    MessageBox.Show("dang nhap thanh cong");
-                }
-                else
-                    MessageBox.Show("Dang nhap fail"); */
-
-                //txtUser.Text.CompareTo((mDb.UserAdmins.Select(d => d.UserName).ToString())) == 1 && 
             }
-        }
-        static public bool CapNhat(bool value)
-        {
-            if (value)
-                return true;
-            else
-                return false;
-        }
-        static public bool getDangNhap()
-        {
-            return DangNhap;
         }
 
         private void buttonQuenMK_Click(object sender, RoutedEventArgs e)

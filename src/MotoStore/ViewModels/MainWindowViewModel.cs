@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MotoStore.Views.Pages.LoginPages;
 using System;
 using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
@@ -32,52 +33,54 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
-            ApplicationTitle = "Phần mềm quản lý cửa hàng xe máy";
+            //ApplicationTitle = "Phần mềm quản lý cửa hàng xe máy";  //Title
 
-            NavigationItems = new ObservableCollection<INavigationControl>
+            if(PageChinh.isValid)
+            {
+                NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
-                    Content = "Dashboard",
-                    PageTag = "dashboard",
+                    Content = "Trang Chủ",
+                    PageTag = "trangchu",
                     Icon = SymbolRegular.Home24,
                     PageType = typeof(Views.Pages.DashboardPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Nhập xuất",
+                    Content = "Nhập Xuất",
                     PageTag = "io",
                     Icon = SymbolRegular.Stream24,
                     PageType = typeof(Views.Pages.IOPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Danh mục",
+                    Content = "Danh Mục",
                     PageTag = "data",
                     Icon = SymbolRegular.DataHistogram24,
                     PageType = typeof(Views.Pages.DataPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Báo cáo",
+                    Content = "Báo Cáo",
                     PageTag = "report",
                     Icon = SymbolRegular.Info24,
                     PageType = typeof(Views.Pages.ReportPage)
                 }
             };
 
-            NavigationFooter = new ObservableCollection<INavigationControl>
+                NavigationFooter = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
-                    Content = "Cài đặt",
+                    Content = "Cài Đặt",
                     PageTag = "settings",
                     Icon = SymbolRegular.Settings24,
                     PageType = typeof(Views.Pages.SettingsPage)
                 }
             };
 
-            TrayMenuItems = new ObservableCollection<MenuItem>
+                TrayMenuItems = new ObservableCollection<MenuItem>
             {
                 new MenuItem
                 {
@@ -85,6 +88,64 @@ namespace MotoStore.ViewModels
                     Tag = "tray_home"
                 }
             };
+
+            }
+            else
+            {
+                NavigationItems = new ObservableCollection<INavigationControl>
+            {
+                new NavigationItem()
+                {
+                    Content = "Trang Chủ",
+                    PageTag = "trangchu",
+                    Icon = SymbolRegular.Home24,
+                    PageType = typeof(Views.Pages.DashboardPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Nhập Xuất",
+                    PageTag = "io",
+                    Icon = SymbolRegular.Stream24,
+                    PageType = typeof(Views.Pages.IOPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Danh Mục",
+                    PageTag = "data",
+                    Icon = SymbolRegular.DataHistogram24,
+                    PageType = typeof(Views.Pages.DataPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Báo Cáo",
+                    PageTag = "report",
+                    Icon = SymbolRegular.Info24,
+                    PageType = typeof(Views.Pages.ReportPage)
+                }
+            };
+
+                NavigationFooter = new ObservableCollection<INavigationControl>
+            {
+                new NavigationItem()
+                {
+                    Content = "Cài Đặt",
+                    PageTag = "settings",
+                    Icon = SymbolRegular.Settings24,
+                    PageType = typeof(Views.Pages.SettingsPage)
+                }
+            };
+
+                TrayMenuItems = new ObservableCollection<MenuItem>
+            {
+                new MenuItem
+                {
+                    Header = "Home",
+                    Tag = "tray_home"
+                }
+            };
+            }
+
+            
 
             _isInitialized = true;
         }

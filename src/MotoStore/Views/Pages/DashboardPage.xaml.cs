@@ -24,7 +24,6 @@ namespace MotoStore.Views.Pages
         private void btnDgNhapDashBoard_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new PageChinh());
-            
         }
 
     }

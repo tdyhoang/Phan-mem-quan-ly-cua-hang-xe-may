@@ -49,28 +49,28 @@ namespace MotoStore.ViewModels
             {
                 new NavigationItem()
                 {
-                    Content = "Danh sách xe",
+                    Content = "Danh Sách Xe",
                     PageTag = "motolist",
                     Icon = SymbolRegular.TextBulletListSquare20,
                     PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Danh sách nhân viên",
+                    Content = "Danh Sách Nhân Viên",
                     PageTag = "employeelist",
                     Icon = SymbolRegular.ContactCard20,
                     PageType = typeof(Views.Pages.DataPagePages.EmployeeListPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Danh sách khách hàng",
+                    Content = "Danh Sách Khách Hàng",
                     PageTag = "customerlist",
                     Icon = SymbolRegular.PeopleQueue20,
                     PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
                 },
                 new NavigationItem()
                 {
-                    Content = "Nhà cung cấp",
+                    Content = "Nhà Cung Cấp",
                     PageTag = "supplierlist",
                     Icon = SymbolRegular.PeopleCall20,
                     PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)

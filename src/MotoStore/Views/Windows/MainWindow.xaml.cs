@@ -16,6 +16,10 @@ namespace MotoStore.Views.Windows
         {
             get;
         }
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {

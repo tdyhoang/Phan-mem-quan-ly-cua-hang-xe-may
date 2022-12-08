@@ -16,6 +16,8 @@
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize"
+    MouseDown="Window_MouseDown"
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid>

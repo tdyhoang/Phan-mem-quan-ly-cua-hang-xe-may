@@ -11,38 +11,44 @@
     Scrollable="True"
     d:DataContext="{d:DesignInstance local:DashboardPage,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="600"
+    d:DesignWidth="1000"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
     <Grid Margin="56,0,0,0">
         <DockPanel>
-            <ui:Button
+            <Grid Height="50"
+                  Width="300"
+                  Margin="682,-485,0,0">
+                <ui:Button
                 Name="btnDgXuatDashBoard"
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
-                Margin="0,0,10,0"
-                Height="35"
-                Width="125"
-                FontSize="16.15"
+                Margin="155,0,10,0"
+                Height="40"
+                Width="130"
+                FontSize="17"
                 FontWeight="Medium"
                 FontFamily="Great Vibes"
                 Content="Đăng Xuất"
                 Icon="SignOut24"
                 Appearance="Danger" />
-            <ui:Button x:Name="btnDgNhapDashBoard"
+                
+                <ui:Button x:Name="btnDgNhapDashBoard"
                 DockPanel.Dock="Right"
                 VerticalAlignment="Top"
                 Content="Đăng Nhập"
-                Margin="710,0,0,0"
-                Height="35"
-                Width="120"
+                Margin="20,0,0,0"
+                Height="40"
+                Width="130"
                 FontSize="17"
                 FontWeight="Medium"
                 FontFamily="Great Vibes"
                 CommandParameter="open_window_login" Click="btnDgNhapDashBoard_Click" Background="#FF0027FF"
              />
+            </Grid>
+            
         </DockPanel>
     </Grid>
 </ui:UiPage>

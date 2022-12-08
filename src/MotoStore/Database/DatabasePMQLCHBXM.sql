@@ -171,3 +171,4 @@ alter table DonDatHang add constraint FK_MaKHDDH foreign key(MaKH) references KH
 alter table DonDatHang add constraint FK_MaNVDDH foreign key(MaNV) references NHANVIEN(MaNV)
 
 Insert into DonDatHang values(newid(),1,'01921D8D-F015-4309-A130-9390B2E8EC11',1,'8507F1FB-C2CC-48AF-B285-DC15AFF4EC77','90B6193C-0EBD-43F2-82A3-2DA131D767C6','25/11/2022')
+
