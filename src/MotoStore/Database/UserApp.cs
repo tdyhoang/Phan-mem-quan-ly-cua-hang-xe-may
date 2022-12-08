@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
-public partial class UserAdmin
+public partial class UserApp
 {
     public Guid UserId { get; set; }
 
@@ -14,6 +14,4 @@ public partial class UserAdmin
     public string? Password { get; set; }
 
     public string? Email { get; set; }
-
-    public virtual NhanVien? MaNvNavigation { get; set; }
 }

@@ -13,6 +13,8 @@ public partial class HoaDon
 
     public Guid? MaNv { get; set; }
 
+    public string? HoTenNv { get; set; }
+
     public DateTime? NgayLapHd { get; set; }
 
     public int? SoLuong { get; set; }

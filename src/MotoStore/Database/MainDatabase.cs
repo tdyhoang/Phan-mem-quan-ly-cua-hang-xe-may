@@ -29,7 +29,7 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<ThongTinBaoHanh> ThongTinBaoHanhs { get; set; }
 
-    public virtual DbSet<UserAdmin> UserAdmins { get; set; }
+    public virtual DbSet<UserApp> UserApps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -76,6 +76,9 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaHd)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaHD");
+            entity.Property(e => e.HoTenNv)
+                .HasMaxLength(30)
+                .HasColumnName("HoTenNV");
             entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.MaMh).HasColumnName("MaMH");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
@@ -106,22 +109,16 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaKh)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaKH");
-            entity.Property(e => e.DiaChi)
-                .HasMaxLength(40)
-                .IsUnicode(false);
+            entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-            entity.Property(e => e.GioiTinh)
-                .HasMaxLength(3)
-                .IsUnicode(false);
+            entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenKh)
                 .HasMaxLength(30)
-                .IsUnicode(false)
                 .HasColumnName("HoTenKH");
             entity.Property(e => e.LoaiKh)
                 .HasMaxLength(10)
-                .IsUnicode(false)
                 .HasColumnName("LoaiKH");
             entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
             entity.Property(e => e.Sdt)
@@ -149,19 +146,13 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("HangSX");
-            entity.Property(e => e.MoTa)
-                .HasMaxLength(20)
-                .IsUnicode(false);
+            entity.Property(e => e.MoTa).HasMaxLength(60);
             entity.Property(e => e.TenMh)
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("TenMH");
-            entity.Property(e => e.TinhTrang)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-            entity.Property(e => e.XuatXu)
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            entity.Property(e => e.TinhTrang).HasMaxLength(15);
+            entity.Property(e => e.XuatXu).HasMaxLength(15);
 
             entity.HasOne(d => d.NhaSanXuat).WithMany(p => p.MatHangs)
                 .HasForeignKey(d => new { d.HangSx, d.XuatXu })
@@ -180,7 +171,6 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("TenNSX");
             entity.Property(e => e.NuocSx)
                 .HasMaxLength(15)
-                .IsUnicode(false)
                 .HasColumnName("NuocSX");
             entity.Property(e => e.Email)
                 .HasMaxLength(45)
@@ -200,24 +190,20 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaNv)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaNV");
-            entity.Property(e => e.ChucVu)
-                .HasMaxLength(10)
-                .IsUnicode(false);
-            entity.Property(e => e.DiaChi)
-                .HasMaxLength(40)
-                .IsUnicode(false);
+            entity.Property(e => e.ChucVu).HasMaxLength(10);
+            entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-            entity.Property(e => e.GioiTinh)
-                .HasMaxLength(3)
-                .IsUnicode(false);
+            entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
-                .IsUnicode(false)
                 .HasColumnName("HoTenNV");
             entity.Property(e => e.Luong).HasColumnType("money");
             entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
+            entity.Property(e => e.NgVl)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NgVL");
             entity.Property(e => e.Sdt)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -234,9 +220,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaBh)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaBH");
-            entity.Property(e => e.GhiChu)
-                .HasMaxLength(30)
-                .IsUnicode(false);
+            entity.Property(e => e.GhiChu).HasMaxLength(30);
             entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.MaMh).HasColumnName("MaMH");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
@@ -255,11 +239,11 @@ public partial class MainDatabase : DbContext
                 .HasConstraintName("FK_TTBH_MaNV");
         });
 
-        modelBuilder.Entity<UserAdmin>(entity =>
+        modelBuilder.Entity<UserApp>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK_UserID");
 
-            entity.ToTable("UserADMIN");
+            entity.ToTable("UserApp");
 
             entity.Property(e => e.UserId)
                 .HasDefaultValueSql("(newid())")
@@ -269,15 +253,11 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.Password)
-                .HasMaxLength(15)
+                .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.UserName)
                 .HasMaxLength(15)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.UserAdmins)
-                .HasForeignKey(d => d.MaNv)
-                .HasConstraintName("FK_MaNVAdmin");
         });
 
         OnModelCreatingPartial(modelBuilder);

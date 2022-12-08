@@ -21,6 +21,8 @@ public partial class NhanVien
 
     public string? ChucVu { get; set; }
 
+    public DateTime? NgVl { get; set; }
+
     public decimal? Luong { get; set; }
 
     public decimal? Thuong { get; set; }
@@ -30,6 +32,4 @@ public partial class NhanVien
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
 
     public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
-
-    public virtual ICollection<UserAdmin> UserAdmins { get; } = new List<UserAdmin>();
 }

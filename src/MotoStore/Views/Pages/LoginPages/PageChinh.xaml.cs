@@ -125,7 +125,7 @@ namespace MotoStore.Views.Pages.LoginPages
 
                 bool isValid = false;
 
-                foreach (var user in mDb.UserAdmins.ToList())
+                foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                         isValid = true;
 
