@@ -8,6 +8,7 @@ namespace MotoStore.ViewModels
     {
         public void OnNavigatedTo()
         {
+            
         }
 
         public void OnNavigatedFrom()

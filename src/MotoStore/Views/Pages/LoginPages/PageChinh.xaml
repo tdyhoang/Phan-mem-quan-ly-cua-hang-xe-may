@@ -10,9 +10,9 @@
       Background="White">
 
     <Grid>
-        <Border CornerRadius="60">
-            
-            <Border CornerRadius="60"
+        <Border>
+
+            <Border 
            BorderBrush="White"
            BorderThickness="5"
            Opacity="0.82" 
@@ -65,8 +65,8 @@
                                Foreground="Black" Width="350"
                                FontFamily="Montserrat"
                                FontWeight="Medium"
-                              HorizontalAlignment="Center" Height="40"
-                               Margin="0,105,0,0"/>
+                              HorizontalAlignment="Center" Height="30"
+                               Margin="0,55,0,0"/>
                         <TextBox x:Name="txtUser"
                              FontSize="20"
                              FontWeight="Medium"
@@ -93,7 +93,7 @@
                                FontFamily="Montserrat"
                                FontWeight="Medium"
                               HorizontalAlignment="Center" Height="40"
-                               Margin="0,50,0,0"/>
+                               Margin="0,20,0,0"/>
                         <PasswordBox x:Name="txtPassword" 
                                      Height="35" 
                                      Width="355" 
@@ -128,11 +128,11 @@
                     <Button x:Name="buttonDangNhap" 
                             Content="Đăng Nhập" 
                             HorizontalAlignment="Center" 
-                            Height="31" 
-                            Margin="300,401,0,0" 
+                            Height="35" 
+                            Margin="300,320,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
-                            Width="126" 
+                            Width="125" 
                             FontFamily="Great Vibes"
                             FontWeight="Medium"
                             FontSize="19" 
@@ -148,13 +148,12 @@
                     </Button>
                     <Button x:Name="buttonQuenMK" 
                             Content="Quên Mật Khẩu ?" 
-                            HorizontalAlignment="Center" 
-                            Height="30" 
-                            Margin="300,440,0,0" 
+                            Height="34" 
+                            Margin="585,374,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
-                            Width="126" 
-                            RenderTransformOrigin="0.557,0.026" 
+                            Width="145" 
+                            RenderTransformOrigin="0.547,0.026" 
                             FontSize="15" 
                             FontFamily="Great Vibes"                           
                             Click="buttonQuenMK_Click" 
@@ -202,9 +201,9 @@
                             <ImageBrush/>
                         </Label.Background>
                     </Label>
-                    
+
                     <Image Source="../../../Assets/logo2.png" 
-                           Margin="23,94,420,55" 
+                           Margin="10,98,508,128" 
                            Grid.Row="1"
                            Opacity="1"
                            />

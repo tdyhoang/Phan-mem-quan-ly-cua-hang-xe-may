@@ -1,4 +1,6 @@
-﻿using Wpf.Ui.Common.Interfaces;
+﻿using MotoStore.Views.Pages.LoginPages;
+using MotoStore.Views.Windows;
+using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.Views.Pages
 {
@@ -18,5 +20,12 @@ namespace MotoStore.Views.Pages
 
             InitializeComponent();
         }
+
+        private void btnDgNhapDashBoard_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new PageChinh());
+            
+        }
+
     }
 }

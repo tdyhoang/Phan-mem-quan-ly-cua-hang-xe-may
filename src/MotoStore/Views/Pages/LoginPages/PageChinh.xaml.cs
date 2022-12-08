@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Data.SqlClient;
 using MotoStore.Database;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -77,8 +78,8 @@ namespace MotoStore.Views.Pages.LoginPages
             if (string.IsNullOrEmpty(txtUser.Text) == true || string.IsNullOrEmpty(txtPassword.Password))
             {
                 if (buttonLanguage.Content == "English")
-                {                   
-                    lblThongBao.Content = "Please fill in all fields fully!";               
+                {
+                    lblThongBao.Content = "Please fill in all fields fully!";
                 }
                 else
                 {
@@ -89,7 +90,7 @@ namespace MotoStore.Views.Pages.LoginPages
             {
 
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
-                /* SqlConnection sqlcon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True");
+                /*SqlConnection sqlcon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True");
                 try
                 {
                     if (sqlcon.State == System.Data.ConnectionState.Closed)
@@ -103,9 +104,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     if(count==1)
                     {
                         MessageBox.Show("Đăng Nhập Thành Công");
-                        Application.Current.Shutdown();
-                        DangNhap = true;
-                        CapNhat(DangNhap);
+                       
                     }
                     else
                     {
@@ -120,8 +119,27 @@ namespace MotoStore.Views.Pages.LoginPages
                 finally
                 {
                     sqlcon.Close();
+                }*/
+
+                MainDatabase mDb = new MainDatabase();
+
+                var user = mDb.UserAdmins.Where(s => s.UserName == txtUser.Text && s.Password == txtPassword.Password).FirstOrDefault();
+                if (user!=null)
+                {
+                    MessageBox.Show("dang nhap thanh cong");
                 }
-                */
+                else
+                    MessageBox.Show("dang nhap fail");
+
+              
+               /* if (txtPassword.Password.CompareTo((mDb.UserAdmins.Select(d => d.Password).ToString())) == 0)
+                {
+                    MessageBox.Show("dang nhap thanh cong");
+                }
+                else
+                    MessageBox.Show("Dang nhap fail"); */
+
+                //txtUser.Text.CompareTo((mDb.UserAdmins.Select(d => d.UserName).ToString())) == 1 && 
             }
         }
         static public bool CapNhat(bool value)
