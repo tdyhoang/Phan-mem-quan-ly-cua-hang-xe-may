@@ -52,6 +52,9 @@ namespace MotoStore.Views.Windows
         public void CloseWindow()
             => Close();
 
+        public void HideWindow()
+            => Hide();
+
         #endregion INavigationWindow methods
 
         /// <summary>
