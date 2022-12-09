@@ -12,6 +12,7 @@ namespace MotoStore.ViewModels
     public partial class MainWindowViewModel : ObservableObject
     {
         private bool _isInitialized = false;
+       // private bool _isLoggedIn = false;
 
         [ObservableProperty]
         private string _applicationTitle = String.Empty;
@@ -27,15 +28,24 @@ namespace MotoStore.ViewModels
 
         public MainWindowViewModel(INavigationService navigationService)
         {
+            /*if (!_isLoggedIn)
+            {
+                Views.Windows.LoginView lgV = new Views.Windows.LoginView(this);
+                
+            }*/
+                
             if (!_isInitialized)
                 InitializeViewModel();
+
         }
 
         private void InitializeViewModel()
         {
             //ApplicationTitle = "Phần mềm quản lý cửa hàng xe máy";  //Title
 
-            if(PageChinh.isValid)
+            //Check loại NV
+
+            if (PageChinh.isValid)
             {
                 NavigationItems = new ObservableCollection<INavigationControl>
             {

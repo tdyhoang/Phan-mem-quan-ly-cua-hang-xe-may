@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MotoStore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -36,6 +37,12 @@ namespace MotoStore.Views.Windows
             InitializeComponent();
         }
 
+        public LoginView(MainWindowViewModel md)
+        {
+            InitializeComponent();
+            Application.Current.MainWindow = this;
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -51,6 +58,8 @@ namespace MotoStore.Views.Windows
         {
             Application.Current.Shutdown();
         }
+
+
 
     }
 }

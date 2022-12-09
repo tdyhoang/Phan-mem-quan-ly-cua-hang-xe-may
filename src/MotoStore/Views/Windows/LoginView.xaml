@@ -13,13 +13,13 @@
         MouseDown="Window_MouseDown"
         Background="#9900CC">
     <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/PageChinh.xaml"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Views/Pages/LoginPages/PageChinh.xaml"/>
         <ui:Button x:Name="btnMinimize"
                             BorderThickness="0"
                             Height="25"
                             Width="40"
                             Content="-"
-                            FontSize="30"
+                            FontSize="20"
                             FontWeight="Bold"
                             Background="Blue"
                             Foreground="Black"
@@ -27,7 +27,7 @@
                             Cursor="Hand"    
                             Grid.Column="1" 
                             Click="btnMinimize_Click"
-                            Margin="600,0,-15,500">
+                            Margin="700,0,5,500">
             <ui:Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -47,7 +47,7 @@
                             Cursor="Hand"    
                             Grid.Column="2"    
                             Click="btnClose_Click"
-                            Margin="700,0,0,500">
+                            Margin="750,0,0,500">
             <ui:Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

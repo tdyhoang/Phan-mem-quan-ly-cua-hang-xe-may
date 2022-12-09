@@ -30,7 +30,6 @@
                 Width="130"
                 FontSize="17"
                 FontWeight="Medium"
-                FontFamily="Great Vibes"
                 Content="Đăng Xuất"
                 Icon="SignOut24"
                 Appearance="Danger" />
@@ -44,7 +43,6 @@
                 Width="130"
                 FontSize="17"
                 FontWeight="Medium"
-                FontFamily="Great Vibes"
                 CommandParameter="open_window_login" Click="btnDgNhapDashBoard_Click" Background="#FF0027FF"
              />
             </Grid>

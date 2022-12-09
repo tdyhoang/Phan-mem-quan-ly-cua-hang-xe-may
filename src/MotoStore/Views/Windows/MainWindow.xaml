@@ -19,7 +19,9 @@
     ResizeMode="NoResize"
     MouseDown="Window_MouseDown"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    ShowInTaskbar="False"
+    Visibility="Hidden">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -96,10 +98,11 @@
                 CornerRadius="8,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="50" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Frame x:Name="RootFrame" Grid.Row="1" />
+                    <Frame x:Name="RootFrame" Grid.Row="1"                       
+                           />
                     <ui:Breadcrumb
                         Grid.Row="0"
                         Margin="56,36"
@@ -107,6 +110,19 @@
                         VerticalAlignment="Top"
                         FontSize="28"
                         Navigation="{Binding ElementName=RootNavigation, Mode=OneWay}" />
+
+                    <Grid Grid.Row="0">
+                        <Label x:Name="lblCuaHang"
+                               Height="40"
+                               Content="Phần Mềm Quản Lý Cửa Hàng Bán Xe Máy"
+                               FontSize="28.95"
+                               HorizontalAlignment="Center"
+                               FontWeight="Heavy"
+                               FontFamily="Great Vibes"
+                               Foreground="#8A16C1"
+                               ></Label>
+                    </Grid>
+                    
                 </Grid>
             </Border>
         </Grid>

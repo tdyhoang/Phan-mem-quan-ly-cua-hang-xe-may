@@ -34,69 +34,114 @@
             <Label x:Name="lblXinChao"
                Height="50"
                Width="250"
-               FontSize="20"
+               FontSize="30"
                FontWeight="Medium"
                FontFamily="Great Vibes"
                Foreground="White"
                HorizontalAlignment="Left"
                VerticalAlignment="Center"            
-               Margin="15,0,0,500">
+               Margin="15,50,0,500">
             </Label>
 
             <Border 
                 x:Name="borderAnh"
                 CornerRadius="25"
-                Height="100"
-                Width="150"
-                Margin="0,0,240,380"
+                Height="130"
+                Width="180"
+                Margin="0,80,200,380"
                 Background="LightGreen">
 
                 <Image x:Name="anhNhanVien"
-                   Height="90"
-                   Width="115"    
+                   Height="115"
+                   Width="135"    
                    Margin="0,5,1,5"/>
                 
             </Border>
 
-            <Border
+            <Grid>
+
+                <Border
                     x:Name="brdSoNV"
                     CornerRadius="25"
-                    Height="100"
-                    Width="150"
-                    Margin="0,0,240,100"
+                    Height="130"
+                    Width="180"
+                    Margin="0,80,200,100"
                     Background="MediumPurple">
-                <TextBlock
-                x:Name="txtblSoNV"
-                        FontFamily="Great Vibes"
+                    <TextBlock
+                        x:Name="txtblAnh"
                         FontWeight="Medium"
                         FontSize="20"
-                        Height="80"
-                        xml:space="preserve"> 
+                        Height="60"
+                        Width="60"
+                        Margin="90,40,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        >
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/LoginPages/NhanVien.png" 
+                                    Stretch="Uniform" 
+                                    Opacity="0.7"                                    
+                                    />
+
+                        </TextBlock.Background>
+                    </TextBlock>
+
+                </Border>
+
+                <TextBlock x:Name="txtblSoNV"
+                           Height="80"
+                           Width="140"
+                           Margin="0,0,240,20"
+                           FontSize="19"
+                           FontWeight="Medium">
+                    
                 </TextBlock>
-            </Border>
+
+            </Grid>
 
             <Border
                     x:Name="brdSoXe"
                     CornerRadius="25"
-                    Height="100"
-                    Width="150"
-                    Margin="0,280,240,100"
+                    Height="130"
+                    Width="180"
+                    Margin="0,360,200,100"
                     Background="PowderBlue">
-                <TextBlock
-                        x:Name="txtblSoXe"
-                        FontFamily="Great Vibes"
-                        FontWeight="Medium"
-                        FontSize="20"
-                        Height="80"
-                        xml:space="preserve">       
-                </TextBlock>
             </Border>
+
+            <Grid>
+
+                <TextBlock
+                        x:Name="txtblAnhXe"
+                        FontWeight="Medium"
+                        Height="60"
+                        Width="60"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,215,100"
+                        >
+                    <TextBlock.Background>
+                        <ImageBrush ImageSource="/Views/Pages/LoginPages/SoXe-removebg-preview.png"/>
+                    </TextBlock.Background>
+                </TextBlock>
+
+                <TextBlock x:Name="txtblSoXe"
+                           FontWeight="Medium"
+                           FontSize="20.5"
+                           Height="80"
+                           Width="140"
+                           Margin="0,230,230,0">
+                                        
+                </TextBlock>
+
+            </Grid>
+
+            
 
             <Label
             x:Name="lblGioHeThong"
             Height="35"
             Width="300"
-            Margin="0,370,80,0"
+            Margin="0,480,80,0"
             FontSize="20"
             FontWeight="Medium"
             Foreground="Black"></Label>
@@ -109,9 +154,27 @@
 
             <Calendar Height="260"
                       Width="240"
-                      Margin="305,180,0,0">
+                      Margin="305,220,0,0">
                 
             </Calendar>
+
+            <Button x:Name="btnDgXuat"
+                    Content="Đăng Xuất"
+                    Height="40"
+                    Width="120"
+                    FontSize="19"
+                    FontWeight="Medium"
+                    Foreground="Black"
+                    Background="LightSkyBlue"
+                    Margin="425,0,0,450" Click="btnDgXuat_Click"
+                    >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+
+            </Button>
             
         </Grid>
 

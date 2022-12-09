@@ -23,6 +23,7 @@ namespace MotoStore.Views.Pages.LoginPages
     /// </summary>
     public partial class PageDgNhapThanhCong : Page
     {
+        private PageChinh pgChinh;
         public PageDgNhapThanhCong()
         {
             InitializeComponent();
@@ -30,6 +31,16 @@ namespace MotoStore.Views.Pages.LoginPages
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+        }
+
+        public PageDgNhapThanhCong(PageChinh pgC)
+        {
+            InitializeComponent();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+            pgChinh = pgC;
         }
 
         private void PageDgNhapThanhCong_Loaded(object sender, RoutedEventArgs e)
@@ -66,6 +77,14 @@ namespace MotoStore.Views.Pages.LoginPages
         void timer_Tick(object sender, EventArgs e)
         {
             lblGioHeThong.Content = "Bây giờ là: " + DateTime.Now.ToLongTimeString();
+        }
+
+        private void btnDgXuat_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(pgChinh);
+
+
+
         }
     }
 }

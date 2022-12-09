@@ -18,11 +18,14 @@ namespace MotoStore.Views.Windows
         }
         public MainWindow()
         {
+            
             InitializeComponent();
+            
         }
 
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {
+            
             ViewModel = viewModel;
             DataContext = this;
 
@@ -30,6 +33,9 @@ namespace MotoStore.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
+            //LoginView Lgv = new LoginView();
+            //Lgv.Show();
+            
         }
 
         #region INavigationWindow methods

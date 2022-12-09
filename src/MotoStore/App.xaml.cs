@@ -65,6 +65,8 @@ namespace MotoStore
                 services.AddScoped<ViewModels.CustomerListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.SupplierListPage>();
                 services.AddScoped<ViewModels.SupplierListViewModel>();
+                services.AddScoped<Views.Windows.LoginView>();
+                services.AddScoped<Views.Pages.LoginPages.PageChinh>();
 
                 // Configuration
                 services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

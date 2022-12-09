@@ -19,6 +19,9 @@
     <None Remove="Assets\logo2.png" />
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
+    <None Remove="Views\Pages\LoginPages\NhanVien.png" />
+    <None Remove="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
+    <None Remove="Views\Pages\LoginPages\SoXe.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +51,9 @@
     <Resource Include="Assets\User_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Views\Pages\LoginPages\NhanVien.png" />
+    <Resource Include="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
+    <Resource Include="Views\Pages\LoginPages\SoXe.png" />
   </ItemGroup>
 
 </Project>

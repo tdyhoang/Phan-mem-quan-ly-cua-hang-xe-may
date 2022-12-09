@@ -1,5 +1,6 @@
 ﻿using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Views.Windows;
+using System.Windows;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.Views.Pages
@@ -17,13 +18,14 @@ namespace MotoStore.Views.Pages
         public DashboardPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
-
+            
             InitializeComponent();
+            
         }
 
         private void btnDgNhapDashBoard_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PageChinh());
+            NavigationService.Navigate(new PageChinh());
         }
 
     }

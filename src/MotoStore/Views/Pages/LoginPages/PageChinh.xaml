@@ -33,6 +33,15 @@
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
+                    
+                    <Grid Height="550"
+                          Width="400"
+                          Margin="300,0,0,0">
+                        
+                        
+                        
+                    </Grid>
+                    
                     <StackPanel Width="350"
                                 Height="500"
                             Grid.Row="2"
@@ -43,7 +52,6 @@
                                FontSize="23.25"
                                Foreground="#9900CC" 
                                Width="450"
-                               FontFamily="Great Vibes"
                                FontWeight="Heavy"
                                Height="40"
                                RenderTransformOrigin="0.463,0.48"
@@ -55,7 +63,6 @@
                         <TextBlock x:Name="txtSlogan" 
                                    Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý"
                                    FontSize="13.15"
-                                   FontFamily="Great Vibes"
                                    Foreground="#9900CC"
                                    FontWeight="Bold"
                                 ></TextBlock>
@@ -114,7 +121,7 @@
                             </PasswordBox.Background>
                         </PasswordBox>
 
-                        <Label x:Name="lblThongBao" Height="30" Width="300" FontSize="15" FontFamily="Great Vibes"
+                        <Label x:Name="lblThongBao" Height="30" Width="300" FontSize="15"
                                Foreground="Red" 
                                FontWeight="Medium" 
                                Margin="-50,5,0,0"></Label>
@@ -129,11 +136,10 @@
                             Content="Đăng Nhập" 
                             HorizontalAlignment="Center" 
                             Height="35" 
-                            Margin="300,320,0,0" 
+                            Margin="300,330,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="125" 
-                            FontFamily="Great Vibes"
                             FontWeight="Medium"
                             FontSize="16" 
                             Click="buttonDangNhap_Click" 
@@ -145,17 +151,17 @@
                                 <Setter Property="CornerRadius" Value="20"/>
                             </Style>
                         </Button.Resources>
+                        
                     </Button>
                     <Button x:Name="buttonQuenMK" 
                             Content="Quên Mật Khẩu ?" 
                             Height="35" 
-                            Margin="585,365,0,0" 
+                            Margin="585,375,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="145" 
                             RenderTransformOrigin="0.547,0.026" 
-                            FontSize="15.6" 
-                            FontFamily="Great Vibes"                           
+                            FontSize="15.6"                        
                             Click="buttonQuenMK_Click" 
                             FontWeight="Medium" 
                             TabIndex="1"
@@ -173,27 +179,26 @@
                     </Button>
 
                     <Button x:Name="buttonLanguage" 
-                            FontSize="19" 
+                            FontSize="21" 
                             FontWeight="Medium" 
                             Content="Tiếng Việt" 
                             HorizontalAlignment="Left" 
-                            Height="34" 
+                            Height="40" 
                             Margin="17,3,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
+                            
                             Width="146" 
                             Click="buttonLanguage_Click" 
                             TabIndex="1" 
                             Foreground="red" 
-                            Background="#FF00D1FF"
-                            FontFamily="Great Vibes"/>
+                            Background="#FF00D1FF"/>
                     <Label x:Name="lblNnguHienTai" 
                            Content="Ngôn Ngữ Hiện Tại:" 
                            HorizontalAlignment="Left" 
                            Height="30" Margin="24,0,0,0" 
                            VerticalAlignment="Center" 
                            Width="150"
-                           FontFamily="Great Vibes"
                            FontWeight="Medium"
                            FontSize="15"
                            Foreground="#9900CC">

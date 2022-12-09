@@ -34,6 +34,13 @@ namespace MotoStore.Views.Pages.LoginPages
             InitializeComponent();
             txtUser.Focus();  //Khi khởi động màn hình trang Chính thì đặt con trỏ chuột vào ô tài khoản
         }
+
+        private LoginView LoginView;
+        public PageChinh(LoginView lgv)
+        {
+            InitializeComponent();
+            LoginView = lgv;
+        }
     
         //static public PageChinh pgC;
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
@@ -105,10 +112,23 @@ namespace MotoStore.Views.Pages.LoginPages
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
                     }
 
-                if (isValid)
+                if (isValid)  //Chưa set lại biến này
                 {
-                    MessageBox.Show("Đăng Nhập Thành Công");                   
-                    this.NavigationService.Navigate(new PageDgNhapThanhCong());
+                    //MessageBox.Show("Đăng Nhập Thành Công");
+                    MainWindow md = new MainWindow();
+                    //md.RootFrame.Source = new Uri("PageDgNhapThanhCong.xaml");
+
+                    //
+
+                    this.NavigationService.Navigate(new PageDgNhapThanhCong(this));
+                    //Window parentWindow = Application.Current.MainWindow;
+                    //parentWindow.Visibility = Visibility.Hidden;
+
+                    /*md.Visibility=Visibility.Visible;
+                    md.Show();*/
+                    
+
+                    isValid = false;
                 }
                 else
                     lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
