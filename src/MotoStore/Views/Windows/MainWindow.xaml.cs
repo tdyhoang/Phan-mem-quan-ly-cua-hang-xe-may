@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MotoStore.Views.Pages.LoginPages;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,9 +34,25 @@ namespace MotoStore.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
-            //LoginView Lgv = new LoginView();
-            //Lgv.Show();
-            
+            this.Visibility = Visibility.Collapsed;
+            LoginView lgv = new LoginView();
+            lgv.Show();
+            //this.Visibility = Visibility.Visible;
+        }
+
+        public void MainWD_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ViewModel.InitializeViewModel();
+            /*if ((bool)e.NewValue)
+            {
+                ViewModel.InitializeViewModel();
+                this.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Collapse code here
+                this.Visibility = Visibility.Collapsed;
+            }*/
         }
 
         #region INavigationWindow methods

@@ -4,6 +4,7 @@ CREATE DATABASE QLYCHBANXEMAY
 use QLYCHBANXEMAY
 set dateformat dmy
 
+
 Create table KhachHang
 (
        MaKH uniqueidentifier DEFAULT newid(),
@@ -30,7 +31,6 @@ Insert into KhachHang values('F7EED837-719A-4AF5-A6FB-8F167847A2F7',N'Nguyễn V
 Insert into KhachHang values('955A14F5-F895-4F0B-B693-CE24A0B11321',N'Phan Thị Thanh','31/12/1981',N'Nữ',N'34 Trương Định, Q3, TpHCM','0948531923','ThanhTP311281@gmail.com',N'Thân quen')
 Insert into KhachHang values('8507F1FB-C2CC-48AF-B285-DC15AFF4EC77',N'Đỗ Ngọc Khải','4/3/2001','Nam',N'215 Nguyễn Xiển, Q9, TpHCM','0876180684','DNKSBTC@gmail.com',N'Thường')
 
-
 Create table NhanVien
 (
       MaNV uniqueidentifier DEFAULT newid(),
@@ -44,17 +44,18 @@ Create table NhanVien
 	  NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	  Luong money,
 	  Thuong money,
-	  constraint PK_MaNV primary key(MANV)
+      TenNV nvarchar(10),     /*Lấy tên nhân viên*/
+      LoaiNV int,             /*Phân loại NV: 1-Quản Lý | 2-Văn Phòng | 3-Sửa Xe*/
+	  constraint PK_MaNV primary key(MANV)	 
 )
-
 alter table NhanVien add constraint CK_GTNV check(GioiTinh = 'Nam' or GioiTinh=N'Nữ')
 
-Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,3000000)
-Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,4000000)
-Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11/5/2021',5000000,2000000)
-Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,2500000)
-Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,2500000)
-Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,3500000) /*Người quản lý*/
+Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,3000000,N'Nghĩa',3)
+Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,4000000,N'Tuấn',3)
+Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,2000000,N'Quý',3)
+Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,2500000,N'Thương',2)
+Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,2500000,N'Sang',2)
+Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,3500000,N'Trung',1) /*Người quản lý*/
 
 
 create table NhaSanXuat
@@ -66,13 +67,11 @@ create table NhaSanXuat
 	 constraint PK_NSX primary key(TenNSX,NuocSX)
 )
 
-
 Insert into NhaSanXuat values('Yamaha','(30.24)38855080','YamahaMotorJapan@gmail.com',N'Nhật Bản')
 Insert into NhaSanXuat values('Yamaha','(84.24)38855080','YamahaMotorVietNamCNVP@gmail.com',N'Việt Nam')
 Insert into NhaSanXuat values('Suzuki','(84.89)47435209','SuzukiMotorVietNam@gmail.com',N'Việt Nam')
 Insert into NhaSanXuat values('Honda','(84.2)18943170','HondaMotorThaiLand@gmail.com',N'Thái Lan')
 Insert into NhaSanXuat values('Honda','(30.2)18943170','HondaMotorJapan@gmail.com',N'Nhật Bản')
-
 
 create table MatHang
 (
@@ -172,3 +171,11 @@ alter table DonDatHang add constraint FK_MaNVDDH foreign key(MaNV) references NH
 
 Insert into DonDatHang values(newid(),1,'01921D8D-F015-4309-A130-9390B2E8EC11',1,'8507F1FB-C2CC-48AF-B285-DC15AFF4EC77','90B6193C-0EBD-43F2-82A3-2DA131D767C6','25/11/2022')
 
+Create Table LenLich
+(
+  /*MaLenLich  uniqueidentifier DEFAULT newid(),*/
+  MaNV uniqueidentifier,          /*Mã Nhân Viên để biết ai đã lên lịch, tiện cho tính năng xem lịch sử hoạt động sau này*/
+  NgLenLichBD smalldatetime,      /*Ngày, giờ bắt đầu*/
+  NgLenLichKT smalldatetime,      /*Ngày, giờ kết thúc*/
+  NoiDungLenLich nvarchar(200),   /*Nội dung lên lịch hôm đó*/
+)

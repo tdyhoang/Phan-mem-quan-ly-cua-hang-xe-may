@@ -11,7 +11,8 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"  
         MouseDown="Window_MouseDown"
-        Background="#9900CC">
+        
+        >
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Views/Pages/LoginPages/PageChinh.xaml"/>
         <ui:Button x:Name="btnMinimize"
@@ -27,7 +28,7 @@
                             Cursor="Hand"    
                             Grid.Column="1" 
                             Click="btnMinimize_Click"
-                            Margin="700,0,5,500">
+                            Margin="705,0,5,500">
             <ui:Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

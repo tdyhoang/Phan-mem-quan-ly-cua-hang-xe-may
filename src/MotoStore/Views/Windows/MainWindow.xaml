@@ -20,8 +20,8 @@
     MouseDown="Window_MouseDown"
     WindowStyle="None"
     mc:Ignorable="d"
-    ShowInTaskbar="False"
-    Visibility="Hidden">
+    IsVisibleChanged="MainWD_VisibleChanged"
+    >
     <Grid>
 
         <Grid.RowDefinitions>

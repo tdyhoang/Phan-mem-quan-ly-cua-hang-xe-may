@@ -32,7 +32,7 @@
                 FontWeight="Medium"
                 Content="Đăng Xuất"
                 Icon="SignOut24"
-                Appearance="Danger" />
+                Appearance="Danger" Click="btnDgXuatDashBoard_Click" />
                 
                 <ui:Button x:Name="btnDgNhapDashBoard"
                 DockPanel.Dock="Right"
@@ -43,7 +43,7 @@
                 Width="130"
                 FontSize="17"
                 FontWeight="Medium"
-                CommandParameter="open_window_login" Click="btnDgNhapDashBoard_Click" Background="#FF0027FF"
+                CommandParameter="open_window_login"  Background="#FF0027FF" Click="btnDgNhapDashBoard_Click"
              />
             </Grid>
             

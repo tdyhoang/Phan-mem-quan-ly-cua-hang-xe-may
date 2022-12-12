@@ -28,7 +28,7 @@
         </Border>
 
         <Grid Height="600"
-              Width="400"
+              Width="500"
               Margin="0,0,550,0">
 
             <Label x:Name="lblXinChao"
@@ -40,23 +40,20 @@
                Foreground="White"
                HorizontalAlignment="Left"
                VerticalAlignment="Center"            
-               Margin="15,50,0,500">
+               Margin="70,50,0,500">
             </Label>
 
-            <Border 
-                x:Name="borderAnh"
-                CornerRadius="25"
-                Height="130"
-                Width="180"
-                Margin="0,80,200,380"
-                Background="LightGreen">
-
-                <Image x:Name="anhNhanVien"
-                   Height="115"
-                   Width="135"    
-                   Margin="0,5,1,5"/>
-                
-            </Border>
+            <Image x:Name="anhNhanVien"
+                   Height="120"
+                   Width="150"
+                   Margin="0,0,200,300">
+                <Image.OpacityMask>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.65">
+                        <GradientStop Color="#ffffffff" Offset="0.8" />
+                        <GradientStop Color="#00ffffff" Offset="0.8" />
+                    </RadialGradientBrush>
+                </Image.OpacityMask>
+            </Image>
 
             <Grid>
 
@@ -117,7 +114,7 @@
                         Width="60"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
-                        Margin="0,0,215,100"
+                        Margin="0,0,265,100"
                         >
                     <TextBlock.Background>
                         <ImageBrush ImageSource="/Views/Pages/LoginPages/SoXe-removebg-preview.png"/>
@@ -129,13 +126,11 @@
                            FontSize="20.5"
                            Height="80"
                            Width="140"
-                           Margin="0,230,230,0">
-                                        
+                           Margin="0,220,230,0">
+
                 </TextBlock>
 
             </Grid>
-
-            
 
             <Label
             x:Name="lblGioHeThong"
@@ -149,14 +144,23 @@
         </Grid>
 
         <Grid Height="600"
-              Width="550"
-              Margin="400,0,0,0">
+              Width="350"
+              Margin="600,0,0,0">
 
-            <Calendar Height="260"
-                      Width="240"
-                      Margin="305,220,0,0">
-                
+            <StackPanel x:Name="stkLich"
+                        Height="150"
+                        Width="230"
+                        Margin="100,50,0,150">
+            </StackPanel>
+            
+
+            <Calendar x:Name="Lich"
+                Height="260"
+                Width="240"
+                Margin="100,320,0,0"
+                SelectedDatesChanged="Lich_SelectedDatesChanged">
             </Calendar>
+            
 
             <Button x:Name="btnDgXuat"
                     Content="Đăng Xuất"
@@ -166,14 +170,24 @@
                     FontWeight="Medium"
                     Foreground="Black"
                     Background="LightSkyBlue"
-                    Margin="425,0,0,450" Click="btnDgXuat_Click"
+                    Margin="225,0,0,450" Click="btnDgXuat_Click"
                     >
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="20"/>
+                        <Setter Property="CornerRadius" Value="10"/>
                     </Style>
                 </Button.Resources>
 
+            </Button>
+
+            <Button x:Name="btnLenLich"
+                    Content="Lên Lịch"
+                    Height="40"
+                    Width="120"
+                    Margin="225,0,0,350"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Background="Aquamarine" Click="btnLenLich_Click">
             </Button>
             
         </Grid>

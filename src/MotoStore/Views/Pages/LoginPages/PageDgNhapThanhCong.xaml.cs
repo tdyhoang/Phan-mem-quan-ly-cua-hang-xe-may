@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
+using System.Windows.Threading; 
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -51,7 +51,8 @@ namespace MotoStore.Views.Pages.LoginPages
             {
                 case "Ngquanly1":
                     lblXinChao.Content = "Xin Chào, Trung";
-                    txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n"+"".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();                  
+                    txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n"+"".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
+                    txtblSoXe.FontSize = 21.5   ;
                     txtblSoXe.Text= "".PadRight(9)+ "Số Xe\n"+"".PadRight(5)+"Trong Kho:\n"+"".PadRight(11)+ mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\anh3.png"));
                     break;
@@ -60,8 +61,11 @@ namespace MotoStore.Views.Pages.LoginPages
                     //2 dòng dưới để lấy ngày vào làm của nhân viên và tính số ngày từ đó đến nay
                     var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
                     int d3 = (int)(dt - dx).Value.TotalDays;
-
                     txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d3.ToString() + " Ngày";
+
+                    var slg = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                    txtblSoXe.Text = "".PadRight(12)+slg.ToString()+"\n Là Số Xe\n Bạn Bán Được";
+
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\userNu.png"));
                     break;
                 case "Nhvien2":
@@ -69,6 +73,10 @@ namespace MotoStore.Views.Pages.LoginPages
                     var dq = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
                     int d4 = (int)(dt - dq).Value.TotalDays;
                     txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d4.ToString() + " Ngày";
+
+                    var slg1 = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                    txtblSoXe.Text = "".PadRight(10) + slg1.ToString() + "\n Là Số Xe\n Bạn Bán Được";
+
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\userNam.png"));
                     break;
             }   
@@ -84,6 +92,33 @@ namespace MotoStore.Views.Pages.LoginPages
             this.NavigationService.Navigate(pgChinh);
 
 
+
+        }
+
+        private void Lich_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {            
+            stkLich.Children.Clear();
+            RichTextBox rtb = new RichTextBox();
+            rtb.Height = 150;
+            rtb.Width = 230;
+            rtb.Foreground = Brushes.Black;
+            rtb.FontSize = 15;
+            stkLich.Children.Add(rtb);
+        }
+
+        private void btnLenLich_Click(object sender, RoutedEventArgs e)
+        {
+            //if có ngày được select
+            DateTime dt = DateTime.Now;
+            //if (Lich.SelectedDate.HasValue)
+            //MessageBox.Show(Lich.SelectedDate.Value.ToString());
+            //Có sắp giờ đc không ?
+            //==> Có chứ
+            Window wnd = new Window();
+            wnd.Height = 150;
+            wnd.Width = 300;
+            //wnd.
+            wnd.Show();
 
         }
     }

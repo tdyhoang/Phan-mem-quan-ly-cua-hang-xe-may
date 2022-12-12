@@ -15,7 +15,6 @@ using System.Windows.Controls;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using System.Windows;
-using MessageBox = System.Windows.MessageBox;
 
 namespace MotoStore.ViewModels
 {

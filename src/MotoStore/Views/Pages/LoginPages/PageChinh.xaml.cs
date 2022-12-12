@@ -20,6 +20,10 @@ using System.Data.SqlClient;
 using MotoStore.Database;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Cryptography;
+using MotoStore.ViewModels;
+using Wpf.Ui.Mvvm.Contracts;
+using System.Diagnostics;
+using System.Windows.Media.Animation;
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -33,13 +37,14 @@ namespace MotoStore.Views.Pages.LoginPages
         {
             InitializeComponent();
             txtUser.Focus();  //Khi khởi động màn hình trang Chính thì đặt con trỏ chuột vào ô tài khoản
+            timer.Tick += Timer_Tick;
         }
 
-        private LoginView LoginView;
-        public PageChinh(LoginView lgv)
+        private MainWindow mainWD;
+        public PageChinh(MainWindow Mw)
         {
             InitializeComponent();
-            LoginView = lgv;
+            mainWD = Mw;
         }
     
         //static public PageChinh pgC;
@@ -47,6 +52,7 @@ namespace MotoStore.Views.Pages.LoginPages
         static public bool isValid = false;
         static public string getTK;   //Đặt biến tĩnh public để PageDgNhapThanhCong có thể truy cập để lấy các thông tin cần thiết
         static public string getMa;   //Tương tự như trên
+        private readonly DispatcherTimer timer = new DispatcherTimer();
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
@@ -80,9 +86,30 @@ namespace MotoStore.Views.Pages.LoginPages
                     break;
             }
         }
+        static private int dem = 0;
+        private bool Nhay = false;
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (dem == 5)           //dem Vượt Quá 5 Thì Ngừng Nháy
+                timer.Stop();
+            if (Nhay)
+            {
+                lblThongBao.Foreground = Brushes.Red;
+                dem++;
+            }
+            else
+            {
+                lblThongBao.Foreground = Brushes.Black;
+                dem++;
+            }
+            Nhay = !Nhay;
+            //Hàm Này Để Nháy Thông Báo 
+        }
 
         public void buttonDangNhap_Click(object sender, RoutedEventArgs e)
         {
+            dem = 0;
 
             flag = 1; //Báo hiệu nút Đăng Nhập đã được click
 
@@ -91,15 +118,17 @@ namespace MotoStore.Views.Pages.LoginPages
                 if (buttonLanguage.Content == "English")
                 {
                     lblThongBao.Content = "Please fill in all fields fully!";
+                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);      //Nháy Mỗi 200 milisecond
                 }
                 else
-                {
+                {   
                     lblThongBao.Content = "Vui lòng điền đầy đủ thông tin!";
+                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
                 }
+                timer.Start();         //Bắt Đầu Nháy       
             }
             else
             {
-
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
 
                 MainDatabase mDb = new MainDatabase();             
@@ -112,26 +141,25 @@ namespace MotoStore.Views.Pages.LoginPages
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
                     }
 
-                if (isValid)  //Chưa set lại biến này
+                if (isValid)  
                 {
-                    //MessageBox.Show("Đăng Nhập Thành Công");
-                    MainWindow md = new MainWindow();
-                    //md.RootFrame.Source = new Uri("PageDgNhapThanhCong.xaml");
 
-                    //
-
-                    this.NavigationService.Navigate(new PageDgNhapThanhCong(this));
-                    //Window parentWindow = Application.Current.MainWindow;
-                    //parentWindow.Visibility = Visibility.Hidden;
-
-                    /*md.Visibility=Visibility.Visible;
-                    md.Show();*/
                     
+                    //var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này
+                    //getWd.Close();                       //Đóng nó sau khi đăng nhập thành công
+                    //MainWindowViewModel md;
+                    //md.InitializeViewModel();
+
+
 
                     isValid = false;
                 }
                 else
+                {
                     lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
+                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                    timer.Start();
+                }
 
             }
         }

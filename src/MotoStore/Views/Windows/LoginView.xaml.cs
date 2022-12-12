@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -32,21 +33,19 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class LoginView
     {
+        //Muốn hiện thằng này, sau khi đăng nhập xong rồi thì muốn đóng thằng này
+        private MainWindow MWD;
+        
         public LoginView()
         {
             InitializeComponent();
-        }
-
-        public LoginView(MainWindowViewModel md)
-        {
-            InitializeComponent();
-            Application.Current.MainWindow = this;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
+            
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -56,10 +55,9 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            //Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            this.Hide();
         }
-
-
 
     }
 }

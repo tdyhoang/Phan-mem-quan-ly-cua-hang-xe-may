@@ -23,10 +23,30 @@ namespace MotoStore.Views.Pages
             
         }
 
-        private void btnDgNhapDashBoard_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DashboardPage_Loaded(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new PageChinh());
+
         }
 
+       /* private void btnDgXuat_Click(object sender, RoutedEventArgs e)
+        {
+            var getWindw = Window.GetWindow(this);
+            getWindw.Close();
+            LoginView lgv = new LoginView();
+            lgv.Show();
+        } */
+
+        private void btnDgNhapDashBoard_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new PageChinh());
+        }
+
+        private void btnDgXuatDashBoard_Click(object sender, RoutedEventArgs e)
+        {
+            var getWindw = Window.GetWindow(this);
+            getWindw.Hide();
+            LoginView lgv = new LoginView();
+            lgv.ShowDialog();
+        }
     }
 }

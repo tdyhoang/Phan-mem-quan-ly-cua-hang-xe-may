@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MotoStore.Views.Pages.LoginPages;
+using MotoStore.Views.Windows;
 using System;
 using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
@@ -26,6 +27,7 @@ namespace MotoStore.ViewModels
         [ObservableProperty]
         private ObservableCollection<MenuItem> _trayMenuItems = new();
 
+
         public MainWindowViewModel(INavigationService navigationService)
         {
             /*if (!_isLoggedIn)
@@ -33,17 +35,25 @@ namespace MotoStore.ViewModels
                 Views.Windows.LoginView lgV = new Views.Windows.LoginView(this);
                 
             }*/
-                
+            
+
             if (!_isInitialized)
+            {
+                //LoginView lgv = new LoginView();
+                //lgv.ShowDialog();
+                //if(PageChinh.isValid)
                 InitializeViewModel();
+                
+            }
 
         }
 
-        private void InitializeViewModel()
+        public void InitializeViewModel()      //chinh pri thanh pub
         {
             //ApplicationTitle = "Phần mềm quản lý cửa hàng xe máy";  //Title
 
             //Check loại NV
+            
 
             if (PageChinh.isValid)
             {
@@ -54,7 +64,7 @@ namespace MotoStore.ViewModels
                     Content = "Trang Chủ",
                     PageTag = "trangchu",
                     Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)
+                    PageType = typeof(Views.Pages.DashboardPage)                    
                 },
                 new NavigationItem()
                 {
@@ -113,7 +123,7 @@ namespace MotoStore.ViewModels
                 },
                 new NavigationItem()
                 {
-                    Content = "Nhập Xuất",
+                    Content = "Nhập xuất",
                     PageTag = "io",
                     Icon = SymbolRegular.Stream24,
                     PageType = typeof(Views.Pages.IOPage)

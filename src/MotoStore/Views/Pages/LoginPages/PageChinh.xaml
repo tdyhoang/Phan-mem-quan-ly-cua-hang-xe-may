@@ -12,11 +12,12 @@
     <Grid>
         <Border>
 
-            <Border 
-           BorderBrush="White"
-           BorderThickness="5"
-           Opacity="0.82" 
-           Background="White">
+            <Border>
+                <Border.Background>
+                    <ImageBrush Opacity="0.83" ImageSource="/Views/Pages/LoginPages/motorworkshop.jpg"/>
+                    
+                </Border.Background>
+
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -33,29 +34,22 @@
                             <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
-                    
-                    <Grid Height="550"
-                          Width="400"
-                          Margin="300,0,0,0">
-                        
-                        
-                        
-                    </Grid>
-                    
-                    <StackPanel Width="350"
-                                Height="500"
-                            Grid.Row="2"
-                            Orientation="Vertical"
-                            Margin="300,0,0,0">
+
+                    <Grid Width="350"
+                          Height="500"
+                          Grid.Row="2"
+                          Margin="0,0,400,0">
+
+
                         <TextBlock x:Name="txtQLYCHXM" 
                                    Text=" QUẢN LÝ CỬA HÀNG XE MÁY"                               
                                FontSize="23.25"
-                               Foreground="#9900CC" 
+                               Foreground="White" 
                                Width="450"
                                FontWeight="Heavy"
                                Height="40"
                                RenderTransformOrigin="0.463,0.48"
-                                   Margin="0,0,0,0">
+                                   Margin="0,0,0,450">
                             <TextBlock.Background>
                                 <ImageBrush/>
                             </TextBlock.Background>
@@ -63,17 +57,19 @@
                         <TextBlock x:Name="txtSlogan" 
                                    Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý"
                                    FontSize="13.15"
-                                   Foreground="#9900CC"
+                                   Foreground="White"
+                                   Margin="0,50,0,0"
                                    FontWeight="Bold"
                                 ></TextBlock>
                         <TextBlock x:Name="txtTenTK" 
                                    Text="Tên Tài Khoản:"                              
                                FontSize="20"
-                               Foreground="Black" Width="350"
+                               Foreground="WhiteSmoke" Width="350"
                                FontFamily="Montserrat"
-                               FontWeight="Medium"
-                              HorizontalAlignment="Center" Height="30"
-                               Margin="0,55,0,0"/>
+                               FontWeight="Bold"
+                               Height="30"
+                               Margin="0,0,0,260"/>
+
                         <TextBox x:Name="txtUser"
                              FontSize="20"
                              FontWeight="Medium"
@@ -83,10 +79,10 @@
                              BorderBrush="#9900CC"
                              BorderThickness="0,0,0,10"
                              Height="30"
-                             Margin="0,5,0,0"
+                             Margin="0,145,0,0"
                              Padding="20,0,0,0"
-                             VerticalContentAlignment="Center"
-                             TabIndex="1">
+                             
+                             TabIndex="1" VerticalAlignment="Top">
                             <TextBox.Background>
                                 <ImageBrush ImageSource="../../../Assets/user_logo.png"
                                         Stretch="Uniform"
@@ -96,11 +92,12 @@
                         <TextBlock x:Name="txtMatKhau" 
                                    Text="Mật Khẩu:"                             
                                FontSize="20"
-                               Foreground="Black" Width="350"
+                               Foreground="White" 
+                               Width="350"
                                FontFamily="Montserrat"
-                               FontWeight="Medium"
+                               FontWeight="Bold"
                               HorizontalAlignment="Center" Height="40"
-                               Margin="0,20,0,0"/>
+                               Margin="0,192,0,268"/>
                         <PasswordBox x:Name="txtPassword" 
                                      Height="35" 
                                      Width="355" 
@@ -113,7 +110,7 @@
                              CaretBrush="Red"
                              BorderBrush="#9900CC"
                              BorderThickness="0,0,0,10"
-                                     PasswordChar="*">
+                                     PasswordChar="*" Margin="0,237,-5,0" VerticalAlignment="Top">
                             <PasswordBox.Background>
                                 <ImageBrush ImageSource="../../../Assets/lock.png" 
                                             Stretch="Uniform" 
@@ -122,21 +119,16 @@
                         </PasswordBox>
 
                         <Label x:Name="lblThongBao" Height="30" Width="300" FontSize="15"
-                               Foreground="Red" 
+                               Foreground="red" 
                                FontWeight="Medium" 
-                               Margin="-50,5,0,0"></Label>
+                               Margin="10,245,40,140"
+                               ></Label>
 
-                        <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0,15,0,0"
-                                    />
-                    </StackPanel>
-
-                    <Button x:Name="buttonDangNhap" 
+                        <Button x:Name="buttonDangNhap" 
                             Content="Đăng Nhập" 
                             HorizontalAlignment="Center" 
                             Height="35" 
-                            Margin="300,330,0,0" 
+                            Margin="0,330,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="125" 
@@ -145,18 +137,19 @@
                             Click="buttonDangNhap_Click" 
                             Background="#FF00D1FF"
                             Foreground="Black"
-                            TabIndex="1">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="20"/>
-                            </Style>
-                        </Button.Resources>
-                        
-                    </Button>
-                    <Button x:Name="buttonQuenMK" 
+                            TabIndex="1" Cursor="AppStarting">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+
+                        </Button>
+
+                        <Button x:Name="buttonQuenMK" 
                             Content="Quên Mật Khẩu ?" 
                             Height="35" 
-                            Margin="585,375,0,0" 
+                            Margin="103,375,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             Width="145" 
@@ -166,25 +159,32 @@
                             FontWeight="Medium" 
                             TabIndex="1"
                             >
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="20"/>
-                            </Style>
-                        </Button.Resources>
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF00C8FF" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF00C8FF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+                    </Grid>
+
+
+
+
 
                     <Button x:Name="buttonLanguage" 
                             FontSize="21" 
                             FontWeight="Medium" 
                             Content="Tiếng Việt" 
-                            HorizontalAlignment="Left" 
+                            HorizontalAlignment="Right" 
                             Height="40" 
-                            Margin="17,3,0,0" 
+                            Margin="620,0,0,0" 
                             Grid.Row="1" 
                             VerticalAlignment="Top" 
                             
@@ -195,23 +195,17 @@
                             Background="#FF00D1FF"/>
                     <Label x:Name="lblNnguHienTai" 
                            Content="Ngôn Ngữ Hiện Tại:" 
-                           HorizontalAlignment="Left" 
-                           Height="30" Margin="24,0,0,0" 
+                           HorizontalAlignment="Right" 
+                           Height="30" Margin="625,0,0,0" 
                            VerticalAlignment="Center" 
                            Width="150"
                            FontWeight="Medium"
                            FontSize="15"
-                           Foreground="#9900CC">
+                           Foreground="White">
                         <Label.Background>
                             <ImageBrush/>
                         </Label.Background>
                     </Label>
-
-                    <Image Source="../../../Assets/logo2.png" 
-                           Margin="10,98,508,128" 
-                           Grid.Row="1"
-                           Opacity="1"
-                           />
 
                 </Grid>
             </Border>
