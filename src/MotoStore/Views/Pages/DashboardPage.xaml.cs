@@ -1,52 +1,145 @@
-﻿using MotoStore.Views.Pages.LoginPages;
-using MotoStore.Views.Windows;
+﻿using MotoStore.Database;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using Wpf.Ui.Common.Interfaces;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.Views.Pages
 {
     /// <summary>
     /// Interaction logic for DashboardPage.xaml
     /// </summary>
-    public partial class DashboardPage : INavigableView<ViewModels.DashboardViewModel>
+    public partial class DashboardPage : Page
     {
-        public ViewModels.DashboardViewModel ViewModel
+        private PageChinh pgChinh;
+        public DashboardPage()
         {
-            get;
+            InitializeComponent();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
-        public DashboardPage(ViewModels.DashboardViewModel viewModel)
+        public DashboardPage(PageChinh pgC)
         {
-            ViewModel = viewModel;
-            
             InitializeComponent();
-            
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
+            pgChinh = pgC;
         }
 
         private void DashboardPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // Ẩn MainWindow đi, cái này nên dời sang code của MainWindow lúc mới khởi tạo
+            App.Current.MainWindow.Visibility = Visibility.Collapsed;
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            lblGioHeThong.Content = "Bây giờ là: " + DateTime.Now.ToLongTimeString();
+        }
+
+        private void btnDgXuat_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.MainWindow.Visibility = Visibility.Collapsed;
+            Windows.LoginView loginView = new Windows.LoginView();
+            loginView.Show();
+        }
+
+        private void Lich_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            stkLich.Children.Clear();
+            RichTextBox rtb = new RichTextBox();
+            rtb.Height = 150;
+            rtb.Width = 230;
+            rtb.Foreground = Brushes.Black;
+            rtb.FontSize = 15;
+            stkLich.Children.Add(rtb);
+        }
+
+        private void btnLenLich_Click(object sender, RoutedEventArgs e)
+        {
+            //if có ngày được select
+            DateTime dt = DateTime.Now;
+            //if (Lich.SelectedDate.HasValue)
+            //MessageBox.Show(Lich.SelectedDate.Value.ToString());
+            //Có sắp giờ đc không ?
+            //==> Có chứ
+            Window wnd = new Window();
+            wnd.Height = 150;
+            wnd.Width = 300;
+            //wnd.
+            wnd.Show();
 
         }
 
-       /* private void btnDgXuat_Click(object sender, RoutedEventArgs e)
+        // Event Handler cho VisibleChanged
+        private void DashboardPage_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var getWindw = Window.GetWindow(this);
-            getWindw.Close();
-            LoginView lgv = new LoginView();
-            lgv.Show();
-        } */
-
-        private void btnDgNhapDashBoard_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new PageChinh());
+            if ((bool)e.NewValue)
+            {
+                DashboardPage_Initialize();
+            }
+            else
+            {
+                // Collapse code here
+            }
         }
 
-        private void btnDgXuatDashBoard_Click(object sender, RoutedEventArgs e)
+        // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
+        private void DashboardPage_Initialize()
         {
-            var getWindw = Window.GetWindow(this);
-            getWindw.Hide();
-            LoginView lgv = new LoginView();
-            lgv.ShowDialog();
+            MainDatabase mdb = new MainDatabase();
+            DateTime dt = DateTime.Now;
+            switch (PageChinh.getTK)
+            {
+                case "Ngquanly1":
+                    lblXinChao.Content = "Xin Chào, Trung";
+                    txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
+                    txtblSoXe.FontSize = 21.5;
+                    txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\anh3.png"));
+                    break;
+                case "Nhvien1":
+                    lblXinChao.Content = "Xin Chào, Thương";
+                    //2 dòng dưới để lấy ngày vào làm của nhân viên và tính số ngày từ đó đến nay
+                    var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
+                    int d3 = (int)(dt - dx).Value.TotalDays;
+                    txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d3.ToString() + " Ngày";
+
+                    var slg = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                    txtblSoXe.Text = "".PadRight(12) + slg.ToString() + "\n Là Số Xe\n Bạn Bán Được";
+
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\userNu.png"));
+                    break;
+                case "Nhvien2":
+                    lblXinChao.Content = "Xin Chào, Sang";
+                    var dq = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
+                    int d4 = (int)(dt - dq).Value.TotalDays;
+                    txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d4.ToString() + " Ngày";
+
+                    var slg1 = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                    txtblSoXe.Text = "".PadRight(10) + slg1.ToString() + "\n Là Số Xe\n Bạn Bán Được";
+
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\userNam.png"));
+                    break;
+            }
         }
     }
 }

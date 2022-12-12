@@ -22,9 +22,6 @@
     <Compile Update="Views\Pages\IOPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Pages\LoginPages\PageDgNhapThanhCong.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Pages\ReportPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,9 +49,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\LoginPages\PageChinh.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\LoginPages\PageDgNhapThanhCong.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\LoginPages\PageGuiMa.xaml">

@@ -131,7 +131,7 @@ namespace MotoStore.Views.Pages.LoginPages
             {
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
 
-                MainDatabase mDb = new MainDatabase();             
+                MainDatabase mDb = new MainDatabase();  
                 foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                     {
@@ -145,14 +145,9 @@ namespace MotoStore.Views.Pages.LoginPages
                 {
 
                     
-                    //var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này
-                    //getWd.Close();                       //Đóng nó sau khi đăng nhập thành công
-                    //MainWindowViewModel md;
-                    //md.InitializeViewModel();
-
-
-
-                    isValid = false;
+                    var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này
+                    getWd.Close();                       //Đóng nó sau khi đăng nhập thành công
+                    App.Current.MainWindow.Visibility = Visibility.Visible;
                 }
                 else
                 {

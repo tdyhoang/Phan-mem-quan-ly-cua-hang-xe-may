@@ -34,7 +34,8 @@ namespace MotoStore.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
-            this.Visibility = Visibility.Collapsed;
+
+            Visibility = Visibility.Collapsed;
             LoginView lgv = new LoginView();
             lgv.Show();
             //this.Visibility = Visibility.Visible;
@@ -42,17 +43,15 @@ namespace MotoStore.Views.Windows
 
         public void MainWD_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ViewModel.InitializeViewModel();
-            /*if ((bool)e.NewValue)
+            if ((bool)e.NewValue)
             {
                 ViewModel.InitializeViewModel();
-                this.Visibility = Visibility.Visible;
             }
             else
             {
                 // Collapse code here
-                this.Visibility = Visibility.Collapsed;
-            }*/
+                Visibility = Visibility.Collapsed;
+            }
         }
 
         #region INavigationWindow methods
