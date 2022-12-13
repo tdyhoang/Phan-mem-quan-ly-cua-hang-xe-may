@@ -17,12 +17,6 @@ namespace MotoStore.Views.Windows
         {
             get;
         }
-        public MainWindow()
-        {
-            
-            InitializeComponent();
-            
-        }
 
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {
@@ -34,25 +28,13 @@ namespace MotoStore.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
-
-            Visibility = Visibility.Collapsed;
+            this.Visibility = Visibility.Collapsed;
             LoginView lgv = new LoginView();
-            lgv.Show();
+            lgv.ShowDialog();
             //this.Visibility = Visibility.Visible;
         }
 
-        public void MainWD_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-            {
-                ViewModel.InitializeViewModel();
-            }
-            else
-            {
-                // Collapse code here
-                Visibility = Visibility.Collapsed;
-            }
-        }
+        
 
         #region INavigationWindow methods
 

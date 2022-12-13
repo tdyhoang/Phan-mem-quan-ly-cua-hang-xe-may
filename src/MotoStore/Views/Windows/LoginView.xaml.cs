@@ -55,8 +55,7 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            //Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            this.Hide();
+            Application.Current.Shutdown();
         }
 
     }

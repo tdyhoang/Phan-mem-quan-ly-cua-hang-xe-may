@@ -31,7 +31,8 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<UserApp> UserApps { get; set; }
 
-    // public virtual DbSet<LenLich> LenLichs { get; set; }
+    public virtual DbSet<LenLich> LenLichs { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -206,6 +207,12 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.NgVl)
                 .HasColumnType("smalldatetime")
                 .HasColumnName("NgVL");
+            entity.Property(e => e.TenNV).HasMaxLength(10)
+            .HasColumnName("TenNV")
+            .IsUnicode(true);
+            entity.Property(e => e.LoaiNV)
+            .HasColumnName("LoaiNV")
+            .HasColumnType("int");
             entity.Property(e => e.Sdt)
                 .HasMaxLength(10)
                 .IsUnicode(false)
@@ -261,13 +268,23 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false);
         });
-        
-        /*modelBuilder.Entity<LenLich>(entity =>
+
+        modelBuilder.Entity<LenLich>(entity =>
         {
+            entity.HasNoKey();
             entity.ToTable("LenLich");
-            
-            entity.Property(e=>e.NgLenLichBD)
-        }*/
+            entity.Property(e => e.MaNV).HasColumnName("MaNV");
+            entity.Property(e => e.NgLenLichBD)
+            .HasColumnName("NgLenLichBD")
+            .HasColumnType("smalldatetime");
+            entity.Property(e=>e.NgLenLichKT)
+            .HasColumnName("NgLenLichKT")
+            .HasColumnType("smalldatetime");
+            entity.Property(e => e.NoiDungLenLich)
+            .HasMaxLength(200)
+            .HasColumnName("NoiDungLenLich")
+            .IsUnicode(true);
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }

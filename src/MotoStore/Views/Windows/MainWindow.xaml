@@ -19,8 +19,7 @@
     ResizeMode="NoResize"
     MouseDown="Window_MouseDown"
     WindowStyle="None"
-    mc:Ignorable="d"
-    IsVisibleChanged="MainWD_VisibleChanged">
+    mc:Ignorable="d">
     <Grid>
 
         <Grid.RowDefinitions>

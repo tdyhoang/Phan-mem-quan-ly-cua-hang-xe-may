@@ -1,13 +1,13 @@
-﻿<Page x:Class="MotoStore.Views.Pages.DashboardPage"
+﻿<Page x:Class="MotoStore.Views.Pages.LoginPages.PageDgNhapThanhCong"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MotoStore.Views.Pages"
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.LoginPages"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="950"
-      Title="DashboardPage"     
-      IsVisibleChanged="DashboardPage_VisibleChanged">
+      Title="PageDgNhapThanhCong"
+      Loaded="PageDgNhapThanhCong_Loaded">
 
     <Grid>
 
@@ -28,7 +28,7 @@
         </Border>
 
         <Grid Height="600"
-              Width="450"
+              Width="500"
               Margin="0,0,550,0">
 
             <Label x:Name="lblXinChao"
@@ -40,7 +40,7 @@
                Foreground="White"
                HorizontalAlignment="Left"
                VerticalAlignment="Center"            
-               Margin="35,50,0,500">
+               Margin="70,50,0,500">
             </Label>
 
             <Image x:Name="anhNhanVien"
@@ -91,7 +91,7 @@
                            Margin="0,0,240,20"
                            FontSize="19"
                            FontWeight="Medium">
-
+                    
                 </TextBlock>
 
             </Grid>
@@ -123,7 +123,7 @@
 
                 <TextBlock x:Name="txtblSoXe"
                            FontWeight="Medium"
-                           FontSize="18.5"
+                           FontSize="20.5"
                            Height="80"
                            Width="140"
                            Margin="0,220,230,0">
@@ -140,32 +140,28 @@
             FontSize="20"
             FontWeight="Medium"
             Foreground="Black"></Label>
-
+            
         </Grid>
 
         <Grid Height="600"
-              Width="500"
-              Margin="450,0,0,0">
+              Width="350"
+              Margin="600,0,0,0">
 
             <StackPanel x:Name="stkLich"
-                        Height="240"
-                        Width="240"
-                        Margin="250,0,0,175">
+                        Height="175"
+                        Width="230"
+                        Margin="100,30,0,150">
             </StackPanel>
+            
 
             <Calendar x:Name="Lich"
                 Height="260"
                 Width="240"
-                Margin="250,335,0,0"
+                Margin="100,320,0,0"
                 SelectedDatesChanged="Lich_SelectedDatesChanged">
             </Calendar>
-
-            <StackPanel x:Name="stkNoiDung"
-                        Height="150"
-                        Width="250"
-                        Margin="0,435,250,0">
-            </StackPanel>
             
+
             <Button x:Name="btnDgXuat"
                     Content="Đăng Xuất"
                     Height="40"
@@ -174,7 +170,7 @@
                     FontWeight="Medium"
                     Foreground="Black"
                     Background="LightSkyBlue"
-                    Margin="375,0,0,550" Click="btnDgXuat_Click"
+                    Margin="225,0,0,450" Click="btnDgXuat_Click"
                     >
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -188,18 +184,18 @@
                     Content="Lên Lịch"
                     Height="40"
                     Width="120"
-                    Margin="375,0,0,460"
+                    Margin="225,0,0,350"
                     FontSize="20"
                     FontWeight="Medium"
                     Background="Aquamarine" Click="btnLenLich_Click">
             </Button>
-
+            
         </Grid>
 
-    </Grid>
+    </Grid>   
 
+        
 
-
-
-
+    
+    
 </Page>

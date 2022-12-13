@@ -50,8 +50,9 @@ namespace MotoStore.Views.Pages.LoginPages
         //static public PageChinh pgC;
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
         static public bool isValid = false;
-        static public string getTK;   //Đặt biến tĩnh public để PageDgNhapThanhCong có thể truy cập để lấy các thông tin cần thiết
+        static public int getLoaiNV;   //Đặt biến tĩnh public để PageDashboard có thể truy cập để lấy các thông tin cần thiết
         static public string getMa;   //Tương tự như trên
+        static public string getSex;  //Lấy giới tính
         private readonly DispatcherTimer timer = new DispatcherTimer();
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
@@ -135,19 +136,19 @@ namespace MotoStore.Views.Pages.LoginPages
                 foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                     {
-                        isValid = true;
-                        getTK = user.UserName.ToString();                       
+                        isValid = true;               //Mở cổng đăng nhập
+                        getLoaiNV = (int)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.LoaiNV).FirstOrDefault();
+                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.GioiTinh).FirstOrDefault();
                         getMa = user.MaNv.ToString();   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
                     }
 
                 if (isValid)  
                 {
-
-                    
                     var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này
                     getWd.Close();                       //Đóng nó sau khi đăng nhập thành công
                     App.Current.MainWindow.Visibility = Visibility.Visible;
+                    isValid = false;                    //Set lại giá trị để đóng cổng đăng nhập
                 }
                 else
                 {
@@ -155,7 +156,6 @@ namespace MotoStore.Views.Pages.LoginPages
                     timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
                     timer.Start();
                 }
-
             }
         }
 
