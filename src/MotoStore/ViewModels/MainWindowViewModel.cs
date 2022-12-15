@@ -13,7 +13,6 @@ namespace MotoStore.ViewModels
     public partial class MainWindowViewModel : ObservableObject
     {
         private bool _isInitialized = false;
-       // private bool _isLoggedIn = false;
 
         [ObservableProperty]
         private string _applicationTitle = String.Empty;
@@ -30,41 +29,32 @@ namespace MotoStore.ViewModels
 
         public MainWindowViewModel(INavigationService navigationService)
         {
-            /*if (!_isLoggedIn)
-            {
-                Views.Windows.LoginView lgV = new Views.Windows.LoginView(this);
-                
-            }*/
-            
-
             if (!_isInitialized)
             {
-                //LoginView lgv = new LoginView();
-                //lgv.ShowDialog();
-                //if(PageChinh.isValid)
-                InitializeViewModel();
-                
+                InitializeViewModel();             
             }
-
         }
 
-        public void InitializeViewModel()      //chinh pri thanh pub
+        public void VisibleChanged()
+        { 
+            InitializeViewModel();
+            //Hàm khởi tạo các item tuỳ loại nhân viên
+        }
+
+        private void InitializeViewModel()      
         {
-            //ApplicationTitle = "Phần mềm quản lý cửa hàng xe máy";  //Title
-
-            //Check loại NV
-            
-
-            if (PageChinh.isValid)
-            {
-                NavigationItems = new ObservableCollection<INavigationControl>
+            //Check loại NV               
+                switch(PageChinh.getLoaiNV)
+                {
+                    case 1:
+                        NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
                     Content = "Trang Chủ",
                     PageTag = "trangchu",
                     Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)                    
+                    PageType = typeof(Views.Pages.DashboardPage)
                 },
                 new NavigationItem()
                 {
@@ -89,7 +79,7 @@ namespace MotoStore.ViewModels
                 }
             };
 
-                NavigationFooter = new ObservableCollection<INavigationControl>
+                        NavigationFooter = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
@@ -100,7 +90,7 @@ namespace MotoStore.ViewModels
                 }
             };
 
-                TrayMenuItems = new ObservableCollection<MenuItem>
+                        TrayMenuItems = new ObservableCollection<MenuItem>
             {
                 new MenuItem
                 {
@@ -108,11 +98,9 @@ namespace MotoStore.ViewModels
                     Tag = "tray_home"
                 }
             };
-
-            }
-            else
-            {
-                NavigationItems = new ObservableCollection<INavigationControl>
+                        break;
+                    case 2:
+                        NavigationItems = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
@@ -123,28 +111,14 @@ namespace MotoStore.ViewModels
                 },
                 new NavigationItem()
                 {
-                    Content = "Nhập xuất",
+                    Content = "Nhập Xuất",
                     PageTag = "io",
                     Icon = SymbolRegular.Stream24,
                     PageType = typeof(Views.Pages.IOPage)
                 },
-                new NavigationItem()
-                {
-                    Content = "Danh Mục",
-                    PageTag = "data",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.DataPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Báo Cáo",
-                    PageTag = "report",
-                    Icon = SymbolRegular.Info24,
-                    PageType = typeof(Views.Pages.ReportPage)
-                }
             };
 
-                NavigationFooter = new ObservableCollection<INavigationControl>
+                        NavigationFooter = new ObservableCollection<INavigationControl>
             {
                 new NavigationItem()
                 {
@@ -155,7 +129,7 @@ namespace MotoStore.ViewModels
                 }
             };
 
-                TrayMenuItems = new ObservableCollection<MenuItem>
+                        TrayMenuItems = new ObservableCollection<MenuItem>
             {
                 new MenuItem
                 {
@@ -163,9 +137,13 @@ namespace MotoStore.ViewModels
                     Tag = "tray_home"
                 }
             };
-            }
+                        break;
+                }
+          
 
             
+
+
 
             _isInitialized = true;
         }

@@ -20,7 +20,7 @@
     MouseDown="Window_MouseDown"
     WindowStyle="None"
     mc:Ignorable="d"
-    IsVisibleChanged="MainWD_VisibleChanged">
+    IsVisibleChanged="UiWindow_IsVisibleChanged">
     <Grid>
 
         <Grid.RowDefinitions>

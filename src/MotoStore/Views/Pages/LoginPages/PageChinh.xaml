@@ -20,12 +20,7 @@
 
 
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition/>
-
-
-                    </Grid.RowDefinitions>
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -184,10 +179,9 @@
                             Content="Tiếng Việt" 
                             HorizontalAlignment="Right" 
                             Height="40" 
-                            Margin="620,0,0,0" 
+                            Margin="0,65,0,0" 
                             Grid.Row="1" 
-                            VerticalAlignment="Top" 
-                            
+                            VerticalAlignment="Top"                           
                             Width="146" 
                             Click="buttonLanguage_Click" 
                             TabIndex="1" 
@@ -196,7 +190,7 @@
                     <Label x:Name="lblNnguHienTai" 
                            Content="Ngôn Ngữ Hiện Tại:" 
                            HorizontalAlignment="Right" 
-                           Height="30" Margin="625,0,0,0" 
+                           Height="30" Margin="0,0,0,440" 
                            VerticalAlignment="Center" 
                            Width="150"
                            FontWeight="Medium"

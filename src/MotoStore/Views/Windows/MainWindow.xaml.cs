@@ -1,4 +1,5 @@
-﻿using MotoStore.Views.Pages.LoginPages;
+﻿using MotoStore.ViewModels;
+using MotoStore.Views.Pages.LoginPages;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,15 +14,9 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
-        public ViewModels.MainWindowViewModel ViewModel
+        public ViewModels.MainWindowViewModel ViewModel //ViewModel là biến kiểu MainWindowVM
         {
             get;
-        }
-        public MainWindow()
-        {
-            
-            InitializeComponent();
-            
         }
 
         public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
@@ -34,25 +29,13 @@ namespace MotoStore.Views.Windows
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);
-
-            Visibility = Visibility.Collapsed;
+            this.Visibility = Visibility.Collapsed;
             LoginView lgv = new LoginView();
-            lgv.Show();
-            //this.Visibility = Visibility.Visible;
+            lgv.ShowDialog();
+            
         }
 
-        public void MainWD_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-            {
-                ViewModel.InitializeViewModel();
-            }
-            else
-            {
-                // Collapse code here
-                Visibility = Visibility.Collapsed;
-            }
-        }
+        
 
         #region INavigationWindow methods
 
@@ -104,6 +87,14 @@ namespace MotoStore.Views.Windows
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //Xử lý ở đây
+            if ((bool)e.NewValue)   //true là hiện
+                ViewModel.VisibleChanged();
+            //CMT giải thích
         }
     }
 }
