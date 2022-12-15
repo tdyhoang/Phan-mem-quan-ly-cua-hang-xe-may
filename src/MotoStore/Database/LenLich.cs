@@ -8,4 +8,5 @@ public partial class LenLich
     public DateTime? NgLenLichBD { get; set; }
     public DateTime? NgLenLichKT { get; set; }
     public string? NoiDungLenLich { get; set; }
+    //public virtual NhanVien? MaNvNavigation { get; set; }
 }

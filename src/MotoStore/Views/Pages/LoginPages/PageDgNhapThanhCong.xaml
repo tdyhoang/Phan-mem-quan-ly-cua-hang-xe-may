@@ -1,0 +1,201 @@
+﻿<Page x:Class="MotoStore.Views.Pages.LoginPages.PageDgNhapThanhCong"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.LoginPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="PageDgNhapThanhCong"
+      Loaded="PageDgNhapThanhCong_Loaded">
+
+    <Grid>
+
+        <Border>
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#060531" Offset="0"/>
+                    <GradientStop Color="#1B1448" Offset="0.75"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#DA34AE" Offset="0.75"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Grid Height="600"
+              Width="500"
+              Margin="0,0,550,0">
+
+            <Label x:Name="lblXinChao"
+               Height="50"
+               Width="250"
+               FontSize="30"
+               FontWeight="Medium"
+               FontFamily="Great Vibes"
+               Foreground="White"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"            
+               Margin="70,50,0,500">
+            </Label>
+
+            <Image x:Name="anhNhanVien"
+                   Height="120"
+                   Width="150"
+                   Margin="0,0,200,300">
+                <Image.OpacityMask>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.65">
+                        <GradientStop Color="#ffffffff" Offset="0.8" />
+                        <GradientStop Color="#00ffffff" Offset="0.8" />
+                    </RadialGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+
+            <Grid>
+
+                <Border
+                    x:Name="brdSoNV"
+                    CornerRadius="25"
+                    Height="130"
+                    Width="180"
+                    Margin="0,80,200,100"
+                    Background="MediumPurple">
+                    <TextBlock
+                        x:Name="txtblAnh"
+                        FontWeight="Medium"
+                        FontSize="20"
+                        Height="60"
+                        Width="60"
+                        Margin="90,40,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        >
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/LoginPages/NhanVien.png" 
+                                    Stretch="Uniform" 
+                                    Opacity="0.7"                                    
+                                    />
+
+                        </TextBlock.Background>
+                    </TextBlock>
+
+                </Border>
+
+                <TextBlock x:Name="txtblSoNV"
+                           Height="80"
+                           Width="140"
+                           Margin="0,0,240,20"
+                           FontSize="19"
+                           FontWeight="Medium">
+                    
+                </TextBlock>
+
+            </Grid>
+
+            <Border
+                    x:Name="brdSoXe"
+                    CornerRadius="25"
+                    Height="130"
+                    Width="180"
+                    Margin="0,360,200,100"
+                    Background="PowderBlue">
+            </Border>
+
+            <Grid>
+
+                <TextBlock
+                        x:Name="txtblAnhXe"
+                        FontWeight="Medium"
+                        Height="60"
+                        Width="60"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,265,100"
+                        >
+                    <TextBlock.Background>
+                        <ImageBrush ImageSource="/Views/Pages/LoginPages/SoXe-removebg-preview.png"/>
+                    </TextBlock.Background>
+                </TextBlock>
+
+                <TextBlock x:Name="txtblSoXe"
+                           FontWeight="Medium"
+                           FontSize="20.5"
+                           Height="80"
+                           Width="140"
+                           Margin="0,220,230,0">
+
+                </TextBlock>
+
+            </Grid>
+
+            <Label
+            x:Name="lblGioHeThong"
+            Height="35"
+            Width="300"
+            Margin="0,480,80,0"
+            FontSize="20"
+            FontWeight="Medium"
+            Foreground="Black"></Label>
+            
+        </Grid>
+
+        <Grid Height="600"
+              Width="350"
+              Margin="600,0,0,0">
+
+            <StackPanel x:Name="stkLich"
+                        Height="175"
+                        Width="230"
+                        Margin="100,30,0,150">
+            </StackPanel>
+            
+
+            <Calendar x:Name="Lich"
+                Height="260"
+                Width="240"
+                Margin="100,320,0,0"
+                SelectedDatesChanged="Lich_SelectedDatesChanged">
+            </Calendar>
+            
+
+            <Button x:Name="btnDgXuat"
+                    Content="Đăng Xuất"
+                    Height="40"
+                    Width="120"
+                    FontSize="19"
+                    FontWeight="Medium"
+                    Foreground="Black"
+                    Background="LightSkyBlue"
+                    Margin="225,0,0,450" Click="btnDgXuat_Click"
+                    >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+
+            </Button>
+
+            <Button x:Name="btnLenLich"
+                    Content="Lên Lịch"
+                    Height="40"
+                    Width="120"
+                    Margin="225,0,0,350"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Background="Aquamarine" Click="btnLenLich_Click">
+            </Button>
+            
+        </Grid>
+
+    </Grid>   
+
+        
+
+    
+    
+</Page>
