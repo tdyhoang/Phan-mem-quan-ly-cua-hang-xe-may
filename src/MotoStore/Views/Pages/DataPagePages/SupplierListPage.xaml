@@ -11,6 +11,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SupplierListPage">
 
+    <ui:UiPage.Resources>
+        <ControlTemplate x:Key="MultipleChoiceFilter">
+            <dgx:MultipleChoiceFilter />
+        </ControlTemplate>
+    </ui:UiPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,6 +26,10 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
+        </DockPanel>
 
         <ui:DataGrid Name="grdSupplier"
                      Grid.Row="1"
@@ -32,7 +42,7 @@
                 <DataGridTextColumn Header="Tên nhà sản xuất" Binding="{Binding Path=TenNsx}" />
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" />
-                <DataGridTextColumn Header="Nước sản xuất" Binding="{Binding Path=NuocSx}" />
+                <DataGridTextColumn Header="Nước sản xuất" Binding="{Binding Path=NuocSx}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>

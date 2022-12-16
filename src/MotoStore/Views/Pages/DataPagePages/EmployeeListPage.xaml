@@ -14,10 +14,11 @@
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <ui:UiPage.Resources>
-        <resources:GioiTinhList x:Key="GioiTinhList" />
-        <resources:ChucVuList x:Key="ChucVuList" />
+        <ControlTemplate x:Key="MultipleChoiceFilter">
+            <dgx:MultipleChoiceFilter />
+        </ControlTemplate>
     </ui:UiPage.Resources>
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -28,6 +29,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <DockPanel Grid.Row="0">
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
+        </DockPanel>
+
         <ui:DataGrid Name="grdEmployee"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
@@ -36,49 +41,23 @@
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding Path=TableData}">
             <ui:DataGrid.Columns>
+                <DataGridCheckBoxColumn dgx:DataGridFilterColumn.IsFilterVisible="False">
+                    <DataGridCheckBoxColumn.Header>
+                        <CheckBox Name="chkCustomer" IsThreeState="True" />
+                    </DataGridCheckBoxColumn.Header>
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=MaNv, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding Path=HoTenNv}" />
-                <DataGridTemplateColumn Header="Ngày sinh">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path=NgSinh}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Giới tính">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=GioiTinh}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox SelectedItem="{Binding Path=GioiTinh}" ItemsSource="{StaticResource GioiTinhList}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding Path=DiaChi}" />
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" />
-                <DataGridTemplateColumn Header="Chức vụ">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=ChucVu}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox SelectedItem="{Binding Path=ChucVu}" ItemsSource="{StaticResource ChucVuList}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Chức vụ" Binding="{Binding Path=ChucVu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Lương" Binding="{Binding Path=Luong}" />
                 <DataGridTextColumn Header="Thưởng" Binding="{Binding Path=Thuong}" />
+                <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding Path=TenNV}" />
+                <DataGridTextColumn Header="Loại nhân viên" Binding="{Binding Path=LoaiNV}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>

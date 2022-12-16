@@ -11,6 +11,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MotoListPage">
 
+    <ui:UiPage.Resources>
+        <ControlTemplate x:Key="MultipleChoiceFilter">
+            <dgx:MultipleChoiceFilter />
+        </ControlTemplate>
+    </ui:UiPage.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,6 +26,10 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
+        </DockPanel>
 
         <ui:DataGrid Name="grdMoto"
                      Grid.Row="1"
@@ -33,11 +43,12 @@
                 <DataGridTextColumn Header="Tên mặt hàng" Binding="{Binding Path=TenMh}" />
                 <DataGridTextColumn Header="Giá nhập" Binding="{Binding Path=GiaNhapMh}" />
                 <DataGridTextColumn Header="Giá bán" Binding="{Binding Path=GiaBanMh}" />
-                <DataGridTextColumn Header="Số lượng tồn kho" Binding="{Binding Path=SoLuongTonKho}" />
-                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Path=HangSx}" />
-                <DataGridTextColumn Header="Xuất xứ" Binding="{Binding Path=XuatXu}" />
+                <DataGridTextColumn Header="Số lượng tồn kho" Binding="{Binding Path=SoLuongTonKho}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Path=HangSx}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Xuất xứ" Binding="{Binding Path=XuatXu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Mô tả" Binding="{Binding Path=MoTa}" />
-                <DataGridTextColumn Header="Tình trạng" Binding="{Binding Path=TinhTrang}" />
+                <DataGridTextColumn Header="Tình trạng" Binding="{Binding Path=TinhTrang}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Nhà sản xuất" Binding="{Binding Path=NhaSanXuat}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>
