@@ -57,7 +57,7 @@ namespace MotoStore.Views.Pages
                 //Nếu có nhiều hơn 1 sự kiện thì Tuần này có > 1 sự kiện đáng chú ý, xem chi tiết ở lịch
                 //Nếu chỉ có một: Nhắc Bạn: Còn n ngày, Hôm nay 
                 //Tuần này có 3 sự kiện đáng chú ý, xem chi tiết ở Lịch
-                if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBD.Value))
+                if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBd.Value))
                 {
                     soSuKien++;   //Vì nó là biến toàn cục nên cứ thế mà tăng 
                     danhdau = 1;
@@ -126,9 +126,9 @@ namespace MotoStore.Views.Pages
             int co = 0;
             foreach(var ngay in mainDatabase.LenLichs.ToList())  
             {
-                if (Lich.SelectedDate.Value.ToString("dd/MM/yyyy") == ngay.NgLenLichBD.Value.ToString("dd/MM/yyyy"))
+                if (Lich.SelectedDate.Value.ToString("dd/MM/yyyy") == ngay.NgLenLichBd.Value.ToString("dd/MM/yyyy"))
                 {
-                    rtbNoiDung.AppendText("Bắt Đầu: "+ngay.NgLenLichBD.Value.ToString("HH:mm")+ " - Kết Thúc: "+ngay.NgLenLichKT.Value.ToString("HH:mm")+ "\nNội Dung: " + ngay.NoiDungLenLich+"\n");
+                    rtbNoiDung.AppendText("Bắt Đầu: "+ngay.NgLenLichBd.Value.ToString("HH:mm")+ " - Kết Thúc: "+ngay.NgLenLichKt.Value.ToString("HH:mm")+ "\nNội Dung: " + ngay.NoiDungLenLich+"\n");
                     co = 1;
                 }
             }
@@ -303,7 +303,7 @@ namespace MotoStore.Views.Pages
                     bool Deleted = false;
                     foreach(var gio in mdb.LenLichs.ToList())
                     {
-                        if(gio.NgLenLichBD.Value.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
+                        if(gio.NgLenLichBd.Value.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
                         {
                             SqlConnection con = new SqlConnection(@"Data Source=LAPTOP-5TG85UFG\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
                             SqlCommand cmd;
@@ -336,10 +336,16 @@ namespace MotoStore.Views.Pages
         private void DashboardPage_Initialize()
         {
             DateTime dt = DateTime.Now;
+
+            var hoTenNV = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.HoTenNv).FirstOrDefault().ToString();
+            var seperatedHoTenNV = hoTenNV.Split(' ');
+            var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
+
+            lblXinChao.Content = "Xin Chào, " + tenNV;
+
             switch (PageChinh.getLoaiNV)
             {
                 case 1:  //Nhân viên loại 1
-                    lblXinChao.Content = "Xin Chào, " + mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.TenNV).FirstOrDefault().ToString();
                     txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
                     txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\anh3.png"));
@@ -347,8 +353,6 @@ namespace MotoStore.Views.Pages
                     txtblSoXe.FontSize = 20.5;
                     break;
                 case 2:  //Nhân viên loại 2
-                    lblXinChao.Content = "Xin Chào, " + mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.TenNV).FirstOrDefault().ToString(); 
-
                     //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
                     var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
                     int d3 = (int)(dt - dx).Value.TotalDays;

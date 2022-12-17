@@ -44,18 +44,17 @@ Create table NhanVien
 	  NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	  Luong money,
 	  Thuong money,
-      TenNV nvarchar(10),     /*Lấy tên nhân viên*/
       LoaiNV int,             /*Phân loại NV: 1-Quản Lý | 2-Văn Phòng | 3-Sửa Xe*/
 	  constraint PK_MaNV primary key(MANV)	 
 )
 alter table NhanVien add constraint CK_GTNV check(GioiTinh = 'Nam' or GioiTinh=N'Nữ')
 
-Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,3000000,N'Nghĩa',3)
-Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,4000000,N'Tuấn',3)
-Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,2000000,N'Quý',3)
-Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,2500000,N'Thương',2)
-Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,2500000,N'Sang',2)
-Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,3500000,N'Trung',1) /*Người quản lý*/
+Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,3000000,3)
+Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,4000000,3)
+Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,2000000,3)
+Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,2500000,2)
+Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,2500000,2)
+Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,3500000,1) /*Người quản lý*/
 
 
 create table NhaSanXuat
@@ -101,7 +100,6 @@ Create table HoaDon
 	  MaMH  uniqueidentifier,
 	  MaKH  uniqueidentifier,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
 	  MaNV  uniqueidentifier,
-	  HoTenNV Nvarchar(30),
       NgayLapHD  smalldatetime,
 	  SoLuong int,
 	  GiamGia float,
@@ -113,9 +111,9 @@ Alter TABLE HoaDon add constraint FK_MaMH foreign key(MaMH) references MatHang(M
 ALTER TABLE HOADON ADD CONSTRAINT FK_MaKH foreign key(MAKH) references KhachHang(MAKH)
 ALTER TABLE HOADON ADD CONSTRAINT FK_MaNV foreign key(MANV) references NhanVien(MANV)
 
-Insert into HoaDon values(newid(),'A626798B-7071-4710-88A8-7D31935A3019','1B051393-0949-4E96-959A-6B001F82B177','BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','19/8/2021',1,0,26500000)
-Insert into HoaDon values(newid(),'01921D8D-F015-4309-A130-9390B2E8EC11','955A14F5-F895-4F0B-B693-CE24A0B11321','89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','17/10/2022',1,5,40500000*0.95)
-Insert into HoaDon values(newid(),'0FB80AA9-CC97-4157-8F04-BAA88F6E5266','BDA8A3CC-9116-4215-99AB-351EF43154F5','89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','15/10/2022',1,10,45000000*0.85)
+Insert into HoaDon values(newid(),'A626798B-7071-4710-88A8-7D31935A3019','1B051393-0949-4E96-959A-6B001F82B177','BDD24832-B4B9-4195-962C-91909DDE76C6','19/8/2021',1,0,26500000)
+Insert into HoaDon values(newid(),'01921D8D-F015-4309-A130-9390B2E8EC11','955A14F5-F895-4F0B-B693-CE24A0B11321','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','17/10/2022',1,5,40500000*0.95)
+Insert into HoaDon values(newid(),'0FB80AA9-CC97-4157-8F04-BAA88F6E5266','BDA8A3CC-9116-4215-99AB-351EF43154F5','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','15/10/2022',1,10,45000000*0.85)
 
 Create table ThongTinBaoHanh
 (

@@ -41,11 +41,6 @@
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding Path=TableData}">
             <ui:DataGrid.Columns>
-                <DataGridCheckBoxColumn dgx:DataGridFilterColumn.IsFilterVisible="False">
-                    <DataGridCheckBoxColumn.Header>
-                        <CheckBox Name="chkCustomer" IsThreeState="True" />
-                    </DataGridCheckBoxColumn.Header>
-                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=MaNv, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding Path=HoTenNv}" />
                 <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
@@ -54,10 +49,9 @@
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" />
                 <DataGridTextColumn Header="Chức vụ" Binding="{Binding Path=ChucVu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Lương" Binding="{Binding Path=Luong}" />
-                <DataGridTextColumn Header="Thưởng" Binding="{Binding Path=Thuong}" />
-                <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding Path=TenNV}" />
-                <DataGridTextColumn Header="Loại nhân viên" Binding="{Binding Path=LoaiNV}" />
+                <DataGridTextColumn Header="Lương" Binding="{Binding Path=Luong}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Thưởng" Binding="{Binding Path=Thuong}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Loại nhân viên" Binding="{Binding Path=LoaiNV}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>
