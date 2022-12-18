@@ -38,6 +38,18 @@
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding Path=MotoDataView}">
+
+            <ui:DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#0078D7" />
+                            <Setter Property="BorderBrush" Value="#0078D7" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:DataGrid.Resources>
+
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã mặt hàng" Binding="{Binding Path=MaMh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Tên mặt hàng" Binding="{Binding Path=TenMh}" />

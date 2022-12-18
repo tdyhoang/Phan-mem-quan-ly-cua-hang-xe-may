@@ -37,9 +37,22 @@
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
                      AutoGenerateColumns="False"
+                     SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding Path=CustomerDataView}">
+            
+            <ui:DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#0078D7" />
+                            <Setter Property="BorderBrush" Value="#0078D7" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:DataGrid.Resources>
+
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding MaKh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />

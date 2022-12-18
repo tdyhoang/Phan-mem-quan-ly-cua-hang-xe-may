@@ -34,7 +34,7 @@ public partial class MainDatabase : DbContext
     public virtual DbSet<UserApp> UserApps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;MultipleActiveResultSets=True;Encrypt=false;TrustServerCertificate=true");
+        => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
