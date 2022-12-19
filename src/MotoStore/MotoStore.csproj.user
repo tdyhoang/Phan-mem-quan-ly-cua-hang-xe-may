@@ -16,11 +16,7 @@
     <Compile Update="Views\Pages\DataPagePages\InvoiceListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Pages\IOPagePages\IOHoaDonPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\Pages\IOPagePages\IOKhachHangPage.xaml.cs">
->>>>>>> ed0f7f009c2f5b5a80ce19068a9e3ac527264973:MotoStore/MotoStore.csproj.user
+    <Compile Update="Views\Pages\DataPagePages\MotoListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\DataPagePages\SupplierListPage.xaml.cs">
@@ -64,11 +60,10 @@
     <Page Update="Views\Pages\IOPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Pages\IOPagePages\IOHoaDonPage.xaml">
+    <Page Update="Views\Pages\IOPagePages\IOAddSPPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Pages\IOPagePages\IOKhachHangPage.xaml">
->>>>>>> ed0f7f009c2f5b5a80ce19068a9e3ac527264973:MotoStore/MotoStore.csproj.user
+    <Page Update="Views\Pages\IOPagePages\IOHoaDonPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\IOPagePages\IOKhachHangPage.xaml">
