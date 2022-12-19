@@ -25,13 +25,13 @@ public partial class NhanVien
 
     public decimal? Luong { get; set; }
 
-    public decimal? Thuong { get; set; }
-
-    public int? LoaiNv { get; set; }
-
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
+
+    public virtual ICollection<LenLich> LenLiches { get; } = new List<LenLich>();
+
+    public virtual ICollection<LichSuHoatDong> LichSuHoatDongs { get; } = new List<LichSuHoatDong>();
 
     public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 }

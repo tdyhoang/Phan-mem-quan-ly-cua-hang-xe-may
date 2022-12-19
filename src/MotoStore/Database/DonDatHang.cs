@@ -9,19 +9,19 @@ public partial class DonDatHang
 
     public int? SoDonDh { get; set; }
 
-    public Guid? MaMh { get; set; }
+    public Guid MaMh { get; set; }
 
     public int? SoLuongHang { get; set; }
 
-    public Guid? MaKh { get; set; }
+    public Guid MaKh { get; set; }
 
-    public Guid? MaNv { get; set; }
+    public Guid MaNv { get; set; }
 
     public DateTime? Ngdh { get; set; }
 
-    public virtual KhachHang? MaKhNavigation { get; set; }
+    public virtual KhachHang MaKhNavigation { get; set; } = null!;
 
-    public virtual MatHang? MaMhNavigation { get; set; }
+    public virtual MatHang MaMhNavigation { get; set; } = null!;
 
-    public virtual NhanVien? MaNvNavigation { get; set; }
+    public virtual NhanVien MaNvNavigation { get; set; } = null!;
 }

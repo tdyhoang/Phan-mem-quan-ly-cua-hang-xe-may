@@ -23,6 +23,8 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<LenLich> LenLichs { get; set; }
 
+    public virtual DbSet<LichSuHoatDong> LichSuHoatDongs { get; set; }
+
     public virtual DbSet<MatHang> MatHangs { get; set; }
 
     public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
@@ -57,14 +59,17 @@ public partial class MainDatabase : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DonDatHangs)
                 .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaKHDDH");
 
             entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.DonDatHangs)
                 .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaMHDDH");
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.DonDatHangs)
                 .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaNVDDH");
         });
 
@@ -87,14 +92,17 @@ public partial class MainDatabase : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaKH");
 
             entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaMH");
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MaNV");
         });
 
@@ -127,10 +135,13 @@ public partial class MainDatabase : DbContext
 
         modelBuilder.Entity<LenLich>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("LenLich");
+            entity.HasKey(e => e.LenLichId).HasName("PK_LenLichID");
 
+            entity.ToTable("LenLich");
+
+            entity.Property(e => e.LenLichId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("LenLichID");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.NgLenLichBd)
                 .HasColumnType("smalldatetime")
@@ -139,6 +150,30 @@ public partial class MainDatabase : DbContext
                 .HasColumnType("smalldatetime")
                 .HasColumnName("NgLenLichKT");
             entity.Property(e => e.NoiDungLenLich).HasMaxLength(200);
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LenLiches)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKLL_MaNV");
+        });
+
+        modelBuilder.Entity<LichSuHoatDong>(entity =>
+        {
+            entity.HasKey(e => e.LshdId).HasName("PK_LshdID");
+
+            entity.ToTable("LichSuHoatDong");
+
+            entity.Property(e => e.LshdId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("LshdID");
+            entity.Property(e => e.HoatDong).HasMaxLength(200);
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.ThoiGian).HasColumnType("datetime");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LichSuHoatDongs)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKLSHD_MaNV");
         });
 
         modelBuilder.Entity<MatHang>(entity =>
@@ -160,16 +195,16 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("HangSX");
-            entity.Property(e => e.MoTa).HasMaxLength(60);
+            entity.Property(e => e.MoTa).HasMaxLength(75);
             entity.Property(e => e.TenMh)
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("TenMH");
-            entity.Property(e => e.TinhTrang).HasMaxLength(15);
             entity.Property(e => e.XuatXu).HasMaxLength(15);
 
             entity.HasOne(d => d.NhaSanXuat).WithMany(p => p.MatHangs)
                 .HasForeignKey(d => new { d.HangSx, d.XuatXu })
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MH");
         });
 
@@ -213,7 +248,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
                 .HasColumnName("HoTenNV");
-            entity.Property(e => e.LoaiNv).HasColumnName("LoaiNV");
             entity.Property(e => e.Luong).HasColumnType("money");
             entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
             entity.Property(e => e.NgVl)
@@ -223,7 +257,6 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
-            entity.Property(e => e.Thuong).HasColumnType("money");
         });
 
         modelBuilder.Entity<ThongTinBaoHanh>(entity =>
@@ -235,7 +268,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaBh)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaBH");
-            entity.Property(e => e.GhiChu).HasMaxLength(30);
+            entity.Property(e => e.GhiChu).HasMaxLength(60);
             entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.MaMh).HasColumnName("MaMH");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
@@ -243,14 +276,17 @@ public partial class MainDatabase : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.ThongTinBaoHanhs)
                 .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TTBH_MaKH");
 
             entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.ThongTinBaoHanhs)
                 .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TTBH_MaMH");
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.ThongTinBaoHanhs)
                 .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_TTBH_MaNV");
         });
 
