@@ -27,6 +27,8 @@ public partial class NhanVien
 
     public decimal? Thuong { get; set; }
 
+    public string? TenNV { get; set; }
+
     public int? LoaiNV { get; set; }    
 
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();

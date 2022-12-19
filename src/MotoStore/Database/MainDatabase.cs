@@ -33,8 +33,6 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<LenLich> LenLichs { get; set; }
 
-    public virtual DbSet<LichSuHoatDong> LichSuHoatDongs { get; set; }
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -209,6 +207,9 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.NgVl)
                 .HasColumnType("smalldatetime")
                 .HasColumnName("NgVL");
+            entity.Property(e => e.TenNV).HasMaxLength(10)
+            .HasColumnName("TenNV")
+            .IsUnicode(true);
             entity.Property(e => e.LoaiNV)
             .HasColumnName("LoaiNV")
             .HasColumnType("int");
@@ -282,18 +283,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.NoiDungLenLich)
             .HasMaxLength(200)
             .HasColumnName("NoiDungLenLich")
-            .IsUnicode(true);
-        });
-
-        modelBuilder.Entity<LichSuHoatDong>(entity =>
-        {
-            entity.HasNoKey();
-            entity.ToTable("LichSuHoatDong");
-            entity.Property(e => e.MaNV).HasColumnName("MaNV");
-            entity.Property(e => e.ThoiGian).HasColumnName("ThoiGian")
-            .HasColumnType("datetime");
-            entity.Property(e => e.HoatDong).HasColumnName("HoatDong")
-            .HasMaxLength(200)
             .IsUnicode(true);
         });
 

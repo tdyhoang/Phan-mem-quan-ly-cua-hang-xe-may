@@ -33,6 +33,8 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class LoginView
     {
+        //Muốn hiện thằng này, sau khi đăng nhập xong rồi thì muốn đóng thằng này
+        private MainWindow MWD;
         
         public LoginView()
         {

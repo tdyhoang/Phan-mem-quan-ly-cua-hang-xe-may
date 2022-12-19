@@ -16,8 +16,6 @@ using System.Windows.Shapes;
 using System.Net.Mail;
 using System.Net;
 using System.Security.RightsManagement;
-using System.Windows.Threading;
-using MotoStore.Database;
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -27,43 +25,17 @@ namespace MotoStore.Views.Pages.LoginPages
     public partial class PageQuenMatKhau
     {
         static private PageChinh pgC; //Tạo biến kiểu PageChinh để có thể sử dụng trong class này
-        static public string getPass;
-        static public string getEmail;
         public PageQuenMatKhau(PageChinh pageChinh)
         {
             InitializeComponent();
             pgC = pageChinh; //Gán biến pgC chính là tham số pageChinh được cõng theo
-            timer.Tick += Timer_Tick;
             //Hàm Khởi Tạo của trang QuenMatKhau có cõng theo tham số là pageChinh thuộc kiểu PageChinh
         }
-
-        static private int dem = 0;   //Biến đếm số lần nháy
-        private bool Nhay = false;
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (dem == 7)           //dem = 7 Thì Ngừng Nháy
-                timer.Stop();
-            if (Nhay)
-            {
-                lblThongBao.Foreground = Brushes.Red;
-                dem++;
-            }
-            else
-            {
-                lblThongBao.Foreground = Brushes.Black;
-                dem++;
-            }
-            Nhay = !Nhay;
-            //Hàm Này Để Nháy Thông Báo 
-        }
-
         static public long ma;  //Đặt biến tĩnh để các PageGuiMa có thể truy cập*/
         public PageGuiMa pgGM = new PageGuiMa(pgC);
         static public string strEmail;
         static public string ngonngu = "Tiếng Việt";
         private int flag = 0;
-        private readonly DispatcherTimer timer = new DispatcherTimer();
 
         private void buttonLanguageQMK_Click(object sender, RoutedEventArgs e)
         {
@@ -121,17 +93,13 @@ namespace MotoStore.Views.Pages.LoginPages
 
         private void buttonXacNhan_Click(object sender, RoutedEventArgs e)
         {
-            dem = 0;
             flag = 1;  //Báo hiệu nút Xác Nhận đã được click
-            var pageGuiMa = new PageGuiMa(pgC);
             if (string.IsNullOrEmpty(txtEmail.Text) == true || string.IsNullOrEmpty(txtDoiPass.Password)==true||string.IsNullOrEmpty(txtXacNhanDoiPass.Password)==true)
             {
                 if (buttonLanguage.Content == "English")
                     lblThongBao.Content = "Please Fill All Fields Fully!";
                 else
                     lblThongBao.Content = "Vui Lòng Điền Đầy Đủ Thông Tin!";
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-                timer.Start();
             }
             else if(txtDoiPass.Password!=txtXacNhanDoiPass.Password)
             {
@@ -139,48 +107,25 @@ namespace MotoStore.Views.Pages.LoginPages
                     lblThongBao.Content = "Password Retype Didn't Match New Password, Check Again!";
                 else
                     lblThongBao.Content = "Mật Khẩu Xác Nhận Không Khớp Với Mật Khẩu Mới, Kiểm Tra Lại!";
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-                timer.Start();
                 txtXacNhanDoiPass.Clear();
                 txtXacNhanDoiPass.Focus();
             }
             else
             {
-                if(!txtEmail.Text.Contains("@gmail.com"))
+                GuiMail();
+                var pageGuiMa = new PageGuiMa(pgC);
+                switch(buttonLanguage.Content)
                 {
-                    lblThongBao.Content = "Đuôi Email không hợp lệ, hãy xem lại!";
-                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
-                    timer.Start();
+                    case "English":
+                        pageGuiMa.lblThongBao.Content = "We had sent a code with 6 numbers to your Email, fill it below:";
+                        pageGuiMa.buttonXacNhanGuiMa.Content = "Verify";
+                        break;
+                    case "Tiếng Việt":
+                        pageGuiMa.lblThongBao.Content = "Chúng tôi đã gửi mã 6 số về Email của bạn, điền nó xuống dưới:";
+                        pageGuiMa.buttonXacNhanGuiMa.Content = "Xác Nhận";
+                        break;
                 }
-                else
-                {
-                    MainDatabase mdb = new MainDatabase();
-                    bool chuyentrang = false;
-                    foreach(var email in mdb.UserApps)
-                    {
-                        if (txtEmail.Text == email.Email)
-                        {
-                            GuiMail();
-                            chuyentrang = true;
-                            getPass = txtDoiPass.Password;
-                            getEmail = txtEmail.Text;
-                            switch (buttonLanguage.Content)
-                            {
-                                case "English":
-                                    pageGuiMa.lblThongBao.Content = "We had sent a code with 6 numbers to your Email, fill it below:";
-                                    pageGuiMa.buttonXacNhanGuiMa.Content = "Verify";
-                                    break;
-                                case "Tiếng Việt":
-                                    pageGuiMa.lblThongBao.Content = "Chúng tôi đã gửi mã 6 số về Email của bạn, điền nó xuống dưới:";
-                                    pageGuiMa.buttonXacNhanGuiMa.Content = "Xác Nhận";
-                                    break;
-                            }
-                            break;
-                        }
-                    }
-                    if (chuyentrang)
-                        this.NavigationService.Navigate(pageGuiMa);
-                }
+                NavigationService.Navigate(pageGuiMa);
                 //Nếu thoả mãn hết các điều kiện kiểm tra thì chuyển hướng tiếp sang Trang GuiMa
             }
         }
@@ -218,6 +163,7 @@ namespace MotoStore.Views.Pages.LoginPages
         private void buttonQuayLai_Click(object sender, RoutedEventArgs e)
         { 
             this.NavigationService.Navigate(pgC);
+
             //Hàm này để Quay lại Trang Chính(pgC)
         }
     }
