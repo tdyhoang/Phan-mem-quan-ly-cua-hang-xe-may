@@ -48,9 +48,9 @@ namespace MotoStore.ViewModels
             {
                 new NavigationItem()
                 {
-                    Content = "Danh Sách Xe",
+                    Content = "Danh Sách Mặt Hàng",
                     PageTag = "motolist",
-                    Icon = SymbolRegular.TextBulletListSquare20,
+                    Icon = SymbolRegular.VehicleBicycle20,
                     PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
                 },
                 new NavigationItem()
@@ -69,10 +69,24 @@ namespace MotoStore.ViewModels
                 },
                 new NavigationItem()
                 {
+                    Content = "Danh Sách Hóa Đơn",
+                    PageTag = "invoicelist",
+                    Icon = SymbolRegular.TextBulletListSquare20,
+                    PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
+                },
+                new NavigationItem()
+                {
                     Content = "Nhà Cung Cấp",
                     PageTag = "supplierlist",
                     Icon = SymbolRegular.PeopleCall20,
                     PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Danh Sách Tài Khoản",
+                    PageTag = "userlist",
+                    Icon = SymbolRegular.PersonCircle20,
+                    PageType = typeof(Views.Pages.DataPagePages.UserListPage)
                 }
             };
         }

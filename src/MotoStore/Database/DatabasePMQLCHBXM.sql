@@ -43,6 +43,8 @@ Create table NhanVien
 	  ChucVu Nvarchar(10),
 	  NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	  Luong money,
+	  Thuong money,
+      LoaiNV int,             /*Phân loại NV: 1-Quản Lý | 2-Văn Phòng | 3-Sửa Xe*/
 	  constraint PK_MaNV primary key(MANV)	 
 )
 alter table NhanVien add constraint CK_GTNV check(GioiTinh = 'Nam' or GioiTinh=N'Nữ')
@@ -94,6 +96,9 @@ Insert into MatHang values('FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6','Raider F150',
 Create table HoaDon
 (
       MaHD  uniqueidentifier DEFAULT newid(),
+	  MaMH  uniqueidentifier,
+	  MaKH  uniqueidentifier,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
+	  MaNV  uniqueidentifier,
 	  MaMH  uniqueidentifier not null,
 	  MaKH  uniqueidentifier not null,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
 	  MaNV  uniqueidentifier not null,

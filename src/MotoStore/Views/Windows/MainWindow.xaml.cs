@@ -14,12 +14,12 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class MainWindow : INavigationWindow
     {
-        public ViewModels.MainWindowViewModel ViewModel //ViewModel là biến kiểu MainWindowVM
+        public MainWindowViewModel ViewModel //ViewModel là biến kiểu MainWindowVM
         {
             get;
         }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
+        public MainWindow(MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
         {
             
             ViewModel = viewModel;

@@ -149,7 +149,7 @@ namespace MotoStore.Views.Pages
             bool co = false;   //biến này để check xem có sự kiện nổi bật hay không
             foreach (var ngay in mainDatabase.LenLichs.ToList())  
             {
-                if (Lich.SelectedDate.Value.ToString("dd/MM/yyyy") == ngay.NgLenLichBD.Value.ToString("dd/MM/yyyy"))
+                if (Lich.SelectedDate.Value.ToString("dd/MM/yyyy") == ngay.NgLenLichBd.Value.ToString("dd/MM/yyyy"))
                 {
                     rtbNoiDung.AppendText("Bắt Đầu: " + ngay.NgLenLichBD.Value.ToString("HH:mm") + " - Kết Thúc: " + ngay.NgLenLichKT.Value.ToString("HH:mm") + "\n" + "Nội Dung: " + ngay.NoiDungLenLich + "\n");
                     co = true;
@@ -425,6 +425,49 @@ namespace MotoStore.Views.Pages
                     }
                 }
                 else
+                {
+                    string strGiomuonXoa = Lich.SelectedDate.Value.ToString("dd-MM-yyyy") +" "+ cbGioBD.Text + ":" + cbPhutBD.Text + ":00";
+                    bool Deleted = false;
+                    foreach(var gio in mdb.LenLichs.ToList())
+                    {
+                        string strGiomuonXoa = Lich.SelectedDate.Value.ToString("dd-MM-yyyy") + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00";
+                        bool Deleted = false;
+                        foreach (var gio in mdb.LenLichs.ToList())
+                        {
+                            if (gio.NgLenLichBD.Value.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
+                            {
+                                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+                                SqlCommand cmd;
+                                con.Open();
+                                string lich = Lich.SelectedDate.Value.ToString("dd-MM-yyyy");
+                                cmd = new SqlCommand("set dateformat dmy\ndelete from LenLich where NgLenLichBD='" + strGiomuonXoa + "'", con);
+                                cmd.ExecuteNonQuery();
+                                DateTime DT = DateTime.Now;
+                                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "xoá lịch cho ngày " + lich + "')", con);
+                                cmd.ExecuteNonQuery();
+                                con.Close();
+                                MessageBox.Show("Xoá Sự Kiện thành công");
+                                if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
+                                {
+                                    soSuKien--;
+                                    if (soSuKien != 0)
+                                        txtblLoiNhac.Text = "".PadRight(5) + "Tuần Này Có:\n " + soSuKien.ToString() + " Sự Kiện Đáng\n Chú Ý, Xem Chi\n Tiết Ở Lịch!";
+                                    else
+                                        txtblLoiNhac.Text = "".PadRight(8) + "Tuần Này\n Không Có Sự Kiện\n Nào Đáng Chú Ý";
+                                }
+                                stkLich.Children.Clear();
+                                stkNoiDung.Children.Clear();
+                                Deleted = true;
+                                enableXoaLich = false; 
+                                enableLenLich=false;
+                                break;
+                            }
+                        }
+                        if (!Deleted)
+                            MessageBox.Show("Không tìm thấy Sự Kiện cần xoá");
+                    }
+                }
+                else
                     MessageBox.Show("Vui lòng chọn ngày xoá lịch");
             }
             else
@@ -473,10 +516,9 @@ namespace MotoStore.Views.Pages
             switch (PageChinh.getLoaiNV)  //Chức Vụ
             {
                 case 1:  //Nhân viên loại 1
-                    lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
-                    lblChucVu.Content = "Nhân Viên Quản Lý";
                     txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
                     txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Assets\\anh3.png"));
                     txtblSoNV.FontSize = 20;
                     txtblSoXe.FontSize = 20.5;
                     Button btnLichSu = new Button();
@@ -491,8 +533,7 @@ namespace MotoStore.Views.Pages
                     stkbtnLichSu.Children.Add(btnLichSu);
                     break;
                 case 2:  //Nhân viên loại 2
-                    lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
-                    lblChucVu.Content = "Nhân Viên Văn Phòng";
+                    lblXinChao.Content = "Xin Chào, " + mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.TenNV).FirstOrDefault().ToString(); 
 
                     //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
                     var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
