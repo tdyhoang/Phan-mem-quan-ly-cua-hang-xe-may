@@ -1,0 +1,65 @@
+﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IOKhachHangPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.IOPagePages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="IOKhachHangPage">
+
+    <Grid>
+        <Label x:Name="lbMaKhachHang"
+               Content="Mã Khách Hàng: " 
+               Margin="26,36,623,370"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtMaKH" Margin="224,38,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbTenKH"
+               Content="Tên Khách Hàng: " 
+               Margin="24,96,625,310"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtTenKH" Margin="224,93,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbNgaySinhKH"
+               Content="Ngày Sinh: " 
+               Margin="24,146,620,260"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtNgaySinhKH" Margin="224,148,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbDiaChiKH"
+               Content="Địa Chỉ: " 
+               Margin="24,203,620,203"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtDiaChiKH" Margin="224,200,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbEmailKH"
+               Content="Email: " 
+               Margin="24,262,620,144"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtEmailKH" Margin="224,263,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbGioiTinh"
+               Content="Giới Tính: " 
+               Margin="24,315,676,86"
+               FontSize="15"
+               Foreground="Black"/>
+        <ComboBox x:Name="cmbGioiTinhKH" Margin="224,324,521,0" VerticalAlignment="Top">
+            <ComboBoxItem>Nam</ComboBoxItem>
+            <ComboBoxItem>Nữ</ComboBoxItem>
+        </ComboBox>
+        <Label x:Name="lbLoaiKH"
+               Content="Loại Khách Hàng: " 
+               Margin="24,371,676,30"
+               FontSize="15"
+               Foreground="Black"/>
+        <ComboBox x:Name="cmbLoaiKH" Margin="224,378,520,0" VerticalAlignment="Top">
+            <ComboBoxItem>Thường</ComboBoxItem>
+            <ComboBoxItem>Thân Quen</ComboBoxItem>
+            <ComboBoxItem>VIP</ComboBoxItem>
+            
+        </ComboBox>
+        <Button x:Name="btnAddKhachHang" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="599,114,0,0" VerticalAlignment="Top" Height="48" Width="117"/>
+
+    </Grid>
+</Page>

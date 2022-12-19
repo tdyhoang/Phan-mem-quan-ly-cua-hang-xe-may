@@ -1,0 +1,57 @@
+﻿<Window x:Class="Demo.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Demo.View"
+        mc:Ignorable="d"
+        Title="LoginView" Height="550" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"  
+        MouseDown="Window_MouseDown"
+        Background="#9900CC">
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/PageChinh.xaml"/>
+        <Button x:Name="btnMinimize"
+                            BorderThickness="0"
+                            Height="25"
+                            Width="40"
+                            Content="-"
+                            FontSize="30"
+                            FontWeight="Bold"
+                            Background="Blue"
+                            Foreground="Black"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    
+                            Grid.Column="1" 
+                            Click="btnMinimize_Click"
+                            Margin="600,0,-15,500">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="btnClose"
+                            BorderThickness="0"
+                            Height="25"
+                            Width="40"
+                            Content="X"
+                            Background="Red"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"    
+                            Grid.Column="2"    
+                            Click="btnClose_Click"
+                            Margin="700,0,0,500">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

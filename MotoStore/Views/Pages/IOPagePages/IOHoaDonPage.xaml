@@ -1,0 +1,66 @@
+﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IOHoaDonPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.IOPagePages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="IOHoaDonPage">
+
+    <Grid>
+        <Label x:Name="lbMaHD"
+               Content=" Mã Hóa Đơn: " 
+               Margin="24,36,623,370"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtMaHD" Margin="224,38,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbMaSPHD"
+               Content="Mã Sản Phẩm: " 
+               Margin="24,96,625,310"
+               FontSize="15"
+               Foreground="Black"/>
+        <!--Mã Sản Phẩm trong Hóa Đơn-->
+        <TextBox x:Name="txtMaSPHD" Margin="224,93,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbMaKHHD"
+               Content="Mã Khách Hàng: " 
+               Margin="24,146,620,260"
+               FontSize="15"
+               Foreground="Black"/>
+        <!--Mã Khách Hàng trong Hóa Đơn-->
+        <TextBox x:Name="txtMaKHHD" Margin="224,148,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbMaNHD"
+               Content="Mã Nhân Viên: " 
+               Margin="24,203,620,203"
+               FontSize="15"
+               Foreground="Black"/>
+        <!--Mã Nhân Viên trong Hóa Đơn-->
+        <TextBox x:Name="txtMaNVHD" Margin="224,200,526,0" VerticalAlignment="Top" IsReadOnly="True"/>
+        <Label x:Name="lbNgayXuatHD"
+               Content="Ngày Xuất HĐ: " 
+               Margin="24,262,620,144"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtNgayXuatHD" Margin="224,263,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbsoLuongHD"
+               Content="Số Lượng: " 
+               Margin="593,36,51,371"
+               FontSize="15"
+               Foreground="Black"/>
+        <!--Số Lượng SP Xuất ra trong Hóa Đơn-->
+        <TextBox x:Name="txtSoLuongHD" Margin="732,38,33,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbGiamGiaHD"
+               Content="Giảm Giá: " 
+               Margin="593,96,118,305"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtGiamGiaHD" Margin="732,93,33,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbThanhTienHD"
+               Content="Thành Tiền: " 
+               Margin="593,146,118,239"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddKhachHang" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117"/>
+    </Grid>
+</Page>
