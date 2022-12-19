@@ -1,0 +1,318 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace MotoStore.Database;
+
+public partial class MainDatabase : DbContext
+{
+    public MainDatabase()
+    {
+    }
+
+    public MainDatabase(DbContextOptions<MainDatabase> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<DonDatHang> DonDatHangs { get; set; }
+
+    public virtual DbSet<HoaDon> HoaDons { get; set; }
+
+    public virtual DbSet<KhachHang> KhachHangs { get; set; }
+
+    public virtual DbSet<LenLich> LenLichs { get; set; }
+
+    public virtual DbSet<LichSuHoatDong> LichSuHoatDongs { get; set; }
+
+    public virtual DbSet<MatHang> MatHangs { get; set; }
+
+    public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
+
+    public virtual DbSet<NhanVien> NhanViens { get; set; }
+
+    public virtual DbSet<ThongTinBaoHanh> ThongTinBaoHanhs { get; set; }
+
+    public virtual DbSet<UserApp> UserApps { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<DonDatHang>(entity =>
+        {
+            entity.HasKey(e => e.MaDonDh).HasName("PK_MaDonDH");
+
+            entity.ToTable("DonDatHang");
+
+            entity.Property(e => e.MaDonDh)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaDonDH");
+            entity.Property(e => e.MaKh).HasColumnName("MaKH");
+            entity.Property(e => e.MaMh).HasColumnName("MaMH");
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.Ngdh)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NGDH");
+            entity.Property(e => e.SoDonDh).HasColumnName("SoDonDH");
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaKHDDH");
+
+            entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaMHDDH");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.DonDatHangs)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaNVDDH");
+        });
+
+        modelBuilder.Entity<HoaDon>(entity =>
+        {
+            entity.HasKey(e => e.MaHd).HasName("PK_MaHD");
+
+            entity.ToTable("HoaDon");
+
+            entity.Property(e => e.MaHd)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaHD");
+            entity.Property(e => e.MaKh).HasColumnName("MaKH");
+            entity.Property(e => e.MaMh).HasColumnName("MaMH");
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.NgayLapHd)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NgayLapHD");
+            entity.Property(e => e.ThanhTien).HasColumnType("money");
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.HoaDons)
+                .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaKH");
+
+            entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.HoaDons)
+                .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaMH");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.HoaDons)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MaNV");
+        });
+
+        modelBuilder.Entity<KhachHang>(entity =>
+        {
+            entity.HasKey(e => e.MaKh).HasName("PK_MaKH");
+
+            entity.ToTable("KhachHang");
+
+            entity.Property(e => e.MaKh)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaKH");
+            entity.Property(e => e.DiaChi).HasMaxLength(40);
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.GioiTinh).HasMaxLength(3);
+            entity.Property(e => e.HoTenKh)
+                .HasMaxLength(30)
+                .HasColumnName("HoTenKH");
+            entity.Property(e => e.LoaiKh)
+                .HasMaxLength(10)
+                .HasColumnName("LoaiKH");
+            entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
+            entity.Property(e => e.Sdt)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("SDT");
+        });
+
+        modelBuilder.Entity<LenLich>(entity =>
+        {
+            entity.HasKey(e => e.LenLichId).HasName("PK_LenLichID");
+
+            entity.ToTable("LenLich");
+
+            entity.Property(e => e.LenLichId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("LenLichID");
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.NgLenLichBd)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NgLenLichBD");
+            entity.Property(e => e.NgLenLichKt)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NgLenLichKT");
+            entity.Property(e => e.NoiDungLenLich).HasMaxLength(200);
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LenLiches)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKLL_MaNV");
+        });
+
+        modelBuilder.Entity<LichSuHoatDong>(entity =>
+        {
+            entity.HasKey(e => e.LshdId).HasName("PK_LshdID");
+
+            entity.ToTable("LichSuHoatDong");
+
+            entity.Property(e => e.LshdId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("LshdID");
+            entity.Property(e => e.HoatDong).HasMaxLength(200);
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.ThoiGian).HasColumnType("datetime");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LichSuHoatDongs)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKLSHD_MaNV");
+        });
+
+        modelBuilder.Entity<MatHang>(entity =>
+        {
+            entity.HasKey(e => e.MaMh).HasName("PK_MaMH");
+
+            entity.ToTable("MatHang");
+
+            entity.Property(e => e.MaMh)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaMH");
+            entity.Property(e => e.GiaBanMh)
+                .HasColumnType("money")
+                .HasColumnName("GiaBanMH");
+            entity.Property(e => e.GiaNhapMh)
+                .HasColumnType("money")
+                .HasColumnName("GiaNhapMH");
+            entity.Property(e => e.HangSx)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("HangSX");
+            entity.Property(e => e.MoTa).HasMaxLength(75);
+            entity.Property(e => e.TenMh)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("TenMH");
+            entity.Property(e => e.XuatXu).HasMaxLength(15);
+
+            entity.HasOne(d => d.NhaSanXuat).WithMany(p => p.MatHangs)
+                .HasForeignKey(d => new { d.HangSx, d.XuatXu })
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MH");
+        });
+
+        modelBuilder.Entity<NhaSanXuat>(entity =>
+        {
+            entity.HasKey(e => new { e.TenNsx, e.NuocSx }).HasName("PK_NSX");
+
+            entity.ToTable("NhaSanXuat");
+
+            entity.Property(e => e.TenNsx)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("TenNSX");
+            entity.Property(e => e.NuocSx)
+                .HasMaxLength(15)
+                .HasColumnName("NuocSX");
+            entity.Property(e => e.Email)
+                .HasMaxLength(45)
+                .IsUnicode(false);
+            entity.Property(e => e.Sdt)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("SDT");
+        });
+
+        modelBuilder.Entity<NhanVien>(entity =>
+        {
+            entity.HasKey(e => e.MaNv).HasName("PK_MaNV");
+
+            entity.ToTable("NhanVien");
+
+            entity.Property(e => e.MaNv)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaNV");
+            entity.Property(e => e.ChucVu).HasMaxLength(10);
+            entity.Property(e => e.DiaChi).HasMaxLength(40);
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.GioiTinh).HasMaxLength(3);
+            entity.Property(e => e.HoTenNv)
+                .HasMaxLength(30)
+                .HasColumnName("HoTenNV");
+            entity.Property(e => e.Luong).HasColumnType("money");
+            entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
+            entity.Property(e => e.NgVl)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("NgVL");
+            entity.Property(e => e.Sdt)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("SDT");
+        });
+
+        modelBuilder.Entity<ThongTinBaoHanh>(entity =>
+        {
+            entity.HasKey(e => e.MaBh).HasName("PK_MaBH");
+
+            entity.ToTable("ThongTinBaoHanh");
+
+            entity.Property(e => e.MaBh)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("MaBH");
+            entity.Property(e => e.GhiChu).HasMaxLength(60);
+            entity.Property(e => e.MaKh).HasColumnName("MaKH");
+            entity.Property(e => e.MaMh).HasColumnName("MaMH");
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.ThoiGian).HasColumnType("smalldatetime");
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.ThongTinBaoHanhs)
+                .HasForeignKey(d => d.MaKh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TTBH_MaKH");
+
+            entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.ThongTinBaoHanhs)
+                .HasForeignKey(d => d.MaMh)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TTBH_MaMH");
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.ThongTinBaoHanhs)
+                .HasForeignKey(d => d.MaNv)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TTBH_MaNV");
+        });
+
+        modelBuilder.Entity<UserApp>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK_UserID");
+
+            entity.ToTable("UserApp");
+
+            entity.Property(e => e.UserId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("UserID");
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.MaNv).HasColumnName("MaNV");
+            entity.Property(e => e.Password)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.UserName)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

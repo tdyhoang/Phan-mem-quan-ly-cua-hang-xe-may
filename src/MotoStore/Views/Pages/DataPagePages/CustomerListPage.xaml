@@ -1,0 +1,68 @@
+﻿<ui:UiPage x:Class="MotoStore.Views.Pages.DataPagePages.CustomerListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:resources="clr-namespace:MotoStore.Resources"
+      xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+      xmlns:core="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:viewmodels="clr-namespace:MotoStore.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CustomerListViewModel}"
+      xmlns:helpers="clr-namespace:MotoStore.Helpers"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CustomerListPage">
+
+    <ui:UiPage.Resources>
+        <ControlTemplate x:Key="MultipleChoiceFilter">
+            <dgx:MultipleChoiceFilter />
+        </ControlTemplate>
+    </ui:UiPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
+        </DockPanel>
+
+        <ui:DataGrid Name="grdCustomer"
+                     Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     AutoGenerateColumns="False"
+                     SelectionUnit="FullRow"
+                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                     ItemsSource="{Binding Path=CustomerDataView}">
+            
+            <ui:DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#0078D7" />
+                            <Setter Property="BorderBrush" Value="#0078D7" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:DataGrid.Resources>
+
+            <ui:DataGrid.Columns>
+                <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding MaKh, Mode=OneWay}" />
+                <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
+                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
+                <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Sdt}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Loại" Binding="{Binding Path=LoaiKh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+            </ui:DataGrid.Columns>
+        </ui:DataGrid>
+    </Grid>
+</ui:UiPage>
