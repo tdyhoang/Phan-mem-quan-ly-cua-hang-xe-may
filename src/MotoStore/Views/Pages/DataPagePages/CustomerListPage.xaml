@@ -14,8 +14,6 @@
       Title="CustomerListPage">
 
     <ui:UiPage.Resources>
-        <resources:GioiTinhList x:Key="GioiTinhList" />
-        <resources:LoaiKhachHangList x:Key="LoaiKHList" />
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
@@ -33,58 +31,37 @@
 
         <DockPanel Grid.Row="0">
             <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
-            <ui:Button Content="Xoá dòng" Icon="Delete24" />
         </DockPanel>
 
         <ui:DataGrid Name="grdCustomer"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
                      AutoGenerateColumns="False"
+                     SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding Path=CustomerDataView}">
+            
+            <ui:DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#0078D7" />
+                            <Setter Property="BorderBrush" Value="#0078D7" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:DataGrid.Resources>
+
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding MaKh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
-                <DataGridTemplateColumn Header="Ngày sinh">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path=NgSinh}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Giới tính" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=GioiTinh}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox SelectedItem="{Binding Path=GioiTinh}" ItemsSource="{Binding Source={StaticResource GioiTinhList}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                <DataGridTemplateColumn Header="Loại">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=LoaiKh}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox SelectedItem="{Binding Path=LoaiKh}" ItemsSource="{StaticResource LoaiKHList}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Loại" Binding="{Binding Path=LoaiKh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>
