@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 
 namespace MotoStore.Database;
-
 public partial class LenLich
 {
-    public Guid? MaNv { get; set; }
-
-    public DateTime? NgLenLichBd { get; set; }
-
-    public DateTime? NgLenLichKt { get; set; }
-
+    public Guid? MaNV { get; set; }
+    public DateTime? NgLenLichBD { get; set; }
+    public DateTime? NgLenLichKT { get; set; }
     public string? NoiDungLenLich { get; set; }
+    //public virtual NhanVien? MaNvNavigation { get; set; }
 }

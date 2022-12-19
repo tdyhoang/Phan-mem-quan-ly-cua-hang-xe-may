@@ -1,46 +1,28 @@
-﻿using Wpf.Ui.Common.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
 namespace MotoStore.Views.Pages
 {
-    
     /// <summary>
     /// Interaction logic for IOPage.xaml
     /// </summary>
-    public partial class IOPage : INavigableView<ViewModels.IOViewModel>
+    public partial class IOPage : Page
     {
-        public ViewModels.IOViewModel ViewModel
+        public IOPage()
         {
-            get;
-        }
-
-        public IOPage(ViewModels.IOViewModel viewModel)
-        {
-            ViewModel = viewModel;
-
             InitializeComponent();
-        }
-
-        private void btnAddSPPage_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            IOMain.Content = new IOPagePages.IOSanPhamPage();
-        }
-
-
-
-        private void btnAddNSXPage_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            IOMain.Content = new IOPagePages.IONhaSXPage();
-        }
-
-        private void btnAddKhachHang_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            IOMain.Content = new IOPagePages.IOKhachHangPage();
-        }
-
-        private void btnAddHoaDon_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            IOMain.Content = new IOPagePages.IOHoaDonPage();
         }
     }
 }
-
-

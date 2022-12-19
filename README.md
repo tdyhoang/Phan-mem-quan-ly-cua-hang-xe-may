@@ -17,9 +17,6 @@
 ### Về file Resources.resx
 - Mn nhớ sử dụng file này cho các tài nguyên liên quan tới giao diện như màu sắc, hình nền, icon... hoặc những chuỗi (string) được sử dụng nhiều nơi. Có thể xem đây là 1 thư viện tổng cho chương trình.
 
-### Connection string
-- `System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString`
-
 ## Yêu cầu chung
 - Giải thích rõ ràng đối tượng người dùng mà ứng dụng nhắm đến, lợi ích của ứng dụng, ứng dụng có thân thiện với người dùng không là 1 điểm cộng  
 - Trang dữ liệu làm dưới dạng lưới, cho người dùng thao tác trên đó cũng là 1 điểm cộng.  

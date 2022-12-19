@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +21,6 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<KhachHang> KhachHangs { get; set; }
 
-    public virtual DbSet<LenLich> LenLichs { get; set; }
-
     public virtual DbSet<MatHang> MatHangs { get; set; }
 
     public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
@@ -39,7 +37,8 @@ public partial class MainDatabase : DbContext
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=QLYCHBANXEMAY;Encrypt=False;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -82,6 +81,9 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaHd)
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("MaHD");
+            entity.Property(e => e.HoTenNv)
+                .HasMaxLength(30)
+                .HasColumnName("HoTenNV");
             entity.Property(e => e.MaKh).HasColumnName("MaKH");
             entity.Property(e => e.MaMh).HasColumnName("MaMH");
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
@@ -128,22 +130,6 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
-        });
-
-        modelBuilder.Entity<LenLich>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("LenLich");
-
-            entity.Property(e => e.MaNv).HasColumnName("MaNV");
-            entity.Property(e => e.NgLenLichBd)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("NgLenLichBD");
-            entity.Property(e => e.NgLenLichKt)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("NgLenLichKT");
-            entity.Property(e => e.NoiDungLenLich).HasMaxLength(200);
         });
 
         modelBuilder.Entity<MatHang>(entity =>
@@ -218,7 +204,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
                 .HasColumnName("HoTenNV");
-            entity.Property(e => e.LoaiNv).HasColumnName("LoaiNV");
             entity.Property(e => e.Luong).HasColumnType("money");
             entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
             entity.Property(e => e.NgVl)

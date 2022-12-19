@@ -1,34 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Win32;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Shapes;
-using Wpf.Ui.Common.Interfaces;
-using Wpf.Ui.Mvvm.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MotoStore.ViewModels
 {
-    public partial class IOViewModel : ObservableObject, INavigationAware
+    internal class IOViewModel
     {
-        private readonly INavigationService _navigationService;
-
-        public IOViewModel(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
-
-        [ObservableProperty]
-        private int _counter = 0;
-
-        public void OnNavigatedTo()
-        {
-        }
-
-        public void OnNavigatedFrom()
-        {
-        }
     }
 }
-

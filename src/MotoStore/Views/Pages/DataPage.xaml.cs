@@ -43,10 +43,5 @@ namespace MotoStore.Views.Pages
             => DataNavigation.PageService = pageService;
 
         #endregion INavigationWindow methods
-
-        private void Data_LostFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-            DataNavigation.IsExpanded = false;
-        }
     }
 }

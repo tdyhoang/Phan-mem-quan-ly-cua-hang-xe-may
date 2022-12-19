@@ -65,10 +65,6 @@ namespace MotoStore
                 services.AddScoped<ViewModels.CustomerListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.SupplierListPage>();
                 services.AddScoped<ViewModels.SupplierListViewModel>();
-                services.AddScoped<Views.Pages.DataPagePages.InvoiceListPage>();
-                services.AddScoped<ViewModels.InvoiceListViewModel>();
-                services.AddScoped<Views.Pages.DataPagePages.UserListPage>();
-                services.AddScoped<ViewModels.UserListViewModel>();
                 services.AddScoped<Views.Windows.LoginView>();
                 services.AddScoped<Views.Pages.LoginPages.PageChinh>();
 

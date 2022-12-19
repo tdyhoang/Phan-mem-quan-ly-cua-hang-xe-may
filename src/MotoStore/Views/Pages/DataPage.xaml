@@ -25,11 +25,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ui:NavigationCompact
+                <ui:NavigationFluent
                     x:Name="DataNavigation"
                     Grid.Column="0"
-                    IsExpanded="True"
-                    LostFocus="Data_LostFocus"
                     Frame="{Binding ElementName=DataFrame, Mode=OneWay}"
                     Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" />
 

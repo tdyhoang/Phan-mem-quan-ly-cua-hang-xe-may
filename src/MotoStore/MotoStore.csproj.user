@@ -13,16 +13,10 @@
     <Compile Update="Views\Pages\DataPagePages\EmployeeListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Pages\DataPagePages\InvoiceListPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Pages\DataPagePages\MotoListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\DataPagePages\SupplierListPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\Pages\DataPagePages\UserListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\IOPage.xaml.cs">
@@ -45,34 +39,13 @@
     <Page Update="Views\Pages\DataPagePages\EmployeeListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Pages\DataPagePages\InvoiceListPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\Pages\DataPagePages\MotoListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\SupplierListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Pages\DataPagePages\UserListPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\Pages\IOPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\IOPagePages\IOAddSPPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\IOPagePages\IOHoaDonPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\IOPagePages\IOKhachHangPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\IOPagePages\IONhaSXPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\IOPagePages\IOSanPhamPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\LoginPages\PageChinh.xaml">

@@ -33,6 +33,7 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class LoginView
     {
+        
         public LoginView()
         {
             InitializeComponent();
@@ -42,6 +43,7 @@ namespace MotoStore.Views.Windows
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
+            
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -51,7 +53,6 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            OnClosed(e);
             Application.Current.Shutdown();
         }
 
