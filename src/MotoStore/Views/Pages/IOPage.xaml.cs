@@ -39,6 +39,7 @@ namespace MotoStore.Views.Pages
         private void btnAddHoaDon_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             IOMain.Content = new IOPagePages.IOHoaDonPage();
+>>>>>>> ed0f7f009c2f5b5a80ce19068a9e3ac527264973:MotoStore/Views/Pages/IOPage.xaml.cs
         }
     }
 }
