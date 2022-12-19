@@ -21,6 +21,7 @@
     WindowStyle="None"
     mc:Ignorable="d"
     IsVisibleChanged="UiWindow_IsVisibleChanged">
+    
     <Grid>
 
         <Grid.RowDefinitions>

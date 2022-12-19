@@ -25,6 +25,7 @@ using Wpf.Ui.Mvvm.Contracts;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
 using System.Net;
+using Microsoft.Data.SqlClient;
 
 namespace MotoStore.Views.Pages.LoginPages
 {
@@ -41,13 +42,14 @@ namespace MotoStore.Views.Pages.LoginPages
             timer.Tick += Timer_Tick;
         }
     
-        //static public PageChinh pgC;
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
         static public bool isValid = false;
         static public int getLoaiNV;   //Đặt biến tĩnh public để PageDashboard có thể truy cập để lấy các thông tin cần thiết
         static public string getMa;   //Tương tự như trên
         static public string getSex;  //Lấy giới tính
+        static public string getTen;  //Lấy cái tên
         private readonly DispatcherTimer timer = new DispatcherTimer();
+        private DateTime dt = DateTime.Now;
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
@@ -81,12 +83,12 @@ namespace MotoStore.Views.Pages.LoginPages
                     break;
             }
         }
-        static private int dem = 0;
+        static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (dem == 5)           //dem Vượt Quá 5 Thì Ngừng Nháy
+            if (dem == 7)           //dem = 7 Thì Ngừng Nháy
                 timer.Stop();
             if (Nhay)
             {
@@ -104,10 +106,8 @@ namespace MotoStore.Views.Pages.LoginPages
 
         public void buttonDangNhap_Click(object sender, RoutedEventArgs e)
         {
-            dem = 0;
-
+            dem = 0;  //Mỗi lần bấm nút Đăng Nhập thì dem được set lại = 0 
             flag = 1; //Báo hiệu nút Đăng Nhập đã được click
-
             if (string.IsNullOrEmpty(txtUser.Text) == true || string.IsNullOrEmpty(txtPassword.Password))
             {
                 if (buttonLanguage.Content == "English")
@@ -135,12 +135,26 @@ namespace MotoStore.Views.Pages.LoginPages
                         getSex=(string)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.GioiTinh).FirstOrDefault();
                         getMa = user.MaNv.ToString();   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
+
+                        var hoTenNV = mDb.NhanViens.Where(u => u.MaNv.ToString() == getMa).Select(u => u.HoTenNv).FirstOrDefault().ToString();
+                        var seperatedHoTenNV = hoTenNV.Split(' ');
+                        var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
+                        getTen = tenNV;
+                        //4 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
+
+                        SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+                        SqlCommand cmd;
+                        con.Open();
+                        DateTime DT = DateTime.Now;
+                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "đăng nhập')", con);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
 
                 if (isValid)  
                 {
-                    var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này
-                    getWd.Close();                       //Đóng nó sau khi đăng nhập thành công
+                    var getWd = Window.GetWindow(this);  //Lấy Window của cái Trang này(PageChinh)
+                    getWd.Close();                       //Đăng Nhập thành công => đóng Form Đăng Nhập
                     App.Current.MainWindow.Visibility = Visibility.Visible;
                     isValid = false;                    //Set lại giá trị để đóng cổng đăng nhập
                 }
@@ -149,13 +163,15 @@ namespace MotoStore.Views.Pages.LoginPages
                     lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
                     timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
                     timer.Start();
+                    //Nháy nếu sai TK hoặc MK
                 }
             }
         }
 
         private void buttonQuenMK_Click(object sender, RoutedEventArgs e)
         {
-            var pageQuenMatKhau = new PageQuenMatKhau(this); //Khởi tạo biến pageQuenMatKhau là trang QuenMatKhau cõng theo this(trang Chính này)
+            var pageQuenMatKhau = new PageQuenMatKhau(this);
+            //Khởi tạo biến pageQuenMatKhau là trang QuenMatKhau cõng theo this(trang Chính này)
             //Cõng theo this để có thể Back về this
 
             switch (buttonLanguage.Content)

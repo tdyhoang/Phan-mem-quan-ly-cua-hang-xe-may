@@ -43,20 +43,16 @@ Create table NhanVien
 	  ChucVu Nvarchar(10),
 	  NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	  Luong money,
-	  Thuong money,
-      TenNV nvarchar(10),     /*Lấy tên nhân viên*/
-      LoaiNV int,             /*Phân loại NV: 1-Quản Lý | 2-Văn Phòng | 3-Sửa Xe*/
 	  constraint PK_MaNV primary key(MANV)	 
 )
 alter table NhanVien add constraint CK_GTNV check(GioiTinh = 'Nam' or GioiTinh=N'Nữ')
 
-Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,3000000,N'Nghĩa',3)
-Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,4000000,N'Tuấn',3)
-Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,2000000,N'Quý',3)
-Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,2500000,N'Thương',2)
-Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,2500000,N'Sang',2)
-Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,3500000,N'Trung',1) /*Người quản lý*/
-
+Insert into NhanVien values('59ACED03-FF2D-4DAA-A8EF-273B3685F468',N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000)
+Insert into NhanVien values('90B6193C-0EBD-43F2-82A3-2DA131D767C6',N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000)
+Insert into NhanVien values('A25A94A7-6765-4D4E-BAD9-2E7A764C9742',N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000)
+Insert into NhanVien values('BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000)
+Insert into NhanVien values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000)
+Insert into NhanVien values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1',N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000) /*Người quản lý*/
 
 create table NhaSanXuat
 (
@@ -77,54 +73,52 @@ create table MatHang
 (
     MaMH uniqueidentifier DEFAULT newid(),
 	TenMH varchar(15),
+	SoPhanKhoi int,
 	GiaNhapMH money,
 	GiaBanMH money,
 	SoLuongTonKho int,
-	HangSX /*TenNSX*/ varchar(15),
-	XuatXu /*NuocSX*/ Nvarchar(15),
-	MoTa Nvarchar(60),
-	TinhTrang Nvarchar(15),
+	HangSX /*TenNSX*/ varchar(15) not null,
+	XuatXu /*NuocSX*/ Nvarchar(15) not null,
+	MoTa Nvarchar(75),
 	constraint PK_MaMH primary key(MaMH)
 )
 
 alter table MatHang add constraint FK_MH foreign key(HangSX,XuatXu) references NhaSanXuat(TenNSX,NuocSX)
 
-Insert into MatHang values('A626798B-7071-4710-88A8-7D31935A3019','Sirius 110cc',21500000,26500000,13,'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, màu đỏ đen',N'Mới')
-Insert into MatHang values('1B30FA5C-2C4E-42B1-97FE-864391FC4040','Sirius 50cc',10000000,13500000,15,'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, màu đen xám',N'Mới')
-Insert into MatHang values('01921D8D-F015-4309-A130-9390B2E8EC11','Honda Air Blade',33500000,40500000,7,'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, màu vàng đen',N'Mới')
-Insert into MatHang values('0FB80AA9-CC97-4157-8F04-BAA88F6E5266','Exciter 150cc',38500000,45000000,5,'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, màu xanh trắng',N'Mới')
-Insert into MatHang values('FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6','Raider F150',21500000,27500000,10,'Suzuki',N'Việt Nam',N'Màu đỏ đen',N'Mới')
+Insert into MatHang values('A626798B-7071-4710-88A8-7D31935A3019','Sirius', 110,21500000,26500000,13,'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, màu đỏ đen, Còn mới')
+Insert into MatHang values('1B30FA5C-2C4E-42B1-97FE-864391FC4040','Sirius', 50,10000000,13500000,15,'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, màu đen xám, Còn mới')
+Insert into MatHang values('01921D8D-F015-4309-A130-9390B2E8EC11','Honda Air Blade',150,33500000,40500000,7,'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, màu vàng đen, Còn mới')
+Insert into MatHang values('0FB80AA9-CC97-4157-8F04-BAA88F6E5266','Exciter', 150, 38500000,45000000,5,'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, màu xanh trắng, Còn mới')
+Insert into MatHang values('FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6','Raider F150', 150, 21500000,27500000,10,'Suzuki',N'Việt Nam',N'Màu đỏ đen, Còn mới')
 
 Create table HoaDon
 (
       MaHD  uniqueidentifier DEFAULT newid(),
-	  MaMH  uniqueidentifier,
-	  MaKH  uniqueidentifier,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
-	  MaNV  uniqueidentifier,
-	  HoTenNV Nvarchar(30),
+	  MaMH  uniqueidentifier not null,
+	  MaKH  uniqueidentifier not null,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
+	  MaNV  uniqueidentifier not null,
       NgayLapHD  smalldatetime,
-	  SoLuong int,
-	  GiamGia float,
+	  SoLuong int,                               /*số lượng xe*/
 	  ThanhTien money,
 	  constraint PK_MaHD primary key(MaHD)
 )
 
-Alter TABLE HoaDon add constraint FK_MaMH foreign key(MaMH) references MatHang(MaMH)
+Alter TABLE HOADON add constraint FK_MaMH foreign key(MaMH) references MatHang(MaMH)
 ALTER TABLE HOADON ADD CONSTRAINT FK_MaKH foreign key(MAKH) references KhachHang(MAKH)
 ALTER TABLE HOADON ADD CONSTRAINT FK_MaNV foreign key(MANV) references NhanVien(MANV)
 
-Insert into HoaDon values(newid(),'A626798B-7071-4710-88A8-7D31935A3019','1B051393-0949-4E96-959A-6B001F82B177','BDD24832-B4B9-4195-962C-91909DDE76C6',N'Lê Hoài Thương','19/8/2021',1,0,26500000)
-Insert into HoaDon values(newid(),'01921D8D-F015-4309-A130-9390B2E8EC11','955A14F5-F895-4F0B-B693-CE24A0B11321','89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','17/10/2022',1,5,40500000*0.95)
-Insert into HoaDon values(newid(),'0FB80AA9-CC97-4157-8F04-BAA88F6E5266','BDA8A3CC-9116-4215-99AB-351EF43154F5','89250069-C6CC-4D5D-BB9F-AA298DCE0D67',N'Nguyễn Bá Sang','15/10/2022',1,10,45000000*0.85)
+Insert into HoaDon values(newid(),'A626798B-7071-4710-88A8-7D31935A3019','1B051393-0949-4E96-959A-6B001F82B177','BDD24832-B4B9-4195-962C-91909DDE76C6','19/8/2021',1,26500000)
+Insert into HoaDon values(newid(),'01921D8D-F015-4309-A130-9390B2E8EC11','955A14F5-F895-4F0B-B693-CE24A0B11321','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','17/10/2022',1,40500000*0.95)
+Insert into HoaDon values(newid(),'0FB80AA9-CC97-4157-8F04-BAA88F6E5266','BDA8A3CC-9116-4215-99AB-351EF43154F5','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','15/10/2022',1,45000000*0.85)
 
 Create table ThongTinBaoHanh
 (
      MaBH  uniqueidentifier DEFAULT newid(),
-	 MaMH  uniqueidentifier,
-	 MaKH  uniqueidentifier,
-	 MaNV  uniqueidentifier,
+	 MaMH  uniqueidentifier not null,
+	 MaKH  uniqueidentifier not null,
+	 MaNV  uniqueidentifier not null,
 	 ThoiGian smalldatetime,
-	 GhiChu nvarchar(30),
+	 GhiChu nvarchar(60),
 	 constraint PK_MaBH  primary key(MaBH)
 )
 
@@ -157,12 +151,12 @@ create table DonDatHang
 ( 
   MaDonDH uniqueidentifier DEFAULT newid(),
   SoDonDH int,
-  MaMH  uniqueidentifier,
+  MaMH  uniqueidentifier not null,
   SoLuongHang int,
-  MaKH uniqueidentifier,
-  MaNV uniqueidentifier,
-  NGDH smalldatetime, /*Ngày Đặt Hàng*/
-  constraint PK_MaDonDH primary key(MaDonDH)
+  MaKH uniqueidentifier not null,
+  MaNV uniqueidentifier not null,
+  NGDH smalldatetime,                                          /*Ngày Đặt Hàng*/                     
+  constraint PK_MaDonDH primary key(MaDonDH)                  /*Phần này để nhân viên tương tác với Khách, chỉ nhân viên tương tác với khách mới có quyền thêm xoá sửa*/
 )
 
 alter table DonDatHang add constraint FK_MaMHDDH foreign key(MaMH) references MatHang(MaMH)
@@ -173,9 +167,21 @@ Insert into DonDatHang values(newid(),1,'01921D8D-F015-4309-A130-9390B2E8EC11',1
 
 Create Table LenLich
 (
-  /*MaLenLich  uniqueidentifier DEFAULT newid(),*/
-  MaNV uniqueidentifier,          /*Mã Nhân Viên để biết ai đã lên lịch, tiện cho tính năng xem lịch sử hoạt động sau này*/
+  MaNV uniqueidentifier not null,          /*Mã Nhân Viên để biết ai đã lên lịch, tiện cho tính năng xem lịch sử hoạt động sau này*/
   NgLenLichBD smalldatetime,      /*Ngày, giờ bắt đầu*/
   NgLenLichKT smalldatetime,      /*Ngày, giờ kết thúc*/
   NoiDungLenLich nvarchar(200),   /*Nội dung lên lịch hôm đó*/
 )
+alter table LenLich add constraint FKLL_MaNV foreign key(MaNV) references NhanVien(MaNV)
+
+Create Table LichSuHoatDong
+(
+  MaNV uniqueidentifier not null,
+  ThoiGian datetime,
+  HoatDong nvarchar(200)
+)
+alter table LichSuHoatDong add constraint FKLSHD_MaNV foreign key(MaNV) references NhanVien(MaNV)
+insert into LichSuHoatDong values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1','18-12-2022 00:19:40', N'xoá lịch cho ngày 18-12-2022')
+delete from LichSuHoatDong
+select *from lichsuhoatdong
+delete from LenLich

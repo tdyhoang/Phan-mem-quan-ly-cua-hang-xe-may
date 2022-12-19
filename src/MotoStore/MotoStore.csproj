@@ -19,10 +19,10 @@
     <None Remove="Assets\logo2-removebg-preview.png" />
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
-    <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
-    <None Remove="Views\Pages\LoginPages\motorworkshop.jpg" />
-    <None Remove="Views\Pages\LoginPages\NhanVien.png" />
-    <None Remove="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\motorworkshop.jpg" />
+    <None Remove="Views\Pages\Images\NhanVien.png" />
+    <None Remove="Views\Pages\Images\SoXe-removebg-preview.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,10 +52,10 @@
     <Resource Include="Assets\User_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Pages\CalendaRicon-removebg-preview.png" />
-    <Resource Include="Views\Pages\LoginPages\motorworkshop.jpg" />
-    <Resource Include="Views\Pages\LoginPages\NhanVien.png" />
-    <Resource Include="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\motorworkshop.jpg" />
+    <Resource Include="Views\Pages\Images\NhanVien.png" />
+    <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
   </ItemGroup>
 
 </Project>
