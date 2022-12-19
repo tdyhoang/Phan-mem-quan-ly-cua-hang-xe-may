@@ -60,6 +60,21 @@
     <Page Update="Views\Pages\IOPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Pages\IOPagePages\IOAddSPPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\IOPagePages\IOHoaDonPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\IOPagePages\IOKhachHangPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\IOPagePages\IONhaSXPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\IOPagePages\IOSanPhamPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Pages\LoginPages\PageChinh.xaml">
       <SubType>Designer</SubType>
     </Page>

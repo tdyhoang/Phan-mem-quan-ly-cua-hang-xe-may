@@ -1,0 +1,65 @@
+﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IOAddSPPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.IOPagePages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="IOAddSPPage">
+
+    <Grid>
+        <Label x:Name="lbTenSP"
+               Content="Tên Sản Phẩm: " 
+               Margin="49,33,600,373"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtTenSP" Margin="249,30,501,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbGiaNhap"
+               Content="Giá Nhập: " 
+               Margin="49,83,595,323"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtGiaNhapSP" Margin="249,85,501,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbGiaBan"
+               Content="Giá Bán: " 
+               Margin="41,301,603,105"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtGiaBanSP" Margin="242,300,508,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbSoLuong"
+               Content="Số Lượng: " 
+               Margin="49,140,595,266"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtSoLuongSP" Margin="249,137,501,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbXuatXu"
+               Content="Xuất Xứ: " 
+               Margin="49,199,595,207"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtXuatXuSP" Margin="249,201,501,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbHangSanXuat"
+               Content="Hãng Sản Xuất: " 
+               Margin="430,315,214,91"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtHangSanXuatSP" Margin="661,316,89,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbMotaSP"
+               Content="Mô Tả: " 
+               Margin="430,245,214,161"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtMoTaSP" Margin="659,245,91,0" VerticalAlignment="Top" RenderTransformOrigin="0.371,-0.127"/>
+        <Label x:Name="lbTinhTrangSP"
+               Content="Tình Trạng: " 
+               Margin="456,378,188,28"
+               FontSize="15"
+               Foreground="Black"/>
+        <TextBox x:Name="txtTinhTrangSP" Margin="675,379,75,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnAddNewSP" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="302,388,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewSP_Click"/>
+        <Image x:Name="ImageSP" HorizontalAlignment="Left" Height="148" Margin="562,65,0,0" VerticalAlignment="Top" Width="230"/>
+        <Button x:Name="btnLoadImageSP" Content="Chọn ảnh Sản Phẩm" Margin="595,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.898,0.615" Click="btnLoadImageSP_Click"/>
+
+    </Grid>
+</Page>
