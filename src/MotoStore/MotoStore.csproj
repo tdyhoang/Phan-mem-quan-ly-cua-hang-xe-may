@@ -20,9 +20,12 @@
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
     <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67" />
+    <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
     <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1" />
+    <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <None Remove="Views\Pages\Images\anh3.png" />
     <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
+    <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
     <None Remove="Views\Pages\Images\NhanVien.png" />
@@ -61,10 +64,10 @@
     <Resource Include="Assets\User_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67" />
-    <Resource Include="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1" />
+    <Resource Include="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
+    <Resource Include="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <Resource Include="Views\Pages\Images\anh3.png" />
-    <Resource Include="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
+    <Resource Include="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <Resource Include="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\motorworkshop.jpg" />
     <Resource Include="Views\Pages\Images\NhanVien.png" />

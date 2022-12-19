@@ -158,7 +158,7 @@ namespace MotoStore.Views.Pages
             if (co==false)
                 rtbNoiDung.AppendText("Không có sự kiện nổi bật");
 
-            if (PageChinh.getLoaiNV==1)   //Tất nhiên ng Quản Lý mới có quyền lên lịch
+            if (PageChinh.getChucVu == "Quản Lý")   //Tất nhiên ng Quản Lý mới có quyền lên lịch
             {
                 stkLich.Children.Clear();
                 rtb = new RichTextBox();
@@ -460,50 +460,49 @@ namespace MotoStore.Views.Pages
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
-            if (File.Exists("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
-                anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa));
+            if (File.Exists("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
+                anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa + ".png"));
             else
             {
                 if (PageChinh.getSex == "Nữ")
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             }
 
-            switch (PageChinh.getLoaiNV)  //Chức Vụ
+            if (PageChinh.getChucVu == "Quản Lý")
             {
-                case 1:  //Nhân viên loại 1
-                    lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
-                    lblChucVu.Content = "Nhân Viên Quản Lý";
-                    txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
-                    txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
-                    txtblSoNV.FontSize = 20;
-                    txtblSoXe.FontSize = 20.5;
-                    Button btnLichSu = new Button();
-                    btnLichSu.Content = "Lịch Sử";
-                    btnLichSu.FontSize = 18;
-                    btnLichSu.FontWeight = FontWeights.Medium;
-                    btnLichSu.Height = 40;
-                    btnLichSu.Width = 110;
-                    btnLichSu.Foreground = Brushes.Black;
-                    btnLichSu.Background = Brushes.LightSkyBlue;
-                    btnLichSu.Click += btnLichSu_Click;
-                    stkbtnLichSu.Children.Add(btnLichSu);
-                    break;
-                case 2:  //Nhân viên loại 2
-                    lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
-                    lblChucVu.Content = "Nhân Viên Văn Phòng";
+                lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
+                lblChucVu.Content = "Nhân Viên Quản Lý";
+                txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
+                txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
+                txtblSoNV.FontSize = 20;
+                txtblSoXe.FontSize = 20.5;
+                Button btnLichSu = new Button();
+                btnLichSu.Content = "Lịch Sử";
+                btnLichSu.FontSize = 18;
+                btnLichSu.FontWeight = FontWeights.Medium;
+                btnLichSu.Height = 40;
+                btnLichSu.Width = 110;
+                btnLichSu.Foreground = Brushes.Black;
+                btnLichSu.Background = Brushes.LightSkyBlue;
+                btnLichSu.Click += btnLichSu_Click;
+                stkbtnLichSu.Children.Add(btnLichSu);
+            }
+            else  //Nhân viên loại 2
+            {
+                lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
+                lblChucVu.Content = "Nhân Viên Văn Phòng";
 
-                    //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
-                    var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
-                    int d3 = (int)(dt - dx).Value.TotalDays;
-                    txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d3.ToString() + " Ngày";
+                //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
+                var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
+                int d3 = (int)(dt - dx).Value.TotalDays;
+                txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d3.ToString() + " Ngày";
 
-                    var slg = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
-                    txtblSoXe.Text = "".PadRight(15) + slg.ToString() + "\n".PadRight(10) + "Là Số Xe\n" + "".PadRight(1) + "Bạn Bán Được";
-                    txtblSoNV.FontSize = 19;
-                    txtblSoXe.FontSize = 18.9;
-                    break;
+                var slg = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                txtblSoXe.Text = "".PadRight(15) + slg.ToString() + "\n".PadRight(10) + "Là Số Xe\n" + "".PadRight(1) + "Bạn Bán Được";
+                txtblSoNV.FontSize = 19;
+                txtblSoXe.FontSize = 18.9;
             }
         }
 

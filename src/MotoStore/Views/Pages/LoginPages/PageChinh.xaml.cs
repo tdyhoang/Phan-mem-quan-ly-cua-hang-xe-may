@@ -44,7 +44,7 @@ namespace MotoStore.Views.Pages.LoginPages
     
         private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
         static public bool isValid = false;
-        static public int getLoaiNV;   //Đặt biến tĩnh public để PageDashboard có thể truy cập để lấy các thông tin cần thiết
+        static public string getChucVu; //Đặt biến tĩnh public để PageDashboard có thể truy cập để lấy các thông tin cần thiết
         static public string getMa;   //Tương tự như trên
         static public string getSex;  //Lấy giới tính
         static public string getTen;  //Lấy cái tên
@@ -134,6 +134,8 @@ namespace MotoStore.Views.Pages.LoginPages
                         getSex=(string)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.GioiTinh).FirstOrDefault();
                         getMa = user.MaNv.ToString();   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
+
+                        getChucVu = mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.ChucVu).FirstOrDefault();
 
                         var hoTenNV = mDb.NhanViens.Where(u => u.MaNv.ToString() == getMa).Select(u => u.HoTenNv).FirstOrDefault().ToString();
                         var seperatedHoTenNV = hoTenNV.Split(' ');

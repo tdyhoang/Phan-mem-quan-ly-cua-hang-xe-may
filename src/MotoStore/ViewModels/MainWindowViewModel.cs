@@ -44,107 +44,102 @@ namespace MotoStore.ViewModels
         private void InitializeViewModel()      
         {
             //Check loại NV               
-                switch(PageChinh.getLoaiNV)
-                {
-                    case 1:
-                        NavigationItems = new ObservableCollection<INavigationControl>
+            if (PageChinh.getChucVu == "Quản Lý")
             {
-                new NavigationItem()
+                NavigationItems = new ObservableCollection<INavigationControl>
                 {
-                    Content = "Trang Chủ",
-                    PageTag = "trangchu",
-                    Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Nhập Xuất",
-                    PageTag = "io",
-                    Icon = SymbolRegular.Stream24,
-                    PageType = typeof(Views.Pages.IOPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Danh Mục",
-                    PageTag = "data",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.DataPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Báo Cáo",
-                    PageTag = "report",
-                    Icon = SymbolRegular.Info24,
-                    PageType = typeof(Views.Pages.ReportPage)
-                }
-            };
+                    new NavigationItem()
+                    {
+                        Content = "Trang Chủ",
+                        PageTag = "trangchu",
+                        Icon = SymbolRegular.Home24,
+                        PageType = typeof(Views.Pages.DashboardPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Nhập Xuất",
+                        PageTag = "io",
+                        Icon = SymbolRegular.Stream24,
+                        PageType = typeof(Views.Pages.IOPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Mục",
+                        PageTag = "data",
+                        Icon = SymbolRegular.DataHistogram24,
+                        PageType = typeof(Views.Pages.DataPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Báo Cáo",
+                        PageTag = "report",
+                        Icon = SymbolRegular.Info24,
+                        PageType = typeof(Views.Pages.ReportPage)
+                    }
+                };
 
-                        NavigationFooter = new ObservableCollection<INavigationControl>
-            {
-                new NavigationItem()
+                NavigationFooter = new ObservableCollection<INavigationControl>
                 {
-                    Content = "Cài Đặt",
-                    PageTag = "settings",
-                    Icon = SymbolRegular.Settings24,
-                    PageType = typeof(Views.Pages.SettingsPage)
-                }
-            };
+                    new NavigationItem()
+                    {
+                        Content = "Cài Đặt",
+                        PageTag = "settings",
+                        Icon = SymbolRegular.Settings24,
+                        PageType = typeof(Views.Pages.SettingsPage)
+                    }
+                };
 
-                        TrayMenuItems = new ObservableCollection<MenuItem>
-            {
-                new MenuItem
+                TrayMenuItems = new ObservableCollection<MenuItem>
                 {
-                    Header = "Home",
-                    Tag = "tray_home"
-                }
-            };
-                        break;
-                    case 2:
-                        NavigationItems = new ObservableCollection<INavigationControl>
-            {
-                new NavigationItem()
-                {
-                    Content = "Trang Chủ",
-                    PageTag = "trangchu",
-                    Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Nhập Xuất",
-                    PageTag = "io",
-                    Icon = SymbolRegular.Stream24,
-                    PageType = typeof(Views.Pages.IOPage)
-                },
-            };
-
-                        NavigationFooter = new ObservableCollection<INavigationControl>
-            {
-                new NavigationItem()
-                {
-                    Content = "Cài Đặt",
-                    PageTag = "settings",
-                    Icon = SymbolRegular.Settings24,
-                    PageType = typeof(Views.Pages.SettingsPage)
-                }
-            };
-
-                        TrayMenuItems = new ObservableCollection<MenuItem>
-            {
-                new MenuItem
-                {
-                    Header = "Home",
-                    Tag = "tray_home"
-                }
-            };
-                        break;
-                }
-          
-
+                    new MenuItem
+                    {
+                        Header = "Home",
+                        Tag = "tray_home"
+                    }
+                };
+            }
             
+            else
+            {
+                NavigationItems = new ObservableCollection<INavigationControl>
+                {
+                    new NavigationItem()
+                    {
+                        Content = "Trang Chủ",
+                        PageTag = "trangchu",
+                        Icon = SymbolRegular.Home24,
+                        PageType = typeof(Views.Pages.DashboardPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Nhập Xuất",
+                        PageTag = "io",
+                        Icon = SymbolRegular.Stream24,
+                        PageType = typeof(Views.Pages.IOPage)
+                    },
+                };
 
+                NavigationFooter = new ObservableCollection<INavigationControl>
+                {
+                    new NavigationItem()
+                    {
+                        Content = "Cài Đặt",
+                        PageTag = "settings",
+                        Icon = SymbolRegular.Settings24,
+                        PageType = typeof(Views.Pages.SettingsPage)
+                    }
+                };
 
-
+                TrayMenuItems = new ObservableCollection<MenuItem>
+                {
+                    new MenuItem
+                    {
+                        Header = "Home",
+                        Tag = "tray_home"
+                    }
+                };
+            }
+          
             _isInitialized = true;
         }
     }
