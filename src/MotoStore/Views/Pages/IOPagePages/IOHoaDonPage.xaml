@@ -41,7 +41,7 @@
                Margin="24,262,620,144"
                FontSize="15"
                Foreground="Black"/>
-        <TextBox x:Name="txtNgayXuatHD" Margin="224,263,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNgayXuatHD" Margin="225,261,525,0" VerticalAlignment="Top"/>
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
                Margin="593,36,51,371"
