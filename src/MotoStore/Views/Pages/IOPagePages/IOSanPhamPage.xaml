@@ -38,8 +38,10 @@
                                                 <ImageBrush ImageSource="{Binding Image}" />
                                             </Border.Background>
                                         </Border>
-                                        <TextBlock Margin="5" Text="{Binding NameProduct}" FontSize="14" FontWeight="Medium"/>
-                                        <TextBlock Margin="5 0" Text="{Binding ValueMoney, StringFormat={}{0:C}}" FontSize="14" FontWeight="Black"/>
+
+                                        <TextBlock Margin="5" Text="{Binding NameProduct}" FontSize="13" FontWeight="Medium"/>
+                                        <TextBlock Margin="5 0" Text="{Binding ValueMoney, StringFormat={}{0:C}}" FontSize="13" FontWeight="Black"/>
+
 
                                     </StackPanel>
 
@@ -61,6 +63,6 @@
 
 
         </ScrollViewer>
-        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="314,330,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
+        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="266,329,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
     </Grid>
 </Page>

@@ -33,9 +33,11 @@ namespace MotoStore.Views.Pages.IOPagePages
             MainDatabase db = new MainDatabase();
             List<Product> products = new List<Product>();
             List<MatHang> matHang = db.MatHangs.ToList();
+            string AnhXE;
             foreach (MatHang matHang1 in matHang)
             {
-                products.Add(new Product(matHang1.TenMh, matHang1.GiaBanMh, "/Images/AB160c.png"));
+                AnhXE = "/Views/Pages/IO_Images/" + matHang1.MaMh.ToString() + ".png"; //Ảnh của từng xe(gán theo mã xe có sẵn )
+                products.Add(new Product(matHang1.TenMh, matHang1.GiaBanMh, AnhXE));
             }
             return products;
         }

@@ -39,68 +39,60 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
-            //bool check = true;
-            //SqlConnection con = new SqlConnection(@"Data Source=.\SQLExpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
-            //SqlCommand cmd;
-            //if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongSP.Text)) || (string.IsNullOrWhiteSpace(txtXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaBanSP.Text)) || (string.IsNullOrWhiteSpace(txtHangSanXuatSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtTinhTrangSP.Text)))
-            //{
-            //    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < txtTenSP.Text.Length; i++)//Check Tên SP
-            //    {
-            //        if ((txtTenSP.Text[i] >= 48 && txtTenSP.Text[i] <= 57))
-            //        {
-            //            MessageBox.Show("Tên Sản Phẩm không được chứa các ký tự số! ");
-            //            check = false;
-            //        }
-            //    }
+            bool check = true;
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLExpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+            SqlCommand cmd;
+            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaBanSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtTinhTrangSP.Text)))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+            }
+            else
+            {
+                for (int i = 0; i < txtTenSP.Text.Length; i++)//Check Tên SP
+                {
+                    if ((txtTenSP.Text[i] >= 48 && txtTenSP.Text[i] <= 57))
+                    {
+                        MessageBox.Show("Tên Sản Phẩm không được chứa các ký tự số! ");
+                        check = false;
+                    }
+                }
+
+
+                for (int i = 0; i < txtGiaNhapSP.Text.Length; i++) //Check Giá Nhập SPham
+                {
+                    if (!(txtGiaNhapSP.Text[i] >= 48 && txtGiaNhapSP.Text[i] <= 57))
+                    {
+                        MessageBox.Show("Giá Sản Phẩm không được chứa các ký tự ");
+                        check = false;
+                    }
+                }
+                for (int i = 0; i < txtGiaBanSP.Text.Length; i++) //Check Giá Bán SPham
+                {
+                    if (!(txtGiaBanSP.Text[i] >= 48 && txtGiaBanSP.Text[i] <= 57))
+                    {
+                        MessageBox.Show("Giá Bán Sản Phẩm không được chứa các ký tự ");
+                        check = false;
+                    }
+                }
+                for (int i = 0; i < txtSoLuongSP.Text.Length; i++) //Check Số Lượng SPham
+                {
+                    if (!(txtSoLuongSP.Text[i] >= 48 && txtSoLuongSP.Text[i] <= 57))
+                    {
+                        MessageBox.Show("Số Lượng Sản Phẩm không được chứa các ký tự ");
+                        check = false;
+                    }
+                }
                 
 
-            //    for (int i = 0; i < txtGiaNhapSP.Text.Length; i++) //Check Giá Nhập SPham
-            //    {
-            //        if (!(txtGiaNhapSP.Text[i] >= 48 && txtGiaNhapSP.Text[i] <= 57))
-            //        {
-            //            MessageBox.Show("Giá Sản Phẩm không được chứa các ký tự ");
-            //            check = false;
-            //        }
-            //    }
-            //    for (int i = 0; i < txtGiaBanSP.Text.Length; i++) //Check Giá Bán SPham
-            //    {
-            //        if (!(txtGiaBanSP.Text[i] >= 48 && txtGiaBanSP.Text[i] <= 57))
-            //        {
-            //            MessageBox.Show("Giá Bán Sản Phẩm không được chứa các ký tự ");
-            //            check = false;
-            //        }
-            //    }
-            //    for (int i = 0; i < txtSoLuongSP.Text.Length; i++) //Check Số Lượng SPham
-            //    {
-            //        if (!(txtSoLuongSP.Text[i] >= 48 && txtSoLuongSP.Text[i] <= 57))
-            //        {
-            //            MessageBox.Show("Số Lượng Sản Phẩm không được chứa các ký tự ");
-            //            check = false;
-            //        }
-            //    }
-            //    for (int i = 0; i < txtXuatXuSP.Text.Length; i++)//Check Xuất Xứ SP
-            //    {
-            //        if ((txtXuatXuSP.Text[i] >= 48 && txtXuatXuSP.Text[i] <= 57))
-            //        {
-            //            MessageBox.Show("Xuất Xứ không được chứa các ký tự số! ");
-            //            check = false;
-            //        }
-            //    }
-                
-
-            //    if (check)
-            //    {
-            //        con.Open();
-            //        cmd = new SqlCommand("Set Dateformat dmy\nInsert into MatHang values( NEWID(),  " + "  N'" + txtTenSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + txtHangSanXuatSP.Text + "','" + txtXuatXuSP.Text  + "','" + txtMoTaSP.Text + "','" + txtTinhTrangSP.Text + " ' )", con);
-            //        cmd.ExecuteNonQuery();
-            //        con.Close();
-            //        MessageBox.Show("Thêm dữ liệu thành công");
-            //    }
-            //}
+                if (check)
+                {
+                    con.Open();
+                    cmd = new SqlCommand("Set Dateformat dmy\nInsert into MatHang values( NEWID(),  " + "  N'" + txtTenSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + cmbHangSXSP.Text + "','" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + "','" + txtTinhTrangSP.Text + " ' )", con);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    MessageBox.Show("Thêm dữ liệu thành công");
+                }
+            }
         }
     }
 }
