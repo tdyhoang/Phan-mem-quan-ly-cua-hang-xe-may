@@ -19,6 +19,9 @@
     <Compile Update="Views\Pages\DataPagePages\MotoListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\DataPagePages\OrderListPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\DataPagePages\SupplierListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\MotoListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\DataPagePages\OrderListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\SupplierListPage.xaml">

@@ -150,7 +150,6 @@ Insert into UserApp values(newid(),'89250069-C6CC-4D5D-BB9F-AA298DCE0D67','Nhvie
 create table DonDatHang
 ( 
   MaDonDH uniqueidentifier DEFAULT newid(),
-  SoDonDH int,
   MaMH  uniqueidentifier not null,
   SoLuongHang int,
   MaKH uniqueidentifier not null,
@@ -163,7 +162,7 @@ alter table DonDatHang add constraint FK_MaMHDDH foreign key(MaMH) references Ma
 alter table DonDatHang add constraint FK_MaKHDDH foreign key(MaKH) references KHACHHANG(MaKH)
 alter table DonDatHang add constraint FK_MaNVDDH foreign key(MaNV) references NHANVIEN(MaNV)
 
-Insert into DonDatHang values(newid(),1,'01921D8D-F015-4309-A130-9390B2E8EC11',1,'8507F1FB-C2CC-48AF-B285-DC15AFF4EC77','90B6193C-0EBD-43F2-82A3-2DA131D767C6','25/11/2022')
+Insert into DonDatHang values(newid(),'01921D8D-F015-4309-A130-9390B2E8EC11',1,'8507F1FB-C2CC-48AF-B285-DC15AFF4EC77','90B6193C-0EBD-43F2-82A3-2DA131D767C6','25/11/2022')
 
 Create Table LenLich
 (

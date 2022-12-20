@@ -61,9 +61,8 @@
                 <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Path=Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" />
                 <DataGridTextColumn Header="Chức vụ" Binding="{Binding Path=ChucVu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Ngày vào làm" Binding="{Binding Path=NgVl, StringFormat=dd/MM/yyyy}" />
                 <DataGridTextColumn Header="Lương" Binding="{Binding Path=Luong}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Thưởng" Binding="{Binding Path=Thuong}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Loại nhân viên" Binding="{Binding Path=LoaiNV}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>

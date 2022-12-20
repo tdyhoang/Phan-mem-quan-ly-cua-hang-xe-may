@@ -55,7 +55,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.Ngdh)
                 .HasColumnType("smalldatetime")
                 .HasColumnName("NGDH");
-            entity.Property(e => e.SoDonDh).HasColumnName("SoDonDH");
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.DonDatHangs)
                 .HasForeignKey(d => d.MaKh)

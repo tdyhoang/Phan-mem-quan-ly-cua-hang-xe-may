@@ -28,5 +28,13 @@ namespace MotoStore.Views.Pages.DataPagePages
             ViewModel.OnNavigatedTo();
             grdCustomer.ItemsSource = ViewModel.TableData;
         }
+
+        private void SaveToDatabase()
+        {
+            foreach (var item in grdCustomer.Items)
+            {
+
+            }
+        }
     }
 }

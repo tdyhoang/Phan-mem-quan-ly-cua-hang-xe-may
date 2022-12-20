@@ -7,8 +7,6 @@ public partial class DonDatHang
 {
     public Guid MaDonDh { get; set; }
 
-    public int? SoDonDh { get; set; }
-
     public Guid MaMh { get; set; }
 
     public int? SoLuongHang { get; set; }

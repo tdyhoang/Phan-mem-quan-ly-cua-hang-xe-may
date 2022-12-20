@@ -81,16 +81,12 @@
     <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\userNam.png" />
     <Resource Include="Views\Pages\Images\userNu.png" />
-    <Resource Include="Views\Pages\CalendaRicon-removebg-preview.png" />
     <Resource Include="Views\Pages\IO_Images\01921D8D-F015-4309-A130-9390B2E8EC11.png" />
     <Resource Include="Views\Pages\IO_Images\0FB80AA9-CC97-4157-8F04-BAA88F6E5266.png" />
     <Resource Include="Views\Pages\IO_Images\1B30FA5C-2C4E-42B1-97FE-864391FC4040.png" />
     <Resource Include="Views\Pages\IO_Images\A626798B-7071-4710-88A8-7D31935A3019.png" />
     <Resource Include="Views\Pages\IO_Images\FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6.png" />
     <Resource Include="Views\Pages\IO_Images\Future.png" />
-    <Resource Include="Views\Pages\LoginPages\motorworkshop.jpg" />
-    <Resource Include="Views\Pages\LoginPages\NhanVien.png" />
-    <Resource Include="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
   </ItemGroup>
 
   <ItemGroup>

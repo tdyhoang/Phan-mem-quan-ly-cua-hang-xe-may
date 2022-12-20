@@ -29,9 +29,9 @@
                     x:Name="DataNavigation"
                     Grid.Column="0"
                     IsExpanded="True"
-                    LostFocus="Data_LostFocus"
                     Frame="{Binding ElementName=DataFrame, Mode=OneWay}"
-                    Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" />
+                    Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}"
+                    LostFocus="Data_LostFocus" />
 
                 <Grid Grid.Column="1">
                     <Border>
