@@ -31,11 +31,25 @@
                     IsExpanded="True"
                     Frame="{Binding ElementName=DataFrame, Mode=OneWay}"
                     Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}"
-                    LostFocus="Data_LostFocus" />
+                    LostFocus="Data_LostFocus">
+                </ui:NavigationCompact>
 
                 <Grid Grid.Column="1">
                     <Border>
                         <Frame x:Name="DataFrame" />
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#060531" Offset="0"/>
+                                <GradientStop Color="#1B1448" Offset="0.75"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                <GradientStop Color="#462AD8" Offset="0"/>
+                                <GradientStop Color="#DA34AE" Offset="0.75"/>
+                                <GradientStop Color="#8A16C1" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                     </Border>
                 </Grid>
             </Grid>

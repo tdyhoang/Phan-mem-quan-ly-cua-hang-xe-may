@@ -14,12 +14,13 @@
       Title="CustomerListPage">
 
     <ui:UiPage.Resources>
-        <CollectionViewSource x:Key="CustomerCollectionViewSource" CollectionViewType="ListCollectionView" />
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
         <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
-            <MenuItem Header="Copy Mã KH" Icon="" Command="{Binding CopyMaKH}" />
+            <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
+            <ui:MenuItem Header="Copy Mã KH" SymbolIcon="Copy24" Click="CopyMaKH" />
+            <ui:MenuItem Header="Xóa dòng" SymbolIcon="Delete24" Click="DeleteRow" />
         </ContextMenu>
         <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
@@ -47,9 +48,9 @@
                      SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     DataContext="{StaticResource CustomerCollectionViewSource}"
                      ItemsSource="{Binding}"
-                     RowStyle="{StaticResource DefaultRowStyle}">
+                     RowStyle="{StaticResource DefaultRowStyle}"
+                     PreviewKeyDown="PreviewKeyDown">
 
             <ui:DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
