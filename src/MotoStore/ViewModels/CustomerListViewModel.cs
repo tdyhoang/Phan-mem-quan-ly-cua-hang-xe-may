@@ -17,7 +17,7 @@ namespace MotoStore.ViewModels
 {
     public partial class CustomerListViewModel : ObservableObject, INavigationAware
     {
-        public List<KhachHang> TableData;
+        internal List<KhachHang> TableData;
 
         public void OnNavigatedTo()
         {
@@ -30,15 +30,8 @@ namespace MotoStore.ViewModels
 
         private void RefreshDataGrid()
         {
-            try
-            {
-                MainDatabase con = new MainDatabase();
-                TableData = con.KhachHangs.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            MainDatabase con = new MainDatabase();
+            TableData = con.KhachHangs.ToList();
         }
     }
 }

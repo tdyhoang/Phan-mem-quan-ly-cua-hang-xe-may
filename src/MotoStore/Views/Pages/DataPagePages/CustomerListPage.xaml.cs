@@ -7,6 +7,7 @@ using System.Linq;
 using System.Data;
 using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
+using System.Windows.Data;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -26,14 +27,15 @@ namespace MotoStore.Views.Pages.DataPagePages
             InitializeComponent();
 
             ViewModel.OnNavigatedTo();
-            grdCustomer.ItemsSource = ViewModel.TableData;
+            CollectionViewSource customerCollectionViewSource = (CollectionViewSource)(FindResource("CustomerCollectionViewSource"));
+            customerCollectionViewSource.Source = ViewModel.TableData;
         }
 
-        private void SaveToDatabase()
+        private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            foreach (var item in grdCustomer.Items)
+            foreach (KhachHang kh in grdCustomer.Items)
             {
-
+                //if (kh.MaKh == "")
             }
         }
     }

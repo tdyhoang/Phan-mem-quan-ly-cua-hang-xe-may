@@ -14,9 +14,16 @@
       Title="CustomerListPage">
 
     <ui:UiPage.Resources>
+        <CollectionViewSource x:Key="CustomerCollectionViewSource" CollectionViewType="ListCollectionView" />
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
+        <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
+            <MenuItem Header="Copy Mã KH" Icon="" Command="{Binding CopyMaKH}" />
+        </ContextMenu>
+        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+        </Style>
     </ui:UiPage.Resources>
 
     <Grid>
@@ -30,7 +37,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0">
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Command="SaveToDatabase" />
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
         </DockPanel>
 
         <ui:DataGrid Name="grdCustomer"
@@ -40,8 +47,10 @@
                      SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding Path=CustomerDataView, Mode=TwoWay}">
-            
+                     DataContext="{StaticResource CustomerCollectionViewSource}"
+                     ItemsSource="{Binding}"
+                     RowStyle="{StaticResource DefaultRowStyle}">
+
             <ui:DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -55,7 +64,7 @@
 
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding MaKh, Mode=OneWay}" />
-                <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh, Mode=TwoWay}" />
+                <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
                 <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
                 <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
