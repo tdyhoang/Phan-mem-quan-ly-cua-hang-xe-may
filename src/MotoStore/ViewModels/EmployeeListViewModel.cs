@@ -17,28 +17,12 @@ namespace MotoStore.ViewModels
 {
     public partial class EmployeeListViewModel : ObservableObject, INavigationAware
     {
-        public List<NhanVien> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new MainDatabase();
-                TableData = con.NhanViens.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

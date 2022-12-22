@@ -15,16 +15,39 @@
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
+        <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
+            <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
+            <ui:MenuItem Header="Copy Mã HD" SymbolIcon="Copy24" Click="CopyMaHD" />
+            <ui:MenuItem Header="Xóa dòng" SymbolIcon="Delete24" Click="DeleteRow" />
+        </ContextMenu>
+        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+        </Style>
     </ui:UiPage.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <DockPanel Grid.Row="0">
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+        </DockPanel>
+        
         <ui:DataGrid Name="grdInvoice"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
                      AutoGenerateColumns="False"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding Path=TableData}">
+                     ItemsSource="{Binding}"
+                     RowStyle="{StaticResource DefaultRowStyle}"
+                     PreviewKeyDown="PreviewKeyDown">
 
             <ui:DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">

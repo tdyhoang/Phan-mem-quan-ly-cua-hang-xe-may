@@ -133,18 +133,17 @@ Insert into ThongTinBaoHanh values(newid(),'1B30FA5C-2C4E-42B1-97FE-864391FC4040
 /*Tài khoản mà Mật khẩu đăng nhập dành cho NV Quản Lý và NV Văn Phòng*/
 create table UserApp
 (
-  UserID uniqueidentifier DEFAULT newid(),
   MaNV uniqueidentifier,
   UserName varchar(15),
   Password varchar(20),
   Email  Varchar(30),   /*Email để khôi phục mật khẩu nếu cần*/
-  constraint PK_UserID primary key(UserID)
+  constraint PK_UserName primary key(UserName)
 )
 
 
-Insert into UserApp values(newid(),'A5D54EA6-F80B-4A22-979B-D9FCB571FAB1','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com') /*NV Quản Lý*/ 
-Insert into UserApp values(newid(),'BDD24832-B4B9-4195-962C-91909DDE76C6','Nhvien1','ABCDEF123456','ThuongLe98Hoai@gmail.com')  /*NV Văn Phòng*/
-Insert into UserApp values(newid(),'89250069-C6CC-4D5D-BB9F-AA298DCE0D67','Nhvien2', 'Englandvodich','SangNBa11896@gmail.com')   /*NV Văn Phòng*/
+Insert into UserApp values('A5D54EA6-F80B-4A22-979B-D9FCB571FAB1','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com') /*NV Quản Lý*/ 
+Insert into UserApp values('BDD24832-B4B9-4195-962C-91909DDE76C6','Nhvien1','ABCDEF123456','ThuongLe98Hoai@gmail.com')  /*NV Văn Phòng*/
+Insert into UserApp values('89250069-C6CC-4D5D-BB9F-AA298DCE0D67','Nhvien2', 'Englandvodich','SangNBa11896@gmail.com')   /*NV Văn Phòng*/
 
 
 create table DonDatHang

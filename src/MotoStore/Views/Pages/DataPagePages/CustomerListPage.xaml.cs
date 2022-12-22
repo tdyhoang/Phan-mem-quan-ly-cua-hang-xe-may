@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -36,7 +37,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
-            MainDatabase con = new MainDatabase();
+            MainDatabase con = new();
             grdCustomer.ItemsSource = con.KhachHangs.ToList();
         }
 
@@ -44,7 +45,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
+                MainDatabase mainDatabase = new();
                 SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
@@ -75,17 +76,17 @@ namespace MotoStore.Views.Pages.DataPagePages
                     if (string.IsNullOrEmpty(kh.GioiTinh) || (kh.GioiTinh != "Nam" && kh.GioiTinh != "Nữ"))
                     {
                         MessageBox.Show("Giới tính chỉ có thể là Nam hoặc Nữ (có dấu)!");
-                        break;
+                        return;
                     }
                     if (!string.IsNullOrEmpty(kh.Sdt) && (kh.Sdt.Contains('+') || kh.Sdt.Contains('-')) && int.TryParse(kh.Sdt, out _))
                     {
                         MessageBox.Show("Số điện thoại không được chứa ký tự không phải chữ số!");
-                        break;
+                        return;
                     }
                     if (string.IsNullOrEmpty(kh.LoaiKh) || (kh.LoaiKh != "Vip" && kh.LoaiKh != "Thường" && kh.LoaiKh != "Thân quen"))
                     {
                         MessageBox.Show("Loại khách hàng phải là Vip, Thường hoặc Thân quen (có dấu)!");
-                        break;
+                        return;
                     }
 
                     // Thêm mới
@@ -115,6 +116,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void CopyMaKH(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 Clipboard.SetText(((KhachHang)grdCustomer.SelectedItems[grdCustomer.SelectedItems.Count - 1]).MaKh.ToString());
@@ -166,7 +168,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã KH
                     if (kh.MaKh.ToString() == "00000000-0000-0000-0000-000000000000")
-                        // Vẫn chạy handler mặc định để thay đổi hiển thị thay vì refresh
+                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
                         // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
                         // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
                         // !! Chưa tìm ra hướng xử lý
@@ -176,7 +178,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     {
                         cmd = new SqlCommand("Delete From KhachHang Where MaKh = '" + kh.MaKh.ToString() + "';", con);
                         cmd.ExecuteNonQuery();
-                        // Vẫn chạy handler mặc định để thay đổi hiển thị thay vì refresh
+                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
                         // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
                         // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
                         grdCustomer.Items.Remove(obj);

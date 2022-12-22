@@ -38,7 +38,6 @@
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã tài khoản" Binding="{Binding Path=UserId, Mode=OneWay}" />
                 <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=MaNv, Mode=OneWay}" />
                 <DataGridTextColumn Header="Username" Binding="{Binding Path=UserName}" />
                 <DataGridTextColumn Header="Password" Binding="{Binding Path=Password}" />

@@ -17,28 +17,12 @@ namespace MotoStore.ViewModels
 {
     public partial class InvoiceListViewModel : ObservableObject, INavigationAware
     {
-        public List<HoaDon> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new MainDatabase();
-                TableData = con.HoaDons.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

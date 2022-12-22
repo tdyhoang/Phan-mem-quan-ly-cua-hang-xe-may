@@ -291,22 +291,19 @@ public partial class MainDatabase : DbContext
 
         modelBuilder.Entity<UserApp>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK_UserID");
+            entity.HasKey(e => e.UserName).HasName("PK_UserName");
 
             entity.ToTable("UserApp");
 
-            entity.Property(e => e.UserId)
-                .HasDefaultValueSql("(newid())")
-                .HasColumnName("UserID");
+            entity.Property(e => e.UserName)
+                .HasMaxLength(15)
+                .IsUnicode(false);
             entity.Property(e => e.Email)
                 .HasMaxLength(30)
                 .IsUnicode(false);
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.Password)
                 .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.UserName)
-                .HasMaxLength(15)
                 .IsUnicode(false);
         });
 
