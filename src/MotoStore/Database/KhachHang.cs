@@ -21,6 +21,8 @@ public partial class KhachHang
 
     public string? LoaiKh { get; set; }
 
+    public bool DaXoa { get; set; }
+
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();

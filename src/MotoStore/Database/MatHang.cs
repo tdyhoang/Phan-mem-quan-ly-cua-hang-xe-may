@@ -23,6 +23,8 @@ public partial class MatHang
 
     public string? MoTa { get; set; }
 
+    public bool DaXoa { get; set; }
+
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();

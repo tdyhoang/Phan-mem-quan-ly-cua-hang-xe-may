@@ -88,13 +88,5 @@ namespace MotoStore.Views.Windows
         {
             this.Close();
         }
-
-        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //Xử lý ở đây
-            if ((bool)e.NewValue)   //true là hiện
-                ViewModel.VisibleChanged();
-            //CMT giải thích
-        }
     }
 }

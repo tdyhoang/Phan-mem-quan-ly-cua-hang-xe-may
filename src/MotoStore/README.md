@@ -37,10 +37,10 @@
 ## Ý tưởng thiết kế
 - **Dashboard**
 	+ Các chức năng cho *account*: đăng nhập, đổi mật khẩu, đăng xuất
-	+ Tính năng đặt lịch, quản lý giờ giấc(Khi đến ngày đó sẽ có thông báo nhắc nhở)
+	+ Tính năng đặt lịch, Quản Lý giờ giấc(Khi đến ngày đó sẽ có thông báo nhắc nhở)
 	+ Tính năng hướng dẫn người dùng sử dụng phần mềm
-	+ Biểu đồ quản lý doanh thu theo(ngày, tháng, năm)
-	+ Biểu đồ quản lý nhân viên năng suất(có thể cần) 
+	+ Biểu đồ Quản Lý doanh thu theo(ngày, tháng, năm)
+	+ Biểu đồ Quản Lý nhân viên năng suất(có thể cần) 
 	+ 
 - **Data**
 	+ Sử dụng bảng, có các chức năng filter, sắp xếp, thêm xóa sửa

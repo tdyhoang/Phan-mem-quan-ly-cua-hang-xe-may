@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -21,6 +22,7 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class CustomerListPage : INavigableView<ViewModels.CustomerListViewModel>
     {
+        internal List<KhachHang> TableData = new();
         public ViewModels.CustomerListViewModel ViewModel
         {
             get;
@@ -31,14 +33,17 @@ namespace MotoStore.Views.Pages.DataPagePages
             ViewModel = viewModel;
             InitializeComponent();
 
-            ViewModel.OnNavigatedTo();
             RefreshDataGrid();
         }
 
         private void RefreshDataGrid()
         {
             MainDatabase con = new();
-            grdCustomer.ItemsSource = con.KhachHangs.ToList();
+            TableData = con.KhachHangs.ToList();
+            foreach (var khachHang in TableData.ToList())
+                if (khachHang.DaXoa)
+                    TableData.Remove(khachHang);
+            grdCustomer.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
@@ -92,14 +97,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Thêm mới
                     if (kh.MaKh.ToString() == "00000000-0000-0000-0000-000000000000")
                     {
-                        cmd = new SqlCommand("Insert into KhachHang values(newid(), N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "')", con);
+                        cmd = new SqlCommand("Insert into KhachHang values(newid(), N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "' Where MaKh = '" + kh.MaKh.ToString() + "';", con);
+                        cmd = new SqlCommand("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh.ToString() + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -131,7 +136,14 @@ namespace MotoStore.Views.Pages.DataPagePages
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
-            if (dg == null)
+            if (dg is null)
+                return;
+            // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
+            if (grdCustomer.IsReadOnly)
+                return;
+            // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            if (dep is not DataGridRow && dep is not DataGridCell)
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
             DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
@@ -176,23 +188,32 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Delete From KhachHang Where MaKh = '" + kh.MaKh.ToString() + "';", con);
+                        cmd = new SqlCommand("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh.ToString() + "'", con);
                         cmd.ExecuteNonQuery();
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        grdCustomer.Items.Remove(obj);
                     }
                 }
                 con.Close();
-                // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                e.Handled = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
+            }
+        }
+
+        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                if (PageChinh.getChucVu.ToLower() == "quản lý")
+                {
+                    grdCustomer.IsReadOnly = false;
+                }
+                else
+                {
+                    grdCustomer.IsReadOnly = true;
+                }
             }
         }
     }

@@ -13,5 +13,7 @@ public partial class NhaSanXuat
 
     public string NuocSx { get; set; } = null!;
 
+    public bool DaXoa { get; set; }
+
     public virtual ICollection<MatHang> MatHangs { get; } = new List<MatHang>();
 }

@@ -20,6 +20,8 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class EmployeeListPage : INavigableView<ViewModels.EmployeeListViewModel>
     {
+        internal List<NhanVien> TableData = new();
+
         public ViewModels.EmployeeListViewModel ViewModel
         {
             get;
@@ -36,8 +38,12 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
+            TableData.Clear();
             MainDatabase con = new();
-            grdEmployee.ItemsSource = con.NhanViens.ToList();
+            foreach (var nhanVien in con.NhanViens.ToList())
+                if (!nhanVien.DaXoa)
+                    TableData.Add(nhanVien);
+            grdEmployee.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
@@ -93,14 +99,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Thêm mới
                     if (nv.MaNv.ToString() == "00000000-0000-0000-0000-000000000000")
                     {
-                        cmd = new SqlCommand("Insert into NhanVien values(newid(), N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + ")", con);
+                        cmd = new SqlCommand("Insert into NhanVien values(newid(), N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + "0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + " Where Manv = '" + nv.MaNv.ToString() + "';", con);
+                        cmd = new SqlCommand("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv.ToString() + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -131,7 +137,11 @@ namespace MotoStore.Views.Pages.DataPagePages
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
-            if (dg == null)
+            if (dg is null)
+                return;
+            // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+            if (dep is not DataGridRow && dep is not DataGridCell)
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
             DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
@@ -176,17 +186,11 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Delete From NhanVien Where Manv = '" + nv.MaNv.ToString() + "';", con);
+                        cmd = new SqlCommand("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv.ToString() + "';", con);
                         cmd.ExecuteNonQuery();
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        grdEmployee.Items.Remove(obj);
                     }
                 }
                 con.Close();
-                // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                e.Handled = true;
             }
             catch (Exception ex)
             {

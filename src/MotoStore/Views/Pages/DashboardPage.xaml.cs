@@ -124,7 +124,7 @@ namespace MotoStore.Views.Pages
             SqlCommand cmd;
             con.Open();
             DateTime DT = DateTime.Now;
-            cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "đăng xuất')", con);
+            cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "đăng xuất')", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -158,7 +158,7 @@ namespace MotoStore.Views.Pages
             if (co==false)
                 rtbNoiDung.AppendText("Không có sự kiện nổi bật");
 
-            if (PageChinh.getChucVu == "Quản Lý")   //Tất nhiên ng Quản Lý mới có quyền lên lịch
+            if (PageChinh.getChucVu.ToLower()== "quản lý")   //Tất nhiên ng Quản Lý mới có quyền lên lịch
             {
                 stkLich.Children.Clear();
                 rtb = new RichTextBox();
@@ -465,12 +465,12 @@ namespace MotoStore.Views.Pages
             else
             {
                 if (PageChinh.getSex == "Nữ")
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             }
 
-            if (PageChinh.getChucVu == "Quản Lý")
+            if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
                 lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
                 lblChucVu.Content = "Nhân Viên Quản Lý";

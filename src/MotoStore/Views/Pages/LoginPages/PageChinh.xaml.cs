@@ -75,8 +75,8 @@ namespace MotoStore.Views.Pages.LoginPages
                     txtMatKhau.Text = "Mật Khẩu:";
                     buttonDangNhap.Content = "Đăng Nhập";
                     buttonQuenMK.Content = "Quên Mật Khẩu ?";
-                    txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
-                    txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý";
+                    txtQLYCHXM.Text = "Quản Lý CỬA HÀNG XE MÁY";
+                    txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý";
                     lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
                     if (flag != 0)
                         lblThongBao.Content = "Vui lòng điền đầy đủ thông tin!";

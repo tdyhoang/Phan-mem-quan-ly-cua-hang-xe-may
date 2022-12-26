@@ -150,7 +150,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("NgLenLichKT");
             entity.Property(e => e.NoiDungLenLich).HasMaxLength(200);
 
-            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LenLiches)
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.LenLichs)
                 .HasForeignKey(d => d.MaNv)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKLL_MaNV");
@@ -305,6 +305,10 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.UserApps)
+                .HasForeignKey(d => d.MaNv)
+                .HasConstraintName("FK_UA_MaNV");
         });
 
         OnModelCreatingPartial(modelBuilder);

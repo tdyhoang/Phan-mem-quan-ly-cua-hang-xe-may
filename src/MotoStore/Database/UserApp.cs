@@ -12,4 +12,6 @@ public partial class UserApp
     public string? Password { get; set; }
 
     public string? Email { get; set; }
+
+    public virtual NhanVien? MaNvNavigation { get; set; }
 }

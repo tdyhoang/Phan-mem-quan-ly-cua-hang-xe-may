@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 using System.Windows;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.ViewModels
 {
@@ -44,51 +45,88 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
-            NavigationItems = new ObservableCollection<INavigationControl>
+            if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
-                new NavigationItem()
+                NavigationItems = new ObservableCollection<INavigationControl>
                 {
-                    Content = "Danh Sách Mặt Hàng",
-                    PageTag = "motolist",
-                    Icon = SymbolRegular.VehicleBicycle20,
-                    PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
-                },
-                new NavigationItem()
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Mặt Hàng",
+                        PageTag = "motolist",
+                        Icon = SymbolRegular.VehicleBicycle20,
+                        PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Nhân Viên",
+                        PageTag = "employeelist",
+                        Icon = SymbolRegular.ContactCard20,
+                        PageType = typeof(Views.Pages.DataPagePages.EmployeeListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Khách Hàng",
+                        PageTag = "customerlist",
+                        Icon = SymbolRegular.PeopleQueue20,
+                        PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Hóa Đơn",
+                        PageTag = "invoicelist",
+                        Icon = SymbolRegular.TextBulletListSquare20,
+                        PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Nhà Cung Cấp",
+                        PageTag = "supplierlist",
+                        Icon = SymbolRegular.PeopleCall20,
+                        PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Tài Khoản",
+                        PageTag = "userlist",
+                        Icon = SymbolRegular.PersonCircle20,
+                        PageType = typeof(Views.Pages.DataPagePages.UserListPage)
+                    }
+                };
+            }
+            else
+            {
+                NavigationItems = new ObservableCollection<INavigationControl>
                 {
-                    Content = "Danh Sách Nhân Viên",
-                    PageTag = "employeelist",
-                    Icon = SymbolRegular.ContactCard20,
-                    PageType = typeof(Views.Pages.DataPagePages.EmployeeListPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Danh Sách Khách Hàng",
-                    PageTag = "customerlist",
-                    Icon = SymbolRegular.PeopleQueue20,
-                    PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Danh Sách Hóa Đơn",
-                    PageTag = "invoicelist",
-                    Icon = SymbolRegular.TextBulletListSquare20,
-                    PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Nhà Cung Cấp",
-                    PageTag = "supplierlist",
-                    Icon = SymbolRegular.PeopleCall20,
-                    PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Danh Sách Tài Khoản",
-                    PageTag = "userlist",
-                    Icon = SymbolRegular.PersonCircle20,
-                    PageType = typeof(Views.Pages.DataPagePages.UserListPage)
-                }
-            };
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Mặt Hàng",
+                        PageTag = "motolist",
+                        Icon = SymbolRegular.VehicleBicycle20,
+                        PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Khách Hàng",
+                        PageTag = "customerlist",
+                        Icon = SymbolRegular.PeopleQueue20,
+                        PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Hóa Đơn",
+                        PageTag = "invoicelist",
+                        Icon = SymbolRegular.TextBulletListSquare20,
+                        PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Nhà Cung Cấp",
+                        PageTag = "supplierlist",
+                        Icon = SymbolRegular.PeopleCall20,
+                        PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
+                    }
+                };
+            }
         }
     }
 }

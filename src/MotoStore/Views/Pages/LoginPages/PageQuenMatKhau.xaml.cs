@@ -111,8 +111,8 @@ namespace MotoStore.Views.Pages.LoginPages
                     pgC.txtMatKhau.Text = "Mật Khẩu:";
                     pgC.buttonDangNhap.Content = "Đăng Nhập";
                     pgC.buttonQuenMK.Content = "Quên Mật Khẩu ?";
-                    pgC.txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
-                    pgC.txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý";
+                    pgC.txtQLYCHXM.Text = "Quản Lý CỬA HÀNG XE MÁY";
+                    pgC.txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý";
                     pgC.lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
                     break;
             }

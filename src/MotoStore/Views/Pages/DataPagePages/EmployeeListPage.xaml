@@ -7,7 +7,7 @@
       xmlns:resources="clr-namespace:MotoStore.Resources"
       xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
       xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:viewmodels="clr-namespace:MotoStore.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EmployeeListViewModel}"
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:EmployeeListPage}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeeListPage"
@@ -20,7 +20,6 @@
         <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
             <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
             <ui:MenuItem Header="Copy Mã NV" SymbolIcon="Copy24" Click="CopyMaNV" />
-            <ui:MenuItem Header="Xóa dòng" SymbolIcon="Delete24" Click="DeleteRow" />
         </ContextMenu>
         <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
@@ -47,7 +46,7 @@
                      AutoGenerateColumns="False"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding}"
+                     ItemsSource="{Binding TableData}"
                      RowStyle="{StaticResource DefaultRowStyle}"
                      PreviewKeyDown="PreviewKeyDown">
             
