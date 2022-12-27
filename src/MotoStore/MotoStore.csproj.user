@@ -31,6 +31,9 @@
     <Compile Update="Views\Pages\IOPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\PageBieuDo.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\ReportPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +91,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\LoginPages\PageQuenMatKhau.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\PageBieuDo.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\ReportPage.xaml">

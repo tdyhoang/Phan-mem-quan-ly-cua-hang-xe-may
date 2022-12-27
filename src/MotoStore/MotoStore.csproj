@@ -20,19 +20,20 @@
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
     <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67" />
-    <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
     <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1" />
-    <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <None Remove="Views\Pages\Images\anh3.png" />
     <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
-    <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\IconXeMay.png" />
+    <None Remove="Views\Pages\Images\money.png" />
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
     <None Remove="Views\Pages\Images\NhanVien.png" />
+    <None Remove="Views\Pages\Images\NhvienNgSuat.png" />
     <None Remove="Views\Pages\Images\SoXe-removebg-preview.png" />
     <None Remove="Views\Pages\Images\userNam.png" />
     <None Remove="Views\Pages\Images\userNu.png" />
     <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\VIP-removebg-preview.png" />
     <None Remove="Views\Pages\IO_Images\01921D8D-F015-4309-A130-9390B2E8EC11.png" />
     <None Remove="Views\Pages\IO_Images\0FB80AA9-CC97-4157-8F04-BAA88F6E5266.png" />
     <None Remove="Views\Pages\IO_Images\1B30FA5C-2C4E-42B1-97FE-864391FC4040.png" />
@@ -46,10 +47,12 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Resource Include="Views\Pages\Images\money.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DataGridExtensions" Version="2.5.14" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -71,16 +74,16 @@
     <Resource Include="Assets\User_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
-    <Resource Include="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <Resource Include="Views\Pages\Images\anh3.png" />
-    <Resource Include="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <Resource Include="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\IconXeMay.png" />
     <Resource Include="Views\Pages\Images\motorworkshop.jpg" />
     <Resource Include="Views\Pages\Images\NhanVien.png" />
+    <Resource Include="Views\Pages\Images\NhvienNgSuat.png" />
     <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\userNam.png" />
     <Resource Include="Views\Pages\Images\userNu.png" />
+    <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
     <Resource Include="Views\Pages\IO_Images\01921D8D-F015-4309-A130-9390B2E8EC11.png" />
     <Resource Include="Views\Pages\IO_Images\0FB80AA9-CC97-4157-8F04-BAA88F6E5266.png" />
     <Resource Include="Views\Pages\IO_Images\1B30FA5C-2C4E-42B1-97FE-864391FC4040.png" />

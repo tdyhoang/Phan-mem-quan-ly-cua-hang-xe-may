@@ -341,10 +341,10 @@ namespace MotoStore.Views.Pages
                                 //Giải thích dòng trên:
                                 //Vì SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
 
-                                cmd = new SqlCommand("set dateformat dmy\nInsert into LenLich values('" + PageChinh.getMa.ToString() + "', '" + lich + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00" + "', '" + lich + " " + cbGioKT.Text + ":" + cbPhutKT.Text + ":00" + "', N'" + richText + "')", con);
+                                cmd = new SqlCommand("set dateformat dmy\nInsert into LenLich values(NewID(),'" + PageChinh.getMa.ToString() + "', '" + lich + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00" + "', '" + lich + " " + cbGioKT.Text + ":" + cbPhutKT.Text + ":00" + "', N'" + richText + "')", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "lên lịch cho ngày " + lich + "')", con);
+                                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "lên lịch cho ngày " + lich + "')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Lên lịch thành công!");
@@ -400,7 +400,7 @@ namespace MotoStore.Views.Pages
                                 cmd = new SqlCommand("set dateformat dmy\ndelete from LenLich where NgLenLichBD='" + strGiomuonXoa + "'", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "xoá lịch cho ngày " + lich + "')", con);
+                                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "xoá lịch cho ngày " + lich + "')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Xoá Sự Kiện thành công");
@@ -467,7 +467,7 @@ namespace MotoStore.Views.Pages
                 if (PageChinh.getSex == "Nữ")
                     anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             }
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
@@ -475,7 +475,9 @@ namespace MotoStore.Views.Pages
                 lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
                 lblChucVu.Content = "Nhân Viên Quản Lý";
                 txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
-                txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + mdb.MatHangs.Sum(d => d.SoLuongTonKho).ToString();
+                int? solgxe = mdb.MatHangs.Sum(d => d.SoLuongTonKho) - mdb.HoaDons.Sum(d => d.SoLuong);
+                //Số xe hiện tại = Số Xe nhập về - Số xe bán đc
+                txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + solgxe.ToString();
                 txtblSoNV.FontSize = 20;
                 txtblSoXe.FontSize = 20.5;
                 Button btnLichSu = new Button();
@@ -525,9 +527,6 @@ namespace MotoStore.Views.Pages
                     //anhNhanVien.Source = null;
 
                     //Nó đang đc hiển thị
-                    
-
-
 
                 }
                 File.Copy(OFD.FileName, newPathToFile);
@@ -564,6 +563,36 @@ namespace MotoStore.Views.Pages
         {
             anhNhanVien.Source = null;
             GC.Collect();
+        }
+
+        private void brdSoNV_MouseMove(object sender, MouseEventArgs e)
+        {
+            brdSoNV.Margin = new Thickness(0, 198, 220, 222);
+        }
+
+        private void brdSoNV_MouseLeave(object sender, MouseEventArgs e)
+        {
+            brdSoNV.Margin = new Thickness(0, 248, 220, 222);
+        }
+
+        private void brdSoXe_MouseMove(object sender, MouseEventArgs e)
+        {
+            brdSoXe.Margin = new Thickness(0, 355, 220, 65);
+        }
+
+        private void brdSoXe_MouseLeave(object sender, MouseEventArgs e)
+        {
+            brdSoXe.Margin = new Thickness(0, 405, 220, 65);
+        }
+
+        private void brdLoiNhac_MouseMove(object sender, MouseEventArgs e)
+        {
+            brdLoiNhac.Margin = new Thickness(200, 272, 20, 138);
+        }
+
+        private void brdLoiNhac_MouseLeave(object sender, MouseEventArgs e)
+        {
+            brdLoiNhac.Margin = new Thickness(200, 322, 20, 138);
         }
     }
 }

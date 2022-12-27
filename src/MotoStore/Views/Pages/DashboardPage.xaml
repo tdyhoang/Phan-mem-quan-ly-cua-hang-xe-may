@@ -113,34 +113,40 @@
                     Height="130"
                     Width="180"
                     Margin="0,248,220,222"
-                    Background="MediumPurple">
-                    <TextBlock
+                    Background="MediumPurple"
+                    MouseMove="brdSoNV_MouseMove"
+                    MouseLeave="brdSoNV_MouseLeave">
+                    
+                    <Grid>
+                        <TextBlock
                         x:Name="txtblAnh"
                         FontWeight="Medium"
                         FontSize="20"
                         Height="60"
                         Width="60"
-                        Margin="90,40,0,0"
+                        Margin="0,0,0,5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         >
-                        <TextBlock.Background>
-                            <ImageBrush ImageSource="/Views/Pages/Images/NhanVien.png" 
+
+                            <TextBlock.Background>
+                                <ImageBrush ImageSource="/Views/Pages/Images/NhanVien.png" 
                                     Stretch="Uniform" 
                                     Opacity="0.7"                                    
                                     />
-                        </TextBlock.Background>
-                    </TextBlock>
-
-                </Border>
-
-                <TextBlock x:Name="txtblSoNV"
+                            </TextBlock.Background>
+                        </TextBlock>
+                        
+                        <TextBlock x:Name="txtblSoNV"
                            Height="80"
                            Width="140"
-                           Margin="0,0,250,0"
+                           Margin="0,20,40,30"
                            FontSize="19"
                            FontWeight="Medium">
-                </TextBlock>
+                        </TextBlock>
+                    </Grid>
+                   
+                </Border>
 
             </Grid>
 
@@ -150,19 +156,17 @@
                     Height="130"
                     Width="180"
                     Margin="0,405,220,65"
-                    Background="PowderBlue">
-            </Border>
-
-            <Grid>
-
-                <TextBlock
+                    Background="PowderBlue"
+                    MouseMove="brdSoXe_MouseMove"
+                    MouseLeave="brdSoXe_MouseLeave">
+                <Grid>
+                    <TextBlock
                         x:Name="txtblAnhXe"
                         FontWeight="Medium"
                         Height="60"
                         Width="60"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
-                        Margin="0,0,225,55"
                         >
                     <TextBlock.Background>
                         <ImageBrush ImageSource="/Views/Pages/Images/SoXe-removebg-preview.png"/>
@@ -174,33 +178,44 @@
                            FontSize="19"
                            Height="80"
                            Width="140"
-                           Margin="0,320,240,0"
+                           Margin="0,10,40,40"
                            Foreground="Black">
                 </TextBlock>
 
-                <Border Height="140"
+                </Grid>
+            </Border>
+
+            <Grid>
+
+                <Border x:Name="brdLoiNhac"
+                        Height="140"
                         Width="180"
                         CornerRadius="25"
                         Margin="200,322,20,138"
-                        Background="NavajoWhite">
-                    <TextBlock x:Name="txtblLoiNhac"
+                        Background="NavajoWhite"
+                        MouseMove="brdLoiNhac_MouseMove"
+                        MouseLeave="brdLoiNhac_MouseLeave">
+
+                    <Grid>
+                        <TextBlock x:Name="txtblLoiNhac"
                                Height="100"
                                Width="150"
                                Margin="0,0,30,30"
                                FontSize="17"
                                FontWeight="Medium"
                                >
-                    </TextBlock>
-                </Border>
-
-                <TextBlock x:Name="txtblAnhLoiNhac"
+                        </TextBlock>
+                        <TextBlock x:Name="txtblAnhLoiNhac"
                            Height="60"
                            Width="60"
-                           Margin="305,395,20,138">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="/Views/Pages/Images/CalendaRicon-removebg-preview.png"/>
-                    </TextBlock.Background>
-                </TextBlock>
+                           Margin="115,65,0,0">
+                            <TextBlock.Background>
+                                <ImageBrush ImageSource="/Views/Pages/Images/CalendaRicon-removebg-preview.png"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                    </Grid>
+
+                </Border>
 
             </Grid>
 

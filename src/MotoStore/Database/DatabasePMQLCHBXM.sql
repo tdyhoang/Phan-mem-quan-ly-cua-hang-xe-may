@@ -207,6 +207,27 @@ Insert into HoaDon values('02B8C74E-C284-4CE5-A169-F8DE999C6769','A626798B-7071-
 Insert into HoaDon values('08292E6A-9C25-40D4-BE5C-E59311298BD3','D4C4275E-F248-4BA1-90E4-C8D31344A44D','249CADA6-53D5-4D9E-85B9-1AF5BFB067C0','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','27/7/2022',1,24500000)
 Insert into HoaDon values('07C0D47C-2666-4DB7-8DDD-EC8FDFCE85A9','1B30FA5C-2C4E-42B1-97FE-864391FC4040','BDA8A3CC-9116-4215-99AB-351EF43154F5','89250069-C6CC-4D5D-BB9F-AA298DCE0D67','20/8/2022',1,13500000)
 
+Insert into HoaDon values(newid(),'1B30FA5C-2C4E-42B1-97FE-864391FC4040','BDA8A3CC-9116-4215-99AB-351EF43154F5','BDD24832-B4B9-4195-962C-91909DDE76C6','11/12/2022',1,13500000)
+
+select MaMH 
+from HoaDon
+where NgayLapHD=(select top(1) NgayLapHD from HoaDon order by NgayLapHD ASC) /*19EB6 Của ngày 29-1-2021*/
+
+
+Select MaMH 
+From MatHang
+Where MaMH not in(select MaMH from HoaDon)
+
+select count( distinct MaMH)
+from HoaDon
+
+select *from MatHang
+
+
+/*2BFB3B33-16E7-47B1-AFFF-02BD5B620E3A*/
+
+SELECT *FROM HoaDon
+
 Create table ThongTinBaoHanh
 (
      MaBH  uniqueidentifier DEFAULT newid(),
@@ -280,3 +301,25 @@ Create Table LichSuHoatDong
   CONSTRAINT PK_LshdID primary key(LshdID)
 )
 alter table LichSuHoatDong add constraint FKLSHD_MaNV foreign key(MaNV) references NhanVien(MaNV)
+
+select top(1) MANV, sum(SOLuong)
+from HoaDon
+group by MANV
+order by Sum(SOLUONG) DESC
+
+declare @fromdate date = '1/11/2022'; 
+declare @thrudate date = getdate();
+with n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n)), dates as
+(
+	select top (datediff(day, @fromdate, @thrudate)+1)
+	[Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))
+	from n as deka cross join n as hecto cross join n as kilo cross join n as tenK cross join n as hundredK
+	order by [Date]
+)
+
+select Date, sum(ThanhTien) as DoanhThu
+from dates d left join HoaDon HD on d.Date = HD.NgayLapHD
+where Date between @fromdate and @thrudate
+group by Date
+
+/*Chạy phần trên sẽ ra 
