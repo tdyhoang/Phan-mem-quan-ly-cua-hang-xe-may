@@ -9,22 +9,16 @@
       Title="IOPage">
 
     <Grid>
-        <Border>
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#462AD8" Offset="0"/>
-                    <GradientStop Color="#DA34AE" Offset="0.75"/>
-                    <GradientStop Color="#8A16C1" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border Background="#97BCC7">
+           
         </Border>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <Button x:Name="btnAddSPPage" Content="Sản Phẩm" MinWidth="120" Click="btnAddSPPage_Click" Background="RosyBrown" FontSize="15"/>
+            <Button x:Name="btnAddSPPage" Content="Sản Phẩm" MinWidth="120" Click="btnAddSPPage_Click" Background="#DBEFE1" FontSize="15"/>
 
-            <Button x:Name="btnAddNSXPage" Content="Nhà Sản Xuất" MinWidth="120" Click="btnAddNSXPage_Click" Background="LightYellow" FontSize="15"/>
-            <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="120" Click="btnAddKhachHang_Click" Background="PowderBlue" FontSize="15"/>
-            <Button x:Name="btnAddHoaDon" Content="Hóa Đơn" MinWidth="120" Click="btnAddHoaDon_Click" Background="Pink" FontSize="15"/>
+            <Button x:Name="btnAddNSXPage" Content="Nhà Sản Xuất" MinWidth="120" Click="btnAddNSXPage_Click" Background=" #649FDF" FontSize="15"/>
+            <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="120" Click="btnAddKhachHang_Click" Background="#6BC3D2" FontSize="15"/>
+            <Button x:Name="btnAddHoaDon" Content="Hóa Đơn" MinWidth="120" Click="btnAddHoaDon_Click" Background="#75D481" FontSize="15"/>
         </StackPanel>
         <Frame x:Name="IOMain" Margin="0,35,0,0" VerticalAlignment="Top" />
 

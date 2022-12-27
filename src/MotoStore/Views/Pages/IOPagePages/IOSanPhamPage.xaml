@@ -28,19 +28,20 @@
             <StackPanel>
                 <TextBlock Text="Kho Sản Phẩm" Margin="10" FontSize="15" FontWeight="Medium" />
                 <StackPanel Margin="20 0">
-                    <ItemsControl x:Name="ListViewProduct" ItemsSource="{Binding Product}">
+                    <ItemsControl x:Name="ListViewProduct" ItemsSource="{Binding Product}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="10" Width="110" Height="160">
+                                <Border Margin="10" Width="110" Height="160" MouseDown="Border_MouseDown">
                                     <StackPanel>
                                         <Border Width="104" Height="83" CornerRadius="5" Margin="5">
                                             <Border.Background>
-                                                <ImageBrush ImageSource="{Binding Image}" />
+                                                <ImageBrush ImageSource="{Binding Image}"  />
                                             </Border.Background>
+
                                         </Border>
 
                                         <TextBlock Margin="5" Text="{Binding NameProduct}" FontSize="13" FontWeight="Medium"/>
-                                        <TextBlock Margin="5 0" Text="{Binding ValueMoney, StringFormat={}{0:C}}" FontSize="13" FontWeight="Black"/>
+                                        <TextBlock Margin="5 0" Text="{Binding ValueMoney, StringFormat={}{0:0}}" FontSize="13" FontWeight="Black"/>
 
 
                                     </StackPanel>
@@ -63,6 +64,6 @@
 
 
         </ScrollViewer>
-        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="266,329,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
+        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="263,365,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
     </Grid>
 </Page>

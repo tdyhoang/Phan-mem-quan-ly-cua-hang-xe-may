@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Data.SqlClient;
+using System.IO;
+using MotoStore.Database;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -25,6 +27,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         public IOAddSPPage()
         {
             InitializeComponent();
+          
         }
         private void btnLoadImageSP_Click(object sender, RoutedEventArgs e)
         {
@@ -33,16 +36,18 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
-
+                File.Copy(openFileDialog.FileName, "F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
             }
         }
+       
 
-        private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
+            private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
+
             bool check = true;
             SqlConnection con = new SqlConnection(@"Data Source=.\SQLExpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
             SqlCommand cmd;
-            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaBanSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtTinhTrangSP.Text)))
+            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaBanSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtPhanKhoiSP.Text)))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
             }
@@ -86,8 +91,11 @@ namespace MotoStore.Views.Pages.IOPagePages
 
                 if (check)
                 {
+                    string MaMH = Guid.NewGuid().ToString();
+                    File.Move("F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
+
                     con.Open();
-                    cmd = new SqlCommand("Set Dateformat dmy\nInsert into MatHang values( NEWID(),  " + "  N'" + txtTenSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + cmbHangSXSP.Text + "','" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + "','" + txtTinhTrangSP.Text + " ' )", con);
+                    cmd = new SqlCommand("Set Dateformat dmy\nInsert into MatHang values('" + MaMH +  "', N'" + txtTenSP.Text + "','"  + txtPhanKhoiSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + cmbHangSXSP.Text + "',N'" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + " ' )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");
