@@ -46,7 +46,7 @@ namespace MotoStore.Views.Pages
             con.Open();
             int i = 0;
 
-               for (DateTime date = DateTime.Parse("1/12/2022"); date<=DateTime.Parse("31/12/2022"); date = date.AddDays(1.0))
+               for (DateTime date = DateTime.Parse("1/12/2022"); date<=DateTime.Today; date = date.AddDays(1.0))
                {
                    SqlCommand cmd = new SqlCommand("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today",con);
                    cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
@@ -63,6 +63,8 @@ namespace MotoStore.Views.Pages
                }
 
             ChartValues<decimal> columnData = new ChartValues<decimal>();
+            Labels = new();
+
 
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString))
             {
@@ -74,7 +76,8 @@ namespace MotoStore.Views.Pages
                     {
                         while (reader.Read())
                         {
-                            if (reader[1] is null)
+                            Labels.Add(reader.GetDateTime(0).Day.ToString());
+                            if (reader[1] == DBNull.Value)
                                 columnData.Add(0);
                             else
                                 columnData.Add(reader.GetDecimal(1));
@@ -93,7 +96,6 @@ namespace MotoStore.Views.Pages
             }); 
             con.Close();  
             //int index = 0;
-            Labels = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24","25", "26", "27", "28", "29", "30", "31" };
 
             //Có chút vấn đề ở vòng for dưới
             /* for (DateTime date = DateTime.Parse(strNgayMin); date <= DateTime.Parse(ngaysau); date = date.AddDays(1.0))
@@ -119,7 +121,7 @@ namespace MotoStore.Views.Pages
         }
         
         public SeriesCollection SrC { get; set; }   
-        public string[] Labels { get; set; }
+        public List<string> Labels { get; set; }
         public Func<decimal,string>Values { get; set; }
         
 
