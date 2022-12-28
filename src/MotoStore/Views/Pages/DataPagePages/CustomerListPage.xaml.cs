@@ -23,6 +23,7 @@ namespace MotoStore.Views.Pages.DataPagePages
     public partial class CustomerListPage : INavigableView<ViewModels.CustomerListViewModel>
     {
         internal List<KhachHang> TableData = new();
+
         public ViewModels.CustomerListViewModel ViewModel
         {
             get;

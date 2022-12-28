@@ -36,7 +36,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
-                File.Copy(openFileDialog.FileName, "F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
+                File.Copy(openFileDialog.FileName, "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
             }
         }
        
@@ -92,7 +92,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (check)
                 {
                     string MaMH = Guid.NewGuid().ToString();
-                    File.Move("F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "F:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
+                    File.Move("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
 
                     con.Open();
                     cmd = new SqlCommand("Set Dateformat dmy\nInsert into MatHang values('" + MaMH +  "', N'" + txtTenSP.Text + "','"  + txtPhanKhoiSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + cmbHangSXSP.Text + "',N'" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + " ' )", con);

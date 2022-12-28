@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -38,11 +39,11 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
-            TableData.Clear();
             MainDatabase con = new();
-            foreach (var nhanVien in con.NhanViens.ToList())
-                if (!nhanVien.DaXoa)
-                    TableData.Add(nhanVien);
+            TableData = con.NhanViens.ToList();
+            foreach (var nhanVien in TableData.ToList())
+                if (nhanVien.DaXoa)
+                    TableData.Remove(nhanVien);
             grdEmployee.ItemsSource = TableData;
         }
 
@@ -197,6 +198,21 @@ namespace MotoStore.Views.Pages.DataPagePages
                 MessageBox.Show(ex.Message);
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
+            }
+        }
+
+        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                if (PageChinh.getChucVu.ToLower() == "quản lý")
+                {
+                    grdEmployee.IsReadOnly = false;
+                }
+                else
+                {
+                    grdEmployee.IsReadOnly = true;
+                }
             }
         }
     }

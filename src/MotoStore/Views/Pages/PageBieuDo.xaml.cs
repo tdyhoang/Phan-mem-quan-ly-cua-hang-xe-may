@@ -29,7 +29,7 @@ namespace MotoStore.Views.Pages
     public partial class PageBieuDo : Page
     {
         private MainDatabase mdb = new MainDatabase();
-        private SqlConnection con = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+        private SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
         public PageBieuDo()
         {
             InitializeComponent();

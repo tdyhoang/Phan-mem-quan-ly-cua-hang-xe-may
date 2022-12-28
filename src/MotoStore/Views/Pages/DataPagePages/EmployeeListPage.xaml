@@ -11,7 +11,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeeListPage"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+           IsVisibleChanged="UiPage_IsVisibleChanged">
 
     <ui:UiPage.Resources>
         <ControlTemplate x:Key="MultipleChoiceFilter">
