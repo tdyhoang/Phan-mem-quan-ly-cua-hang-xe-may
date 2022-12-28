@@ -67,7 +67,7 @@ namespace MotoStore.Views.Pages
             {
                 con.Open();
                 //string dưới t thêm thủ công, ngày mua hàng xa nhất tính tới giờ là 29/1/2021
-                string query = "SET Dateformat dmy\nselect Date, sum(ThanhTien) as DoanhThu\r\nfrom dates d left join HoaDon HD on d.Date = HD.NgayLapHD\r\nwhere Date between '1/11/2022' and getdate()\r\ngroup by Date";
+                string query = "SET Dateformat dmy\ndeclare @fromdate date = '1/12/2022'; \r\ndeclare @thrudate date = getdate();\r\nwith n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n)), dates as\r\n(\r\n\tselect top (datediff(day, @fromdate, @thrudate)+1)\r\n\t[Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))\r\n\tfrom n as deka cross join n as hecto cross join n as kilo cross join n as tenK cross join n as hundredK\r\n\torder by [Date]\r\n)\r\n\r\nselect Date, sum(ThanhTien) as DoanhThu\r\nfrom dates d left join HoaDon HD on d.Date = HD.NgayLapHD\r\nwhere Date between @fromdate and @thrudate\r\ngroup by Date";
                 using (SqlCommand command = new SqlCommand(query, con))
                 {
                     //SqlDataAdapter adapter = new SqlDataAdapter(query,con);

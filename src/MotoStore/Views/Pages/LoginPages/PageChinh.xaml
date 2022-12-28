@@ -68,7 +68,7 @@
 
 
                         <TextBlock x:Name="txtQLYCHXM" 
-                                   Text=" Quản Lý CỬA HÀNG XE MÁY"                               
+                                   Text=" QUẢN LÝ CỬA HÀNG XE MÁY"                               
                                FontSize="23.25"
                                Foreground="White" 
                                Width="450"
@@ -210,8 +210,7 @@
                             Content="Tiếng Việt" 
                             HorizontalAlignment="Right" 
                             Height="40" 
-                            Margin="0,65,0,0" 
-                            Grid.Row="1" 
+                            Margin="0,70,10,0" 
                             VerticalAlignment="Top"                           
                             Width="146" 
                             Click="buttonLanguage_Click" 

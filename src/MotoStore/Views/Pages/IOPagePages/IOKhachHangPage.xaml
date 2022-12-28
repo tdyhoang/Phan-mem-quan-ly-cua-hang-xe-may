@@ -12,55 +12,70 @@
 
         <Label x:Name="lbSDTKhachHang"
                Content=" SĐT: " 
-               Margin="536,42,113,367"
+               Margin="536,58,113,367"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top"/>
         <Label x:Name="lbTenKH"
                Content="Tên Khách Hàng: " 
-               Margin="24,42,622,355"
+               Margin="24,58,622,355"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top"/>
         <Label x:Name="lbNgaySinhKH"
                Content="Ngày Sinh: " 
-               Margin="24,106,613,287"
+               Margin="24,120,613,287"
                FontSize="15"
-               Foreground="Black"/>
-        <TextBox x:Name="txtNgaySinhKH" Margin="210,107,540,0" VerticalAlignment="Top"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
+        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" VerticalAlignment="Top"/>
         <Label x:Name="lbDiaChiKH"
                Content="Địa Chỉ: " 
-               Margin="24,163,620,243"
+               Margin="24,180,620,243"
                FontSize="15"
-               Foreground="Black"/>
-        <TextBox x:Name="txtDiaChiKH" Margin="212,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
+        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075"/>
         <Label x:Name="lbEmailKH"
                Content="Email: " 
-               Margin="536,106,108,300"
+               Margin="536,125,108,300"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtEmailKH" Margin="669,109,81,0" VerticalAlignment="Top"/>
         <Label x:Name="lbGioiTinh"
                Content="Giới Tính: " 
-               Margin="536,222,156,179"
+               Margin="536,243,156,179"
                FontSize="15"
-               Foreground="Black"/>
-        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,221,75,0" VerticalAlignment="Top">
+               Foreground="Black"
+               FontWeight="Medium"/>
+        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,225,75,0" VerticalAlignment="Top">
             <ComboBoxItem>Nam</ComboBoxItem>
             <ComboBoxItem>Nữ</ComboBoxItem>
         </ComboBox>
         <Label x:Name="lbLoaiKH"
                Content="Loại Khách Hàng: " 
-               Margin="536,166,165,235"
+               Margin="533,186,165,235"
                FontSize="15"
-               Foreground="Black"/>
-        <ComboBox x:Name="cmbLoaiKH" Margin="672,170,72,0" VerticalAlignment="Top">
+               Foreground="Black"
+               FontWeight="Medium"/>
+        <ComboBox x:Name="cmbLoaiKH" Margin="670,170,75,0" VerticalAlignment="Top">
             <ComboBoxItem>Thường</ComboBoxItem>
             <ComboBoxItem>Thân Quen</ComboBoxItem>
             <ComboBoxItem>VIP</ComboBoxItem>
 
         </ComboBox>
-        <Button x:Name="btnAddNewKhachHang" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="525,391,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewKhachHang_Click"/>
+        <Button x:Name="btnAddNewKhachHang" 
+                FontWeight="UltraBlack" 
+                Content="THÊM MỚI" 
+                Margin="525,391,0,0"  
+                Height="48" 
+                Width="117" 
+                Click="btnAddNewKhachHang_Click"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
 
     </Grid>
 </Page>
