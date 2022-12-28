@@ -209,10 +209,12 @@ namespace MotoStore.Views.Pages.DataPagePages
             {
                 if (PageChinh.getChucVu.ToLower() == "quản lý")
                 {
+                    btnSave.Visibility = Visibility.Visible;
                     grdCustomer.IsReadOnly = false;
                 }
                 else
                 {
+                    btnSave.Visibility = Visibility.Collapsed;
                     grdCustomer.IsReadOnly = true;
                 }
             }

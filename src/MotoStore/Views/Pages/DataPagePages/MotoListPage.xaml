@@ -6,15 +6,23 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:resources="clr-namespace:MotoStore.Resources"
       xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:viewmodels="clr-namespace:MotoStore.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MotoListViewModel}"
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:MotoListPage}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MotoListPage">
+      Title="MotoListPage"
+           IsVisibleChanged="UiPage_IsVisibleChanged">
 
     <ui:UiPage.Resources>
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
+        <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
+            <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
+            <ui:MenuItem Header="Copy Mã NV" SymbolIcon="Copy24" Click="CopyMaMh" />
+        </ContextMenu>
+        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+        </Style>
     </ui:UiPage.Resources>
 
     <Grid>
@@ -28,7 +36,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0">
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" />
+            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
         </DockPanel>
 
         <ui:DataGrid Name="grdMoto"
@@ -37,7 +45,9 @@
                      AutoGenerateColumns="False"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding Path=MotoDataView}">
+                     ItemsSource="{Binding TableData}"
+                     RowStyle="{StaticResource DefaultRowStyle}"
+                     PreviewKeyDown="PreviewKeyDown">
 
             <ui:DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">

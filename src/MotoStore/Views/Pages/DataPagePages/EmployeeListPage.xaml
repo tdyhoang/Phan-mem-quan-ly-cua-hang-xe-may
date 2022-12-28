@@ -38,7 +38,7 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0">
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
         </DockPanel>
 
         <ui:DataGrid Name="grdEmployee"
