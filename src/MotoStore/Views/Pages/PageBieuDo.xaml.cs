@@ -35,16 +35,15 @@ namespace MotoStore.Views.Pages
             InitializeComponent();
             SrC = new SeriesCollection();
 
-            DateTime ngaymin = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
-            string strNgayMin = ngaymin.ToString("dd/MM/yyyy");
-            decimal[] arrDoanhThu = new decimal[1000];
+
+            //DateTime ngaymin = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
+            //string strNgayMin = ngaymin.ToString("dd/MM/yyyy");
+            //decimal[] arrDoanhThu = new decimal[1000];
 
             List<decimal> ListDoanhThu = new List<decimal>();
 
-            //Xem lại đoạn dưới
-            //string ngaysau = "8/2/2021";
-            con.Open();
-            int i = 0;
+            //con.Open();
+           /* int i = 0;
 
                for (DateTime date = DateTime.Parse("1/12/2022"); date<=DateTime.Today; date = date.AddDays(1.0))
                {
@@ -59,19 +58,21 @@ namespace MotoStore.Views.Pages
                     else
                         ListDoanhThu.Add(0);
                    }
-                //++i;
-               }
+               }   */
 
             ChartValues<decimal> columnData = new ChartValues<decimal>();
             Labels = new();
-
-
-            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString))
+            
+            using (con)
             {
-                connection.Open();
-                string query = "SET Dateformat dmy\ndeclare @fromdate date = '1/12/2022'; \r\ndeclare @thrudate date = getdate();\r\nwith n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n)), dates as\r\n(\r\n\tselect top (datediff(day, @fromdate, @thrudate)+1)\r\n\t[Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))\r\n\tfrom n as deka cross join n as hecto cross join n as kilo cross join n as tenK cross join n as hundredK\r\n\torder by [Date]\r\n)\r\n\r\nselect Date, sum(ThanhTien) as DoanhThu\r\nfrom dates d left join HoaDon HD on d.Date = HD.NgayLapHD\r\nwhere Date between @fromdate and @thrudate\r\ngroup by Date";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                con.Open();
+                //string dưới t thêm thủ công, ngày mua hàng xa nhất tính tới giờ là 29/1/2021
+                string query = "SET Dateformat dmy\ndeclare @fromdate date = '29/1/2021'; \r\ndeclare @thrudate date = getdate();\r\nwith n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n)), dates as\r\n(\r\n\tselect top (datediff(day, @fromdate, @thrudate)+1)\r\n\t[Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))\r\n\tfrom n as deka cross join n as hecto cross join n as kilo cross join n as tenK cross join n as hundredK\r\n\torder by [Date]\r\n)\r\n\r\nselect Date, sum(ThanhTien) as DoanhThu\r\nfrom dates d left join HoaDon HD on d.Date = HD.NgayLapHD\r\nwhere Date between @fromdate and @thrudate\r\ngroup by Date";
+                using (SqlCommand command = new SqlCommand(query, con))
                 {
+                    //SqlDataAdapter adapter = new SqlDataAdapter(query,con);
+                    //adapter.SelectCommand.CommandTimeout = 60;
+                    // command.CommandTimeout = 180; nếu bị timeout thì thử thêm dòng này hoặc đóng mở kết nối con hợp lý
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -85,39 +86,16 @@ namespace MotoStore.Views.Pages
                     }
                 }
             }
-
-
+            con.Close();
             SrC.Add(new LineSeries
             {
                 Values = columnData,
-                //Values =new ChartValues<decimal> { ListDoanhThu[0], ListDoanhThu[1], ListDoanhThu[2], ListDoanhThu[3], ListDoanhThu[4], ListDoanhThu[5], ListDoanhThu[6], ListDoanhThu[7], ListDoanhThu[8], ListDoanhThu[9], ListDoanhThu[10], ListDoanhThu[11], ListDoanhThu[12], ListDoanhThu[13], ListDoanhThu[14], ListDoanhThu[15], ListDoanhThu[16], ListDoanhThu[17], ListDoanhThu[18], ListDoanhThu[19], ListDoanhThu[20], ListDoanhThu[21], ListDoanhThu[22], ListDoanhThu[23], ListDoanhThu[24], ListDoanhThu[25], ListDoanhThu[26], ListDoanhThu[27], ListDoanhThu[28], ListDoanhThu[29], ListDoanhThu[30] },
                 //Doanh thu tháng này
                 Fill = null
             }); 
-            con.Close();  
-            //int index = 0;
-
-            //Có chút vấn đề ở vòng for dưới
-            /* for (DateTime date = DateTime.Parse(strNgayMin); date <= DateTime.Parse(ngaysau); date = date.AddDays(1.0))
-             {
-                 Labels[index] = date.ToString("dd");
-                 ++index;      
-             } */
-
-            /* ChartValues<decimal> decimals = new ChartValues<decimal>();
-             decimals.Add(11);
-
-             foreach(var item in decimals)
-             {
-
-             } */
-
+            //con.Close();  
             Values = value => value.ToString("N");
-
-            DataContext = this;
-            
-
-            
+            DataContext = this;            
         }
         
         public SeriesCollection SrC { get; set; }   
@@ -135,6 +113,7 @@ namespace MotoStore.Views.Pages
             con.Close();
             if(cbxChonNam.SelectedItem != null)
             {
+                lblSeries.Content = "Năm";
                 while (dothi.Series.Count > 0) { dothi.Series.RemoveAt(0); }
                 if (cbxChonNam.SelectedIndex == 0)
                 {
@@ -155,7 +134,7 @@ namespace MotoStore.Views.Pages
                         else
                             EndDate2022 = "1/" + thangsau2022 + "/2022";
 
-                        SqlCommand cmd = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
+                        SqlCommand cmd = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
                         cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
                         cmd.Parameters["@StartDate2022"].Value = StartDate2022;
                         cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);

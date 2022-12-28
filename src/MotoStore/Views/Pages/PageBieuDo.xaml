@@ -65,7 +65,7 @@
                                   FontSize="20"
                                   FontWeight="Medium">
                 <livechart:CartesianChart.AxisX>
-                    <livechart:Axis Title="Ngày" Labels="{Binding Labels}" FontSize="20" FontWeight="Bold" Foreground="White">
+                    <livechart:Axis Labels="{Binding Labels}" FontSize="20" FontWeight="Bold" Foreground="White">
                         <livechart:Axis.Separator>
                             <livechart:Separator Step="1" />
                         </livechart:Axis.Separator>
@@ -83,7 +83,7 @@
                 Content="Quay Lại"
                 FontSize="20"
                 FontWeight="Medium"
-                Height="35"
+                Height="40"
                 Width="115"
                 Click="btnBack_Click"
                 VerticalAlignment="Top"
@@ -103,7 +103,7 @@
                 Content="So Sánh Doanh Thu"
                 FontSize="15"
                 FontWeight="Medium"
-                Height="35"
+                Height="40"
                 Width="140"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
@@ -116,5 +116,13 @@
                Width="280"
                VerticalAlignment="Top"
                HorizontalAlignment="Center"></Label>
+        <Label x:Name="lblSeries"
+               Height="30"
+               Width="130"
+               Margin="50,345,0,0"
+               Foreground="White"
+               FontSize="17.25"
+               FontWeight="Bold"
+               Content="         Ngày"></Label>
     </Grid>
 </Page>

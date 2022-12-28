@@ -460,15 +460,15 @@ namespace MotoStore.Views.Pages
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
-            if (File.Exists("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
-                anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa + ".png"));
-            else
-            {
+            //if (File.Exists("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
+              //  anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa + ".png"));
+           // else
+            //{
                 if (PageChinh.getSex == "Nữ")
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
-            }
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+            //}
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
