@@ -63,7 +63,8 @@
                                   HorizontalAlignment="Center"
                                   Series="{Binding SrC}"
                                   FontSize="20"
-                                  FontWeight="Medium">
+                                  FontWeight="Medium"
+                                  LegendLocation="Bottom">
                 <livechart:CartesianChart.AxisX>
                     <livechart:Axis Labels="{Binding Labels}" FontSize="20" FontWeight="Bold" Foreground="White">
                         <livechart:Axis.Separator>
@@ -119,10 +120,20 @@
         <Label x:Name="lblSeries"
                Height="30"
                Width="130"
-               Margin="50,395,0,0"
+               Margin="40,430,0,0"
                Foreground="White"
-               FontSize="17.25"
+               FontSize="19"
                FontWeight="Bold"
                Content="         Ngày"></Label>
+        <Label x:Name="lblDTThgNay"
+               Height="30"
+               Width="330"
+               Content="Doanh Thu Tháng Này(Đơn Vị: VNĐ)"
+               Foreground="White"
+               FontSize="19"
+               FontWeight="Medium"
+               VerticalContentAlignment="Bottom"
+               HorizontalAlignment="Center"
+               Margin="80,500,0,0"></Label>
     </Grid>
 </Page>

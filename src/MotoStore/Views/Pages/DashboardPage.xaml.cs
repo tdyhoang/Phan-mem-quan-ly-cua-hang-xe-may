@@ -302,6 +302,10 @@ namespace MotoStore.Views.Pages
                     string richText = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd).Text;
                     if (string.IsNullOrEmpty(cbGioBD.Text) || string.IsNullOrEmpty(cbPhutBD.Text) || string.IsNullOrEmpty(cbGioKT.Text) || string.IsNullOrEmpty(cbPhutKT.Text))
                         MessageBox.Show("Vui lòng chọn giờ cụ thể");
+                    else if(Lich.SelectedDate.Value<DateTime.Now)
+                    {
+                        MessageBox.Show("Ngày lên lịch không hợp lệ");
+                    }
                     else if (string.IsNullOrWhiteSpace(richText))
                     {
                         MessageBox.Show("Vui lòng ghi nội dung");
@@ -465,9 +469,9 @@ namespace MotoStore.Views.Pages
            // else
             //{
                 if (PageChinh.getSex == "Nữ")
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             //}
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
