@@ -10,8 +10,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="110"/>
@@ -19,12 +19,12 @@
         </Grid.ColumnDefinitions>
         <Frame x:Name="AddSP" NavigationUIVisibility="Hidden" />
 
-        <Grid Grid.RowSpan="2">
+        <Grid>
             <TextBlock Text="" FontSize="13" FontWeight="Black" FontFamily="Times New Roman"/>
 
 
         </Grid>
-        <ScrollViewer Grid.Column="1" Background="DarkSlateBlue" Margin="3,3,0,0" Grid.RowSpan="2">
+        <ScrollViewer Grid.Column="1" Background="DarkSlateBlue" Margin="3,3,0,0">
             <StackPanel>
                 <TextBlock Text="Kho Sản Phẩm" Margin="10" FontSize="15" FontWeight="Medium" />
                 <StackPanel Margin="20 0">
@@ -64,6 +64,6 @@
 
 
         </ScrollViewer>
-        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="263,365,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
+        <Button x:Name="btnAddNewPageSP" Content="Thêm Mới" Width="135" Click="btnAddNewPageSP_Click" Grid.Column="1" Margin="263,10,0,0" Grid.Row="1" VerticalAlignment="Top" Background="LightSkyBlue" FontWeight="Black" Height="39"/>
     </Grid>
 </Page>
