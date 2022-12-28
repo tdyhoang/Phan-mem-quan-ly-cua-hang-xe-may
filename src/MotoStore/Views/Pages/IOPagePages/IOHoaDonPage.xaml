@@ -12,43 +12,49 @@
 
         <Label x:Name="lbMaSPHD"
                Content="Mã Sản Phẩm: " 
-               Margin="47,39,602,367"
+               Margin="45,50,602,367"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <!--Mã Sản Phẩm trong Hóa Đơn-->
         <TextBox x:Name="txtMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="34" TextChanged="txtMaSPHD_TextChanged"/>
         <Label x:Name="lbMaKHHD"
                Content="Mã Khách Hàng: " 
-               Margin="47,89,597,317"
+               Margin="45,105,597,317"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <!--Mã Khách Hàng trong Hóa Đơn-->
         <TextBox x:Name="txtMaKHHD" Margin="247,91,503,0" VerticalAlignment="Top" Height="35" TextChanged="txtMaKHHD_TextChanged"/>
         <!--Mã Nhân Viên trong Hóa Đơn-->
         <Label x:Name="lbNgayXuatHD"
                Content="Ngày Xuất HĐ: " 
-               Margin="47,158,597,248"
+               Margin="45,170,597,248"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtNgayXuatHD" Margin="248,157,502,0" VerticalAlignment="Top" Height="35"/>
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
-               Margin="593,36,51,371"
+               Margin="593,55,51,371"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <!--Số Lượng SP Xuất ra trong Hóa Đơn-->
         <TextBox x:Name="txtSoLuongHD" Margin="732,38,33,0" VerticalAlignment="Top" TextChanged="txtSoLuongHD_TextChanged"/>
         <Label x:Name="lbGiamGiaHD"
                Content="Giảm Giá: " 
-               Margin="593,96,118,305"
+               Margin="593,108,118,305"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtGiamGiaHD" Margin="732,93,33,0" VerticalAlignment="Top" IsReadOnly="True" TextChanged="txtGiamGiaHD_TextChanged"/>
         <Label x:Name="lbThanhTienHD"
                Content="Thành Tiền: " 
-               Margin="593,146,118,239"
+               Margin="593,160,118,239"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
         <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click"/>
 

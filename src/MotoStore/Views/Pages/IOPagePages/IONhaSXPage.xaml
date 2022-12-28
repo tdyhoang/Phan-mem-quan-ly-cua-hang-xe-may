@@ -11,27 +11,31 @@
     <Grid>
         <Label x:Name="lbTenNSX"
                Content="Tên Nhà Sản Xuất: " 
-               Margin="26,36,623,370"
+               Margin="26,50,623,370"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top"/>
         <Label x:Name="lbSDTNSX"
                Content="Số Điện Thoại: " 
-               Margin="24,96,625,310"
+               Margin="24,105,625,310"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top"/>
         <Label x:Name="lbEmail"
                Content="Email: " 
-               Margin="24,146,620,260"
+               Margin="24,160,620,260"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top"/>
         <Label x:Name="lbNuocSX"
                Content="Nước Sản Xuất: " 
-               Margin="24,203,620,203"
+               Margin="24,215,620,203"
                FontSize="15"
-               Foreground="Black"/>
+               Foreground="Black"
+               FontWeight="Medium"/>
         <TextBox x:Name="txtNuocSX" Margin="224,200,526,0" VerticalAlignment="Top"/>
         <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="599,114,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewNSX_Click"/>
 
