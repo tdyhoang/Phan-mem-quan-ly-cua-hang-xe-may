@@ -129,7 +129,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom">
                     <TextBlock.Background>
-                        <ImageBrush ImageSource="C:\Users\ADMIN\Documents\Github\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\NhvienNgSuat.png" 
+                        <ImageBrush ImageSource="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\NhvienNgSuat.png" 
                                     Stretch="Uniform"/>
                     </TextBlock.Background>
                 </TextBlock>
@@ -166,7 +166,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom">
                     <TextBlock.Background>
-                        <ImageBrush ImageSource="C:\Users\ADMIN\Documents\Github\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\IconXeMay.png" 
+                        <ImageBrush ImageSource="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\IconXeMay.png" 
                                     Stretch="Uniform"/>
                     </TextBlock.Background>
                 </TextBlock>
@@ -202,7 +202,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom">
                     <TextBlock.Background>
-                        <ImageBrush ImageSource="C:\Users\ADMIN\Documents\Github\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\money.png" 
+                        <ImageBrush ImageSource="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\money.png" 
                                     Stretch="Uniform"/>
                     </TextBlock.Background>
                 </TextBlock>
@@ -239,7 +239,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom">
                     <TextBlock.Background>
-                        <ImageBrush ImageSource="C:\Users\ADMIN\Documents\Github\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\VIP-removebg-preview.png" 
+                        <ImageBrush ImageSource="C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\VIP-removebg-preview.png" 
                                     Stretch="Uniform"/>
                     </TextBlock.Background>
                 </TextBlock>

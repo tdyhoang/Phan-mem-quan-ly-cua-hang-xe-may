@@ -1,5 +1,5 @@
 ﻿/*Cơ sở dữ liệu cho Ứng dụng Quản Lý Cửa Hàng Bán Xe Máy*/
-CREATE DATABASE QLYCHBANXEMAY
+create DATABASE QLYCHBANXEMAY
 
 use QLYCHBANXEMAY
 set dateformat dmy
@@ -307,19 +307,16 @@ from HoaDon
 group by MANV
 order by Sum(SOLUONG) DESC
 
-declare @fromdate date = '1/11/2022'; 
-declare @thrudate date = getdate();
-with n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n)), dates as
-(
-	select top (datediff(day, @fromdate, @thrudate)+1)
-	[Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))
-	from n as deka cross join n as hecto cross join n as kilo cross join n as tenK cross join n as hundredK
-	order by [Date]
-)
-
-select Date, sum(ThanhTien) as DoanhThu
-from dates d left join HoaDon HD on d.Date = HD.NgayLapHD
-where Date between @fromdate and @thrudate
-group by Date
-
-/*Chạy phần trên sẽ ra 
+set dateformat dmy
+declare @fromdate date = '01-01-2020';
+declare @years    int  = 10;
+/* 30 years, 19 used data pages ~152kb in memory, ~264kb on disk */
+;with n as (select n from (values(0),(1),(2),(3),(4),(5),(6),(7),(8),(9)) t(n))
+select top (datediff(day, @fromdate,dateadd(year,@years,@fromdate)))
+    [Date]=convert(date,dateadd(day,row_number() over(order by (select 1))-1,@fromdate))
+into dbo.Dates
+from n as deka cross join n as hecto cross join n as kilo
+               cross join n as tenK cross join n as hundredK
+order by [Date];
+create unique clustered index ix_dbo_Dates_date
+  on dbo.Dates([Date]);
