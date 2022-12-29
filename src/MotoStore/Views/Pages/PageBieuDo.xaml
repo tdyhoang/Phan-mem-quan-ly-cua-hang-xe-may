@@ -49,24 +49,25 @@
             </Border.BorderBrush>
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#462AD8" Offset="1"/>
-                    <GradientStop Color="Purple" Offset="0.15"/>
+                    <GradientStop Color="#462AD8" Offset="0.35"/>
+                    <GradientStop Color="DarkViolet" Offset="0.9"/>
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
             <livechart:CartesianChart x:Name="dothi"
-                                  Height="400"
-                                  Width="800"
+                                  Height="420"
+                                  Width="950"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
                                   Series="{Binding SrC}"
-                                  FontSize="20"
+                                  FontSize="15"
                                   FontWeight="Medium"
                                   LegendLocation="Bottom">
+
                 <livechart:CartesianChart.AxisX>
-                    <livechart:Axis Labels="{Binding Labels}" FontSize="20" FontWeight="Bold" Foreground="White">
+                    <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="12" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
                         <livechart:Axis.Separator>
                             <livechart:Separator Step="1" />
                         </livechart:Axis.Separator>
@@ -74,7 +75,7 @@
                 </livechart:CartesianChart.AxisX>
 
                 <livechart:CartesianChart.AxisY>
-                    <livechart:Axis Title="Doanh Thu" Labels="{Binding Values}" FontSize="20" FontWeight="Bold" Foreground="White"></livechart:Axis>
+                    <livechart:Axis Title="Doanh Thu" Labels="{Binding Values}" FontSize="15.5" FontWeight="Bold" Foreground="White"></livechart:Axis>
                 </livechart:CartesianChart.AxisY>
 
             </livechart:CartesianChart>
@@ -89,26 +90,98 @@
                 Click="btnBack_Click"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"></Button>
-        <ComboBox x:Name="cbxChonNam"
+        
+        <Menu     x:Name="MenuTuChon"
                   Height="40"
-                  Width="200"
+                  Width="140"
                   FontSize="20"
                   FontWeight="Medium"
-                  DropDownClosed="cbxChonNam_DropDownClosed"
-                  VerticalAlignment="Top" Margin="10,0,550,0"
-                  Visibility="Collapsed">
-            <ComboBoxItem>Năm Trước</ComboBoxItem>
-            <ComboBoxItem>2 Năm Trước</ComboBoxItem>
-        </ComboBox>
-        <Button x:Name="btnSSDoanhThu"
-                Content="So Sánh Doanh Thu"
-                FontSize="15"
+                  VerticalAlignment="Top" 
+                  Margin="0,0,650,0">
+
+            <MenuItem Header="Các Lựa Chọn"
+                          Foreground="Blue"
+                          FontSize="15"
+                          FontWeight="Bold"
+                          Width="200"
+                          Height="50">
+
+                <MenuItem Header="So Sánh Theo Năm" 
+                              Foreground="black"
+                              FontSize="15"
+                              FontWeight="Medium">
+                    <MenuItem x:Name="subitemNamTrc"
+                              Header="Năm Trước"
+                              Foreground="black"
+                              FontSize="15"
+                              FontWeight="Medium"
+                              Click="subitemNamTrc_Click"></MenuItem>
+                    <MenuItem x:Name="subitem2NamTrc"
+                              Header="2 Năm Trước"
+                              Foreground="black"
+                              FontSize="15"
+                              FontWeight="Medium"
+                              Click="subitem2NamTrc_Click"></MenuItem>
+                </MenuItem>
+
+                <MenuItem     x:Name="subitemChonNgayXem"
+                              Header="Chọn Ngày Xem" 
+                              Foreground="black"
+                              FontSize="15"
+                              FontWeight="Medium"
+                              Click="subitemChonNgayXem_Click">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid x:Name="gridChonNgay"
+              Height="40"
+              Width="420"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Margin="0,50,0,0">
+            <Label Content="Từ Ngày:"
+                   Foreground="Black"
+                   FontWeight="Medium"
+                   FontSize="15"
+                   VerticalAlignment="Center"></Label>
+            <Label Content="Đến Ngày:"
+                   Foreground="Black"
+                   FontWeight="Medium"
+                   FontSize="15"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"></Label>
+            <TextBox x:Name="txtTuNgay"
+                     Height="35"
+                     Width="100"
+                     VerticalContentAlignment="Center"
+                     Margin="0,0,195,0"
+                     TextChanged="txtTuNgay_TextChanged"
+                     LostFocus="txtTuNgay_LostFocus"></TextBox>
+            <TextBox x:Name="txtDenNgay"
+                     Height="35"
+                     Width="100"
+                     VerticalContentAlignment="Center"
+                     Margin="175,0,0,0"
+                     TextChanged="txtDenNgay_TextChanged"
+                     LostFocus="txtDenNgay_LostFocus"></TextBox>
+            <Button x:Name="btnXem"
+                    Height="20"
+                    Width="60"
+                    Content="Xem"
+                    FontWeight="Medium"
+                    HorizontalAlignment="Right"
+                    Click="btnXem_Click"></Button>
+        </Grid>
+        
+        <Button x:Name="btnTuChon"
+                Content="Tự Chọn"
+                FontSize="20"
                 FontWeight="Medium"
                 Height="40"
-                Width="140"
+                Width="115"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Click="btnSSDoanhThu_Click"></Button>
+                Click="btnTuChon_Click"></Button>
         <Label Content="Biểu Đồ Doanh Thu"
                FontSize="30"
                FontWeight="Medium"
@@ -120,7 +193,7 @@
         <Label x:Name="lblSeries"
                Height="30"
                Width="130"
-               Margin="40,430,0,0"
+               Margin="40,450,0,0"
                Foreground="White"
                FontSize="19"
                FontWeight="Bold"
