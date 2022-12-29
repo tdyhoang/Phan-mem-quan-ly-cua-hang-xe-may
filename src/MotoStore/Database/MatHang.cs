@@ -5,7 +5,9 @@ namespace MotoStore.Database;
 
 public partial class MatHang
 {
-    public Guid MaMh { get; set; }
+    public int Id { get; set; }
+
+    public string MaMh { get; set; } = null!;
 
     public string? TenMh { get; set; }
 

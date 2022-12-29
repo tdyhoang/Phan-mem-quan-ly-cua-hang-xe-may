@@ -130,14 +130,14 @@ namespace MotoStore.Views.Pages.LoginPages
                 foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                     {
-                        isValid = true;               //Mở cổng đăng nhập
-                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.GioiTinh).FirstOrDefault();
-                        getMa = user.MaNv.ToString();   
+                        isValid = true;             //Mở cổng đăng nhập
+                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.GioiTinh).FirstOrDefault();
+                        getMa = user.MaNv;   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
 
-                        getChucVu = mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.ChucVu).FirstOrDefault();
+                        getChucVu = mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.ChucVu).FirstOrDefault();
 
-                        var hoTenNV = mDb.NhanViens.Where(u => u.MaNv.ToString() == getMa).Select(u => u.HoTenNv).FirstOrDefault().ToString();
+                        var hoTenNV = mDb.NhanViens.Where(u => u.MaNv == getMa).Select(u => u.HoTenNv).FirstOrDefault();
                         var seperatedHoTenNV = hoTenNV.Split(' ');
                         var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
                         getTen = tenNV;

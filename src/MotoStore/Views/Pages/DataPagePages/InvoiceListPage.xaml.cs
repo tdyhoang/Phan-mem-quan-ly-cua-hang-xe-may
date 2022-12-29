@@ -78,7 +78,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         hd.ThanhTien = 0;
 
                     // Thêm mới
-                    if (hd.MaHd.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(hd.MaHd))
                     {
                         cmd = new SqlCommand("Insert into HoaDon values(newid(), '" + hd.MaMh + "', '" + hd.MaKh + "', '" + hd.MaNv + "', '" + ngayLapHD + "', " + hd.SoLuong + ", " + hd.ThanhTien + ")", con);
                         cmd.ExecuteNonQuery();
@@ -154,7 +154,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     if (hd is null)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã hd
-                    if (hd.MaHd.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(hd.MaHd))
                         // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
                         // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
                         // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.

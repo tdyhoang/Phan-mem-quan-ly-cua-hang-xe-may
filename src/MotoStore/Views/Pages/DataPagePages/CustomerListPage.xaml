@@ -20,7 +20,6 @@
         </ControlTemplate>
         <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
             <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
-            <ui:MenuItem Header="Copy Mã KH" SymbolIcon="Copy24" Click="CopyMaKH" />
         </ContextMenu>
         <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
