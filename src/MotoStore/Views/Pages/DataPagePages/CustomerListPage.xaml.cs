@@ -96,16 +96,16 @@ namespace MotoStore.Views.Pages.DataPagePages
                     }
 
                     // Thêm mới
-                    if (kh.MaKh.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(kh.MaKh))
                     {
-                        cmd = new SqlCommand("Insert into KhachHang values(newid(), N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
+                        cmd = new SqlCommand("Insert into KhachHang values(N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh.ToString() + "';", con);
+                        cmd = new SqlCommand("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -113,19 +113,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Close();
                 // Làm mới nội dung hiển thị cho khớp với database
                 RefreshDataGrid();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void CopyMaKH(object sender, RoutedEventArgs e)
-        {
-            
-            try
-            {
-                Clipboard.SetText(((KhachHang)grdCustomer.SelectedItems[grdCustomer.SelectedItems.Count - 1]).MaKh.ToString());
             }
             catch (Exception ex)
             {
@@ -180,7 +167,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     if (kh is null)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã KH
-                    if (kh.MaKh.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(kh.MaKh))
                         // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
                         // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
                         // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
@@ -189,7 +176,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh.ToString() + "'", con);
+                        cmd = new SqlCommand("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh + "'", con);
                         cmd.ExecuteNonQuery();
                     }
                 }

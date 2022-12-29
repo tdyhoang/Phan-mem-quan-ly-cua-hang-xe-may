@@ -5,13 +5,15 @@ namespace MotoStore.Database;
 
 public partial class KhachHang
 {
-    public Guid MaKh { get; set; }
+    public int Id { get; set; }
+
+    public string MaKh { get; set; } = null!;
 
     public string? HoTenKh { get; set; }
 
     public DateTime? NgSinh { get; set; }
 
-    public string? GioiTinh { get; set; }
+    public string GioiTinh { get; set; } = null!;
 
     public string? DiaChi { get; set; }
 
@@ -19,7 +21,7 @@ public partial class KhachHang
 
     public string? Email { get; set; }
 
-    public string? LoaiKh { get; set; }
+    public string LoaiKh { get; set; } = null!;
 
     public bool DaXoa { get; set; }
 

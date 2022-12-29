@@ -5,13 +5,15 @@ namespace MotoStore.Database;
 
 public partial class NhanVien
 {
-    public Guid MaNv { get; set; }
+    public int Id { get; set; }
+
+    public string MaNv { get; set; } = null!;
 
     public string? HoTenNv { get; set; }
 
     public DateTime? NgSinh { get; set; }
 
-    public string? GioiTinh { get; set; }
+    public string GioiTinh { get; set; } = null!;
 
     public string? DiaChi { get; set; }
 

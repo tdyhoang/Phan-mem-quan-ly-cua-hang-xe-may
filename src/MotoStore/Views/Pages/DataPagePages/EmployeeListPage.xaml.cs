@@ -98,7 +98,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         nv.Luong = 0;
 
                     // Thêm mới
-                    if (nv.MaNv.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(nv.MaNv))
                     {
                         cmd = new SqlCommand("Insert into NhanVien values(newid(), N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + "0)", con);
                         cmd.ExecuteNonQuery();
@@ -107,7 +107,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv.ToString() + "';", con);
+                        cmd = new SqlCommand("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -115,18 +115,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Close();
                 // Làm mới nội dung hiển thị cho khớp với database
                 RefreshDataGrid();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void CopyMaNV(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Clipboard.SetText(((NhanVien)grdEmployee.SelectedItems[grdEmployee.SelectedItems.Count - 1]).MaNv.ToString());
             }
             catch (Exception ex)
             {
@@ -178,7 +166,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     if (nv is null)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã nv
-                    if (nv.MaNv.ToString() == "00000000-0000-0000-0000-000000000000")
+                    if (string.IsNullOrEmpty(nv.MaNv))
                         // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
                         // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
                         // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
@@ -187,7 +175,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv.ToString() + "';", con);
+                        cmd = new SqlCommand("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }

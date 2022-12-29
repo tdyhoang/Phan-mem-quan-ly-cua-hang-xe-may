@@ -5,13 +5,15 @@ namespace MotoStore.Database;
 
 public partial class ThongTinBaoHanh
 {
-    public Guid MaBh { get; set; }
+    public int Id { get; set; }
 
-    public Guid MaMh { get; set; }
+    public string MaBh { get; set; } = null!;
 
-    public Guid MaKh { get; set; }
+    public string MaMh { get; set; } = null!;
 
-    public Guid MaNv { get; set; }
+    public string MaKh { get; set; } = null!;
+
+    public string MaNv { get; set; } = null!;
 
     public DateTime? ThoiGian { get; set; }
 

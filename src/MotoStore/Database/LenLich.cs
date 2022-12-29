@@ -7,7 +7,7 @@ public partial class LenLich
 {
     public Guid LenLichId { get; set; }
 
-    public Guid MaNv { get; set; }
+    public string MaNv { get; set; } = null!;
 
     public DateTime? NgLenLichBd { get; set; }
 

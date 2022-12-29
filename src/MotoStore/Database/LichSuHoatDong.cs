@@ -7,7 +7,7 @@ public partial class LichSuHoatDong
 {
     public Guid LshdId { get; set; }
 
-    public Guid MaNv { get; set; }
+    public string MaNv { get; set; } = null!;
 
     public DateTime? ThoiGian { get; set; }
 
