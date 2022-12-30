@@ -52,12 +52,11 @@ namespace MotoStore.Views.Pages.DataPagePages
             try
             {
                 MainDatabase mainDatabase = new();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
-                cmd = new SqlCommand("set dateformat dmy", con);
+                cmd = new("set dateformat dmy", con);
                 cmd.ExecuteNonQuery();
-                KhachHang kh;
                 string ngaySinhKh;
 
                 // Lý do cứ mỗi lần có cell sai là break:
@@ -67,10 +66,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 {
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                     // is not KhachHang chỉ để an toàn
-                    if (obj is null || obj is not KhachHang)
-                        continue;
-                    kh = obj as KhachHang;
-                    if (kh is null)
+                    if (obj is not KhachHang kh)
                         continue;
 
                     // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
@@ -98,14 +94,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Thêm mới
                     if (string.IsNullOrEmpty(kh.MaKh))
                     {
-                        cmd = new SqlCommand("Insert into KhachHang values(N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
+                        cmd = new("Insert into KhachHang values(N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh + "';", con);
+                        cmd = new("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -123,8 +119,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         // Định nghĩa lại phím tắt Delete
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            DataGrid dg = sender as DataGrid;
-            if (dg is null)
+            if (sender is not DataGrid dg)
                 return;
             // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
             if (grdCustomer.IsReadOnly)
@@ -151,8 +146,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                MainDatabase mainDatabase = new();
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
                 KhachHang kh;
@@ -176,7 +171,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh + "'", con);
+                        cmd = new("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh + "'", con);
                         cmd.ExecuteNonQuery();
                     }
                 }

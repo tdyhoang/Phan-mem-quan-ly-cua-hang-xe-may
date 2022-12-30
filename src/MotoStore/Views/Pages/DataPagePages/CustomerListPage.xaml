@@ -63,12 +63,12 @@
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding MaKh, Mode=OneWay}" />
+                <DataGridTextColumn Header="Mã KH" Binding="{Binding MaKh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
                 <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
                 <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
-                <DataGridTextColumn Header="Số điện thoại" Binding="{Binding Sdt}" />
+                <DataGridTextColumn Header="SĐT" Binding="{Binding Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
                 <DataGridTextColumn Header="Loại" Binding="{Binding Path=LoaiKh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>

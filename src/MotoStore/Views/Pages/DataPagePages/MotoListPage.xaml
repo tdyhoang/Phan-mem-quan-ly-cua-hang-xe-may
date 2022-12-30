@@ -1,15 +1,15 @@
 ﻿<ui:UiPage x:Class="MotoStore.Views.Pages.DataPagePages.MotoListPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:resources="clr-namespace:MotoStore.Resources"
-      xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:MotoListPage}"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="MotoListPage"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+           xmlns:resources="clr-namespace:MotoStore.Resources"
+           xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:MotoListPage}"
+           mc:Ignorable="d" 
+           d:DesignHeight="450" d:DesignWidth="800"
+           Title="MotoListPage"
            IsVisibleChanged="UiPage_IsVisibleChanged">
 
     <ui:UiPage.Resources>
@@ -60,13 +60,13 @@
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã mặt hàng" Binding="{Binding Path=MaMh, Mode=OneWay}" />
-                <DataGridTextColumn Header="Tên mặt hàng" Binding="{Binding Path=TenMh}" />
-                <DataGridTextColumn Header="Số phân khối" Binding="{Binding Path=SoPhanKhoi}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaMh, Mode=OneWay}" />
+                <DataGridTextColumn Header="Tên MH" Binding="{Binding Path=TenMh}" />
+                <DataGridTextColumn Header="Số PK" Binding="{Binding Path=SoPhanKhoi}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Giá nhập" Binding="{Binding Path=GiaNhapMh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Giá bán" Binding="{Binding Path=GiaBanMh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Số lượng tồn kho" Binding="{Binding Path=SoLuongTonKho}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Path=HangSx}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Tồn kho" Binding="{Binding Path=SoLuongTonKho}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Hãng SX" Binding="{Binding Path=HangSx}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Xuất xứ" Binding="{Binding Path=XuatXu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Mô tả" Binding="{Binding Path=MoTa}" />
             </ui:DataGrid.Columns>

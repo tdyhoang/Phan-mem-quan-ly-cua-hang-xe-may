@@ -51,13 +51,12 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                MainDatabase mainDatabase = new();
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
-                cmd = new SqlCommand("set dateformat dmy", con);
+                cmd = new("set dateformat dmy", con);
                 cmd.ExecuteNonQuery();
-                MatHang mh;
 
                 // Lý do cứ mỗi lần có cell sai là break:
                 // - Tránh trường hợp hiện MessageBox liên tục
@@ -66,23 +65,20 @@ namespace MotoStore.Views.Pages.DataPagePages
                 {
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                     // is not MatHang chỉ để an toàn
-                    if (obj is null || obj is not MatHang)
-                        continue;
-                    mh = obj as MatHang;
-                    if (mh is null)
+                    if (obj is null || obj is not MatHang mh)
                         continue;
 
                     // Thêm mới
                     if (string.IsNullOrEmpty(mh.MaMh))
                     {
-                        cmd = new SqlCommand("Insert into MatHang values(newid(), '" + mh.TenMh + "', '" + mh.SoPhanKhoi + "', '" + mh.GiaNhapMh + "', '" + mh.GiaBanMh + "', '" + mh.SoLuongTonKho + "', N'" + mh.HangSx + "', N'" + mh.XuatXu + "', N'" + mh.MoTa + "0)", con);
+                        cmd = new("Insert into MatHang values('" + mh.TenMh + "', '" + mh.SoPhanKhoi + "', '" + mh.GiaNhapMh + "', '" + mh.GiaBanMh + "', '" + mh.SoLuongTonKho + "', '" + mh.MaNcc + "', N'" + mh.HangSx + "', N'" + mh.XuatXu + "', N'" + mh.MoTa + "0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update MatHang Set TenMh = '" + mh.TenMh + "', SoPhanKhoi = '" + mh.SoPhanKhoi + "', GiaNhapMh = '" + mh.GiaNhapMh + "', GiaBanMh = '" + mh.GiaBanMh + "', SoLuongTonKho = '" + mh.SoLuongTonKho + "', HangSx = N'" + mh.HangSx + "', XuatXu = N'" + mh.XuatXu + "', MoTa = N'" + mh.MoTa + "', DaXoa = 0 Where MaMh = '" + mh.MaMh.ToString() + "';", con);
+                        cmd = new("Update MatHang Set TenMh = '" + mh.TenMh + "', SoPhanKhoi = '" + mh.SoPhanKhoi + "', GiaNhapMh = '" + mh.GiaNhapMh + "', GiaBanMh = '" + mh.GiaBanMh + "', SoLuongTonKho = '" + mh.SoLuongTonKho + "', MaNCC = '" + mh.MaNcc + "', HangSx = N'" + mh.HangSx + "', XuatXu = N'" + mh.XuatXu + "', MoTa = N'" + mh.MoTa + "', DaXoa = 0 Where MaMh = '" + mh.MaMh + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -97,23 +93,10 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
         }
 
-        private void CopyMaMh(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Clipboard.SetText(((MatHang)grdMoto.SelectedItems[grdMoto.SelectedItems.Count - 1]).MaMh.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         // Định nghĩa lại phím tắt Delete
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            DataGrid dg = sender as DataGrid;
-            if (dg is null)
+            if (sender is not DataGrid dg)
                 return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -137,8 +120,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                MainDatabase mainDatabase = new();
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
                 MatHang mh;
@@ -162,7 +145,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Update MatHang Set DaXoa = 1 Where MaMh = '" + mh.MaMh.ToString() + "';", con);
+                        cmd = new("Update MatHang Set DaXoa = 1 Where MaMh = '" + mh.MaMh + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }

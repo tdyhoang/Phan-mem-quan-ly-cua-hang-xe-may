@@ -3,15 +3,19 @@ using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
-public partial class NhaSanXuat
+public partial class NhaCungCap
 {
-    public string TenNsx { get; set; } = null!;
+    public int Id { get; set; }
+
+    public string MaNcc { get; set; } = null!;
+
+    public string? TenNcc { get; set; }
 
     public string? Sdt { get; set; }
 
     public string? Email { get; set; }
 
-    public string NuocSx { get; set; } = null!;
+    public string? DiaChi { get; set; }
 
     public bool DaXoa { get; set; }
 

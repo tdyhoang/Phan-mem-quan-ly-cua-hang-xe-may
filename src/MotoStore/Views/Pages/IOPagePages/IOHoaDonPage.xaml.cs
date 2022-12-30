@@ -24,7 +24,7 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// </summary>
     public partial class IOHoaDonPage : Page
     {
-        private MainDatabase mainDatabase = new MainDatabase(); 
+        private readonly MainDatabase mainDatabase = new(); 
         public IOHoaDonPage()
         {
 
@@ -34,7 +34,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnAddNewHoaDon_Click(object sender, RoutedEventArgs e)
         {
             bool check = true;
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLExpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
             if ((string.IsNullOrWhiteSpace(txtMaKHHD.Text)) || (string.IsNullOrWhiteSpace(txtMaSPHD.Text)) || (string.IsNullOrWhiteSpace(txtNgayXuatHD.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongHD.Text)) || (string.IsNullOrWhiteSpace(txtGiamGiaHD.Text)) || (string.IsNullOrWhiteSpace(txtThanhTienHD.Text)))
             {
@@ -63,7 +63,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (check)
                 {
                     con.Open();
-                    cmd = new SqlCommand("Set Dateformat dmy\nInsert into HoaDon values( NEWID(),  " + "  N'" + txtMaSPHD.Text + "','" + txtMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text +  " ' )", con);
+                    cmd = new("Set Dateformat dmy\nInsert into HoaDon values( NEWID(),  " + "  N'" + txtMaSPHD.Text + "','" + txtMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text +  " ' )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");

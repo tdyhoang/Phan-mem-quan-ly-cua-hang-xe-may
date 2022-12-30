@@ -31,7 +31,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnAddNewNSX_Click(object sender, RoutedEventArgs e)
         {
             bool check=true;
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLExpress;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
             if (string.IsNullOrWhiteSpace(txtTenNSX.Text) || (string.IsNullOrWhiteSpace(txtSDTNSX.Text)) || (string.IsNullOrWhiteSpace(txtEmailNSX.Text)) || (string.IsNullOrWhiteSpace(txtNuocSX.Text)))
             {
@@ -64,7 +64,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if(check)
                 {
                     con.Open();
-                    cmd = new SqlCommand("Set Dateformat dmy\nInsert into NhaSanXuat values('" + txtTenNSX.Text + "','" + txtSDTNSX.Text + "','" + txtEmailNSX.Text + "',N'" + txtNuocSX.Text + " ')", con);
+                    cmd = new("Set Dateformat dmy\nInsert into NhaSanXuat values('" + txtTenNSX.Text + "','" + txtSDTNSX.Text + "','" + txtEmailNSX.Text + "',N'" + txtNuocSX.Text + " ')", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");

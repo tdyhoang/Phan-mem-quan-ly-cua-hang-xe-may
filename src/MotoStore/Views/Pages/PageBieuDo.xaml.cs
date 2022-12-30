@@ -30,12 +30,12 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class PageBieuDo : Page
     {
-        private MainDatabase mdb = new MainDatabase();
-        private SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly MainDatabase mdb = new();
+        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
         public PageBieuDo()
         {
             InitializeComponent();
-            SrC = new SeriesCollection();
+            SrC = new();
             dothi.ChartLegend.Visibility = Visibility.Collapsed;
             gridChonNgay.Visibility = Visibility.Collapsed;
             MenuTuChon.Visibility = Visibility.Collapsed;
@@ -49,7 +49,7 @@ namespace MotoStore.Views.Pages
 
             for (DateTime date = DateTime.Parse(dauthangnay); date <= DateTime.Today; date = date.AddDays(1.0))
             {
-                SqlCommand cmd = new SqlCommand("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
+                SqlCommand cmd = new("Set dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                 cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
                 cmd.Parameters["@Today"].Value = date;
                 SqlDataReader sda = cmd.ExecuteReader();
@@ -144,7 +144,7 @@ namespace MotoStore.Views.Pages
                 else
                     EndDate2022 = "1/" + thangsau2022 + "/2022";
 
-                SqlCommand cmd = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
+                SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
                 cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
                 cmd.Parameters["@StartDate2022"].Value = StartDate2022;
                 cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
@@ -165,7 +165,7 @@ namespace MotoStore.Views.Pages
                     EndDate2021 = "1/1/2022";
                 else
                     EndDate2021 = "1/" + thangsau2021 + "/2021";
-                SqlCommand cmd2 = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
+                SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
                 cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
                 cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
                 cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
@@ -235,7 +235,7 @@ namespace MotoStore.Views.Pages
                 else
                     EndDate2022 = "1/" + thangsau2022 + "/2022";
 
-                SqlCommand cmd = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
+                SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
                 cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
                 cmd.Parameters["@StartDate2022"].Value = StartDate2022;
                 cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
@@ -256,7 +256,7 @@ namespace MotoStore.Views.Pages
                     EndDate2021 = "1/1/2022";
                 else
                     EndDate2021 = "1/" + thangsau2021 + "/2021";
-                SqlCommand cmd2 = new SqlCommand("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
+                SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
                 cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
                 cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
                 cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
@@ -317,10 +317,9 @@ namespace MotoStore.Views.Pages
         public bool IsValidDateTimeTest(string dateTime)
         {
             string[] formats = { "d/MM/yyyy" };
-            DateTime parsedDateTime;
             return DateTime.TryParseExact(dateTime, formats, new CultureInfo("vi-VN"),
-                                           DateTimeStyles.None, out parsedDateTime);
-            //Hàm kiểm tra ngày có hợp lệ hay không          
+                                           DateTimeStyles.None, out _);
+            //Hàm kiểm tra ngày có hợp lệ hay không
         }
 
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
@@ -349,7 +348,7 @@ namespace MotoStore.Views.Pages
 
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!(IsValidDateTimeTest(txtTuNgay.Text)))
+            if (!(IsValidDateTimeTest(txtDenNgay.Text)))
             {
                 MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ!");
                 txtDenNgay.Clear();
@@ -387,7 +386,7 @@ namespace MotoStore.Views.Pages
 
                 for (DateTime date = DateTime.Parse(txtTuNgay.Text); date <= DateTime.Parse(txtDenNgay.Text); date = date.AddDays(1.0))
                 {
-                    SqlCommand cmd = new SqlCommand("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
+                    SqlCommand cmd = new("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                     cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
                     cmd.Parameters["@Today"].Value = date;
                     SqlDataReader sda = cmd.ExecuteReader();

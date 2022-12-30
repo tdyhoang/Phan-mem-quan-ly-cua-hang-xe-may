@@ -51,13 +51,12 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                MainDatabase mainDatabase = new();
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
-                cmd = new SqlCommand("set dateformat dmy", con);
+                cmd = new("set dateformat dmy", con);
                 cmd.ExecuteNonQuery();
-                NhanVien nv;
                 string ngaySinhNv, ngayVaoLam;
 
                 // Lý do cứ mỗi lần có cell sai là break:
@@ -66,11 +65,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 foreach (object obj in grdEmployee.Items)
                 {
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                    // is not NhanVien chỉ để an toàn
-                    if (obj is null || obj is not NhanVien)
-                        continue;
-                    nv = obj as NhanVien;
-                    if (nv is null)
+                    if (obj is not NhanVien nv)
                         continue;
 
                     // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
@@ -100,14 +95,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Thêm mới
                     if (string.IsNullOrEmpty(nv.MaNv))
                     {
-                        cmd = new SqlCommand("Insert into NhanVien values(newid(), N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + "0)", con);
+                        cmd = new("Insert into NhanVien values(N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + "0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new SqlCommand("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv + "';", con);
+                        cmd = new("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -125,8 +120,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         // Định nghĩa lại phím tắt Delete
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            DataGrid dg = sender as DataGrid;
-            if (dg is null)
+            if (sender is not DataGrid dg)
                 return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -150,8 +144,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             try
             {
-                MainDatabase mainDatabase = new MainDatabase();
-                SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                MainDatabase mainDatabase = new();
+                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
                 NhanVien nv;
@@ -175,7 +169,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new SqlCommand("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "';", con);
+                        cmd = new("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -186,23 +180,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                 MessageBox.Show(ex.Message);
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
-            }
-        }
-
-        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-            {
-                if (PageChinh.getChucVu.ToLower() == "quản lý")
-                {
-                    btnSave.Visibility = Visibility.Visible;
-                    grdEmployee.IsReadOnly = false;
-                }
-                else
-                {
-                    btnSave.Visibility = Visibility.Collapsed;
-                    grdEmployee.IsReadOnly = true;
-                }
             }
         }
     }

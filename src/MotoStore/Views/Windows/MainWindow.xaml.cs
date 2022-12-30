@@ -30,7 +30,7 @@ namespace MotoStore.Views.Windows
 
             navigationService.SetNavigationControl(RootNavigation);
             Visibility = Visibility.Collapsed;
-            LoginView lgv = new LoginView();
+            LoginView lgv = new();
             lgv.ShowDialog();
             
         }

@@ -27,7 +27,7 @@ public partial class MainDatabase : DbContext
 
     public virtual DbSet<MatHang> MatHangs { get; set; }
 
-    public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
+    public virtual DbSet<NhaCungCap> NhaCungCaps { get; set; }
 
     public virtual DbSet<NhanVien> NhanViens { get; set; }
 
@@ -137,7 +137,9 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("KhachHang");
 
-            entity.Property(e => e.MaKh).HasMaxLength(5).IsUnicode(false)
+            entity.Property(e => e.MaKh)
+                .HasMaxLength(5)
+                .IsUnicode(false)
                 .HasColumnName("MaKH");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
@@ -215,7 +217,9 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("MatHang");
 
-            entity.Property(e => e.MaMh).HasMaxLength(5).IsUnicode(false)
+            entity.Property(e => e.MaMh)
+                .HasMaxLength(5)
+                .IsUnicode(false)
                 .HasColumnName("MaMH");
             entity.Property(e => e.GiaBanMh)
                 .HasColumnType("money")
@@ -230,6 +234,10 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
+            entity.Property(e => e.MaNcc)
+                .HasMaxLength(5)
+                .IsUnicode(false)
+                .HasColumnName("MaNCC");
             entity.Property(e => e.MoTa).HasMaxLength(75);
             entity.Property(e => e.TenMh)
                 .HasMaxLength(30)
@@ -237,32 +245,37 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("TenMH");
             entity.Property(e => e.XuatXu).HasMaxLength(15);
 
-            entity.HasOne(d => d.NhaSanXuat).WithMany(p => p.MatHangs)
-                .HasForeignKey(d => new { d.HangSx, d.XuatXu })
+            entity.HasOne(d => d.MaNccNavigation).WithMany(p => p.MatHangs)
+                .HasForeignKey(d => d.MaNcc)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MH");
         });
 
-        modelBuilder.Entity<NhaSanXuat>(entity =>
+        modelBuilder.Entity<NhaCungCap>(entity =>
         {
-            entity.HasKey(e => new { e.TenNsx, e.NuocSx }).HasName("PK_NSX");
+            entity.HasKey(e => e.MaNcc).HasName("PK_NNCC");
 
-            entity.ToTable("NhaSanXuat");
+            entity.ToTable("NhaCungCap");
 
-            entity.Property(e => e.TenNsx)
-                .HasMaxLength(15)
+            entity.Property(e => e.MaNcc)
+                .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasColumnName("TenNSX");
-            entity.Property(e => e.NuocSx)
-                .HasMaxLength(15)
-                .HasColumnName("NuocSX");
+                .HasColumnName("MaNCC");
+            entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
                 .HasMaxLength(45)
                 .IsUnicode(false);
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ID");
             entity.Property(e => e.Sdt)
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
+            entity.Property(e => e.TenNcc)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("TenNCC");
         });
 
         modelBuilder.Entity<NhanVien>(entity =>
@@ -271,7 +284,9 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("NhanVien");
 
-            entity.Property(e => e.MaNv).HasMaxLength(5).IsUnicode(false)
+            entity.Property(e => e.MaNv)
+                .HasMaxLength(5)
+                .IsUnicode(false)
                 .HasColumnName("MaNV");
             entity.Property(e => e.ChucVu).HasMaxLength(10);
             entity.Property(e => e.DiaChi).HasMaxLength(40);
@@ -302,7 +317,9 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("ThongTinBaoHanh");
 
-            entity.Property(e => e.MaBh).HasMaxLength(5).IsUnicode(false)
+            entity.Property(e => e.MaBh)
+                .HasMaxLength(5)
+                .IsUnicode(false)
                 .HasColumnName("MaBH");
             entity.Property(e => e.GhiChu).HasMaxLength(60);
             entity.Property(e => e.Id)

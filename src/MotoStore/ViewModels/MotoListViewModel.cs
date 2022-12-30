@@ -30,7 +30,7 @@ namespace MotoStore.ViewModels
         {
             try
             {
-                MainDatabase con = new MainDatabase();
+                MainDatabase con = new();
                 TableData = con.MatHangs.ToList();
             }
             catch (Exception ex)

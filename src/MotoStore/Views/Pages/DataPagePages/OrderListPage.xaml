@@ -38,11 +38,11 @@
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã đơn đặt hàng" Binding="{Binding Path=MaDonDh, Mode=OneWay}" />
-                <DataGridTextColumn Header="Mã mặt hàng" Binding="{Binding Path=MaKh}" />
-                <DataGridTextColumn Header="Số lượng hàng" Binding="{Binding Path=SoLuongHang}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding Path=SoLuong}" />
-                <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=GiamGia}" />
+                <DataGridTextColumn Header="Mã ĐĐH" Binding="{Binding Path=MaDonDh, Mode=OneWay}" />
+                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaKh}" />
+                <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuongHang}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=SoLuong}" />
+                <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=GiamGia}" />
                 <DataGridTextColumn Header="Ngày đặt hàng" Binding="{Binding Path=Ngdh, StringFormat=dd/MM/yyyy}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>

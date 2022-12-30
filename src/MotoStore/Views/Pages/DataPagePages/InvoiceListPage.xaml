@@ -1,15 +1,16 @@
 ﻿<ui:UiPage x:Class="MotoStore.Views.Pages.DataPagePages.InvoiceListPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:resources="clr-namespace:MotoStore.Resources"
-      xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:viewmodels="clr-namespace:MotoStore.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:InvoiceListViewModel}"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="InvoiceListPage">
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+           xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+           xmlns:resources="clr-namespace:MotoStore.Resources"
+           xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:InvoiceListPage}"
+           mc:Ignorable="d" 
+           d:DesignHeight="450" d:DesignWidth="800"
+           Title="InvoiceListPage"
+           IsVisibleChanged="UiPage_IsVisibleChanged">
 
     <ui:UiPage.Resources>
         <ControlTemplate x:Key="MultipleChoiceFilter">
@@ -34,7 +35,7 @@
         </Grid.ColumnDefinitions>
         
         <DockPanel Grid.Row="0">
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
         </DockPanel>
         
         <ui:DataGrid Name="grdInvoice"
@@ -59,11 +60,11 @@
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã hóa đơn" Binding="{Binding Path=MaHd, Mode=OneWay}" />
-                <DataGridTextColumn Header="Mã mặt hàng" Binding="{Binding Path=MaMh}" />
-                <DataGridTextColumn Header="Mã khách hàng" Binding="{Binding Path=MaKh}" />
-                <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding Path=MaNv}" />
-                <DataGridTextColumn Header="Ngày lập hóa đơn" Binding="{Binding Path=NgayLapHd, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Mã HĐ" Binding="{Binding Path=MaHd, Mode=OneWay}" />
+                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaMh}" />
+                <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=MaKh}" />
+                <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=MaNv}" />
+                <DataGridTextColumn Header="Ngày lập HĐ" Binding="{Binding Path=NgayLapHd, StringFormat=dd/MM/yyyy}" />
                 <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuong}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Thành tiền" Binding="{Binding Path=ThanhTien}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>
