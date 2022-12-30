@@ -35,11 +35,6 @@ namespace MotoStore.Views.Pages
     {
         private MainDatabase mdb = new MainDatabase();
         private PageChinh pgChinh;
-        private RichTextBox rtb;
-        private ComboBox cbGioBD;
-        private ComboBox cbPhutBD;
-        private ComboBox cbGioKT;
-        private ComboBox cbPhutKT;
         private DateTime dt = DateTime.Now;
         private int soSuKien = 0;  //Biến đếm số sự kiện trong tuần
         private int danhdau = 0;   //Biến đánh dấu lời nhắc số sự kiện
@@ -63,6 +58,14 @@ namespace MotoStore.Views.Pages
         {
             if (danhdau == 0)  //danhdau=0 có nghĩa là DashboardPage lần đầu được khởi tạo
             {
+                for (int i = 0; i <= 23; i++)
+                    cbGioBD.Items.Add(i);
+                for (int i = 0; i <= 23; i++)
+                    cbGioKT.Items.Add(i);
+                for (int i = 0; i <= 59; i++)
+                    cbPhutBD.Items.Add(i);
+                for (int i = 0; i <= 59; i++)
+                    cbPhutKT.Items.Add(i);
                 foreach (var demngay in mdb.LenLichs.ToList())
                 {
                     //Một tuần tới không có sự kiện gì đáng chú ý
@@ -72,10 +75,10 @@ namespace MotoStore.Views.Pages
                     if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBd.Value))
                     {
                         soSuKien++;   //Vì nó là biến toàn cục nên cứ thế mà tăng 
-                        danhdau = 1;
                         //Đánh dấu = 1 để hạn chế những lần load trang Dashboard sau nó tự động tăng số sự kiện 
                     }
                 }
+                danhdau = 1;
             }
             if (soSuKien == 0)
                 txtblLoiNhac.Text = "".PadRight(8) + "Tuần Này\n Không Có Sự Kiện\n Nào Đáng Chú Ý";
@@ -111,15 +114,6 @@ namespace MotoStore.Views.Pages
         {
             stkNoiDung.Children.Clear();
             stkLich.Children.Clear();
-            stkbtnLenLich.Children.Clear();
-            stkbtnXoaLich.Children.Clear();
-            stkbtnLichSu.Children.Clear();
-            /*5 dòng trên để:
-            Xoá ô Nội Dung
-            Xoá ô Lên Lịch
-            Xoá button Lên Lịch, Xoá Lịch(Dành cho Quản Lý)
-            Xoá button Lịch Sử mỗi lần đăng xuất*/
-
             SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
             SqlCommand cmd;
             con.Open();
@@ -135,8 +129,12 @@ namespace MotoStore.Views.Pages
 
         private void Lich_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            enableLenLich = true;    //Cho phép lên lịch mỗi lần click chuột vào ngày bất kì trên Lịch
-            enableXoaLich = true;
+            if (PageChinh.getChucVu.ToLower() == "quản lý")
+            {
+                enableLenLich = true;    //Cho phép lên lịch mỗi lần click chuột vào ngày bất kì trên Lịch
+                enableXoaLich = true;
+                borderLichvaButton.Visibility = Visibility.Visible;
+            }
             stkNoiDung.Children.Clear();  
             RichTextBox rtbNoiDung = new RichTextBox();
             rtbNoiDung.Height = 150;
@@ -157,114 +155,15 @@ namespace MotoStore.Views.Pages
             }
             if (co==false)
                 rtbNoiDung.AppendText("Không có sự kiện nổi bật");
-
-            if (PageChinh.getChucVu.ToLower()== "quản lý")   //Tất nhiên ng Quản Lý mới có quyền lên lịch
-            {
-                stkLich.Children.Clear();
-                rtb = new RichTextBox();
-                rtb.Height = 100;
-                rtb.Width = 240;
-                rtb.Foreground = Brushes.Black;
-                rtb.FontSize = 14;
-                stkLich.Children.Add(rtb);
-                //Các dòng trên là tạo một RichTextBox chứa Nội Dung để Lên Lịch
-
-                cbGioBD = new ComboBox();
-                cbGioBD.Height = 40;
-                cbGioBD.Width = 70;
-                cbGioBD.Margin = new Thickness(15, 0, 0, 0);
-                for (int i = 0; i <= 23; i++)
-                    cbGioBD.Items.Add(i.ToString("D2"));
-                cbPhutBD = new ComboBox();
-                cbPhutBD.Height = 40;
-                cbPhutBD.Width = 70;
-                cbPhutBD.Margin = new Thickness(170, -40, 0, 0);
-                for (int i = 0; i <= 59; i++)
-                    cbPhutBD.Items.Add(i.ToString("D2"));
-                stkLich.Children.Add(cbGioBD);
-                stkLich.Children.Add(cbPhutBD);
-                Label lblBatDau = new Label();
-                lblBatDau.Content = "Giờ Bắt Đầu: ";
-                lblBatDau.Height = 30;
-                lblBatDau.Width = 85;
-                lblBatDau.Margin = new Thickness(-155, -20, 0, 0);
-                lblBatDau.FontSize = 14;
-                lblBatDau.FontWeight = FontWeights.Medium;
-                lblBatDau.Foreground = Brushes.Black;
-                stkLich.Children.Add(lblBatDau);
-                Label lblKetThuc = new Label();
-                lblKetThuc.Content = "Giờ Kết Thúc: ";
-                lblKetThuc.Height = 30;
-                lblKetThuc.Width = 85;
-                lblKetThuc.Margin = new Thickness(-155, 35, 0, 0);
-                lblKetThuc.FontSize = 14;
-                lblKetThuc.FontWeight = FontWeights.Medium;
-                lblKetThuc.Foreground = Brushes.Black;
-                stkLich.Children.Add(lblKetThuc);
-                cbGioKT = new ComboBox();
-                cbGioKT.Height = 40;
-                cbGioKT.Width = 70;
-                cbGioKT.Margin = new Thickness(15, -55, 0, 0);
-                for (int i = 0; i <= 23; i++)
-                    cbGioKT.Items.Add(i.ToString("D2"));
-                cbPhutKT = new ComboBox();
-                cbPhutKT.Height = 40;
-                cbPhutKT.Width = 70;
-                cbPhutKT.Margin = new Thickness(170, -55, 0, 0);
-                for (int i = 0; i <= 59; i++)
-                    cbPhutKT.Items.Add(i.ToString("D2"));
-                //Các dòng tiếp theo tạo các khung giờ và các nhãn
-
-                Button btnLenLich = new Button();
-                btnLenLich.Height = 40;
-                btnLenLich.Width = 110;
-                btnLenLich.Content = "Lên Lịch";
-                btnLenLich.Foreground = Brushes.Black;
-                btnLenLich.Background = Brushes.Aquamarine;
-                btnLenLich.FontSize = 19;
-                btnLenLich.FontWeight = FontWeights.Medium;
-                btnLenLich.Click += btnLenLich_Click;
-
-                Button btnXoaLich = new Button();
-                btnXoaLich.Height = 40;
-                btnXoaLich.Width = 110;
-                btnXoaLich.Content = "Xoá Lịch";
-                btnXoaLich.Foreground = Brushes.Black;
-                btnXoaLich.Background = Brushes.DeepSkyBlue;
-                btnXoaLich.FontSize = 19;
-                btnXoaLich.FontWeight = FontWeights.Medium;
-                btnXoaLich.Click += btnXoaLich_Click;
-
-                Button btnHuy = new Button();
-                btnHuy.Height = 30;
-                btnHuy.Width = 100;
-                btnHuy.Content = "Hủy";
-                btnHuy.FontSize = 11;
-                btnHuy.FontWeight = FontWeights.Medium;
-                btnHuy.Margin = new Thickness(115, -5, 0, 15);
-                btnHuy.Background = Brushes.LightSkyBlue;
-                btnHuy.Click += BtnHuy_Click;
-
-                stkLich.Children.Add(cbGioKT);
-                stkLich.Children.Add(cbPhutKT);
-                stkbtnLenLich.Children.Add(btnLenLich);
-                stkbtnXoaLich.Children.Add(btnXoaLich);
-                stkLich.Children.Add(btnHuy);
-                //Tạo 3 button Thêm, Xoá, Huỷ và thêm nó vào StackPanel
+                /*Hàm này để khi ng quản lý bấm vào ngày
+                  bất kì trên lịch sẽ hiện nội dung(Nếu có)*/
             }
 
-            /*Hàm này hơi dài, nhưng tóm gọn lại là
-              có chức năng Lên Lịch và Xoá Lịch dành 
-              cho người Quản Lý mỗi khi click chuột
-              vào ngày bất kì trên tờ Lịch
-            */
-        }
-
-        private void BtnHuy_Click(object sender, RoutedEventArgs e)
+            private void btnHuy_Click(object sender, RoutedEventArgs e)
         {
-            stkLich.Children.Clear();
-            stkbtnLenLich.Children.Clear();
-            stkbtnXoaLich.Children.Clear();
+            borderLichvaButton.Visibility = Visibility.Collapsed;
+           /* stkbtnLenLich.Children.Clear();
+            stkbtnXoaLich.Children.Clear(); */
             //Button Hủy tương tác với Lịch
         }
 
@@ -296,15 +195,17 @@ namespace MotoStore.Views.Pages
 
             if (enableLenLich)
             {
+                string ngaylenlich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy") + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00";
+                
                 //if có ngày được select
                 if (Lich.SelectedDate.HasValue)
                 {
                     string richText = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd).Text;
                     if (string.IsNullOrEmpty(cbGioBD.Text) || string.IsNullOrEmpty(cbPhutBD.Text) || string.IsNullOrEmpty(cbGioKT.Text) || string.IsNullOrEmpty(cbPhutKT.Text))
                         MessageBox.Show("Vui lòng chọn giờ cụ thể");
-                    else if(Lich.SelectedDate.Value<DateTime.Now)
+                    else if(DateTime.Parse(ngaylenlich)<DateTime.Now)
                     {
-                        MessageBox.Show("Ngày lên lịch không hợp lệ");
+                        MessageBox.Show("Ngày hoặc giờ bắt đầu lên lịch không hợp lệ");
                     }
                     else if (string.IsNullOrWhiteSpace(richText))
                     {
@@ -340,10 +241,8 @@ namespace MotoStore.Views.Pages
                                 SqlCommand cmd;
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
-     
-
                                 //Giải thích dòng trên:
-                                //Vì SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
+                                //Vì Lich.SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
 
                                 cmd = new SqlCommand("set dateformat dmy\nInsert into LenLich values(NewID(),'" + PageChinh.getMa.ToString() + "', '" + lich + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00" + "', '" + lich + " " + cbGioKT.Text + ":" + cbPhutKT.Text + ":00" + "', N'" + richText + "')", con);
                                 cmd.ExecuteNonQuery();
@@ -437,8 +336,9 @@ namespace MotoStore.Views.Pages
 
         private void btnLichSu_Click(object sender, RoutedEventArgs e)
         {
-            stkbtnLenLich.Children.Clear();
-            stkbtnXoaLich.Children.Clear();
+            //Điều hướng thằng này qua trang khác
+           /* stkbtnLenLich.Children.Clear();
+            stkbtnXoaLich.Children.Clear(); */
             stkLich.Children.Clear();
 
             RichTextBox rtbLichSu = new RichTextBox();
@@ -454,7 +354,7 @@ namespace MotoStore.Views.Pages
                 string time = lshd.ThoiGian.Value.ToString("dd-MM-yyyy HH:mm:ss");
                 rtbLichSu.AppendText(time+"\n");
 
-                var hoTenNV = mdb.NhanViens.Where(u => u.MaNv.ToString() == lshd.MaNv.ToString()).Select(u => u.HoTenNv).FirstOrDefault().ToString();
+                var hoTenNV = mdb.NhanViens.Where(u => u.MaNv == lshd.MaNv).Select(u => u.HoTenNv).FirstOrDefault().ToString();
                 var seperatedHoTenNV = hoTenNV.Split(' ');
                 var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
                 rtbLichSu.AppendText("Nhân viên " + tenNV +" "+ lshd.HoatDong+"\n");
@@ -471,12 +371,12 @@ namespace MotoStore.Views.Pages
                 if (PageChinh.getSex == "Nữ")
                     anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             //}
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
-                lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
+                lblXinChao.Content = "  Xin Chào, " + PageChinh.getTen;
                 lblChucVu.Content = "Nhân Viên Quản Lý";
                 txtblSoNV.Text = "   Số Nhân Viên\n   Bạn Quản Lý:\n" + "".PadRight(12) + (mdb.NhanViens.Select(d => d.MaNv).Count() - 1).ToString();
                 int? solgxe = mdb.MatHangs.Sum(d => d.SoLuongTonKho) - mdb.HoaDons.Sum(d => d.SoLuong);
@@ -484,31 +384,26 @@ namespace MotoStore.Views.Pages
                 txtblSoXe.Text = "".PadRight(9) + "Số Xe\n" + "".PadRight(5) + "Trong Kho:\n" + "".PadRight(11) + solgxe.ToString();
                 txtblSoNV.FontSize = 20;
                 txtblSoXe.FontSize = 20.5;
-                Button btnLichSu = new Button();
-                btnLichSu.Content = "Lịch Sử";
-                btnLichSu.FontSize = 18;
-                btnLichSu.FontWeight = FontWeights.Medium;
-                btnLichSu.Height = 40;
-                btnLichSu.Width = 110;
-                btnLichSu.Foreground = Brushes.Black;
-                btnLichSu.Background = Brushes.LightSkyBlue;
-                btnLichSu.Click += btnLichSu_Click;
-                stkbtnLichSu.Children.Add(btnLichSu);
+                btnLichSu.Visibility = Visibility.Visible;
             }
             else  //Nhân viên loại 2
             {
-                lblXinChao.Content = "Xin Chào, " + PageChinh.getTen;
+                lblXinChao.Content = "  Xin Chào, " + PageChinh.getTen;
                 lblChucVu.Content = "Nhân Viên Văn Phòng";
 
                 //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
-                var dx = mdb.NhanViens.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
+                var dx = mdb.NhanViens.Where(u => u.MaNv == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
                 int d3 = (int)(dt - dx).Value.TotalDays;
                 txtblSoNV.Text = " Bạn Đã Gắn Bó\n" + " Với Chúng Tôi:\n" + "".PadRight(6) + d3.ToString() + " Ngày";
 
-                var slg = mdb.HoaDons.Where(u => u.MaNv.ToString() == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                var slg = mdb.HoaDons.Where(u => u.MaNv == PageChinh.getMa).Select(u => u.SoLuong).Sum();
                 txtblSoXe.Text = "".PadRight(15) + slg.ToString() + "\n".PadRight(10) + "Là Số Xe\n" + "".PadRight(1) + "Bạn Bán Được";
                 txtblSoNV.FontSize = 19;
                 txtblSoXe.FontSize = 18.9;
+
+                borderLichvaButton.Visibility = Visibility.Collapsed;
+                btnLichSu.Visibility = Visibility.Collapsed;
+                //Với nhân viên văn phòng thì giấu quyền Lên, Xoá Lịch và xem Lịch Sử đi
             }
         }
 
@@ -571,32 +466,62 @@ namespace MotoStore.Views.Pages
 
         private void brdSoNV_MouseMove(object sender, MouseEventArgs e)
         {
-            brdSoNV.Margin = new Thickness(0, 198, 220, 222);
+            brdSoNV.Margin = new Thickness(15, 15, 0, 0);
         }
 
         private void brdSoNV_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdSoNV.Margin = new Thickness(0, 248, 220, 222);
+            brdSoNV.Margin = new Thickness(15, 30, 0, 0);
         }
 
         private void brdSoXe_MouseMove(object sender, MouseEventArgs e)
         {
-            brdSoXe.Margin = new Thickness(0, 355, 220, 65);
+            brdSoXe.Margin = new Thickness(15, 0, 0, 45);
         }
 
         private void brdSoXe_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdSoXe.Margin = new Thickness(0, 405, 220, 65);
+            brdSoXe.Margin = new Thickness(15, 0, 0, 30);
         }
 
         private void brdLoiNhac_MouseMove(object sender, MouseEventArgs e)
         {
-            brdLoiNhac.Margin = new Thickness(200, 272, 20, 138);
+            brdLoiNhac.Margin = new Thickness(0, 0, 20, 15);
         }
 
         private void brdLoiNhac_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdLoiNhac.Margin = new Thickness(200, 322, 20, 138);
+            brdLoiNhac.Margin = new Thickness(0, 0, 20, 0);
+        }
+
+        private void border3thgtin_MouseMove(object sender, MouseEventArgs e)
+        {
+            border3thgtin.Opacity = 1;
+        }
+
+        private void border3thgtin_MouseLeave(object sender, MouseEventArgs e)
+        {
+            border3thgtin.Opacity = 0.8;
+        }
+
+        private void borderThgTinUser_MouseMove(object sender, MouseEventArgs e)
+        {
+            borderThgTinUser.Opacity = 1;
+        }
+
+        private void borderThgTinUser_MouseLeave(object sender, MouseEventArgs e)
+        {
+            borderThgTinUser.Opacity = 0.8;
+        }
+
+        private void borderLichvaButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            borderLichvaButton.Opacity = 1;
+        }
+
+        private void borderLichvaButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            borderLichvaButton.Opacity = 0.8;
         }
     }
 }

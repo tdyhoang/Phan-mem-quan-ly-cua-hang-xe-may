@@ -37,219 +37,235 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid>
+    <Grid Background="#151f2d">
         <Border>
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#060531" Offset="0"/>
-                    <GradientStop Color="#1B1448" Offset="0.75"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#462AD8" Offset="1"/>
-                    <GradientStop Color="#1B1448" Offset="0.85"/>
-                    <GradientStop Color="#060531" Offset="0.05"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <Border
+            <Border x:Name="border6ThgTin"
+                    Height="400"
+                    Width="800"
+                    VerticalAlignment="Center"
+                    Margin="0,0,0,0"
+                    CornerRadius="45"
+                    Background="#1e2e44"
+                    Opacity="0.9"
+                    MouseMove="border6ThgTin_MouseMove"
+                    MouseLeave="border6ThgTin_MouseLeave">
+                <Grid>
+                    <Border
                 x:Name="brdMHBanE"
                 CornerRadius="25"
                 Height="150"
                 Width="200"
-                Margin="58,279,542,21"
+                Margin="27,226,573,24"
                 Background="BlueViolet"
                 MouseMove="brdMHBanE_MouseMove"
                 MouseLeave="brdMHBanE_MouseLeave">
-                <Grid>
-                    <Label Content="Mặt Hàng Bán Ít Nhất"
+                        <Grid>
+                            <Label Content="Mặt Hàng Bán Ít Nhất"
                         Foreground="Black"
                         FontSize="18"
                         FontWeight="Bold"
                         Margin="7,15,0,0"/>
 
-                    <TextBlock x:Name="txtblThgTinMHBanE"
+                            <TextBlock x:Name="txtblThgTinMHBanE"
                         Height="80"
                         Margin="110,35,0,10"
                         FontSize="12"
                         FontWeight="Bold"
-                        TextWrapping="Wrap"/>
-                </Grid>
-
-            </Border>
-        </Border>
-
-        <Border
+                        TextWrapping="Wrap">
+                            </TextBlock>
+                            <TextBlock Height="100"
+                                       Width="100"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left"
+                                       Margin="0,0,0,0">
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="/Views/Pages/Images/IconLowSales.png" 
+                                    Stretch="Uniform"/>
+                                </TextBlock.Background>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border
                     x:Name="brdMHBanChay"
                     CornerRadius="25"
                     Height="150"
                     Width="200"
-                    Margin="58,95,542,207"
+                    Margin="27,33,573,217"
                     Background="NavajoWhite"
                     MouseMove="brdMHBanChay_MouseMove"
-                    MouseLeave="brdMHBanChay_MouseLeave">
-            <Grid>
-                <Label Content="Mặt Hàng Bán Chạy Nhất"
+                    MouseLeave="brdMHBanChay_MouseLeave"
+                    MouseDown="brdMHBanChay_MouseDown">
+                        <Grid>
+                            <Label Content="Mặt Hàng Bán Chạy Nhất"
                        Foreground="Black"
                        FontSize="16"
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
 
-                <TextBlock x:Name="txtblThgTinMHBanChay"
+                            <TextBlock x:Name="txtblThgTinMHBanChay"
                            Height="80"
-                           Margin="110,35,0,10"
-                           FontSize="12"
+                           Margin="110,40,0,10"
+                           FontSize="15"
                            FontWeight="Bold"
-                           TextWrapping="Wrap"/>
-            </Grid>
-
-        </Border>
-        <Border
+                           TextWrapping="Wrap">
+                            </TextBlock>
+                            <TextBlock Height="100"
+                                       Width="100"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left">
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="/Views/Pages/Images/IconTOP.png" 
+                                    Stretch="Uniform"/>
+                                </TextBlock.Background>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+            <Border
              x:Name="brdNVNgSuat"
              CornerRadius="25"
              Height="150"
              Width="200"
-             Margin="321,95,279,207"
+             Margin="300,33,300,217"
              Background="WhiteSmoke"
              MouseMove="brdNVNgSuat_MouseMove"
              MouseLeave="brdNVNgSuat_MouseLeave">
-            <Grid>
-                <Label Content="Nhân Viên Năng Suất Nhất"
+                <Grid>
+                    <Label Content="Nhân Viên Năng Suất Nhất"
                        Foreground="Black"
                        FontSize="15"
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
-                <TextBlock
+                    <TextBlock
                         x:Name="txtblAnh"
                         FontWeight="Medium"
                         FontSize="20"
-                        Height="90"
-                        Width="90"
-                        Margin="0,0,110,10"
-                        HorizontalAlignment="Right"
+                        Height="100"
+                        Width="100"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="D:\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\NhvienNgSuat.png" 
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/Images/NhvienNgSuat.png" 
                                     Stretch="Uniform"/>
-                    </TextBlock.Background>
-                </TextBlock>
-                <TextBlock x:Name="txtblThgTinNVNgSuat"
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock x:Name="txtblThgTinNVNgSuat"
                            Height="80"
-                           Margin="90,30,0,10"
-                           FontSize="12.5"
+                           Margin="100,50,0,20"
+                           FontSize="15"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
-            </Grid>
-        </Border>
-        <Border
+                </Grid>
+            </Border>
+            <Border
             x:Name="brdSoXeBanDcThgNay"
             CornerRadius="25"
             Height="150"
             Width="200"
-            Margin="576,95,24,206"
+            Margin="576,33,24,217"
             Background="LightSkyBlue"
             MouseMove="brdSoXeBanDcThgNay_MouseMove"
             MouseLeave="brdSoXeBanDcThgNay_MouseLeave">
-            <Grid>
-                <Label Content="Số Xe Bán Được Tháng Này"
+                <Grid>
+                    <Label Content="Số Xe Bán Được Tháng Này"
                        Foreground="Black"
                        FontSize="15"
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
-                <TextBlock
+                    <TextBlock
                         x:Name="txtblAnhSoXe"
                         FontWeight="Medium"
                         FontSize="20"
-                        Height="80"
-                        Width="70"
-                        Margin="0,0,120,17"
-                        HorizontalAlignment="Right"
+                        Height="100"
+                        Width="100"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="D:\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\IconXeMay.png" 
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/Images/IconXeMay.png" 
                                     Stretch="Uniform"/>
-                    </TextBlock.Background>
-                </TextBlock>
-                <TextBlock x:Name="txtblThgTinSoXeBanDc"
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock x:Name="txtblThgTinSoXeBanDc"
                            Height="80"
-                           Margin="125,70,0,10"
+                           Margin="115,60,10,10"
                            FontSize="30"
                            FontWeight="Medium"/>
-            </Grid>
-        </Border>
-        <Border
+                </Grid>
+            </Border>
+            <Border
             x:Name="brdDoanhThuThgNay"
             CornerRadius="25"
             Height="150"
             Width="200"
-            Margin="576,279,24,21"
+            Margin="576,227,24,23"
             Background="LightGreen"
             MouseMove="brdDoanhThuThgNay_MouseMove"
             MouseLeave="brdDoanhThuThgNay_MouseLeave">
-            <Grid>
-                <Label Content=" Doanh Thu Tháng Này"
+                <Grid>
+                    <Label Content=" Doanh Thu Tháng Này"
                        Foreground="Black"
                        FontSize="17.5"
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
-                <TextBlock
+                    <TextBlock
                         x:Name="txtblMoney"
                         FontWeight="Medium"
                         FontSize="20"
-                        Height="80"
-                        Width="70"
-                        Margin="0,0,120,17"
-                        HorizontalAlignment="Right"
+                        Height="100"
+                        Width="100"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="D:\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\money.png" 
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/Images/money.png" 
                                     Stretch="Uniform"/>
-                    </TextBlock.Background>
-                </TextBlock>
-                <TextBlock x:Name="txtblDoanhThu"
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock x:Name="txtblDoanhThu"
                            Height="80"
                            Margin="100,55,0,20"
                            FontSize="20"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
-            </Grid>
-        </Border>
-        <Border
+                </Grid>
+            </Border>
+            <Border
             x:Name="brdKHVIP"
             CornerRadius="25"
             Height="150"
             Width="200"
-            Margin="40,279,0,21"
+            Margin="300,226,300,24"
             Background="LightPink"
             MouseMove="brdKHVIP_MouseMove"
             MouseLeave="brdKHVIP_MouseLeave">
-            <Grid>
-                <Label Content="Khách Hàng Chi Nhiều Nhất"
+                <Grid>
+                    <Label Content="Khách Hàng Chi Nhiều Nhất"
                        Foreground="Black"
                        FontSize="14.5"
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
-                <TextBlock
+                    <TextBlock
                         x:Name="txtblVip"
                         FontWeight="Medium"
                         FontSize="20"
-                        Height="99"
-                        Width="97"
-                        Margin="0,0,103,10"
-                        HorizontalAlignment="Right"
+                        Height="100"
+                        Width="100"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="D:\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\VIP-removebg-preview.png" 
+                        <TextBlock.Background>
+                            <ImageBrush ImageSource="/Views/Pages/Images/VIP-removebg-preview.png" 
                                     Stretch="Uniform"/>
-                    </TextBlock.Background>
-                </TextBlock>
-                <TextBlock x:Name="txtblThgTinKHVIP"
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock x:Name="txtblThgTinKHVIP"
                            Height="80"
                            Margin="90,40,2,17"
-                           FontSize="12.5"
+                           FontSize="15"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>
-            </Grid>
+                </Grid>
+            </Border>
+    </Grid>
+            </Border>
+           
         </Border>
         <Button x:Name="btnBieuDo"
                 Content="Biểu Đồ"

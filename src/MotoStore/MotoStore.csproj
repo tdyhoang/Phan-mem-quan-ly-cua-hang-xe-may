@@ -24,6 +24,8 @@
     <None Remove="Views\Pages\Images\anh3.png" />
     <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
     <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\IconLowSales.png" />
+    <None Remove="Views\Pages\Images\IconTOP.png" />
     <None Remove="Views\Pages\Images\IconXeMay.png" />
     <None Remove="Views\Pages\Images\money.png" />
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
@@ -49,6 +51,8 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Resource Include="Views\Pages\Images\IconLowSales.png" />
+    <Resource Include="Views\Pages\Images\IconTOP.png" />
     <Resource Include="Views\Pages\Images\money.png" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using MotoStore.Database;
+using MotoStore.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace MotoStore.Views.Pages
     public partial class ReportPage : Page
     {
         private MainDatabase mdb = new MainDatabase();
+        static public string tenXeBanChay;
         public ReportPage()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace MotoStore.Views.Pages
               WHERE MaMH = (SELECT TOP(1) MaMH FROM HOADON Group by MaMH Order by SUM(SoLuong) DESC)
              */
             var XeBanChay = mdb.HoaDons.GroupBy(u => u.MaMh).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdXe = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
-            var tenXeBanChay = mdb.MatHangs.Where(i => i.MaMh == XeBanChay.IdXe).Select(i => i.TenMh).FirstOrDefault();
+            tenXeBanChay = mdb.MatHangs.Where(i => i.MaMh == XeBanChay.IdXe).Select(i => i.TenMh).FirstOrDefault();
             txtblThgTinMHBanChay.Text = tenXeBanChay + "\nMã Mặt Hàng: " + XeBanChay.IdXe;
             //3 Dòng trên để tìm ra mặt hàng bán chạy nhất
 
@@ -91,62 +93,62 @@ namespace MotoStore.Views.Pages
 
         private void brdNVNgSuat_MouseMove(object sender, MouseEventArgs e)
         {
-            brdNVNgSuat.Margin = new Thickness(321, 45, 279, 207);
+            brdNVNgSuat.Margin = new Thickness(300, 3, 300, 217);
         }
 
         private void brdNVNgSuat_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdNVNgSuat.Margin = new Thickness(321, 95, 279, 207);
+            brdNVNgSuat.Margin = new Thickness(300, 33, 300, 217);
         }
 
         private void brdSoXeBanDcThgNay_MouseMove(object sender, MouseEventArgs e)
         {
-            brdSoXeBanDcThgNay.Margin = new Thickness(576, 45, 24, 206);
+            brdSoXeBanDcThgNay.Margin = new Thickness(576, 3, 24, 217);
         }
 
         private void brdSoXeBanDcThgNay_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdSoXeBanDcThgNay.Margin = new Thickness(576, 95, 24, 206);
+            brdSoXeBanDcThgNay.Margin = new Thickness(576, 33, 24, 217);
         }
 
         private void brdMHBanChay_MouseMove(object sender, MouseEventArgs e)
         {
-            brdMHBanChay.Margin = new Thickness(58, 45, 542, 207);
+            brdMHBanChay.Margin = new Thickness(27, 3, 573, 217);
         }
 
         private void brdMHBanChay_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdMHBanChay.Margin = new Thickness(58, 95, 542, 207);
+            brdMHBanChay.Margin = new Thickness(27, 33, 573, 217);
         }
 
         private void brdMHBanE_MouseMove(object sender, MouseEventArgs e)
         {
-            brdMHBanE.Margin = new Thickness(58, 229, 542, 21);
+            brdMHBanE.Margin = new Thickness(27, 196, 573, 24);
         }
 
         private void brdMHBanE_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdMHBanE.Margin = new Thickness(58, 279, 542, 21);
+            brdMHBanE.Margin = new Thickness(27, 226, 573, 24);
         }
 
         private void brdDoanhThuThgNay_MouseMove(object sender, MouseEventArgs e)
         {
-            brdDoanhThuThgNay.Margin = new Thickness(576, 229, 24, 21);
+            brdDoanhThuThgNay.Margin = new Thickness(576, 197, 24, 23);
         }
 
         private void brdDoanhThuThgNay_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdDoanhThuThgNay.Margin = new Thickness(576, 279, 24, 21);
+            brdDoanhThuThgNay.Margin = new Thickness(576, 227, 24, 23);
         }
 
         private void brdKHVIP_MouseMove(object sender, MouseEventArgs e)
         {
-            brdKHVIP.Margin = new Thickness(40, 229, 0, 21);
+            brdKHVIP.Margin = new Thickness(300, 196, 300, 24);
         }
 
         private void brdKHVIP_MouseLeave(object sender, MouseEventArgs e)
         {
-            brdKHVIP.Margin = new Thickness(40, 279, 0, 21);
+            brdKHVIP.Margin = new Thickness(300, 226, 300, 24);
         }
 
         private void btnBieuDo_Click(object sender, RoutedEventArgs e)
@@ -157,6 +159,22 @@ namespace MotoStore.Views.Pages
         private void btnChiTiet_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void border6ThgTin_MouseMove(object sender, MouseEventArgs e)
+        {
+            border6ThgTin.Opacity = 1;
+        }
+
+        private void border6ThgTin_MouseLeave(object sender, MouseEventArgs e)
+        {
+            border6ThgTin.Opacity = 0.9;
+        }
+
+        private void brdMHBanChay_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInformation WdI = new WindowInformation();
+            WdI.ShowDialog();
         }
     }
 }

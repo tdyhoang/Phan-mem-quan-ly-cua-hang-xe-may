@@ -5,6 +5,7 @@ use QLYCHBANXEMAY
 set dateformat dmy
 
 
+
 Create table KhachHang
 (
 	ID int identity(1,1),
