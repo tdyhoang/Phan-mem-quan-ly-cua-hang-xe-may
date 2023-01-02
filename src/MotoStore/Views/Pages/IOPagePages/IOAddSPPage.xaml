@@ -23,27 +23,13 @@
                Foreground="Black"
                FontWeight="Medium"/>
         <TextBox x:Name="txtGiaNhapSP" Margin="249,85,501,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbGiaBan"
-               Content="Giá Bán: " 
-               Margin="49,269,595,137"
-               FontSize="15"
-               Foreground="Black"
-               FontWeight="Medium"/>
-        <TextBox x:Name="txtGiaBanSP" Margin="249,262,501,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbSoLuong"
-               Content="Số Lượng: " 
-               Margin="49,140,595,266"
-               FontSize="15"
-               Foreground="Black"
-               FontWeight="Medium"/>
-        <TextBox x:Name="txtSoLuongSP" Margin="249,137,501,0" VerticalAlignment="Top"/>
         <Label x:Name="lbXuatXu"
                Content="Xuất Xứ: " 
-               Margin="49,199,595,207"
+               Margin="52,144,592,262"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbXuatXuSP" Margin="249,202,502,0" VerticalAlignment="Top">
+        <ComboBox x:Name="cmbXuatXuSP" Margin="252,147,499,0" VerticalAlignment="Top">
             <ComboBoxItem>Nhật Bản</ComboBoxItem>
             <ComboBoxItem>Việt Nam</ComboBoxItem>
             <ComboBoxItem>Thái Lan</ComboBoxItem>

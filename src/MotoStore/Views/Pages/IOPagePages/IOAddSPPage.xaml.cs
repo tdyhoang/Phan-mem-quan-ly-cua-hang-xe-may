@@ -36,7 +36,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 Uri fileUri = new(openFileDialog.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
-                File.Copy(openFileDialog.FileName, "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
+                File.Copy(openFileDialog.FileName, "F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
             }
         }
        
@@ -47,7 +47,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             bool check = true;
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaBanSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtPhanKhoiSP.Text)))
+            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtPhanKhoiSP.Text)))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
             }
@@ -71,31 +71,16 @@ namespace MotoStore.Views.Pages.IOPagePages
                         check = false;
                     }
                 }
-                for (int i = 0; i < txtGiaBanSP.Text.Length; i++) //Check Giá Bán SPham
-                {
-                    if (!(txtGiaBanSP.Text[i] >= 48 && txtGiaBanSP.Text[i] <= 57))
-                    {
-                        MessageBox.Show("Giá Bán Sản Phẩm không được chứa các ký tự ");
-                        check = false;
-                    }
-                }
-                for (int i = 0; i < txtSoLuongSP.Text.Length; i++) //Check Số Lượng SPham
-                {
-                    if (!(txtSoLuongSP.Text[i] >= 48 && txtSoLuongSP.Text[i] <= 57))
-                    {
-                        MessageBox.Show("Số Lượng Sản Phẩm không được chứa các ký tự ");
-                        check = false;
-                    }
-                }
-                
+               
+              
 
                 if (check)
                 {
                     string MaMH = Guid.NewGuid().ToString();
-                    File.Move("C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "C:\\Users\\huyha\\source\\repos\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
+                    File.Move("F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
 
                     con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + MaMH +  "', N'" + txtTenSP.Text + "','"  + txtPhanKhoiSP.Text + "','" + txtGiaNhapSP.Text + "','" + txtGiaBanSP.Text + "','" + txtSoLuongSP.Text + "','" + cmbHangSXSP.Text + "',N'" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + " ' )", con);
+                    cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + MaMH +  "', N'" + txtTenSP.Text + "','"  + txtPhanKhoiSP.Text + "','" + txtGiaNhapSP.Text  + "','" + cmbHangSXSP.Text + "',N'" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + " ' )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");

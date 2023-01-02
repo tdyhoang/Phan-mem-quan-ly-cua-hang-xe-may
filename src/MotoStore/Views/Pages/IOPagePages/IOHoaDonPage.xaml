@@ -16,16 +16,86 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
+
+        <ComboBox x:Name="cmbMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="60"  ItemsSource="{Binding}" IsVisibleChanged="cmbMaSPHD_IsVisibleChanged" DropDownOpened="cmbMaSPHD_DropDownOpened" IsEditable="True" DisplayMemberPath="MaKh">
+            
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid x:Name="gd" TextElement.Foreground="Black">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="5" Grid.Column="0" Text="{Binding MaMh}"/>
+                                    <TextBlock Margin="5" Grid.Column="1" Text="{Binding TenMh}"/>
+                                    <TextBlock Margin="5" Grid.Column="2" Text="{Binding SoPhanKhoi}"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="ComboBoxItem.IsSelected" Value="True">
+                                        <Setter TargetName="gd"  Property="Background" Value="Gray"></Setter>
+                                        <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="ComboBoxItem.IsMouseOver" Value="True">
+                                        <Setter TargetName="gd"  Property="Background" Value="Blue"></Setter>
+                                        <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
+                                    </Trigger>
+
+                                    <!--IsHighlighted and IsMouseOver is showing same effect but IsHighlighted is used for showing logical focus( for understanding check using tab key)-->
+
+                                    <!--<Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
+                                    <Setter TargetName="gd"  Property="Background" Value="Yellow"></Setter>
+                                    <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
+                                </Trigger>-->
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+
         <!--Mã Sản Phẩm trong Hóa Đơn-->
-        <TextBox x:Name="txtMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="34" TextChanged="txtMaSPHD_TextChanged"/>
         <Label x:Name="lbMaKHHD"
                Content="Mã Khách Hàng: " 
                Margin="45,105,597,317"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
+
         <!--Mã Khách Hàng trong Hóa Đơn-->
-        <TextBox x:Name="txtMaKHHD" Margin="247,91,503,0" VerticalAlignment="Top" Height="35" TextChanged="txtMaKHHD_TextChanged"/>
+        <ComboBox x:Name="cmbMaKHHD" Margin="247,97,503,0" VerticalAlignment="Top" Height="34" ItemsSource="{Binding}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="2" Text="{Binding MaKh}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid x:Name="gd" TextElement.Foreground="Black">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="5" Grid.Column="0" Text="{Binding MaKh}"/>
+                                    <TextBlock Margin="5" Grid.Column="1" Text="{Binding HoTenKh}"/>
+                                    <TextBlock Margin="5" Grid.Column="2" Text="{Binding NgSinh}"/>
+                                </Grid>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+
         <!--Mã Nhân Viên trong Hóa Đơn-->
         <Label x:Name="lbNgayXuatHD"
                Content="Ngày Xuất HĐ: " 
@@ -57,6 +127,7 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
         <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click"/>
+
 
     </Grid>
 </Page>

@@ -10,12 +10,24 @@
 
     <Grid>
         <Label x:Name="lbTenNSX"
-               Content="Tên Nhà Sản Xuất: " 
+               Content="Tên Nhà Cung Cấp: " 
                Margin="26,50,623,370"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblThongBao" Height="30" FontSize="15"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="23,285,624,135"
+                               />
+        <Label x:Name="lblDauSao" 
+               Height="30"
+               FontSize="15"
+               Content="*"
+               Foreground="Red"
+               FontWeight="Medium"
+               Margin="164,47,613,373"/>
+        <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNSX_LostFocus"/>
         <Label x:Name="lbSDTNSX"
                Content="Số Điện Thoại: " 
                Margin="24,105,625,310"
@@ -31,13 +43,13 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top"/>
         <Label x:Name="lbNuocSX"
-               Content="Nước Sản Xuất: " 
+               Content="Quốc Gia: " 
                Margin="24,215,620,203"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
         <TextBox x:Name="txtNuocSX" Margin="224,200,526,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="599,114,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewNSX_Click"/>
+        <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click"/>
 
 
     </Grid>

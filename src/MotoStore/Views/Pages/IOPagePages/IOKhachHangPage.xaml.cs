@@ -69,7 +69,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (check)
                 {
                     con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into KhachHang values( NEWID(),  "+"  N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "','" + cmbGioiTinhKH.Text + "','" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "','" + cmbLoaiKH.Text + " ' )", con);
+                    cmd = new("Set Dateformat dmy\nInsert into KhachHang values(N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "',N'"  + cmbGioiTinhKH.Text + "', N'" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "',N'" + cmbLoaiKH.Text + " ',0 )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");

@@ -16,6 +16,7 @@ using Microsoft.Data.SqlClient;
 using System.Globalization;
 using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
+using System.Collections.ObjectModel;
 namespace MotoStore.Views.Pages.IOPagePages
     
 {
@@ -24,7 +25,10 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// </summary>
     public partial class IOHoaDonPage : Page
     {
-        private readonly MainDatabase mainDatabase = new(); 
+        internal ObservableCollection<MatHang> matHangs;
+        internal ObservableCollection<KhachHang> KhachHangs;
+
+        private readonly MainDatabase mainDatabase = new();
         public IOHoaDonPage()
         {
 
@@ -36,13 +40,13 @@ namespace MotoStore.Views.Pages.IOPagePages
             bool check = true;
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if ((string.IsNullOrWhiteSpace(txtMaKHHD.Text)) || (string.IsNullOrWhiteSpace(txtMaSPHD.Text)) || (string.IsNullOrWhiteSpace(txtNgayXuatHD.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongHD.Text)) || (string.IsNullOrWhiteSpace(txtGiamGiaHD.Text)) || (string.IsNullOrWhiteSpace(txtThanhTienHD.Text)))
+            if ((string.IsNullOrWhiteSpace(cmbMaSPHD.Text)) || (string.IsNullOrWhiteSpace(cmbMaKHHD.Text)) || (string.IsNullOrWhiteSpace(txtNgayXuatHD.Text)) || (string.IsNullOrWhiteSpace(txtSoLuongHD.Text)) || (string.IsNullOrWhiteSpace(txtGiamGiaHD.Text)) || (string.IsNullOrWhiteSpace(txtThanhTienHD.Text)))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
             }
             else
             {
-                
+
                 DateTime date;
                 if (!(DateTime.TryParseExact(txtNgayXuatHD.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)))
                 {
@@ -58,12 +62,12 @@ namespace MotoStore.Views.Pages.IOPagePages
                         check = false;
                     }
                 }
-             
+
 
                 if (check)
                 {
                     con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into HoaDon values( NEWID(),  " + "  N'" + txtMaSPHD.Text + "','" + txtMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text +  " ' )", con);
+                    cmd = new("Set Dateformat dmy\nInsert into HoaDon values( NEWID(),  " + "  N'" + cmbMaSPHD.Text + "','" + cmbMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text + " ' )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");
@@ -78,10 +82,10 @@ namespace MotoStore.Views.Pages.IOPagePages
         public void UpdateGiamGia()
         {
             bool check = false;
-            string LoaiKH=string.Empty;
-            foreach ( KhachHang item in mainDatabase.KhachHangs.ToList())
+            string LoaiKH = string.Empty;
+            foreach (KhachHang item in mainDatabase.KhachHangs.ToList())
             {
-                if(txtMaKHHD.Text==item.MaKh.ToString())
+                if (cmbMaKHHD.Text == item.MaKh)
                 {
                     check = true;
                     LoaiKH = item.LoaiKh.ToString();
@@ -94,9 +98,9 @@ namespace MotoStore.Views.Pages.IOPagePages
                 txtGiamGiaHD.Text = String.Empty;
                 return;
             }
-            switch(LoaiKH)
+            switch (LoaiKH)
             {
-                case "Vip" : txtGiamGiaHD.Text = "15%";
+                case "Vip": txtGiamGiaHD.Text = "15%";
                     break;
                 case "Thân quen":
                     txtGiamGiaHD.Text = "5%";
@@ -113,24 +117,24 @@ namespace MotoStore.Views.Pages.IOPagePages
             decimal? giamgia = 0;
             decimal? giaban = 0;
             decimal? thanhtien = 0;
-            if (string.IsNullOrEmpty(txtGiamGiaHD.Text ) || string.IsNullOrEmpty(txtMaSPHD.Text) || string.IsNullOrEmpty(txtSoLuongHD.Text))
+            if (string.IsNullOrEmpty(txtGiamGiaHD.Text) || string.IsNullOrEmpty(cmbMaSPHD.Text) || string.IsNullOrEmpty(txtSoLuongHD.Text))
             {
                 txtThanhTienHD.Text = String.Empty;
                 return;
             }
-            
-            
+
+
             foreach (MatHang item in mainDatabase.MatHangs.ToList())
             {
-                if (txtMaSPHD.Text == item.MaMh.ToString())
+                if (cmbMaSPHD.Text == item.MaMh.ToString())
                 {
-                    if(item.GiaBanMh is null)
+                    if (item.GiaBanMh is null)
                     {
                         giaban = 0;
                     }
                     else
                     {
-                        giaban = item.GiaBanMh;  
+                        giaban = item.GiaBanMh;
                     }
                     check = true;
                     break;
@@ -160,10 +164,10 @@ namespace MotoStore.Views.Pages.IOPagePages
                     giamgia = 0;
                     break;
                 case "5%":
-                    giamgia=(decimal)0.05;
+                    giamgia = (decimal)0.05;
                     break;
                 case "15%":
-                    giamgia =(decimal) 0.15;
+                    giamgia = (decimal)0.15;
                     break;
 
             }
@@ -184,6 +188,24 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void txtGiamGiaHD_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateThanhTien();
+        } 
+        public void  RefreshMatHang()
+        {
+            MainDatabase dtb = new();
+            matHangs = new(dtb.MatHangs);
+            foreach (var mat in matHangs)
+            {
+                if(mat.DaXoa)
+                {
+                    matHangs.Remove(mat);
+                }    
+            }
+            cmbMaSPHD.ItemsSource = matHangs;
+        }
+
+        private void cmbMaSPHD_DropDownOpened(object sender, EventArgs e)
+        {
+            RefreshMatHang();
         }
     }
 }
