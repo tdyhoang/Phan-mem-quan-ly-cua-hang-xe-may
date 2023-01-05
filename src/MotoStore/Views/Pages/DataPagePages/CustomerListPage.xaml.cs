@@ -1,6 +1,7 @@
 ﻿using MotoStore.Database;
 using MotoStore.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System;
 using System.Windows;
 using System.Linq;
@@ -14,6 +15,8 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using MotoStore.Views.Pages.LoginPages;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -22,12 +25,13 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class CustomerListPage : INavigableView<ViewModels.CustomerListViewModel>
     {
-        internal List<KhachHang> TableData = new();
 
         public ViewModels.CustomerListViewModel ViewModel
         {
             get;
         }
+
+        internal ObservableCollection<KhachHang> TableData;
 
         public CustomerListPage(ViewModels.CustomerListViewModel viewModel)
         {
@@ -40,8 +44,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         private void RefreshDataGrid()
         {
             MainDatabase con = new();
-            TableData = con.KhachHangs.ToList();
-            foreach (var khachHang in TableData.ToList())
+            TableData = new(con.KhachHangs);
+            foreach (var khachHang in TableData)
                 if (khachHang.DaXoa)
                     TableData.Remove(khachHang);
             grdCustomer.ItemsSource = TableData;
@@ -109,6 +113,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Close();
                 // Làm mới nội dung hiển thị cho khớp với database
                 RefreshDataGrid();
+                MessageBox.Show("Lưu chỉnh sửa thành công!");
             }
             catch (Exception ex)
             {
@@ -189,17 +194,18 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                if (PageChinh.getChucVu.ToLower() == "quản lý")
-                {
-                    btnSave.Visibility = Visibility.Visible;
-                    grdCustomer.IsReadOnly = false;
-                }
-                else
-                {
-                    btnSave.Visibility = Visibility.Collapsed;
-                    grdCustomer.IsReadOnly = true;
-                }
+                bool isQuanLy = (PageChinh.getChucVu.ToLower() == "quản lý");
+
+                grdCustomer.IsReadOnly = !isQuanLy;
+
+                if (sender is MenuItem item)
+                    item.IsEnabled = isQuanLy;
             }
+        }
+
+        private void AddRow(object sender, RoutedEventArgs e)
+        {
+            TableData.Add(new());
         }
     }
 }

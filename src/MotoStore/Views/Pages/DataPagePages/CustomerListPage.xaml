@@ -9,6 +9,7 @@
            xmlns:core="clr-namespace:System;assembly=mscorlib"
            xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:CustomerListPage}"
            xmlns:helpers="clr-namespace:MotoStore.Helpers"
+           xmlns:database="clr-namespace:MotoStore.Database"
            mc:Ignorable="d"
            d:DesignHeight="450" d:DesignWidth="800"
            Title="CustomerListPage"
@@ -18,8 +19,11 @@
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
-        <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
+        <ContextMenu x:Key="RowMenu">
             <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
+            <ui:MenuItem Header="Lưu chỉnh sửa" SymbolIcon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged"/>
+            <ui:NavigationSeparator />
+            <ui:MenuItem Header="Thêm dòng" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
         </ContextMenu>
         <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
@@ -35,19 +39,16 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
-        <DockPanel Grid.Row="0">
-            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
-        </DockPanel>
-
+        
         <ui:DataGrid Name="grdCustomer"
                      Grid.Row="1"
                      Grid.ColumnSpan="2"
                      AutoGenerateColumns="False"
+                     CanUserAddRows="False"
                      SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding TableData}"
+                     ItemsSource="{Binding TableData, Mode=TwoWay}"
                      RowStyle="{StaticResource DefaultRowStyle}"
                      PreviewKeyDown="PreviewKeyDown">
 
@@ -60,12 +61,13 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
+                <helpers:DateTimeConverter x:Key="DateTimeConverter" />
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã KH" Binding="{Binding MaKh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
-                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, Converter={StaticResource DateTimeConverter}}" />
                 <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
                 <DataGridTextColumn Header="SĐT" Binding="{Binding Sdt}" />
