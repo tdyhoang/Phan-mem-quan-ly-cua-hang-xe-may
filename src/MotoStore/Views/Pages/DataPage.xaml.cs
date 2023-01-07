@@ -53,7 +53,7 @@ namespace MotoStore.Views.Pages
         private void UiPage_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
-                ViewModel.OnNavigatedTo();
+                ViewModel.VisibleChanged();
         }
     }
 }

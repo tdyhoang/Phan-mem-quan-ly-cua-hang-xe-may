@@ -44,10 +44,11 @@ namespace MotoStore.Views.Pages
             ChartValues<decimal> ListDoanhThu = new();
             Labels = new();
             con.Open();
-            //Các dòng dưới Select Doanh Thu của tháng này và hiển thị lên đầu trang Biểu Đồ
-            string dauthangnay ="1/"+DateTime.Now.Month+"/"+DateTime.Now.Year;
-
-            for (DateTime date = DateTime.Parse(dauthangnay); date <= DateTime.Today; date = date.AddDays(1.0))
+            //Nên đổi doanh thu Tháng Này thành doanh thu 30 ngày gần nhất
+            //để lúc nào nó cũng luôn có dữ liệu
+            string now = DateTime.Now.ToString("dd/MM/yyyy");
+            string lastdate = DateTime.Now.AddDays(-30.0).ToString("dd/MM/yyyy");
+            for (DateTime date = DateTime.Parse(now);date>=DateTime.Now.AddDays(-30.0);date=date.AddDays(-1.0))
             {
                 SqlCommand cmd = new("Set dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                 cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
@@ -60,7 +61,12 @@ namespace MotoStore.Views.Pages
                     else
                         ListDoanhThu.Add(0);
                 }
-                Labels.Add(date.ToString("dd"));
+                if (date == DateTime.Parse(now)) //Ngày đầu
+                    Labels.Add(date.ToString("d-M-yyyy"));
+                else if (date == DateTime.Now.AddDays(-30.0))//date == DateTime.Parse(lastdate)) //Ngày cuối, có chút vấn đề ở đây
+                    Labels.Add(date.ToString("d-M-yyyy"));
+                else //Ngày thường
+                    Labels.Add(date.ToString("dd"));
             }
                     
             SrC.Add(new LineSeries
@@ -104,9 +110,11 @@ namespace MotoStore.Views.Pages
               sau đó đổ lại dữ liệu vào.
              */
             gridChonNgay.Visibility = Visibility.Collapsed;
+            lblZoomIn.Visibility = Visibility.Collapsed;
             lblSeries.Content = "Tháng";
             lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
+            borderHuongDan.Visibility = Visibility.Collapsed;
 
             while (dothi.Series.Count > 0) 
                 dothi.Series.RemoveAt(0);  //Clear dữ liệu cũ
@@ -114,8 +122,8 @@ namespace MotoStore.Views.Pages
 
             for (int i = 1; i <= 12; i++)
                 Labels.Add(i.ToString()); //Đổ 12 tháng vào Nhãn
-            dothi.AxisX[0].MinValue = 0;
-            dothi.AxisX[0].MaxValue = 12;
+            dothi.AxisX[0].MinValue = 0;  //kết thúc Zoom hiện tại(nếu có), trả về Zoom vốn có
+            dothi.AxisX[0].MaxValue = 12; //.....
 
             dothi.FontSize = 20;
             TrucHoanhX.FontSize = 20;
@@ -201,9 +209,12 @@ namespace MotoStore.Views.Pages
         private void subitem2NamTrc_Click(object sender, RoutedEventArgs e)
         {
             gridChonNgay.Visibility = Visibility.Collapsed;
+            lblZoomIn.Visibility = Visibility.Collapsed;
             lblSeries.Content = "Tháng";
             lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
+            borderHuongDan.Visibility = Visibility.Collapsed;
+
             while (dothi.Series.Count > 0)
                 dothi.Series.RemoveAt(0);
             Labels.Clear();
@@ -290,7 +301,7 @@ namespace MotoStore.Views.Pages
             {
                 Title = "2020",
                 Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
-                Fill = Brushes.Red
+                Fill = Brushes.Green
             });*/
         }
 
@@ -316,7 +327,7 @@ namespace MotoStore.Views.Pages
         }
         public bool IsValidDateTimeTest(string dateTime)
         {
-            string[] formats = { "d/MM/yyyy" };
+            string[] formats = { "d/M/yyyy" };
             return DateTime.TryParseExact(dateTime, formats, new CultureInfo("vi-VN"),
                                            DateTimeStyles.None, out _);
             //Hàm kiểm tra ngày có hợp lệ hay không
@@ -324,9 +335,20 @@ namespace MotoStore.Views.Pages
 
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            if(!(IsValidDateTimeTest(txtTuNgay.Text)))
+            string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
+            if (!(IsValidDateTimeTest(txtTuNgay.Text)))
             {
-                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ!");
+                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(ngày/tháng/năm)!");
+                txtTuNgay.Clear();
+            }
+            else if (DateTime.Parse(txtTuNgay.Text) > DateTime.Now)
+            {
+                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
+                txtTuNgay.Clear();
+            }
+            else if (DateTime.Parse(txtTuNgay.Text) < DateTime.Parse(ngaynhonhat))
+            {
+                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
                 txtTuNgay.Clear();
             }
             //Nếu ô Từ Ngày bị LostFocus mà trong ô đó chứa ngày kh hợp lệ thì xoá text ô đó
@@ -348,14 +370,25 @@ namespace MotoStore.Views.Pages
 
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
         {
+            string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
             if (!(IsValidDateTimeTest(txtDenNgay.Text)))
             {
-                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ!");
+                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(Ngày/Tháng/Năm)!");
                 txtDenNgay.Clear();
             }
             else if (DateTime.Parse(txtTuNgay.Text) >= DateTime.Parse(txtDenNgay.Text))
             {
                 MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
+                txtDenNgay.Clear();
+            }
+            else if (DateTime.Parse(txtDenNgay.Text) > DateTime.Now)
+            {
+                MessageBox.Show("Chưa có dữ liệu ở ô đến ngày, hãy nhập lại");
+                txtDenNgay.Clear();
+            }
+            else if (DateTime.Parse(txtDenNgay.Text) < DateTime.Parse(ngaynhonhat))
+            {
+                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
                 txtDenNgay.Clear();
             }
             /*Khi ô Đến Ngày LostFocus, ta sẽ check nó có phải ngày hợp lệ hay kh,
@@ -365,6 +398,10 @@ namespace MotoStore.Views.Pages
 
         private void btnXem_Click(object sender, RoutedEventArgs e)
         {
+            /*Chỉ có duy nhất Lựa chọn hàm này là người dùng đc 
+              phép Zoom, nên sẽ tìm MaxValue ở đây để tránh tình trạng
+              Zoom quá mức nó sẽ ra giá trị Rác*/
+
             ChartValues<decimal> ChartVal = new();
             if (string.IsNullOrEmpty(txtTuNgay.Text) || string.IsNullOrEmpty(txtDenNgay.Text))
                 MessageBox.Show("Vui Lòng Nhập Đầy Đủ 2 Ngày");
@@ -381,7 +418,6 @@ namespace MotoStore.Views.Pages
                 dothi.Pan = PanningOptions.X;  //Cho phép Lia trục hoành
                 dothi.FontSize = 15;
                 TrucHoanhX.FontSize = 12;
-                TrucHoanhX.Separator.Step = 3; //Đặt mỗi giá trị trục hoành cách nhau 3 đơn vị
                 con.Open();
 
                 for (DateTime date = DateTime.Parse(txtTuNgay.Text); date <= DateTime.Parse(txtDenNgay.Text); date = date.AddDays(1.0))
@@ -397,16 +433,24 @@ namespace MotoStore.Views.Pages
                         else
                             ChartVal.Add(0);
                     }
-                    if (date.Day == 1)
-                        Labels.Add(date.ToString("dd-MM"));
+                    if (date == DateTime.Parse(txtTuNgay.Text))
+                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày đầu của txtTuNgay(thêm NĂM sau đuôi)
+                    else if (date.Day == 1)
+                    {
+                        if (date.Month != 1)
+                            Labels.Add(date.ToString("d-M")); //Ngày đầu tháng(Thêm tháng đằng sau)
+                        else
+                            Labels.Add(date.ToString("d-M-yyyy"));
+                    }
                     else if (int.Parse(date.ToString("dd")) == DateTime.DaysInMonth(date.Year, date.Month))
-                        Labels.Add(date.ToString("dd-MM"));
-                    else if (int.Parse(date.ToString("dd")) == int.Parse(DateTime.Parse(txtDenNgay.Text).ToString("dd")))
-                        Labels.Add(date.ToString("dd-MM"));
+                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày cuối Tháng (Thêm tháng đằng sau)
+                    else if (date == DateTime.Parse(txtDenNgay.Text))
+                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày cuối của txtDenNgay(thêm NĂM sau đuôi)
                     else
-                        Labels.Add(date.ToString("dd"));
+                        Labels.Add(date.Day.ToString()); //Ngày thường
+                    //Cần ngày đầu tháng
                 }
-
+                con.Close();
                 SrC.Add(new LineSeries
                 {
                     Title = "VNĐ",
@@ -415,8 +459,28 @@ namespace MotoStore.Views.Pages
                     StrokeThickness = 2,
                     Fill = null
                 });
-                con.Close();
+
+                 decimal maxVal = ChartVal[0];
+                 for (int i = 1; i < ChartVal.Count; i++)
+                     if (ChartVal[i] > maxVal)
+                         maxVal = ChartVal[i];
+
+                 dothi.AxisX[0].MinValue = 0;  
+                 dothi.AxisX[0].MaxValue = ChartVal.Count;
+                //kết thúc Zoom hiện tại(nếu có), trả về Zoom ban đầu
+                TrucHoanhX.Separator.Step = 1; //Đặt giá trị của step mặc định là 1
+                 if ((double)ChartVal.Count / 30 - (int)(ChartVal.Count / 30) > 0)
+                     TrucHoanhX.Separator.Step = (int)ChartVal.Count / 30 + 1;
+                 else if((double)ChartVal.Count / 30 - (int)(ChartVal.Count / 30) == 0)
+                     TrucHoanhX.Separator.Step = (int)ChartVal.Count / 30;
+                //ĐK if else ở trên để tăng bước trục hoành dựa vào khoảng ngày
+                //0<NGÀY<30: step = 1, 30<NGÀY<60: step = 2 , ...  
+
+                dothi.AxisY[0].MaxValue = (double)maxVal * 1.1;
+                /*1 dòng trên để set max value trục tung cho đồ thị,
+                  tránh nó nhận giá trị RÁC khi Zoom quá*/
                 Values = value => value.ToString("N");
+                lblZoomIn.Visibility = Visibility.Visible;
             }
         }
 
@@ -436,6 +500,16 @@ namespace MotoStore.Views.Pages
               2 cái Textbox Từ ngày và Đến ngày,
               Tuy nhiên vẫn còn chút lỗi hiển thị
              */
+        }
+
+        private void btnChamHoi_Click(object sender, RoutedEventArgs e)
+        {
+            borderHuongDan.Visibility = Visibility.Visible;
+        }
+
+        private void btnUnderstand_Click(object sender, RoutedEventArgs e)
+        {
+            borderHuongDan.Visibility = Visibility.Collapsed;
         }
     }
 }

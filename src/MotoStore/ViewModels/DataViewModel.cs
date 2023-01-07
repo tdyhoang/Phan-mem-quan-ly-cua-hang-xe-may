@@ -29,14 +29,10 @@ namespace MotoStore.ViewModels
         }
 
         [ObservableProperty]
-        private IEnumerable<DataColor> _colors;
-
-        [ObservableProperty]
         private ObservableCollection<INavigationControl> _navigationItems = new();
 
         public void OnNavigatedTo()
         {
-            InitializeViewModel();
         }
 
         public void OnNavigatedFrom()
@@ -127,6 +123,13 @@ namespace MotoStore.ViewModels
                     }
                 };
             }
+
+            _navigationService.Navigate(typeof(Views.Pages.DataPagePages.MotoListPage));
+        }
+
+        internal void VisibleChanged()
+        {
+            InitializeViewModel();
         }
     }
 }

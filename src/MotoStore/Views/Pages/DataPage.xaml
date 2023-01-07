@@ -29,7 +29,7 @@
                 <ui:NavigationCompact
                     x:Name="DataNavigation"
                     Grid.Column="0"
-                    IsExpanded="True"
+                    IsExpanded="False"
                     Frame="{Binding ElementName=DataFrame, Mode=OneWay}"
                     Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}"
                     LostFocus="Data_LostFocus">
