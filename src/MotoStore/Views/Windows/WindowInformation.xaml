@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MotoStore.Views.Windows"
         mc:Ignorable="d"
-        Title="WindowInformation" Height="300" Width="400"
+        Title="WindowInformation" Height="400" Width="500"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -57,22 +57,19 @@
             </Border.Background>
         </Border>
 
-        <Border Height="150"
-                Width="300"
-                VerticalAlignment="Center"
-                Margin="0,100,0,0"
+        <Border Height="254"
+                VerticalAlignment="Top"
+                Margin="79,82,80,0"
                 CornerRadius="45"
                 Background="#151f2d">
             <RichTextBox x:Name="rtbThongTin"
-                         Height="140"
                          Width="250"
                          Background="Transparent"
                          Foreground="White"
                          FontSize="14"
-                         FontWeight="Medium">
-            </RichTextBox>
+                         FontWeight="Medium" Margin="48,10,43,-51"/>
         </Border>
-        
+
         <Border Height="150"
                 Width="200"
                 VerticalAlignment="Top"
@@ -86,8 +83,8 @@
                FontWeight="Bold"
                FontSize="25"
                VerticalAlignment="Top"
-               HorizontalAlignment="Center"></Label>
-        
+               HorizontalAlignment="Center" Margin="0,39,0,0"></Label>
+
         <Button x:Name="btnMinimize"
                 Height="25"
                 Width="50"
@@ -97,7 +94,7 @@
                 Click="btnMinimize_Click"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
-                Margin="0,0,55,0"
+                Margin="0,0,54,0"
                 >
         </Button>
         <Button x:Name="btnClose"
@@ -110,5 +107,16 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right">
         </Button>
+        <Button x:Name="btnHD"
+                Height="25"
+                Width="120"
+                Content="Thêm Hàng"
+                FontSize="17"
+                FontWeight="Bold"
+                Click="btnClose_Click"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center" Margin="0,356,0,0">
+        </Button>
+
     </Grid>
 </Window>

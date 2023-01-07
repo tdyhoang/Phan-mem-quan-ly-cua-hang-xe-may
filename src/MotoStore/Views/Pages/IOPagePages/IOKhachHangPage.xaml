@@ -10,27 +10,33 @@
 
     <Grid>
 
-        <Label x:Name="lbSDTKhachHang"
-               Content=" SĐT: " 
-               Margin="536,58,113,367"
-               FontSize="15"
-               Foreground="Black"
-               FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top"/>
+
         <Label x:Name="lbTenKH"
                Content="Tên Khách Hàng: " 
                Margin="24,58,622,355"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDauSao" 
+               Height="30"
+               FontSize="15"
+               Content="*"
+               Foreground="Red"
+               FontWeight="Medium"
+               Margin="143,57,634,363"/>
+        <Label x:Name="lblThongBao" Height="30" FontSize="15"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="23,272,624,148"
+                               />
+        <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus"/>
         <Label x:Name="lbNgaySinhKH"
                Content="Ngày Sinh: " 
                Margin="24,120,613,287"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" VerticalAlignment="Top" LostFocus="txtNgaySinhKH_LostFocus"/>
         <Label x:Name="lbDiaChiKH"
                Content="Địa Chỉ: " 
                Margin="24,180,620,243"
@@ -38,20 +44,27 @@
                Foreground="Black"
                FontWeight="Medium"/>
         <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075"/>
+        <Label x:Name="lbSDTKhachHang"
+               Content=" SĐT: " 
+               Margin="536,58,113,367"
+               FontSize="15"
+               Foreground="Black"
+               FontWeight="Medium"/>
+        <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top" LostFocus="txtSDTKH_LostFocus"/>
         <Label x:Name="lbEmailKH"
                Content="Email: " 
                Margin="536,125,108,300"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailKH" Margin="669,109,81,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtEmailKH" Margin="669,109,81,0" VerticalAlignment="Top" LostFocus="txtEmailKH_LostFocus"/>
         <Label x:Name="lbGioiTinh"
                Content="Giới Tính: " 
                Margin="536,243,156,179"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,225,75,0" VerticalAlignment="Top">
+        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top">
             <ComboBoxItem>Nam</ComboBoxItem>
             <ComboBoxItem>Nữ</ComboBoxItem>
         </ComboBox>
@@ -70,12 +83,48 @@
         <Button x:Name="btnAddNewKhachHang" 
                 FontWeight="UltraBlack" 
                 Content="THÊM MỚI" 
-                Margin="525,391,0,0"  
+                Margin="358,328,0,0"  
                 Height="48" 
                 Width="117" 
                 Click="btnAddNewKhachHang_Click"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.57"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Label x:Name="lblDauSao1" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="112,118,665,302"/>
+        <Label x:Name="lblDauSao2" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="654,181,123,239"/>
+        <Label x:Name="lblDauSao3" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="620,238,157,182"/>
+        <Label x:Name="lblDauSao2_Copy" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="612,121,165,299"/>
 
     </Grid>
 </Page>

@@ -369,9 +369,9 @@ namespace MotoStore.Views.Pages
            // else
             //{
                 if (PageChinh.getSex == "Nữ")
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("F:\\IT008\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("F:\\IT008\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             //}
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
@@ -413,7 +413,7 @@ namespace MotoStore.Views.Pages
             OFD.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
             if (OFD.ShowDialog()==true)
             {
-                string newPathToFile = @"C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\" + PageChinh.getMa;
+                string newPathToFile = @"F:\IT008\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images" + PageChinh.getMa;
                 if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
                 {
 

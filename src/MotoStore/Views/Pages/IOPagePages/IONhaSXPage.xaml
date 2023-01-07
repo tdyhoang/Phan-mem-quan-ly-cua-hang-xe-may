@@ -34,22 +34,29 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top" LostFocus="txtSDTNSX_LostFocus"/>
         <Label x:Name="lbEmail"
                Content="Email: " 
                Margin="24,160,620,260"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top" LostFocus="txtEmailNSX_LostFocus"/>
         <Label x:Name="lbNuocSX"
                Content="Quốc Gia: " 
                Margin="24,215,620,203"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtNuocSX" Margin="224,200,526,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNuocSX" Margin="222,206,528,0" VerticalAlignment="Top" LostFocus="txtNuocSX_LostFocus"/>
         <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click"/>
+        <Label x:Name="lblDauSao_Copy" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="106,215,660,205"/>
 
 
     </Grid>

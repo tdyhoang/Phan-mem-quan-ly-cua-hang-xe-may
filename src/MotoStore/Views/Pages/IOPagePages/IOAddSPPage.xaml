@@ -15,14 +15,14 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtTenSP" Margin="249,30,501,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtTenSP" Margin="249,30,501,0" VerticalAlignment="Top" LostFocus="txtTenSP_LostFocus"/>
         <Label x:Name="lbGiaNhap"
                Content="Giá Nhập: " 
                Margin="49,83,595,323"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtGiaNhapSP" Margin="249,85,501,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtGiaNhapSP" Margin="249,85,501,0" VerticalAlignment="Top" LostFocus="txtGiaNhapSP_LostFocus"/>
         <Label x:Name="lbXuatXu"
                Content="Xuất Xứ: " 
                Margin="52,144,592,262"
@@ -47,6 +47,18 @@
             <ComboBoxItem>Suzuki</ComboBoxItem>
 
         </ComboBox>
+        <Label x:Name="lblThongBao" Height="30" FontSize="15"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="17,232,630,188"
+                               />
+        <Label x:Name="lblDauSao" 
+               Height="30"
+               FontSize="15"
+               Content="*"
+               Foreground="Red"
+               FontWeight="Medium"
+               Margin="129,141,648,279"/>
         <Label x:Name="lbMotaSP"
                Content="Mô Tả: " 
                Margin="581,35,63,371"
@@ -64,6 +76,27 @@
         <Button x:Name="btnAddNewSP" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="302,388,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewSP_Click"/>
         <Image x:Name="ImageSP" HorizontalAlignment="Left" Height="123" Margin="556,289,0,0" VerticalAlignment="Top" Width="209"/>
         <Button x:Name="btnLoadImageSP" Content="Chọn ảnh Sản Phẩm" Margin="619,249,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.898,0.615" Click="btnLoadImageSP_Click"/>
+        <Label x:Name="lblDauSao_Copy" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="687,94,90,326"/>
+        <Label x:Name="lblDauSao_Copy1" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="164,31,613,389"/>
+        <Label x:Name="lblDauSao_Copy2" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="666,167,111,253"/>
 
     </Grid>
 </Page>

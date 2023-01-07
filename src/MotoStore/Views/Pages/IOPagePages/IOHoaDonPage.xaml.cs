@@ -17,6 +17,8 @@ using System.Globalization;
 using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
+
 namespace MotoStore.Views.Pages.IOPagePages
     
 {
@@ -27,12 +29,14 @@ namespace MotoStore.Views.Pages.IOPagePages
     {
         internal ObservableCollection<MatHang> matHangs;
         internal ObservableCollection<KhachHang> KhachHangs;
+        
 
         private readonly MainDatabase mainDatabase = new();
         public IOHoaDonPage()
         {
 
             InitializeComponent();
+            RefreshMatHang();
         }
 
         private void btnAddNewHoaDon_Click(object sender, RoutedEventArgs e)
@@ -203,9 +207,18 @@ namespace MotoStore.Views.Pages.IOPagePages
             cmbMaSPHD.ItemsSource = matHangs;
         }
 
-        private void cmbMaSPHD_DropDownOpened(object sender, EventArgs e)
+        private void cmbMaSPHD_KeyDown(object sender, KeyEventArgs e)
         {
-            RefreshMatHang();
+
+        }
+        private void cmbMaSPHD_DropDownClosed(object sender, EventArgs e)
+        {
+            if(cmbMaSPHD.SelectedItem is MatHang mh)
+            {
+                cmbMaSPHD.Text = mh.MaMh;
+            }    
+                
+            
         }
     }
 }

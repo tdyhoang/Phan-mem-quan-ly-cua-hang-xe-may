@@ -17,7 +17,7 @@
                Foreground="Black"
                FontWeight="Medium"/>
 
-        <ComboBox x:Name="cmbMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="60"  ItemsSource="{Binding}" IsVisibleChanged="cmbMaSPHD_IsVisibleChanged" DropDownOpened="cmbMaSPHD_DropDownOpened" IsEditable="True" DisplayMemberPath="MaKh">
+        <ComboBox x:Name="cmbMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="60"  ItemsSource="{Binding}" IsEditable="True" KeyDown="cmbMaSPHD_KeyDown"  DropDownClosed="cmbMaSPHD_DropDownClosed" >
             
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ComboBoxItem}">
@@ -99,14 +99,21 @@
         <!--Mã Nhân Viên trong Hóa Đơn-->
         <Label x:Name="lbNgayXuatHD"
                Content="Ngày Xuất HĐ: " 
-               Margin="45,170,597,248"
+               Margin="47,162,595,256"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
+        <Label x:Name="lblDauSao" 
+               Height="30"
+               FontSize="15"
+               Content="*"
+               Foreground="Red"
+               FontWeight="Medium"
+               Margin="153,47,624,373"/>
         <TextBox x:Name="txtNgayXuatHD" Margin="248,157,502,0" VerticalAlignment="Top" Height="35"/>
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
-               Margin="593,55,51,371"
+               Margin="591,42,53,384"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
@@ -114,7 +121,7 @@
         <TextBox x:Name="txtSoLuongHD" Margin="732,38,33,0" VerticalAlignment="Top" TextChanged="txtSoLuongHD_TextChanged"/>
         <Label x:Name="lbGiamGiaHD"
                Content="Giảm Giá: " 
-               Margin="593,108,118,305"
+               Margin="591,97,120,316"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
@@ -127,6 +134,27 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
         <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click"/>
+        <Label x:Name="lblDauSao_Copy" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="159,102,618,318"/>
+        <Label x:Name="lblDauSao_Copy1" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="161,160,616,260"/>
+        <Label x:Name="lblDauSao_Copy2" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="685,34,92,386"/>
 
 
     </Grid>

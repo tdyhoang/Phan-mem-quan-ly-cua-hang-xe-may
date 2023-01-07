@@ -21,8 +21,6 @@
 
         <Grid>
             <TextBlock Text="" FontSize="13" FontWeight="Black" FontFamily="Times New Roman"/>
-
-
         </Grid>
         <ScrollViewer Grid.Column="1" Background="DarkSlateBlue" Margin="3,3,0,0">
             <StackPanel>

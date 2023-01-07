@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
+using MotoStore.Views.Pages.IOPagePages;
 
 namespace MotoStore.ViewModels
 {
@@ -21,7 +22,10 @@ namespace MotoStore.ViewModels
 
         [ObservableProperty]
         private int _counter = 0;
-
+        internal IOSanPhamPage iosppage=new();
+        internal IOHoaDonPage iohoadonpage=new();
+        internal IOKhachHangPage iokhachhangpage = new();
+        internal IONhaSXPage ionhasxpage = new();
         public void OnNavigatedTo()
         {
         }
