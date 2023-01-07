@@ -34,6 +34,12 @@
     <Compile Update="Views\Pages\PageBieuDo.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\PageChiTiet.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\PageLichSuHD.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\ReportPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +103,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\PageBieuDo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\PageChiTiet.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\PageLichSuHD.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\ReportPage.xaml">

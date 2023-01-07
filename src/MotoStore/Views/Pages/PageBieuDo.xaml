@@ -67,7 +67,7 @@
                                   LegendLocation="Bottom">
 
                 <livechart:CartesianChart.AxisX>
-                    <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="12" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
+                    <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="10" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
                         <livechart:Axis.Separator>
                             <livechart:Separator Step="1" />
                         </livechart:Axis.Separator>
@@ -135,7 +135,7 @@
         </Menu>
         <Grid x:Name="gridChonNgay"
               Height="40"
-              Width="420"
+              Width="490"
               VerticalAlignment="Top"
               HorizontalAlignment="Left"
               Margin="0,50,0,0">
@@ -154,7 +154,7 @@
                      Height="35"
                      Width="100"
                      VerticalContentAlignment="Center"
-                     Margin="0,0,195,0"
+                     Margin="0,0,255,0"
                      TextChanged="txtTuNgay_TextChanged"
                      LostFocus="txtTuNgay_LostFocus"></TextBox>
             <TextBox x:Name="txtDenNgay"
@@ -170,7 +170,17 @@
                     Content="Xem"
                     FontWeight="Medium"
                     HorizontalAlignment="Right"
+                    Margin="0,0,40,0"
                     Click="btnXem_Click"></Button>
+            <Button x:Name="btnChamHoi"
+                Content="?"
+                Height="25"
+                Width="30"
+                FontSize="20"
+                FontWeight="Medium"
+                Click="btnChamHoi_Click"
+                HorizontalAlignment="Right"
+                Margin="0,0,0,0"></Button>
         </Grid>
         
         <Button x:Name="btnTuChon"
@@ -201,12 +211,61 @@
         <Label x:Name="lblDTThgNay"
                Height="30"
                Width="330"
-               Content="Doanh Thu Tháng Này(Đơn Vị: VNĐ)"
+               Content="Doanh Thu 30 Ngày Gần Nhất(Đơn Vị: VNĐ)"
                Foreground="White"
-               FontSize="19"
+               FontSize="16.5"
                FontWeight="Medium"
                VerticalContentAlignment="Bottom"
                HorizontalAlignment="Center"
                Margin="80,500,0,0"></Label>
+        <Label x:Name="lblZoomIn"
+               Height="30"
+               Width="330"
+               Content="Phóng To Để Biết Thêm Chi Tiết"
+               Foreground="White"
+               FontSize="17"
+               FontWeight="Medium"
+               VerticalContentAlignment="Bottom"
+               HorizontalAlignment="Left"
+               Margin="100,500,0,0"
+               Visibility="Collapsed"></Label>
+        <!--Mỗi lần bấm xem theo ngày tự chọn thì Label này sẽ hiện lên -->
+
+        <Border x:Name="borderHuongDan"
+                Height="320"
+                Width="500"
+                Background="red"
+                CornerRadius="50"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,100"
+                Visibility="Collapsed">
+            <Grid>
+                <Label Content="Hãy Nhập Ngày Theo Đúng Format Sau:"
+                       Height="25"
+                       Width="275"
+                       Foreground="White"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       VerticalAlignment="Top">
+                </Label>
+                <Image Source="/Views/Pages/Images/hdsd.png"
+                       Height="270"
+                       Width="485"
+                       VerticalAlignment="Center"
+                       Margin="0,0,0,5">
+                </Image>
+                <Button x:Name="btnUnderstand"
+                        Content="Đã Hiểu"
+                        FontSize="15"
+                        FontWeight="Medium"
+                        Height="25"
+                        Width="90"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,0,3"
+                        Click="btnUnderstand_Click">
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

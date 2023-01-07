@@ -17,7 +17,7 @@
                Foreground="Black"
                FontWeight="Medium"/>
 
-        <ComboBox x:Name="cmbMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="60"  ItemsSource="{Binding}" IsVisibleChanged="cmbMaSPHD_IsVisibleChanged" DropDownOpened="cmbMaSPHD_DropDownOpened" IsEditable="True" DisplayMemberPath="MaKh">
+        <ComboBox x:Name="cmbMaSPHD" Margin="247,36,503,0" VerticalAlignment="Top" Height="60"  ItemsSource="{Binding}" DropDownOpened="cmbMaSPHD_DropDownOpened" IsEditable="True" DisplayMemberPath="MaKh">
             
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ComboBoxItem}">

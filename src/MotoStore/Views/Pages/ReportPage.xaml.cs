@@ -26,6 +26,7 @@ namespace MotoStore.Views.Pages
     {
         private MainDatabase mdb = new MainDatabase();
         static public string tenXeBanChay;
+        static public int SoLgXeBanChay;
         public ReportPage()
         {
             InitializeComponent();
@@ -39,6 +40,7 @@ namespace MotoStore.Views.Pages
             tenXeBanChay = mdb.MatHangs.Where(i => i.MaMh == XeBanChay.IdXe).Select(i => i.TenMh).FirstOrDefault();
             txtblThgTinMHBanChay.Text = tenXeBanChay + "\nMã Mặt Hàng: " + XeBanChay.IdXe;
             //3 Dòng trên để tìm ra mặt hàng bán chạy nhất
+            SoLgXeBanChay = XeBanChay.Tong.Value;
 
             var NVNgSuat = mdb.HoaDons.GroupBy(u => u.MaNv).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdNv = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             var tenNVNgSuat = mdb.NhanViens.Where(i => i.MaNv == NVNgSuat.IdNv).Select(i => i.HoTenNv).FirstOrDefault();
@@ -69,7 +71,12 @@ namespace MotoStore.Views.Pages
             int soxebandc = 0;
             SqlDataReader sda = command.ExecuteReader();
             if (sda.Read())
-                soxebandc = (int)sda[0];
+            {
+                if (sda[0] != DBNull.Value)
+                    soxebandc = (int)sda[0];
+                else
+                    soxebandc = 0;
+            }
             txtblThgTinSoXeBanDc.Text = soxebandc.ToString();
 
             string commandTextMoney = "Set Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon Where NgayLapHD >=@StartDate and NgayLapHD < @EndDate";
@@ -81,8 +88,13 @@ namespace MotoStore.Views.Pages
             commandMoney.Parameters["@EndDate"].Value = EndDate;
             decimal sotien = 0;
             sda=commandMoney.ExecuteReader();
-            if(sda.Read())
-                sotien = (decimal)sda[0];
+            if (sda.Read())
+            {
+                if (sda[0] != DBNull.Value)
+                    sotien = (decimal)sda[0];
+                else
+                    sotien = 0;
+            }
             txtblDoanhThu.Text = sotien.ToString() + "$";
 
             var KhVIP = mdb.HoaDons.GroupBy(u => u.MaKh).Select(u => new { Tong = u.Sum(u => u.ThanhTien), IdKhach = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
@@ -158,7 +170,7 @@ namespace MotoStore.Views.Pages
 
         private void btnChiTiet_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new PageChiTiet());
         }
 
         private void border6ThgTin_MouseMove(object sender, MouseEventArgs e)

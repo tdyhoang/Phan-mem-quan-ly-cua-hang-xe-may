@@ -4,8 +4,6 @@ CREATE DATABASE QLYCHBANXEMAY
 use QLYCHBANXEMAY
 set dateformat dmy
 
-
-
 Create table KhachHang
 (
 	ID int identity(1,1),
@@ -216,8 +214,23 @@ Insert into HoaDon values('MH011','KH036','NV007','27/7/2022',1,25925000)
 Insert into HoaDon values('MH007','KH007','NV007','20/8/2022',1,31500000)
 
 Insert into HoaDon values('MH005','KH016','NV006','11/12/2022',1,23375000)
+Insert into HoaDon values('MH004','KH010','NV007','1/1/2023',1,45000000)
+Insert into HoaDon values('MH014','KH006','NV006','1/1/2023',1,27500000)
 
-/*2BFB3B33-16E7-47B1-AFFF-02BD5B620E3A*/
+select HoTenKH
+from KhachHang
+where MaKH in(
+select top(5)KhachHang.MaKH
+from hoadon join KhachHang
+on HoaDon.MaKH=KhachHang.MaKH
+group by KhachHang.MaKH
+order by sum(thanhtien) desc)
+
+SELECT MaKH 
+FROM   HoaDon
+Group by MaKH
+ORDER BY sum(ThanhTien) desc
+OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;
 
 Create table ThongTinBaoHanh
 (
@@ -294,3 +307,22 @@ Create Table LichSuHoatDong
 	CONSTRAINT PK_LshdID primary key(LshdID)
 )
 alter table LichSuHoatDong add constraint FKLSHD_MaNV foreign key(MaNV) references NhanVien(MaNV)
+
+select MaNV from LichSuHoatDong order by ThoiGian desc
+
+select Nhanvien.HoTenNV
+from NhanVien join LichSuHoatDong
+on NhanVien.MaNV=LichSuHoatDong.MaNV
+order by ThoiGian Desc
+
+select HotenNV from NhanVien 
+where MaNV in (Select top 100 percent MaNV from LichSuHoatDong order by ThoiGian DESC)
+
+select ThoiGian from LichSuHoatDong order by ThoiGian desc
+
+select HoatDong from LichSuHoatDong order by ThoiGian desc
+
+select *from LichSuHoatDong order by ThoiGian desc
+
+
+SELECT COUNT(*) FROM LichSuHoatDong

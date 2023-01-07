@@ -43,7 +43,14 @@ namespace MotoStore.Views.Pages
         sau khi đã lên lịch thành công mà ứng dụng vẫn lên lịch*/
         private bool enableXoaLich;
         //Biến cho phép xoá lịch, công dụng tương tự như trên
-        
+        private bool isFirstClicked = true;
+        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+
+        List<string> listMaNV { get; set; } = new List<string>();
+        List<string> listTenNV { get; set; } = new List<string>();
+        List<DateTime> listThoiGian { get; set; } = new List<DateTime>();
+        List<string> listHoatDong { get; set; } = new List<string>();
+
         public DashboardPage(PageChinh pgC)
         {
             InitializeComponent();
@@ -52,6 +59,15 @@ namespace MotoStore.Views.Pages
             timer.Tick += timer_Tick;
             timer.Start();
             pgChinh = pgC;
+            //this.DataContext = this;
+        }
+
+        public class LichSuHoatDong
+        {
+            public string MaNV { get; set; }
+            public string HoTenNV { get; set; }
+            public DateTime ThoiGian { get; set; }
+            public string HoatDong { get; set; } 
         }
 
         private void DashboardPage_Loaded(object sender, RoutedEventArgs e)
@@ -114,7 +130,11 @@ namespace MotoStore.Views.Pages
         {
             stkNoiDung.Children.Clear();
             stkLich.Children.Clear();
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+            dataGridLSHD.Items.Clear(); //Clear dữ liệu Lịch Sử, khi nào 1st Click thì đổ dữ liệu lại sau
+            dataGridLSHD.Visibility= Visibility.Collapsed;
+            btnXoaLichSu.Visibility= Visibility.Collapsed;
+            isFirstClicked = true;
+
             SqlCommand cmd;
             con.Open();
             DateTime DT = DateTime.Now;
@@ -134,6 +154,7 @@ namespace MotoStore.Views.Pages
                 enableLenLich = true;    //Cho phép lên lịch mỗi lần click chuột vào ngày bất kì trên Lịch
                 enableXoaLich = true;
                 borderLichvaButton.Visibility = Visibility.Visible;
+                dataGridLSHD.Visibility = Visibility.Collapsed;
             }
             stkNoiDung.Children.Clear();  
             RichTextBox rtbNoiDung = new RichTextBox();
@@ -234,17 +255,12 @@ namespace MotoStore.Views.Pages
                             }
                             if (valid)
                             {
-                                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
-                                /*Dòng trên ae cop cái connection string của máy mình thay cho cái dòng trên
-                                Nhớ chạy lại dòng lệnh databasePMQLCHBXM.sql trên máy mình*/
-
-                                SqlCommand cmd;
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
                                 //Giải thích dòng trên:
                                 //Vì Lich.SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
 
-                                cmd = new SqlCommand("set dateformat dmy\nInsert into LenLich values(NewID(),'" + PageChinh.getMa.ToString() + "', '" + lich + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00" + "', '" + lich + " " + cbGioKT.Text + ":" + cbPhutKT.Text + ":00" + "', N'" + richText + "')", con);
+                                SqlCommand cmd = new SqlCommand("set dateformat dmy\nInsert into LenLich values(NewID(),'" + PageChinh.getMa.ToString() + "', '" + lich + " " + cbGioBD.Text + ":" + cbPhutBD.Text + ":00" + "', '" + lich + " " + cbGioKT.Text + ":" + cbPhutKT.Text + ":00" + "', N'" + richText + "')", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
                                 cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "lên lịch cho ngày " + lich + "')", con);
@@ -296,11 +312,9 @@ namespace MotoStore.Views.Pages
                         {
                             if (gio.NgLenLichBd.Value.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
                             {
-                                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
-                                SqlCommand cmd;
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("dd-MM-yyyy");
-                                cmd = new SqlCommand("set dateformat dmy\ndelete from LenLich where NgLenLichBD='" + strGiomuonXoa + "'", con);
+                                SqlCommand cmd = new SqlCommand("set dateformat dmy\ndelete from LenLich where NgLenLichBD='" + strGiomuonXoa + "'", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
                                 cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'" + PageChinh.getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "xoá lịch cho ngày " + lich + "')", con);
@@ -336,28 +350,76 @@ namespace MotoStore.Views.Pages
 
         private void btnLichSu_Click(object sender, RoutedEventArgs e)
         {
-            //Điều hướng thằng này qua trang khác
-           /* stkbtnLenLich.Children.Clear();
-            stkbtnXoaLich.Children.Clear(); */
+            borderLichvaButton.Visibility = Visibility.Collapsed;
+            dataGridLSHD.Visibility = Visibility.Visible;
             stkLich.Children.Clear();
-
-            RichTextBox rtbLichSu = new RichTextBox();
-            rtbLichSu.IsReadOnly = true;
-            rtbLichSu.Height = 240;
-            rtbLichSu.Width = 240;
-            rtbLichSu.FontSize = 15;
-            rtbLichSu.FontWeight = FontWeights.Medium;
-            stkLich.Children.Add(rtbLichSu);
-            rtbLichSu.AppendText("------Lịch Sử Hoạt Động------\n");
-            foreach(var lshd in mdb.LichSuHoatDongs.ToList())
+            if (isFirstClicked)
             {
-                string time = lshd.ThoiGian.Value.ToString("dd-MM-yyyy HH:mm:ss");
-                rtbLichSu.AppendText(time+"\n");
+                listMaNV.Clear();
+                listTenNV.Clear();
+                listThoiGian.Clear();
+                listHoatDong.Clear();
+                //Mỗi lần First Click phải Clear hết 4 trường dữ liệu trên
+                //Nếu kh thì hành động mới sẽ bị đẩy vào cuối Danh Sách
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SET Dateformat dmy\nSelect MaNV From LichSuHoatDong Order by ThoiGian DESC", con);
+                SqlDataReader sda = cmd.ExecuteReader();
 
-                var hoTenNV = mdb.NhanViens.Where(u => u.MaNv == lshd.MaNv).Select(u => u.HoTenNv).FirstOrDefault().ToString();
-                var seperatedHoTenNV = hoTenNV.Split(' ');
-                var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
-                rtbLichSu.AppendText("Nhân viên " + tenNV +" "+ lshd.HoatDong+"\n");
+                while (sda.Read())
+                    listMaNV.Add((string)sda[0]); 
+
+                SqlCommand cmd1 = new SqlCommand("SET Dateformat dmy\nSelect Nhanvien.HoTenNV\r\nfrom NhanVien join LichSuHoatDong\r\non NhanVien.MaNV=LichSuHoatDong.MaNV\r\norder by ThoiGian DESC", con);
+                SqlDataReader sda1 = cmd1.ExecuteReader();
+
+                while (sda1.Read())
+                    listTenNV.Add((string)sda1[0]);
+
+                SqlCommand cmd2 = new SqlCommand("SET Dateformat dmy\nSelect ThoiGian from LichSuHoatDong Order by ThoiGian DESC", con);
+                SqlDataReader sda2 = cmd2.ExecuteReader();
+
+                while (sda2.Read())
+                    listThoiGian.Add((DateTime)sda2[0]);
+
+                SqlCommand cmd3 = new SqlCommand("SET Dateformat dmy\nSelect HoatDong from LichSuHoatDong order by ThoiGian DESC", con);
+                SqlDataReader sda3 = cmd3.ExecuteReader();
+                while (sda3.Read())
+                    listHoatDong.Add((string)sda3[0]);
+                int TableLength = 0;
+                SqlCommand cmd4 = new SqlCommand("SELECT COUNT(*) FROM LichSuHoatDong", con);
+                SqlDataReader sda4 = cmd4.ExecuteReader();
+                if (sda4.Read())
+                    TableLength = (int)sda4[0];
+                MessageBox.Show(TableLength.ToString());
+                for (int i = 0; i < TableLength; i++) 
+                {
+                    dataGridLSHD.Items.Add(new LichSuHoatDong()
+                    {
+                        MaNV = listMaNV[i],
+                        HoTenNV = listTenNV[i],
+                        ThoiGian = listThoiGian[i],
+                        HoatDong = listHoatDong[i],
+                    });
+                }
+                isFirstClicked = false;
+                con.Close();
+            }
+        }
+
+        private void btnXoaLichSu_Click(object sender, RoutedEventArgs e)
+        {
+            var Result = MessageBox.Show("Bạn Có Chắc Muốn Xoá Lịch Sử Hoạt Động?", " ", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (Result == MessageBoxResult.Yes)
+            {
+                con.Open();
+                DateTime now = DateTime.Now;
+                SqlCommand cmd = new SqlCommand("Delete from LichSuHoatDong", con);
+                cmd.ExecuteNonQuery();
+
+                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + now.ToString("dd-MM-yyyy HH:mm:ss") + "', N'xoá lịch sử')", con);
+                cmd.ExecuteNonQuery();
+                dataGridLSHD.Items.Clear();
+                MessageBox.Show("Xoá Lịch Sử Hoạt Động Thành Công!");
+                con.Close();
             }
         }
 
@@ -369,9 +431,9 @@ namespace MotoStore.Views.Pages
            // else
             //{
                 if (PageChinh.getSex == "Nữ")
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
                 else
-                    anhNhanVien.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                    anhNhanVien.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
             //}
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
@@ -385,6 +447,7 @@ namespace MotoStore.Views.Pages
                 txtblSoNV.FontSize = 20;
                 txtblSoXe.FontSize = 20.5;
                 btnLichSu.Visibility = Visibility.Visible;
+                btnXoaLichSu.Visibility=Visibility.Visible;
             }
             else  //Nhân viên loại 2
             {
@@ -415,8 +478,7 @@ namespace MotoStore.Views.Pages
             {
                 string newPathToFile = @"C:\Users\huyha\source\repos\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Views\Pages\Images\" + PageChinh.getMa;
                 if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
-                {
-
+                { 
                     anhNhanVien.Source = null;
 
                     /* anhNhanVien.Source = null;
@@ -438,11 +500,9 @@ namespace MotoStore.Views.Pages
                 anhNhanVien.Source = image;
                 MessageBox.Show("Cập nhật ảnh thành công!");
 
-                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
-                SqlCommand cmd;
                 con.Open();
                 DateTime now = DateTime.Now;
-                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + now.ToString("dd-MM-yyyy HH:mm:ss") + "', N'cập nhật ảnh')", con);
+                SqlCommand cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + PageChinh.getMa + "', '" + now.ToString("dd-MM-yyyy HH:mm:ss") + "', N'cập nhật ảnh')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -523,5 +583,6 @@ namespace MotoStore.Views.Pages
         {
             borderLichvaButton.Opacity = 0.8;
         }
+
     }
 }

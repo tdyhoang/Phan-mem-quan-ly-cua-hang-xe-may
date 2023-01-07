@@ -310,6 +310,25 @@
                 </Button.Resources>
             </Button>
 
+            <DataGrid x:Name="dataGridLSHD"
+                  Height="290"
+                  Width="510"
+                  VerticalAlignment="Top"
+                  Margin="0,45,0,0"
+                  FontSize="15"
+                  FontWeight="Medium"
+                  AutoGenerateColumns="False"
+                  Background="#151f2d"
+                  Foreground="White"
+                  Visibility="Collapsed">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã NV" Width="60" Binding="{Binding MaNV}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Tên Nhân Viên" Width="150" Binding="{Binding HoTenNV}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Thời Gian" Width="150" Binding="{Binding ThoiGian}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Hoạt Động" Width="180" Binding="{Binding HoatDong}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
             <Border x:Name="borderLichvaButton"
                     Height="290"
                     Width="240"
@@ -341,7 +360,7 @@
                         FontWeight="Medium"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right"
-                        Margin="0,5,5,0"
+                        Margin="0,5,0,0"
                         Click="btnLenLich_Click">
                         <Button.Resources>
                             <Style TargetType="Border">
@@ -435,6 +454,22 @@
                     FontSize="20"
                     FontWeight="Medium"
                     Click="btnLichSu_Click"
+                    Visibility="Collapsed">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button x:Name="btnXoaLichSu"
+                    Height="40"
+                    Width="110"
+                    Margin="0,0,125,560"
+                    Content="Xoá Lịch Sử"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Click="btnXoaLichSu_Click"
                     Visibility="Collapsed">
                 <Button.Resources>
                     <Style TargetType="Border">
