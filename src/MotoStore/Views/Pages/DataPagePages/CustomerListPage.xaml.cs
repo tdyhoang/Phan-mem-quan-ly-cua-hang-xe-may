@@ -45,7 +45,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.KhachHangs);
-            foreach (var khachHang in TableData)
+            foreach (var khachHang in TableData.ToList())
                 if (khachHang.DaXoa)
                     TableData.Remove(khachHang);
             grdCustomer.ItemsSource = TableData;

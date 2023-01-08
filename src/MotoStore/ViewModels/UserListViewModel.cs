@@ -17,28 +17,12 @@ namespace MotoStore.ViewModels
 {
     public partial class UserListViewModel : ObservableObject, INavigationAware
     {
-        public List<UserApp> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new();
-                TableData = con.UserApps.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

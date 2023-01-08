@@ -25,7 +25,6 @@ namespace MotoStore.Views.Pages.DataPagePages
             InitializeComponent();
 
             ViewModel.OnNavigatedTo();
-            grdSupplier.ItemsSource = ViewModel.TableData;
         }
 
         private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

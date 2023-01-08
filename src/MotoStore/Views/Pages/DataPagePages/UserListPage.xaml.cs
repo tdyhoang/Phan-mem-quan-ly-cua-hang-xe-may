@@ -29,7 +29,6 @@ namespace MotoStore.Views.Pages.DataPagePages
             InitializeComponent();
 
             ViewModel.OnNavigatedTo();
-            grdUser.ItemsSource = ViewModel.TableData;
         }
     }
 }

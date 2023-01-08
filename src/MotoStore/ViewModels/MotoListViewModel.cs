@@ -15,28 +15,12 @@ namespace MotoStore.ViewModels
 {
     public partial class MotoListViewModel : ObservableObject, INavigationAware
     {
-        public List<MatHang> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new();
-                TableData = con.MatHangs.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }
