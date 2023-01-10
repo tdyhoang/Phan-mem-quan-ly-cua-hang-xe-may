@@ -2,7 +2,12 @@
 *Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
 
 ## Lưu ý!!!
-### Cách dùng TextBoxInputBehavior
+### TextBoxInputBehavior
+#### Tác dụng
+- Ngăn các ký tự không hợp lệ ở các textbox, hợp lệ hay không do tự mình quy định trong class này, tiện để dùng chung và kế thừa
+- Cụ thể hơn: dùng trong textbox nhập số lượng, số tiền, số điện thoại, v.v. trong 2 trang `Nhập xuất` và `Danh mục`
+
+#### Cách dùng
 - Ở file xaml thêm 2 namespace là `xmlns:i="http://schemas.microsoft.com/xaml/behaviors"` và `xmlns:helpers="clr-namespace:MotoStore.Helpers"`
 - Có 3 InputMode:
     + `None`: Textbox gõ như bình thường, không có điều kiện

@@ -62,7 +62,6 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
-    <Resource Include="Views\Pages\bullet_triangle_blue-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\hdsd.png" />
     <Resource Include="Views\Pages\Images\huongdanLich.png" />
     <Resource Include="Views\Pages\Images\huongdanLich2.png" />
