@@ -26,8 +26,8 @@ namespace MotoStore.Views.Pages.LoginPages
     /// </summary>
     public partial class PageGuiMa
     {
-        private PageChinh pgC;
-        private DateTime dt= DateTime.Now;
+        private readonly PageChinh pgC;
+        private readonly DateTime dt= DateTime.Now;
         private string getMa;
         private string getTen;
         public PageGuiMa(PageChinh pageChinh)
@@ -59,13 +59,13 @@ namespace MotoStore.Views.Pages.LoginPages
             //Hàm Này Để Nháy Thông Báo 
         }
 
-        private readonly DispatcherTimer timer = new DispatcherTimer();
+        private readonly DispatcherTimer timer = new();
 
         private void buttonXacNhanGuiMa_Click(object sender, RoutedEventArgs e)
         {
             dem = 0;
-            MainDatabase mdb = new MainDatabase();
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QLYCHBANXEMAY;Integrated Security=True;TrustServerCertificate=True");
+            MainDatabase mdb = new();
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
             con.Open();
             if (string.IsNullOrEmpty(txtMa.Text))
@@ -86,7 +86,7 @@ namespace MotoStore.Views.Pages.LoginPages
             {
                 /*Cập nhật mật khẩu mới lên DataBase
                 ==>*/
-                cmd = new SqlCommand("Update UserApp\nSet Password = '" + PageQuenMatKhau.getPass+"'" + "\nWhere Email = '" + PageQuenMatKhau.getEmail+"'", con);
+                cmd = new("Update UserApp\nSet Password = '" + PageQuenMatKhau.getPass+"'" + "\nWhere Email = '" + PageQuenMatKhau.getEmail+"'", con);
                 cmd.ExecuteNonQuery();
                 foreach(var item in mdb.NhanViens.ToList())
                 {
@@ -101,7 +101,7 @@ namespace MotoStore.Views.Pages.LoginPages
                         break;
                     }
                 }
-                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + getMa + "', N'" + getTen + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "thay đổi mật khẩu')", con);
+                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values('" + getMa + "', N'" + getTen + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "thay đổi mật khẩu')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -127,7 +127,7 @@ namespace MotoStore.Views.Pages.LoginPages
                         lbl.Content = "Your Code You Fill Didn't Match, Check Again!";;
                         break;
                 }
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                timer.Interval = new(0, 0, 0, 0, 200);
                 timer.Start();
                 txtMa.Clear();
                 txtMa.Focus();

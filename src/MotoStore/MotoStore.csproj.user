@@ -19,6 +19,9 @@
     <Compile Update="Views\Pages\DataPagePages\MotoListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\DataPagePages\OrderListPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\DataPagePages\SupplierListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,7 +31,16 @@
     <Compile Update="Views\Pages\IOPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\PageBieuDo.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Pages\PageChiTiet.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\ReportPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Windows\WindowInformation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -49,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\MotoListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\DataPagePages\OrderListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\SupplierListPage.xaml">
@@ -84,6 +99,12 @@
     <Page Update="Views\Pages\LoginPages\PageQuenMatKhau.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Pages\PageBieuDo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\PageChiTiet.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Pages\ReportPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -94,6 +115,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\WindowInformation.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -12,33 +12,18 @@ using Wpf.Ui.Mvvm.Interfaces;
 using MotoStore.Models;
 using System.Collections.Generic;
 using MotoStore.Database;
+using System.Windows.Controls;
 
 namespace MotoStore.ViewModels
 {
     public partial class CustomerListViewModel : ObservableObject, INavigationAware
     {
-        public List<KhachHang> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new MainDatabase();
-                TableData = con.KhachHangs.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

@@ -35,111 +35,60 @@ namespace MotoStore.ViewModels
             }
         }
 
-        public void VisibleChanged()
-        { 
-            InitializeViewModel();
-            //Hàm khởi tạo các item tuỳ loại nhân viên
-        }
-
         private void InitializeViewModel()      
         {
-            //Check loại NV               
-            if (PageChinh.getChucVu == "Quản Lý")
+            NavigationItems = new ObservableCollection<INavigationControl>
             {
-                NavigationItems = new ObservableCollection<INavigationControl>
+                new NavigationItem()
                 {
-                    new NavigationItem()
-                    {
-                        Content = "Trang Chủ",
-                        PageTag = "trangchu",
-                        Icon = SymbolRegular.Home24,
-                        PageType = typeof(Views.Pages.DashboardPage)
-                    },
-                    new NavigationItem()
-                    {
-                        Content = "Nhập Xuất",
-                        PageTag = "io",
-                        Icon = SymbolRegular.Stream24,
-                        PageType = typeof(Views.Pages.IOPage)
-                    },
-                    new NavigationItem()
-                    {
-                        Content = "Danh Mục",
-                        PageTag = "data",
-                        Icon = SymbolRegular.DataHistogram24,
-                        PageType = typeof(Views.Pages.DataPage)
-                    },
-                    new NavigationItem()
-                    {
-                        Content = "Báo Cáo",
-                        PageTag = "report",
-                        Icon = SymbolRegular.Info24,
-                        PageType = typeof(Views.Pages.ReportPage)
-                    }
-                };
+                    Content = "Trang Chủ",
+                    PageTag = "trangchu",
+                    Icon = SymbolRegular.Home24,
+                    PageType = typeof(Views.Pages.DashboardPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Nhập Xuất",
+                    PageTag = "io",
+                    Icon = SymbolRegular.Stream24,
+                    PageType = typeof(Views.Pages.IOPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Danh Mục",
+                    PageTag = "data",
+                    Icon = SymbolRegular.DataHistogram24,
+                    PageType = typeof(Views.Pages.DataPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "Báo Cáo",
+                    PageTag = "report",
+                    Icon = SymbolRegular.Info24,
+                    PageType = typeof(Views.Pages.ReportPage)
+                }
+            };
 
-                NavigationFooter = new ObservableCollection<INavigationControl>
-                {
-                    new NavigationItem()
-                    {
-                        Content = "Cài Đặt",
-                        PageTag = "settings",
-                        Icon = SymbolRegular.Settings24,
-                        PageType = typeof(Views.Pages.SettingsPage)
-                    }
-                };
-
-                TrayMenuItems = new ObservableCollection<MenuItem>
-                {
-                    new MenuItem
-                    {
-                        Header = "Home",
-                        Tag = "tray_home"
-                    }
-                };
-            }
-            
-            else
+            NavigationFooter = new ObservableCollection<INavigationControl>
             {
-                NavigationItems = new ObservableCollection<INavigationControl>
+                new NavigationItem()
                 {
-                    new NavigationItem()
-                    {
-                        Content = "Trang Chủ",
-                        PageTag = "trangchu",
-                        Icon = SymbolRegular.Home24,
-                        PageType = typeof(Views.Pages.DashboardPage)
-                    },
-                    new NavigationItem()
-                    {
-                        Content = "Nhập Xuất",
-                        PageTag = "io",
-                        Icon = SymbolRegular.Stream24,
-                        PageType = typeof(Views.Pages.IOPage)
-                    },
-                };
+                    Content = "Cài Đặt",
+                    PageTag = "settings",
+                    Icon = SymbolRegular.Settings24,
+                    PageType = typeof(Views.Pages.SettingsPage)
+                }
+            };
 
-                NavigationFooter = new ObservableCollection<INavigationControl>
+            TrayMenuItems = new ObservableCollection<MenuItem>
+            {
+                new MenuItem
                 {
-                    new NavigationItem()
-                    {
-                        Content = "Cài Đặt",
-                        PageTag = "settings",
-                        Icon = SymbolRegular.Settings24,
-                        PageType = typeof(Views.Pages.SettingsPage)
-                    }
-                };
+                    Header = "Home",
+                    Tag = "tray_home"
+                }
+            };
 
-                TrayMenuItems = new ObservableCollection<MenuItem>
-                {
-                    new MenuItem
-                    {
-                        Header = "Home",
-                        Tag = "tray_home"
-                    }
-                };
-            }
-          
             _isInitialized = true;
         }
     }

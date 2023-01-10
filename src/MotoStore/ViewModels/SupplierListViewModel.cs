@@ -15,7 +15,7 @@ namespace MotoStore.ViewModels
 {
     public partial class SupplierListViewModel : ObservableObject, INavigationAware
     {
-        public List<NhaSanXuat> TableData;
+        public List<NhaCungCap> TableData;
 
         public void OnNavigatedTo()
         {
@@ -30,8 +30,8 @@ namespace MotoStore.ViewModels
         {
             try
             {
-                MainDatabase con = new MainDatabase();
-                TableData = con.NhaSanXuats.ToList();
+                MainDatabase con = new();
+                TableData = con.NhaCungCaps.ToList();
             }
             catch (Exception ex)
             {

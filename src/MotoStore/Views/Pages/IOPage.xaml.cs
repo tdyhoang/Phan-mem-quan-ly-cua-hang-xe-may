@@ -17,28 +17,29 @@ namespace MotoStore.Views.Pages
             ViewModel = viewModel;
 
             InitializeComponent();
+
         }
 
         private void btnAddSPPage_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            IOMain.Content = new IOPagePages.IOSanPhamPage();
+            IOMain.Content = ViewModel.iosppage;
         }
 
 
 
         private void btnAddNSXPage_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            IOMain.Content = new IOPagePages.IONhaSXPage();
+            IOMain.Content = ViewModel.ionhasxpage;
         }
 
         private void btnAddKhachHang_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            IOMain.Content = new IOPagePages.IOKhachHangPage();
+            IOMain.Content = ViewModel.iokhachhangpage;
         }
 
         private void btnAddHoaDon_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            IOMain.Content = new IOPagePages.IOHoaDonPage();
+            IOMain.Content = ViewModel.iohoadonpage;
         }
     }
 }

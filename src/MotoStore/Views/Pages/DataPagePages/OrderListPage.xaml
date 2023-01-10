@@ -1,0 +1,50 @@
+﻿<ui:UiPage x:Class="MotoStore.Views.Pages.DataPagePages.OrderListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:resources="clr-namespace:MotoStore.Resources"
+      xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:viewmodels="clr-namespace:MotoStore.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:OrderListViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrderListPage">
+
+    <ui:UiPage.Resources>
+        <ControlTemplate x:Key="MultipleChoiceFilter">
+            <dgx:MultipleChoiceFilter />
+        </ControlTemplate>
+    </ui:UiPage.Resources>
+
+    <Grid>
+        <ui:DataGrid Name="grdOrder"
+                     Grid.Row="1"
+                     Grid.ColumnSpan="2"
+                     AutoGenerateColumns="False"
+                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                     ItemsSource="{Binding Path=TableData}">
+
+            <ui:DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#0078D7" />
+                            <Setter Property="BorderBrush" Value="#0078D7" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:DataGrid.Resources>
+
+            <ui:DataGrid.Columns>
+                <DataGridTextColumn Header="Mã ĐĐH" Binding="{Binding Path=MaDonDh, Mode=OneWay}" />
+                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaKh}" />
+                <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuongHang}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=SoLuong}" />
+                <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=GiamGia}" />
+                <DataGridTextColumn Header="Ngày đặt hàng" Binding="{Binding Path=Ngdh, StringFormat=dd/MM/yyyy}" />
+            </ui:DataGrid.Columns>
+        </ui:DataGrid>
+    </Grid>
+</ui:UiPage>

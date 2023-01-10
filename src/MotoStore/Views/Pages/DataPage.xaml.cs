@@ -46,7 +46,14 @@ namespace MotoStore.Views.Pages
 
         private void Data_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            DataNavigation.IsExpanded = false;
+            if (!DataNavigation.IsKeyboardFocusWithin) // Trường hợp vẫn còn focus ở những phần tử con của DataNavigation
+                DataNavigation.IsExpanded = false;
+        }
+
+        private void UiPage_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+                ViewModel.VisibleChanged();
         }
     }
 }

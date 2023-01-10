@@ -32,7 +32,7 @@ namespace MotoStore.ViewModels
         {
             try
             {
-                MainDatabase con = new MainDatabase();
+                MainDatabase con = new();
                 TableData = con.UserApps.ToList();
             }
             catch (Exception ex)

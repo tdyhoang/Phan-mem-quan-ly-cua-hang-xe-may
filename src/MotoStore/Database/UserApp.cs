@@ -5,13 +5,13 @@ namespace MotoStore.Database;
 
 public partial class UserApp
 {
-    public Guid UserId { get; set; }
+    public string MaNv { get; set; } = null!;
 
-    public Guid? MaNv { get; set; }
+    public string UserName { get; set; } = null!;
 
-    public string? UserName { get; set; }
+    public string Password { get; set; } = null!;
 
-    public string? Password { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string? Email { get; set; }
+    public virtual NhanVien MaNvNavigation { get; set; } = null!;
 }

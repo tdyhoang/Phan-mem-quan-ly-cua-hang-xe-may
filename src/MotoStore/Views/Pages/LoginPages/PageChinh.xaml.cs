@@ -48,8 +48,8 @@ namespace MotoStore.Views.Pages.LoginPages
         static public string getMa;   //Tương tự như trên
         static public string getSex;  //Lấy giới tính
         static public string getTen;  //Lấy cái tên
-        private readonly DispatcherTimer timer = new DispatcherTimer();
-        private DateTime dt = DateTime.Now;
+        private readonly DispatcherTimer timer = new();
+        private readonly DateTime dt = DateTime.Now;
 
         private void buttonLanguage_Click(object sender, RoutedEventArgs e)
         {
@@ -75,8 +75,8 @@ namespace MotoStore.Views.Pages.LoginPages
                     txtMatKhau.Text = "Mật Khẩu:";
                     buttonDangNhap.Content = "Đăng Nhập";
                     buttonQuenMK.Content = "Quên Mật Khẩu ?";
-                    txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
-                    txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý";
+                    txtQLYCHXM.Text = "Quản Lý CỬA HÀNG XE MÁY";
+                    txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý";
                     lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
                     if (flag != 0)
                         lblThongBao.Content = "Vui lòng điền đầy đủ thông tin!";
@@ -113,12 +113,12 @@ namespace MotoStore.Views.Pages.LoginPages
                 if (buttonLanguage.Content == "English")
                 {
                     lblThongBao.Content = "Please fill in all fields fully!";
-                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);      //Nháy Mỗi 200 milisecond
+                    timer.Interval = new(0, 0, 0, 0, 200);      //Nháy Mỗi 200 milisecond
                 }
                 else
                 {   
                     lblThongBao.Content = "Vui lòng điền đầy đủ thông tin!";
-                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                    timer.Interval = new(0, 0, 0, 0, 200);
                 }
                 timer.Start();         //Bắt Đầu Nháy       
             }
@@ -126,28 +126,28 @@ namespace MotoStore.Views.Pages.LoginPages
             {
                 //Kiểm tra tài khoản mật khẩu có khớp với trên DataBase không ?
 
-                MainDatabase mDb = new MainDatabase();  
+                MainDatabase mDb = new();  
                 foreach (var user in mDb.UserApps.ToList())
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                     {
-                        isValid = true;               //Mở cổng đăng nhập
-                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.GioiTinh).FirstOrDefault();
-                        getMa = user.MaNv.ToString();   
+                        isValid = true;             //Mở cổng đăng nhập
+                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.GioiTinh).FirstOrDefault();
+                        getMa = user.MaNv;   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
 
-                        getChucVu = mDb.NhanViens.Where(u => u.MaNv.ToString() == user.MaNv.ToString()).Select(u => u.ChucVu).FirstOrDefault();
+                        getChucVu = mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.ChucVu).FirstOrDefault();
 
-                        var hoTenNV = mDb.NhanViens.Where(u => u.MaNv.ToString() == getMa).Select(u => u.HoTenNv).FirstOrDefault().ToString();
+                        var hoTenNV = mDb.NhanViens.Where(u => u.MaNv == getMa).Select(u => u.HoTenNv).FirstOrDefault();
                         var seperatedHoTenNV = hoTenNV.Split(' ');
                         var tenNV = seperatedHoTenNV[seperatedHoTenNV.Length - 1];
                         getTen = tenNV;
                         //4 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
 
-                        SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                        SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                         SqlCommand cmd;
                         con.Open();
                         DateTime DT = DateTime.Now;
-                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '" + getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "đăng nhập')", con);
+                        cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '" + getMa + "', '" + DT.ToString("dd-MM-yyyy HH:mm:ss") + "', N'" + "đăng nhập')", con);
                         cmd.ExecuteNonQuery();
                         con.Close();
                     }
@@ -162,7 +162,7 @@ namespace MotoStore.Views.Pages.LoginPages
                 else
                 {
                     lblThongBao.Content = "Sai Tài Khoản Hoặc Mật Khẩu";
-                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                    timer.Interval = new(0, 0, 0, 0, 200);
                     timer.Start();
                     //Nháy nếu sai TK hoặc MK
                 }

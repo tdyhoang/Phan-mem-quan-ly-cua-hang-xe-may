@@ -30,7 +30,7 @@ namespace MotoStore.Views.Windows
 
             navigationService.SetNavigationControl(RootNavigation);
             Visibility = Visibility.Collapsed;
-            LoginView lgv = new LoginView();
+            LoginView lgv = new();
             lgv.ShowDialog();
             
         }
@@ -87,14 +87,6 @@ namespace MotoStore.Views.Windows
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //Xử lý ở đây
-            if ((bool)e.NewValue)   //true là hiện
-                ViewModel.VisibleChanged();
-            //CMT giải thích
         }
     }
 }

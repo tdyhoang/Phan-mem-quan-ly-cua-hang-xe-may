@@ -19,26 +19,42 @@
     <None Remove="Assets\logo2-removebg-preview.png" />
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
+    <None Remove="Views\Pages\bullet_triangle_blue-removebg-preview.png" />
     <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67" />
-    <None Remove="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
     <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1" />
-    <None Remove="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <None Remove="Views\Pages\Images\anh3.png" />
     <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
-    <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\hdsd.png" />
+    <None Remove="Views\Pages\Images\huongdanLich.png" />
+    <None Remove="Views\Pages\Images\huongdanLich2.png" />
+    <None Remove="Views\Pages\Images\IconLowSales.png" />
+    <None Remove="Views\Pages\Images\IconTOP.png" />
+    <None Remove="Views\Pages\Images\IconXeMay.png" />
+    <None Remove="Views\Pages\Images\money.png" />
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
     <None Remove="Views\Pages\Images\NhanVien.png" />
+    <None Remove="Views\Pages\Images\NhvienNgSuat.png" />
     <None Remove="Views\Pages\Images\SoXe-removebg-preview.png" />
     <None Remove="Views\Pages\Images\userNam.png" />
     <None Remove="Views\Pages\Images\userNu.png" />
     <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
-    <None Remove="Views\Pages\IO_Images\01921D8D-F015-4309-A130-9390B2E8EC11.png" />
-    <None Remove="Views\Pages\IO_Images\0FB80AA9-CC97-4157-8F04-BAA88F6E5266.png" />
-    <None Remove="Views\Pages\IO_Images\1B30FA5C-2C4E-42B1-97FE-864391FC4040.png" />
-    <None Remove="Views\Pages\IO_Images\A626798B-7071-4710-88A8-7D31935A3019.png" />
-    <None Remove="Views\Pages\IO_Images\FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6.png" />
-    <None Remove="Views\Pages\IO_Images\Future.png" />
+    <None Remove="Views\Pages\Images\VIP-removebg-preview.png" />
+    <None Remove="Views\Pages\IO_Images\MH001.png" />
+    <None Remove="Views\Pages\IO_Images\MH002.png" />
+    <None Remove="Views\Pages\IO_Images\MH003.png" />
+    <None Remove="Views\Pages\IO_Images\MH004.png" />
+    <None Remove="Views\Pages\IO_Images\MH005.png" />
+    <None Remove="Views\Pages\IO_Images\MH006.png" />
+    <None Remove="Views\Pages\IO_Images\MH007.png" />
+    <None Remove="Views\Pages\IO_Images\MH008.png" />
+    <None Remove="Views\Pages\IO_Images\MH009.png" />
+    <None Remove="Views\Pages\IO_Images\MH010.png" />
+    <None Remove="Views\Pages\IO_Images\MH011.png" />
+    <None Remove="Views\Pages\IO_Images\MH012.png" />
+    <None Remove="Views\Pages\IO_Images\MH013.png" />
+    <None Remove="Views\Pages\IO_Images\MH014.png" />
+    <None Remove="Views\Pages\IO_Images\MH015.png" />
     <None Remove="Views\Pages\LoginPages\motorworkshop.jpg" />
     <None Remove="Views\Pages\LoginPages\NhanVien.png" />
     <None Remove="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
@@ -46,10 +62,18 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Resource Include="Views\Pages\bullet_triangle_blue-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\hdsd.png" />
+    <Resource Include="Views\Pages\Images\huongdanLich.png" />
+    <Resource Include="Views\Pages\Images\huongdanLich2.png" />
+    <Resource Include="Views\Pages\Images\IconLowSales.png" />
+    <Resource Include="Views\Pages\Images\IconTOP.png" />
+    <Resource Include="Views\Pages\Images\money.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DataGridExtensions" Version="2.5.14" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -71,26 +95,31 @@
     <Resource Include="Assets\User_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Pages\Images\89250069-C6CC-4D5D-BB9F-AA298DCE0D67.png" />
-    <Resource Include="Views\Pages\Images\A5D54EA6-F80B-4A22-979B-D9FCB571FAB1.png" />
     <Resource Include="Views\Pages\Images\anh3.png" />
-    <Resource Include="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6.png" />
     <Resource Include="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\IconXeMay.png" />
     <Resource Include="Views\Pages\Images\motorworkshop.jpg" />
     <Resource Include="Views\Pages\Images\NhanVien.png" />
+    <Resource Include="Views\Pages\Images\NhvienNgSuat.png" />
     <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\userNam.png" />
     <Resource Include="Views\Pages\Images\userNu.png" />
-    <Resource Include="Views\Pages\CalendaRicon-removebg-preview.png" />
-    <Resource Include="Views\Pages\IO_Images\01921D8D-F015-4309-A130-9390B2E8EC11.png" />
-    <Resource Include="Views\Pages\IO_Images\0FB80AA9-CC97-4157-8F04-BAA88F6E5266.png" />
-    <Resource Include="Views\Pages\IO_Images\1B30FA5C-2C4E-42B1-97FE-864391FC4040.png" />
-    <Resource Include="Views\Pages\IO_Images\A626798B-7071-4710-88A8-7D31935A3019.png" />
-    <Resource Include="Views\Pages\IO_Images\FAD9A8EF-6437-4A8F-ACB3-CC7232519EB6.png" />
-    <Resource Include="Views\Pages\IO_Images\Future.png" />
-    <Resource Include="Views\Pages\LoginPages\motorworkshop.jpg" />
-    <Resource Include="Views\Pages\LoginPages\NhanVien.png" />
-    <Resource Include="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
+    <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
+    <Resource Include="Views\Pages\IO_Images\MH003.png" />
+    <Resource Include="Views\Pages\IO_Images\MH010.png" />
+    <Resource Include="Views\Pages\IO_Images\MH008.png" />
+    <Resource Include="Views\Pages\IO_Images\MH002.png" />
+    <Resource Include="Views\Pages\IO_Images\MH015.png" />
+    <Resource Include="Views\Pages\IO_Images\MH004.png" />
+    <Resource Include="Views\Pages\IO_Images\MH014.png" />
+    <Resource Include="Views\Pages\IO_Images\MH009.png" />
+    <Resource Include="Views\Pages\IO_Images\MH007.png" />
+    <Resource Include="Views\Pages\IO_Images\MH005.png" />
+    <Resource Include="Views\Pages\IO_Images\MH012.png" />
+    <Resource Include="Views\Pages\IO_Images\MH001.png" />
+    <Resource Include="Views\Pages\IO_Images\MH011.png" />
+    <Resource Include="Views\Pages\IO_Images\MH006.png" />
+    <Resource Include="Views\Pages\IO_Images\MH013.png" />
   </ItemGroup>
 
   <ItemGroup>

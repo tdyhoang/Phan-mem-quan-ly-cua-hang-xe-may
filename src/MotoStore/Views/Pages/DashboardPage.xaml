@@ -52,18 +52,35 @@
             </Border.BorderBrush>
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#462AD8" Offset="0"/>
-                    <GradientStop Color="#DA34AE" Offset="0.75"/>
-                    <GradientStop Color="#8A16C1" Offset="1"/>
+                    <GradientStop Color="#060531" Offset="1"/>
+                    <GradientStop Color="DarkMagenta" Offset="0.1"/>
+                    <GradientStop Color="#1B1448" Offset="0.85"/>
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
 
         <Grid Height="600"
-              Width="400"
-              Margin="0,0,550,0">
+              Width="410"
+              Margin="0,0,610,0">
 
-            <Label x:Name="lblXinChao"
+            <Border x:Name="borderThgTinUser"
+                    Height="230"
+                    Width="250"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    CornerRadius="20"
+                    MouseMove="borderThgTinUser_MouseMove"
+                    MouseLeave="borderThgTinUser_MouseLeave"
+                    Opacity="0.8">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#462AD8" Offset="1"/>
+                        
+                        <GradientStop Color="#8A16C1" Offset="0.75"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Label x:Name="lblXinChao"
                Height="50"
                Width="250"
                FontSize="30"
@@ -72,173 +89,208 @@
                Foreground="White"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"            
-               Margin="0,0,0,0">
-            </Label>
-
-            <Label x:Name="lblChucVu"
+               Margin="15,5,0,0">
+                    </Label>
+                    <Label x:Name="lblChucVu"
                    Height="40"
                    Width="320"
-                   Margin="0,153,80,407"
-                   Foreground="White"                   
+                   VerticalAlignment="Bottom"
+                   Margin="15,0,0,0"                   
                    FontWeight="Medium"
                    FontSize="22"></Label>
 
-            <Button x:Name="btnCapNhatAvatar"
+                    <Button x:Name="btnCapNhatAvatar"
                     Height="40"
                     Width="115"
                     Content="Cập Nhật Ảnh"
-                    Margin="0,0,235,160"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Margin="0"
                     FontSize="17"
                     FontWeight="Medium"
                     Click="btnCapNhatAvatar_Click">
-            </Button>
-            
-            <Image x:Name="anhNhanVien"
-                   Height="120"
-                   Width="150"
-                   Margin="1,38,249,452">
-                <Image.OpacityMask>
-                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.65">
-                        <GradientStop Color="White" Offset="0.8" />
-                        <GradientStop Color="#00ffffff" Offset="0.9" />
-                    </RadialGradientBrush>
-                </Image.OpacityMask>
-            </Image>
+                    </Button>
 
-            <Grid>
+                    <Border HorizontalAlignment="Left" Margin="0,0,0,50" VerticalAlignment="Bottom" Width="130"  Height="130" BorderBrush="White" BorderThickness="5"
+                               CacheMode="BitmapCache" CornerRadius="50">
+                        <!-- left-top and bottom-right round corners. -->
+                        <Border.Background>
+                            <ImageBrush x:Name="anhNhanVien" Stretch="Fill"></ImageBrush>
+                        </Border.Background>
+                    </Border>
 
-                <Border
+                </Grid>
+            </Border>
+
+            <Border x:Name="border3thgtin"
+                    Height="350"
+                    Width="400"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,10"
+                    CornerRadius="20"
+                    MouseMove="border3thgtin_MouseMove"
+                    MouseLeave="border3thgtin_MouseLeave"
+                    Opacity="0.8">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#462AD8" Offset="1"/>
+                        <GradientStop Color="#DA34AE" Offset="0"/>
+                        <GradientStop Color="#8A16C1" Offset="0.75"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <Border
                     x:Name="brdSoNV"
                     CornerRadius="25"
                     Height="130"
                     Width="180"
-                    Margin="0,248,220,222"
-                    Background="MediumPurple">
-                    <TextBlock
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="15,30,0,0"
+                    Background="#DA34AE"
+                    MouseMove="brdSoNV_MouseMove"
+                    MouseLeave="brdSoNV_MouseLeave">
+
+                        <Grid>
+                            <TextBlock
                         x:Name="txtblAnh"
                         FontWeight="Medium"
                         FontSize="20"
                         Height="60"
                         Width="60"
-                        Margin="90,40,0,0"
+                        Margin="0,0,0,5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         >
-                        <TextBlock.Background>
-                            <ImageBrush ImageSource="/Views/Pages/Images/NhanVien.png" 
+
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="/Views/Pages/Images/NhanVien.png" 
                                     Stretch="Uniform" 
                                     Opacity="0.7"                                    
                                     />
-                        </TextBlock.Background>
-                    </TextBlock>
+                                </TextBlock.Background>
+                            </TextBlock>
 
-                </Border>
-
-                <TextBlock x:Name="txtblSoNV"
+                            <TextBlock x:Name="txtblSoNV"
                            Height="80"
                            Width="140"
-                           Margin="0,0,250,0"
+                           Margin="0,0,25,15"
                            FontSize="19"
-                           FontWeight="Medium">
-                </TextBlock>
+                           FontWeight="Medium"
+                           Foreground="White">
+                            </TextBlock>
+                        </Grid>
+                    </Border>
 
-            </Grid>
-
-            <Border
+                    <Border
                     x:Name="brdSoXe"
                     CornerRadius="25"
                     Height="130"
                     Width="180"
-                    Margin="0,405,220,65"
-                    Background="PowderBlue">
-            </Border>
-
-            <Grid>
-
-                <TextBlock
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="15,0,0,30"
+                    Background="#462AD8"
+                    MouseMove="brdSoXe_MouseMove"
+                    MouseLeave="brdSoXe_MouseLeave">
+                        <Grid>
+                            <TextBlock
                         x:Name="txtblAnhXe"
                         FontWeight="Medium"
                         Height="60"
                         Width="60"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right"
-                        Margin="0,0,225,55"
                         >
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="/Views/Pages/Images/SoXe-removebg-preview.png"/>
-                    </TextBlock.Background>
-                </TextBlock>
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="/Views/Pages/Images/SoXe-removebg-preview.png"/>
+                                </TextBlock.Background>
+                            </TextBlock>
 
-                <TextBlock x:Name="txtblSoXe"
+                            <TextBlock x:Name="txtblSoXe"
                            FontWeight="Medium"
                            FontSize="19"
                            Height="80"
                            Width="140"
-                           Margin="0,320,240,0"
-                           Foreground="Black">
-                </TextBlock>
+                           Margin="0,10,40,40"
+                           Foreground="White">
+                            </TextBlock>
 
-                <Border Height="140"
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="brdLoiNhac"
+                        Height="140"
                         Width="180"
                         CornerRadius="25"
-                        Margin="200,322,20,138"
-                        Background="NavajoWhite">
-                    <TextBlock x:Name="txtblLoiNhac"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,20,0"
+                        Background="#8A16C1"
+                        MouseMove="brdLoiNhac_MouseMove"
+                        MouseLeave="brdLoiNhac_MouseLeave">
+
+                        <Grid>
+                            <TextBlock x:Name="txtblLoiNhac"
                                Height="100"
                                Width="150"
                                Margin="0,0,30,30"
                                FontSize="17"
                                FontWeight="Medium"
+                               Foreground="White"
                                >
-                    </TextBlock>
-                </Border>
-
-                <TextBlock x:Name="txtblAnhLoiNhac"
+                            </TextBlock>
+                            <TextBlock x:Name="txtblAnhLoiNhac"
                            Height="60"
                            Width="60"
-                           Margin="305,395,20,138">
-                    <TextBlock.Background>
-                        <ImageBrush ImageSource="/Views/Pages/Images/CalendaRicon-removebg-preview.png"/>
-                    </TextBlock.Background>
-                </TextBlock>
-
-            </Grid>
-
-            <Label
+                           Margin="115,65,0,0">
+                                <TextBlock.Background>
+                                    <ImageBrush ImageSource="/Views/Pages/Images/CalendaRicon-removebg-preview.png"/>
+                                </TextBlock.Background>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Label
             x:Name="lblGioHeThong"
             Height="35"
             Width="300"
-            Margin="0,550,145,0"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            Margin="20,0,0,0"
             FontSize="20"
             FontWeight="Medium"
-            Foreground="Black"></Label>
+            Foreground="White">
+                    </Label>
+                </Grid>
+            </Border>
 
         </Grid>
 
         <Grid Height="600"
-              Width="500"
+              Width="600"
               Margin="450,0,0,0">
-
-            <StackPanel x:Name="stkLich"
-                        Height="240"
-                        Width="240"
-                        Margin="250,0,0,175">
-            </StackPanel>
 
             <Calendar x:Name="Lich"
                 Height="260"
                 Width="240"
-                Margin="250,335,0,0"
+                Margin="0,0,25,0"
                 SelectedDatesChanged="Lich_SelectedDatesChanged"
-                IsTodayHighlighted="True">
-
+                IsTodayHighlighted="True"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right">
             </Calendar>
 
-            <StackPanel x:Name="stkNoiDung"
+            <RichTextBox x:Name="rtbNoiDung"
                         Height="150"
                         Width="250"
-                        Margin="0,445,250,0">
-            </StackPanel>
+                        Margin="0,445,185,0"
+                        Foreground="Red"
+                        FontSize="11"
+                        IsReadOnly="True"
+                        Visibility="Collapsed">
+            </RichTextBox>
 
             <Button x:Name="btnDgXuat"
                     Content="Đăng Xuất"
@@ -248,30 +300,248 @@
                     FontWeight="Medium"
                     Foreground="Black"
                     Background="LightSkyBlue"
-                    Margin="380,0,0,560" 
+                    Margin="0,0,25,0" 
                     Click="btnDgXuat_Click"
-                    HorizontalAlignment="Center">
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
             </Button>
 
-            <StackPanel x:Name="stkbtnLichSu"
+            <DataGrid x:Name="dataGridLSHD"
+                  Height="290"
+                  Width="530"
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Right"
+                  Margin="0,45,0,0"
+                  FontSize="15"
+                  FontWeight="Medium"
+                  AutoGenerateColumns="False"
+                  Background="#151f2d"
+                  Foreground="White"
+                  Visibility="Collapsed">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã NV" Width="60" Binding="{Binding MaNV}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Tên Nhân Viên" Width="140" Binding="{Binding HoTenNV}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Thời Gian" Width="170" Binding="{Binding ThoiGian}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Hoạt Động" Width="230" Binding="{Binding HoatDong}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            <Border x:Name="borderLichvaButton"
+                    Height="290"
+                    Width="240"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Margin="0,45,25,0"
+                    CornerRadius="20"
+                    MouseMove="borderLichvaButton_MouseMove"
+                    MouseLeave="borderLichvaButton_MouseLeave"
+                    Opacity="0.8">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#462AD8" Offset="1"/>
+                        <GradientStop Color="#DA34AE" Offset="0"/>
+                        <GradientStop Color="#8A16C1" Offset="0.75"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Button x:Name="btnLenLich"
+                        Height="40"
+                        Width="110"
+                        Content="Lên Lịch"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Margin="0,5,0,0"
+                        Click="btnLenLich_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button x:Name="btnXoaLich"
+                        Height="40"
+                        Width="110"
+                        Margin="0,5,5,0"
+                        Content="Xoá Lịch"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"    
+                        Click="btnXoaLich_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <RichTextBox x:Name="rtb"
+                                 Height="140"
+                                 Margin="0,0,0,50">
+                    </RichTextBox>
+                    <Label Content="Giờ Bắt Đầu:"
+                           FontSize="14"
+                           FontWeight="Medium"
+                           Foreground="White"
+                           Height="85"
+                           Width="100"
+                           Margin="0,0,0,-5"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Left"></Label>
+                    <ComboBox x:Name="cbGioBD"
+                              Height="40"
+                              Width="70"
+                              VerticalAlignment="Bottom"
+                              Margin="0,0,0,60">
+                    </ComboBox>
+                    <ComboBox x:Name="cbPhutBD"
+                              Height="40"
+                              Width="70"
+                              VerticalAlignment="Bottom"                              
+                              Margin="170,0,0,60">
+                    </ComboBox>
+                    <Label Content="Giờ Kết Thúc:"
+                           FontSize="14"
+                           FontWeight="Medium"
+                           Foreground="White"
+                           Height="35"
+                           Width="100"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="0,200,0,-38">
+                    </Label>
+                    <ComboBox x:Name="cbGioKT"
+                              Height="40"
+                              Width="70"
+                              VerticalAlignment="Bottom"
+                              Margin="0,0,0,22">
+                    </ComboBox>
+                    <ComboBox x:Name="cbPhutKT"
+                              Height="40"
+                              Width="70"
+                              VerticalAlignment="Bottom"
+                              Margin="170,0,0,22">
+                    </ComboBox>
+                    <Button x:Name="btnHuy"
+                            Height="20"
+                            Width="60"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,-90,0"
+                            Content="Huỷ"
+                            FontSize="11"
+                            FontWeight="Medium"
+                            Click="btnHuy_Click">
+                    </Button>
+                    <Button x:Name="btnChamHoi"
+                            Height="20"
+                            Width="25"
+                            Content="?"
+                            FontWeight="Medium"
+                            FontSize="15"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,15,0"
+                            Click="btnChamHoi_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="50"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border x:Name="borderHuongDan"
+                            Height="350"
+                            Width="325"
+                            Background="Red"
+                            Margin="0,0,270,160"
+                            CornerRadius="30"
+                            Visibility="Collapsed">
+                <Grid>
+                    <Label Content="Hướng Dẫn Dùng Chức Năng Lịch"
+                                   FontSize="12"
+                                   FontWeight="Medium"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"></Label>
+                    <Image         x:Name="anhHuongDan"
+                                   Height="315"
+                                   Width="315"
+                                   Margin="0,0,0,3"
+                                   Source="/Views/Pages/Images/huongdanLich.png"></Image>
+                    <Button x:Name="btnDaHieu"
+                                    Content="Đã Hiểu"
+                                    FontSize="12"
+                                    FontWeight="Medium"
+                                    Height="20"
+                                    Width="55"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,0,0"
+                                    Click="btnDaHieu_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="btnNext"
+                            Height="19"
+                            Width="25"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,85,0"
+                            Content=">"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Click="btnNext_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Button x:Name="btnLichSu"
                     Height="40"
                     Width="110"
-                    Margin="130,0,0,560">
-            </StackPanel>
+                    Margin="0,0,155,0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Content="Lịch Sử"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Click="btnLichSu_Click"
+                    Visibility="Collapsed">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
-            <StackPanel x:Name="stkbtnLenLich"
-                        Height="40"
-                        Width="110"
-                        Margin="380,0,0,470">
-            </StackPanel>
-            <!--StackPanel này chứa nút Lên Lịch dành cho Nhân Viên Quản Lý-->
-
-            <StackPanel x:Name="stkbtnXoaLich"
-                        Height="40"
-                        Width="110"
-                        Margin="130,0,0,470">
-            </StackPanel>
-            <!--StackPanel này chứa nút Cập Nhật Lịch dành cho Nhân Viên Quản Lý-->
+            <Button x:Name="btnXoaLichSu"
+                    Height="40"
+                    Width="110"
+                    Margin="0,0,90,560"
+                    Content="Xoá Lịch Sử"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Click="btnXoaLichSu_Click"
+                    Visibility="Collapsed">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
         </Grid>
 

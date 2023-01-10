@@ -5,17 +5,17 @@ namespace MotoStore.Database;
 
 public partial class DonDatHang
 {
-    public Guid MaDonDh { get; set; }
+    public int Id { get; set; }
 
-    public int? SoDonDh { get; set; }
+    public string MaDdh { get; set; } = null!;
 
-    public Guid MaMh { get; set; }
+    public string MaMh { get; set; } = null!;
 
     public int? SoLuongHang { get; set; }
 
-    public Guid MaKh { get; set; }
+    public string MaKh { get; set; } = null!;
 
-    public Guid MaNv { get; set; }
+    public string MaNv { get; set; } = null!;
 
     public DateTime? Ngdh { get; set; }
 

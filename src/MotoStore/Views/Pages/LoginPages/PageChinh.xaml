@@ -81,7 +81,7 @@
                             </TextBlock.Background>
                         </TextBlock>
                         <TextBlock x:Name="txtSlogan" 
-                                   Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý"
+                                   Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý"
                                    FontSize="13.15"
                                    Foreground="White"
                                    Margin="0,50,0,0"
@@ -210,8 +210,7 @@
                             Content="Tiếng Việt" 
                             HorizontalAlignment="Right" 
                             Height="40" 
-                            Margin="0,65,0,0" 
-                            Grid.Row="1" 
+                            Margin="0,70,10,0" 
                             VerticalAlignment="Top"                           
                             Width="146" 
                             Click="buttonLanguage_Click" 

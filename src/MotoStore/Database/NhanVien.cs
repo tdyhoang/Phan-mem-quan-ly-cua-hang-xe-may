@@ -5,13 +5,15 @@ namespace MotoStore.Database;
 
 public partial class NhanVien
 {
-    public Guid MaNv { get; set; }
+    public int Id { get; set; }
+
+    public string MaNv { get; set; } = null!;
 
     public string? HoTenNv { get; set; }
 
     public DateTime? NgSinh { get; set; }
 
-    public string? GioiTinh { get; set; }
+    public string GioiTinh { get; set; } = null!;
 
     public string? DiaChi { get; set; }
 
@@ -25,13 +27,17 @@ public partial class NhanVien
 
     public decimal? Luong { get; set; }
 
+    public bool DaXoa { get; set; }
+
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
 
-    public virtual ICollection<LenLich> LenLiches { get; } = new List<LenLich>();
+    public virtual ICollection<LenLich> LenLichs { get; } = new List<LenLich>();
 
     public virtual ICollection<LichSuHoatDong> LichSuHoatDongs { get; } = new List<LichSuHoatDong>();
 
     public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
+
+    public virtual ICollection<UserApp> UserApps { get; } = new List<UserApp>();
 }

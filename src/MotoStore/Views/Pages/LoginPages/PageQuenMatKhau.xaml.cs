@@ -59,11 +59,11 @@ namespace MotoStore.Views.Pages.LoginPages
         }
 
         static public long ma;  //Đặt biến tĩnh để các PageGuiMa có thể truy cập*/
-        public PageGuiMa pgGM = new PageGuiMa(pgC);
+        public PageGuiMa pgGM = new(pgC);
         static public string strEmail;
         static public string ngonngu = "Tiếng Việt";
         private int flag = 0;
-        private readonly DispatcherTimer timer = new DispatcherTimer();
+        private readonly DispatcherTimer timer = new();
 
         private void buttonLanguageQMK_Click(object sender, RoutedEventArgs e)
         {
@@ -111,8 +111,8 @@ namespace MotoStore.Views.Pages.LoginPages
                     pgC.txtMatKhau.Text = "Mật Khẩu:";
                     pgC.buttonDangNhap.Content = "Đăng Nhập";
                     pgC.buttonQuenMK.Content = "Quên Mật Khẩu ?";
-                    pgC.txtQLYCHXM.Text = "QUẢN LÝ CỬA HÀNG XE MÁY";
-                    pgC.txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà quản lý";
+                    pgC.txtQLYCHXM.Text = "Quản Lý CỬA HÀNG XE MÁY";
+                    pgC.txtSlogan.Text = " Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý";
                     pgC.lblNnguHienTai.Content = "Ngôn Ngữ Hiện Tại:";
                     break;
             }
@@ -130,7 +130,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     lblThongBao.Content = "Please Fill All Fields Fully!";
                 else
                     lblThongBao.Content = "Vui Lòng Điền Đầy Đủ Thông Tin!";
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                timer.Interval = new(0, 0, 0, 0, 200);
                 timer.Start();
             }
             else if(txtDoiPass.Password!=txtXacNhanDoiPass.Password)
@@ -139,7 +139,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     lblThongBao.Content = "Password Retype Didn't Match New Password, Check Again!";
                 else
                     lblThongBao.Content = "Mật Khẩu Xác Nhận Không Khớp Với Mật Khẩu Mới, Kiểm Tra Lại!";
-                timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                timer.Interval = new(0, 0, 0, 0, 200);
                 timer.Start();
                 txtXacNhanDoiPass.Clear();
                 txtXacNhanDoiPass.Focus();
@@ -149,12 +149,12 @@ namespace MotoStore.Views.Pages.LoginPages
                 if(!txtEmail.Text.Contains("@gmail.com"))
                 {
                     lblThongBao.Content = "Đuôi Email không hợp lệ, hãy xem lại!";
-                    timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+                    timer.Interval = new(0, 0, 0, 0, 200);
                     timer.Start();
                 }
                 else
                 {
-                    MainDatabase mdb = new MainDatabase();
+                    MainDatabase mdb = new();
                     bool chuyentrang = false;
                     foreach(var email in mdb.UserApps)
                     {
@@ -187,9 +187,9 @@ namespace MotoStore.Views.Pages.LoginPages
 
         private void GuiMail()
         {
-            MailMessage mess = new MailMessage();
-            mess.From = new MailAddress("datrua3152003@gmail.com"); //Đây là Email gửi từ ứng dụng
-            Random rand = new Random();
+            MailMessage mess = new();
+            mess.From = new("datrua3152003@gmail.com"); //Đây là Email gửi từ ứng dụng
+            Random rand = new();
             ma = rand.Next(100000, 999999);
             switch (buttonLanguage.Content)
             {
@@ -202,8 +202,8 @@ namespace MotoStore.Views.Pages.LoginPages
                     mess.Body = "Your Verify Code Is: " + ma.ToString();
                     break;
             }
-            mess.To.Add(new MailAddress(txtEmail.Text));   //Email nhận là của người Nhân Viên Quản Lý
-            SmtpClient smtpClient1 = new SmtpClient("smtp.gmail.com")
+            mess.To.Add(new(txtEmail.Text));   //Email nhận là của người Nhân Viên Quản Lý
+            SmtpClient smtpClient1 = new("smtp.gmail.com")
             {
                 Port = 587,
                 Credentials = new NetworkCredential("datrua3152003@gmail.com", "ewxeolqofypyfzgi"),

@@ -19,8 +19,7 @@
     ResizeMode="NoResize"
     MouseDown="Window_MouseDown"
     WindowStyle="None"
-    mc:Ignorable="d"
-    IsVisibleChanged="UiWindow_IsVisibleChanged">
+    mc:Ignorable="d">
     
     <Grid>
 
@@ -118,7 +117,6 @@
                                FontSize="28.95"
                                HorizontalAlignment="Center"
                                FontWeight="Heavy"
-                               FontFamily="Great Vibes"
                                Foreground="#8A16C1"
                                ></Label>
                     </Grid>
