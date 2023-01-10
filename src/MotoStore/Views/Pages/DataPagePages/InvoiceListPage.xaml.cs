@@ -1,6 +1,7 @@
 ﻿using MotoStore.Database;
 using MotoStore.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System;
 using System.Windows;
 using System.Linq;
@@ -21,26 +22,51 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class InvoiceListPage : INavigableView<ViewModels.InvoiceListViewModel>
     {
-        internal List<HoaDon> TableData = new();
-
         public ViewModels.InvoiceListViewModel ViewModel
         {
             get;
         }
+
+        internal ObservableCollection<HoaDon> TableData = new();
+
+        bool isvalidtbxQntFrom = false;
+        bool isvalidtbxQntTo = false;
+        bool isvalidtbxTotFrom = false;
+        bool isvalidtbxTotTo = false;
 
         public InvoiceListPage(ViewModels.InvoiceListViewModel viewModel)
         {
             ViewModel = viewModel;
             InitializeComponent();
 
-            ViewModel.OnNavigatedTo();
             RefreshDataGrid();
         }
 
         private void RefreshDataGrid()
         {
+            DateTime? cdfrom = null;
+            DateTime? cdto = null;
             MainDatabase con = new();
-            TableData = con.HoaDons.ToList();
+            TableData = new(con.HoaDons);
+            foreach (var hoaDon in TableData.ToList())
+            {
+                if (cdfrom is null || cdfrom > hoaDon.NgayLapHd)
+                    cdfrom = hoaDon.NgayLapHd;
+                if (cdto is null || cdto < hoaDon.NgayLapHd)
+                    cdto = hoaDon.NgayLapHd;
+            }
+            dpCDFrom.SelectedDate ??= cdfrom;
+            dpCDTo.SelectedDate ??= cdto;
+            // Filter
+            foreach (var nhanVien in TableData.ToList())
+            {
+                if (nhanVien.NgayLapHd < dpCDFrom.SelectedDate || nhanVien.NgayLapHd > dpCDTo.SelectedDate)
+                    TableData.Remove(nhanVien);
+                else if ((isvalidtbxQntFrom && nhanVien.SoLuong < decimal.Parse(tbxQntFrom.Text)) || (isvalidtbxQntTo && nhanVien.SoLuong > decimal.Parse(tbxQntTo.Text)))
+                    TableData.Remove(nhanVien);
+                else if ((isvalidtbxTotFrom && nhanVien.ThanhTien < decimal.Parse(tbxTotFrom.Text)) || (isvalidtbxTotTo && nhanVien.ThanhTien > decimal.Parse(tbxTotTo.Text)))
+                    TableData.Remove(nhanVien);
+            }
             grdInvoice.ItemsSource = TableData;
         }
 
@@ -71,10 +97,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                     else
                         ngayLapHD = string.Empty;
                     // Kiểm tra dữ liệu đã đúng theo định nghĩa chưa
-                    if (hd.SoLuong is null)
-                        hd.SoLuong = 0;
-                    if (hd.ThanhTien is null)
-                        hd.ThanhTien = 0;
+                    hd.SoLuong ??= 0;
+                    hd.ThanhTien ??= 0;
 
                     // Thêm mới
                     if (string.IsNullOrEmpty(hd.MaHd))
@@ -173,15 +197,21 @@ namespace MotoStore.Views.Pages.DataPagePages
             {
                 if (PageChinh.getChucVu.ToLower() == "quản lý")
                 {
-                    btnSave.Visibility = Visibility.Visible;
                     grdInvoice.IsReadOnly = false;
                 }
                 else
                 {
-                    btnSave.Visibility = Visibility.Collapsed;
                     grdInvoice.IsReadOnly = true;
                 }
             }
+        }
+
+        private void AddRow(object sender, RoutedEventArgs e)
+            => TableData.Add(new());
+
+        private void ClearFilter(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

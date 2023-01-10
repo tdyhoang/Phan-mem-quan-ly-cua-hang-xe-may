@@ -1,6 +1,7 @@
 ﻿using MotoStore.Database;
 using MotoStore.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System;
 using System.Windows;
 using System.Linq;
@@ -21,41 +22,68 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class EmployeeListPage : INavigableView<ViewModels.EmployeeListViewModel>
     {
-        internal List<NhanVien> TableData = new();
-
         public ViewModels.EmployeeListViewModel ViewModel
         {
             get;
         }
+
+        internal ObservableCollection<NhanVien> TableData;
 
         public EmployeeListPage(ViewModels.EmployeeListViewModel viewModel)
         {
             ViewModel = viewModel;
             InitializeComponent();
 
-            ViewModel.OnNavigatedTo();
             RefreshDataGrid();
         }
 
         private void RefreshDataGrid()
         {
+            DateTime? bdfrom = null;
+            DateTime? bdto = null;
+            DateTime? jdfrom = null;
+            DateTime? jdto = null;
             MainDatabase con = new();
-            TableData = con.NhanViens.ToList();
+            TableData = new(con.NhanViens);
             foreach (var nhanVien in TableData.ToList())
+            {
                 if (nhanVien.DaXoa)
+                {
                     TableData.Remove(nhanVien);
+                    continue;
+                }
+                if (bdfrom is null || bdfrom > nhanVien.NgSinh)
+                    bdfrom = nhanVien.NgSinh;
+                if (bdto is null || bdto < nhanVien.NgSinh)
+                    bdto = nhanVien.NgSinh;
+                if (jdfrom is null || jdfrom > nhanVien.NgVl)
+                    jdfrom = nhanVien.NgVl;
+                if (jdto is null || jdto < nhanVien.NgVl)
+                    jdto = nhanVien.NgVl;
+            }
+            dpBDFrom.SelectedDate ??= bdfrom;
+            dpBDTo.SelectedDate ??= bdto;
+            dpJDFrom.SelectedDate ??= jdfrom;
+            dpJDTo.SelectedDate ??= jdto;
+            // Filter
+            foreach (var nhanVien in TableData.ToList())
+            {
+                if (nhanVien.NgSinh < dpBDFrom.SelectedDate || nhanVien.NgSinh > dpBDTo.SelectedDate)
+                    TableData.Remove(nhanVien);
+                else if (nhanVien.NgVl < dpJDFrom.SelectedDate || nhanVien.NgVl > dpJDTo.SelectedDate)
+                    TableData.Remove(nhanVien);
+            }
             grdEmployee.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlCommand cmd;
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-                cmd = new("set dateformat dmy", con);
+                cmd = new("begin transaction\nset dateformat dmy", con);
                 cmd.ExecuteNonQuery();
                 string ngaySinhNv, ngayVaoLam;
 
@@ -67,7 +95,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                     if (obj is not NhanVien nv)
                         continue;
-
                     // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
                     if (nv.NgSinh.HasValue)
                         ngaySinhNv = nv.NgSinh.Value.ToString("dd-MM-yyyy");
@@ -89,8 +116,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         MessageBox.Show("Số điện thoại không được chứa ký tự không phải chữ số!");
                         return;
                     }
-                    if (nv.Luong is null)
-                        nv.Luong = 0;
+                    nv.Luong ??= 0;
 
                     // Thêm mới
                     if (string.IsNullOrEmpty(nv.MaNv))
@@ -110,9 +136,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Close();
                 // Làm mới nội dung hiển thị cho khớp với database
                 RefreshDataGrid();
+                MessageBox.Show("Lưu chỉnh sửa thành công!");
             }
             catch (Exception ex)
             {
+                cmd = new("rollback transaction", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -122,22 +152,20 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if (sender is not DataGrid dg)
                 return;
+            // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
+            if (grdEmployee.IsReadOnly)
+                return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
             if (dep is not DataGridRow && dep is not DataGridCell)
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
-            DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+            DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
             if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
                 DeleteRow(sender, e);
             }
-        }
-
-        private void RefreshView(object sender, RoutedEventArgs e)
-        {
-            RefreshDataGrid();
         }
 
         private void DeleteRow(object sender, RoutedEventArgs e)
@@ -148,16 +176,12 @@ namespace MotoStore.Views.Pages.DataPagePages
                 SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
-                NhanVien nv;
 
                 foreach (object obj in grdEmployee.SelectedItems)
                 {
                     // Bỏ qua ô trắng mà vẫn được Select
                     // is not NhanVien chỉ để an toàn
-                    if (obj is null || obj is not NhanVien)
-                        continue;
-                    nv = obj as NhanVien;
-                    if (nv is null)
+                    if (obj is not NhanVien nv)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã nv
                     if (string.IsNullOrEmpty(nv.MaNv))
@@ -169,7 +193,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Xóa hàng
                     else
                     {
-                        cmd = new("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "';", con);
+                        cmd = new("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "'", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -181,6 +205,36 @@ namespace MotoStore.Views.Pages.DataPagePages
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
             }
+        }
+
+        private void RefreshView(object sender, RoutedEventArgs e)
+        {
+            RefreshDataGrid();
+        }
+
+        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                bool isQuanLy = PageChinh.getChucVu.ToLower() == "quản lý";
+
+                grdEmployee.IsReadOnly = !isQuanLy;
+
+                if (sender is MenuItem item)
+                    item.IsEnabled = isQuanLy;
+            }
+        }
+
+        private void AddRow(object sender, RoutedEventArgs e)
+            => TableData.Add(new());
+
+        private void ClearFilter(object sender, RoutedEventArgs e)
+        {
+            dpBDFrom.SelectedDate = null;
+            dpBDTo.SelectedDate = null;
+            dpJDFrom.SelectedDate = null;
+            dpJDTo.SelectedDate = null;
+            RefreshDataGrid();
         }
     }
 }

@@ -2,6 +2,15 @@
 *Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
 
 ## Lưu ý!!!
+### Cách dùng TextBoxInputBehavior
+- Ở file xaml thêm 2 namespace là `xmlns:i="http://schemas.microsoft.com/xaml/behaviors"` và `xmlns:helpers="clr-namespace:MotoStore.Helpers"`
+- Có 3 InputMode:
+    + `None`: Textbox gõ như bình thường, không có điều kiện
+	+ `DigitInput`: Textbox chỉ cho phép nhập các ký tự là chữ số
+	+ `DecimalInput`: Textbox chỉ cho phép nhập số thập phân
+	+ Ae có thể vào file `Helpers\TextBoxInputBehavior.cs` để tự định nghĩa thêm InputMode nếu cần
+- Thuộc tính `JustPositiveDecimalInput` nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm)
+
 ### Trước khi commit change lên github:
 - Xóa các folder:
 	+ `.vs`
@@ -13,6 +22,23 @@
 - Mục đích là để tránh trường hợp ghi đè file của nhau dẫn đến mất code, mất thời gian để sửa
 - Ae chỉnh sửa phần nào thì tạo branch mang tên phần đó, commit lên đó trước rồi vào Pull requests -> Chọn New Pull request -> bên phần compare chọn branch vừa up lên của mình -> Chọn Create pull request  và chờ nó kiểm tra xem có conflict hay không. Nếu không thì chọn Merge pull request -> Confirm merge
 
+### Thay đổi chung
+1. Cho phép người dùng custom ID ở phần cài đặt
+2. Đồng bộ lại các connection string theo như chuỗi ở mục `Connection string`
+3. Sửa lại toàn bộ đường dẫn file thành đường dẫn tương đối (relative)
+
+### Nhập xuất
+1. Ở mục sản phẩm khi click vào 1 sản phẩm sẽ hiện thông tin cơ bản của sp đó, có 2 nút là nhập thêm hàng và tạo hóa đơn
+2. Xóa 2 textbox số lượng và giá bán ở mục thêm mới sản phẩm
+3. Xử lý kiểm tra điều kiện số lượng ở hóa đơn không được phép lớn hơn số lượng hàng tồn kho, và mỗi lần tạo hóa đơn mới là tự động trừ đi lượng hàng tồn
+4. Các textbox nhập ID sửa lại thành combobox, hiển thị thành từng thẻ có vài thông tin quan trọng và cũng cho phép người dùng nhập vào để tìm kiểm (filter)
+5. Xử lý lostfocus và keydown ở các textbox phần nhập xuất, đánh dấu * vào những ô bắt buộc phải có dữ liệu (not null)
+
+### Báo cáo
+1. Cải thiện thêm phần đồ thị, hiển thị các cột thưa ra, cho phép zoom theo trục hoành
+
+### Dashboard
+1. Xem lại phần thay đổi avatar, lên lịch và lịch sử hoạt động
 
 ### Về file Resources.resx
 - Mn nhớ sử dụng file này cho các tài nguyên liên quan tới giao diện như màu sắc, hình nền, icon... hoặc những chuỗi (string) được sử dụng nhiều nơi. Có thể xem đây là 1 thư viện tổng cho chương trình.

@@ -25,7 +25,6 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// </summary>
     public partial class CustomerListPage : INavigableView<ViewModels.CustomerListViewModel>
     {
-
         public ViewModels.CustomerListViewModel ViewModel
         {
             get;
@@ -43,23 +42,39 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
+            DateTime? bdfrom = null;
+            DateTime? bdto = null;
             MainDatabase con = new();
             TableData = new(con.KhachHangs);
             foreach (var khachHang in TableData.ToList())
+            {
                 if (khachHang.DaXoa)
+                {
+                    TableData.Remove(khachHang);
+                    continue;
+                }
+                if (bdfrom is null || bdfrom > khachHang.NgSinh)
+                    bdfrom = khachHang.NgSinh;
+                if (bdto is null || bdto < khachHang.NgSinh)
+                    bdto = khachHang.NgSinh;
+            }
+            dpBDFrom.SelectedDate ??= bdfrom;
+            dpBDTo.SelectedDate ??= bdto;
+            // Filter
+            foreach (var khachHang in TableData.ToList())
+                if (khachHang.NgSinh < dpBDFrom.SelectedDate || khachHang.NgSinh > dpBDTo.SelectedDate)
                     TableData.Remove(khachHang);
             grdCustomer.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlCommand cmd;
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-                cmd = new("set dateformat dmy", con);
+                cmd = new("begin transaction\nset dateformat dmy", con);
                 cmd.ExecuteNonQuery();
                 string ngaySinhKh;
 
@@ -69,10 +84,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                 foreach (object obj in grdCustomer.Items)
                 {
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                    // is not KhachHang chỉ để an toàn
                     if (obj is not KhachHang kh)
                         continue;
-
                     // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
                     if (kh.NgSinh.HasValue)
                         ngaySinhKh = kh.NgSinh.Value.ToString("dd-MM-yyyy");
@@ -117,6 +130,9 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
             catch (Exception ex)
             {
+                cmd = new("rollback transaction", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -134,17 +150,12 @@ namespace MotoStore.Views.Pages.DataPagePages
             if (dep is not DataGridRow && dep is not DataGridCell)
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
-            DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+            DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
             if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
                 DeleteRow(sender, e);
             }
-        }
-
-        private void RefreshView(object sender, RoutedEventArgs e)
-        {
-            RefreshDataGrid();
         }
 
         private void DeleteRow(object sender, RoutedEventArgs e)
@@ -155,16 +166,12 @@ namespace MotoStore.Views.Pages.DataPagePages
                 SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 SqlCommand cmd;
                 con.Open();
-                KhachHang kh;
 
                 foreach (object obj in grdCustomer.SelectedItems)
                 {
                     // Bỏ qua ô trắng mà vẫn được Select
                     // is not KhachHang chỉ để an toàn
-                    if (obj is null || obj is not KhachHang)
-                        continue;
-                    kh = obj as KhachHang;
-                    if (kh is null)
+                    if (obj is not KhachHang kh)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã KH
                     if (string.IsNullOrEmpty(kh.MaKh))
@@ -190,11 +197,16 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
         }
 
+        private void RefreshView(object sender, RoutedEventArgs e)
+        {
+            RefreshDataGrid();
+        }
+
         private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
-                bool isQuanLy = (PageChinh.getChucVu.ToLower() == "quản lý");
+                bool isQuanLy = PageChinh.getChucVu.ToLower() == "quản lý";
 
                 grdCustomer.IsReadOnly = !isQuanLy;
 
@@ -204,8 +216,13 @@ namespace MotoStore.Views.Pages.DataPagePages
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
+            => TableData.Add(new());
+
+        private void ClearFilter(object sender, RoutedEventArgs e)
         {
-            TableData.Add(new());
+            dpBDFrom.SelectedDate = null;
+            dpBDTo.SelectedDate = null;
+            RefreshDataGrid();
         }
     }
 }

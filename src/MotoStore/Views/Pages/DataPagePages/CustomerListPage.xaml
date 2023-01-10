@@ -19,15 +19,6 @@
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
-        <ContextMenu x:Key="RowMenu">
-            <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
-            <ui:MenuItem Header="Lưu chỉnh sửa" SymbolIcon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged"/>
-            <ui:NavigationSeparator />
-            <ui:MenuItem Header="Thêm dòng" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
-        </ContextMenu>
-        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
-            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
-        </Style>
         <helpers:DateTimeConverter x:Key="DateTimeConverter" />
     </ui:UiPage.Resources>
 
@@ -41,28 +32,53 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="5,0">
             <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
             <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
             <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
-            <ui:NavigationSeparator />
-            <TextBlock Text="Lọc theo ngày sinh:" Background="Transparent" />
-            <TextBlock Text="Từ ngày" />
-            <DatePicker SelectedDateFormat="Short">
-                <DatePicker.Resources>
-                    <Style TargetType="{x:Type DatePickerTextBox}">
-                        <Setter Property="Control.Template">
-                            <Setter.Value>
-                                <ControlTemplate>
-                                    <TextBox x:Name="dptbxFrom" Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </DatePicker.Resources>
-            </DatePicker>
-            <TextBlock Text="Đến ngày" />
-            <DatePickerTextBox Name="dtpTo" />
+            <ui:NavigationSeparator Margin="5,0" />
+            <Menu>
+                <ui:MenuItem Header="Lọc" SymbolIcon="Filter24" AllowDrop="True">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:Button Content="Xóa điều kiện lọc" Icon="FilterDismiss24" Margin="5,0" Click="ClearFilter" />
+                        <ui:Button Content="Lọc" Icon="Filter24" Margin="5,0" />
+                    </StackPanel>
+                    <ui:MenuItem Header="Lọc theo ngày sinh">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Từ ngày:" Margin="5,0" />
+                            <DatePicker Name="dpBDFrom" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
+                                <DatePicker.Resources>
+                                    <Style TargetType="{x:Type DatePickerTextBox}">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Đến ngày:" Margin="5,0" />
+                            <DatePicker Name="dpBDTo" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
+                                <DatePicker.Resources>
+                                    <Style TargetType="{x:Type DatePickerTextBox}">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                        </StackPanel>
+                    </ui:MenuItem>
+                </ui:MenuItem>
+            </Menu>
         </StackPanel>
         
         <ui:DataGrid Name="grdCustomer"
@@ -74,15 +90,14 @@
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                      ItemsSource="{Binding TableData, Mode=TwoWay}"
-                     RowStyle="{StaticResource DefaultRowStyle}"
                      PreviewKeyDown="PreviewKeyDown">
 
             <ui:DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#0078D7" />
-                            <Setter Property="BorderBrush" Value="#0078D7" />
+                            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
