@@ -19,7 +19,6 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()

@@ -17,11 +17,8 @@ namespace MotoStore.ViewModels
 {
     public partial class UserListViewModel : ObservableObject, INavigationAware
     {
-        public List<UserApp> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
