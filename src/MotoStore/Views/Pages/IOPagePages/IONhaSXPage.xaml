@@ -15,10 +15,25 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <Label x:Name="lblThongBao" Height="30" FontSize="15"
+        <Label x:Name="lblThongBao" Height="20" FontSize="10" Width="150"
                                Foreground="red" 
                                FontWeight="Medium" 
-                               Margin="23,285,624,135"
+                               Margin="113,79,537,351"
+                               />
+        <Label x:Name="lblThongBaoSDT" Height="20" FontSize="10"  Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="85,131,508,299"
+                               />
+        <Label x:Name="lblThongBaoEmail" Height="20" FontSize="10"  Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="85,180,508,237"
+                               />
+        <Label x:Name="lblThongBaoQG" Height="20" FontSize="10"  Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="111,246,539,184"
                                />
         <Label x:Name="lblDauSao" 
                Height="30"

@@ -72,7 +72,7 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtPhanKhoiSP" Margin="707,164,43,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtPhanKhoiSP" Margin="707,164,43,0" VerticalAlignment="Top" LostFocus="txtPhanKhoiSP_LostFocus"/>
         <Button x:Name="btnAddNewSP" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="302,388,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewSP_Click"/>
         <Image x:Name="ImageSP" HorizontalAlignment="Left" Height="123" Margin="556,289,0,0" VerticalAlignment="Top" Width="209"/>
         <Button x:Name="btnLoadImageSP" Content="Chọn ảnh Sản Phẩm" Margin="619,249,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.898,0.615" Click="btnLoadImageSP_Click"/>
@@ -97,6 +97,13 @@
             Foreground="Red"
             FontWeight="Medium"
             Margin="666,167,111,253"/>
+        <Label x:Name="lblDauSao_Copy3" 
+            Height="30"
+            FontSize="15"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="153,83,624,337"/>
 
     </Grid>
 </Page>

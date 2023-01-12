@@ -33,9 +33,15 @@ namespace MotoStore.Views.Pages.IOPagePages
         static public bool isValid = false;
         private readonly DispatcherTimer timer = new();
         private readonly DateTime dt = DateTime.Now;
+        bool checkTenKH = false;
+        bool checkNgaySinh= false;
+        bool checkSDT = true;
+        bool checkDiaChi= true;
+        bool checkEmail = false;
+       
+      
 
-
-        static private int dem = 0;   //Biến đếm số lần nháy
+    static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -59,30 +65,26 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void btnAddNewKhachHang_Click(object sender, RoutedEventArgs e)
         {
-            bool check = true;
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if ((string.IsNullOrWhiteSpace(txtTenKH.Text)) || (string.IsNullOrWhiteSpace(txtEmailKH.Text)) || (string.IsNullOrWhiteSpace(txtNgaySinhKH.Text)) || (string.IsNullOrWhiteSpace(txtDiaChiKH.Text)) || (string.IsNullOrWhiteSpace(txtSDTKH.Text)) || (string.IsNullOrWhiteSpace(cmbGioiTinhKH.Text)) || (string.IsNullOrWhiteSpace(cmbLoaiKH.Text)))
+            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT))
             {
-                lblThongBao.Content = "Vui lòng điền đầy đủ thông tin!";
-                timer.Interval = new(0, 0, 0, 0, 200);
-            }
+                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
+            }     
             else
-            {          
-                if (check)
-                {
+            {                      
                     con.Open();
                     cmd = new("Set Dateformat dmy\nInsert into KhachHang values(N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "',N'"  + cmbGioiTinhKH.Text + "', N'" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "',N'" + cmbLoaiKH.Text + " ',0 )", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");
-                }
+                
             }
         }
 
         private void txtTenKH_LostFocus(object sender, RoutedEventArgs e) // Check Tên Khách Hang
         {
-            bool checkcheck = true;
+             checkTenKH = true;
             for (int i = 0; i < txtTenKH.Text.Length; i++)
             {
                 if ((txtTenKH.Text[i] >= 48 && txtTenKH.Text[i] <= 57))
@@ -92,12 +94,12 @@ namespace MotoStore.Views.Pages.IOPagePages
                     timer.Interval = new(0, 0, 0, 0, 200);
                     lblThongBao.Visibility = Visibility.Visible;
                     timer.Start();
-                    checkcheck = false;
+                    checkTenKH = false;
                     break;
                 }
 
             }
-            if (checkcheck)
+            if (checkTenKH)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
             }
@@ -106,61 +108,70 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void txtNgaySinhKH_LostFocus(object sender, RoutedEventArgs e) //Check Ngày Sinh Khách Hàng
         {
-            bool checkcheck = true;
+             checkNgaySinh = true;
             DateTime date;
             if (!(DateTime.TryParseExact(txtNgaySinhKH.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)))
             {
-                lblThongBao.Content = "Ngày Sinh không hợp lệ!";
+                lblThongBaoNS.Content = "Ngày Sinh không hợp lệ!";
                 timer.Interval = new(0, 0, 0, 0, 200);
-                lblThongBao.Visibility = Visibility.Visible;
+                lblThongBaoNS.Visibility = Visibility.Visible;
                 timer.Start();
-                checkcheck = false;              
+                checkNgaySinh = false;              
             }
-            if (checkcheck)
+            if (checkNgaySinh)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoNS.Visibility = Visibility.Collapsed;
             }
         }
 
         private void txtSDTKH_LostFocus(object sender, RoutedEventArgs e) //Check SĐT khách hàng
         {
-            bool checkcheck = true;
+             checkSDT = true;
             for (int i = 0; i < txtSDTKH.Text.Length; i++)
             {
                 if (!(txtSDTKH.Text[i] >= 48 && txtSDTKH.Text[i] <= 57))
                 {
 
-                    lblThongBao.Content = "SĐT Khách Hàng không hợp lệ!";
+                    lblThongBaoSDT.Content = "SĐT Khách Hàng không hợp lệ!";
                     timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
+                    lblThongBaoSDT.Visibility = Visibility.Visible;
                     timer.Start();
-                    checkcheck = false;
+                    checkSDT = false;
                     break;
                 }
 
             }
-            if (checkcheck)
+            if (checkSDT)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoSDT.Visibility = Visibility.Collapsed;
             }
         }
 
         private void txtEmailKH_LostFocus(object sender, RoutedEventArgs e)
         {
-            bool checkcheck = true;
+             checkEmail = true;
             if (!(txtEmailKH.Text.Contains("@gmail.com"))) //Check Email Khách hàng
             {
-                lblThongBao.Content = "Email Khách Hàng không hợp lệ!";
+                lblThongBaoEmail.Content = "Email Khách Hàng không hợp lệ!";
                 timer.Interval = new(0, 0, 0, 0, 200);
-                lblThongBao.Visibility = Visibility.Visible;
+                lblThongBaoEmail.Visibility = Visibility.Visible;
                 timer.Start();
-                checkcheck = false;
+                checkEmail = false;
                 
             }
-            if (checkcheck)
+            if (checkEmail)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoEmail.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void txtDiaChiKH_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtDiaChiKH.Text))
+            {
+                checkDiaChi = true;
+            }
+        }
+
     }
 }

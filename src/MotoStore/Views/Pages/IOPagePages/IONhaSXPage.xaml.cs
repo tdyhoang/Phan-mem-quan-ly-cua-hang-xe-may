@@ -125,9 +125,9 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 if (!(txtSDTNSX.Text[i] >= 48 && txtSDTNSX.Text[i] <= 57))
                 {
-                    lblThongBao.Content = "SĐT không chứa các ký tự!";
+                    lblThongBaoSDT.Content = "SĐT không chứa các ký tự!";
                     timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
+                    lblThongBaoSDT.Visibility = Visibility.Visible;
                     checkSDT = false;
                     break;
 
@@ -135,7 +135,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
             if (checkSDT)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoSDT.Visibility = Visibility.Collapsed;
             }
         }
         //check Email
@@ -144,9 +144,9 @@ namespace MotoStore.Views.Pages.IOPagePages
              checkEmail = true;
             if (!(txtEmailNSX.Text.Contains("@gmail.com")))
             {       
-                lblThongBao.Content = "Email không hợp lệ";
+                lblThongBaoEmail.Content = "Email không hợp lệ";
                 timer.Interval = new(0, 0, 0, 0, 200);
-                lblThongBao.Visibility = Visibility.Visible;
+                lblThongBaoEmail.Visibility = Visibility.Visible;
                 checkEmail = false;
                 
             }
@@ -156,7 +156,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }    
             if (checkEmail)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoEmail.Visibility = Visibility.Collapsed;
             }
             
         }
@@ -168,7 +168,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 if ((txtNuocSX.Text[i] >= 48 && txtNuocSX.Text[i] <= 57))
                 {
-                    lblThongBao.Content = "Nước Sản Xuất không hợp lệ!";
+                    lblThongBaoQG.Content = "Nước Sản Xuất không hợp lệ!";
                     timer.Interval = new(0, 0, 0, 0, 200);
                     timer.Start();
                     checkGia = false;
@@ -177,7 +177,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
             if (checkGia)
             {
-                lblThongBao.Visibility = Visibility.Collapsed;
+                lblThongBaoQG.Visibility = Visibility.Collapsed;
             }
         }
     }

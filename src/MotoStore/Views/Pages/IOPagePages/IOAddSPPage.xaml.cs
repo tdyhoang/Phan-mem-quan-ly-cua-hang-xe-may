@@ -19,6 +19,7 @@ using MotoStore.Database;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 
+
 namespace MotoStore.Views.Pages.IOPagePages
 {
     /// <summary>
@@ -35,7 +36,9 @@ namespace MotoStore.Views.Pages.IOPagePages
         static public bool isValid = false;
         private readonly DispatcherTimer timer = new();
         private readonly DateTime dt = DateTime.Now;
-
+        bool checkTenSP= false;
+        bool checkGiaNhapSP=false;
+        bool checkPhanKhoi=false;
 
         static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
@@ -72,38 +75,15 @@ namespace MotoStore.Views.Pages.IOPagePages
             private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
 
-            bool check = true;
+           
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if ((string.IsNullOrWhiteSpace(txtTenSP.Text)) || (string.IsNullOrWhiteSpace(txtGiaNhapSP.Text)) || (string.IsNullOrWhiteSpace(cmbXuatXuSP.Text)) || (string.IsNullOrWhiteSpace(cmbHangSXSP.Text)) || (string.IsNullOrWhiteSpace(txtMoTaSP.Text)) || (string.IsNullOrWhiteSpace(txtPhanKhoiSP.Text)))
+            if (!(checkTenSP && checkGiaNhapSP && checkPhanKhoi ))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
             }
             else
             {
-                for (int i = 0; i < txtTenSP.Text.Length; i++)//Check Tên SP
-                {
-                    if ((txtTenSP.Text[i] >= 48 && txtTenSP.Text[i] <= 57))
-                    {
-                        MessageBox.Show("Tên Sản Phẩm không được chứa các ký tự số! ");
-                        check = false;
-                    }
-                }
-
-
-                for (int i = 0; i < txtGiaNhapSP.Text.Length; i++) //Check Giá Nhập SPham
-                {
-                    if (!(txtGiaNhapSP.Text[i] >= 48 && txtGiaNhapSP.Text[i] <= 57))
-                    {
-                        MessageBox.Show("Giá Sản Phẩm không được chứa các ký tự ");
-                        check = false;
-                    }
-                }
-               
-              
-
-                if (check)
-                {
                     string MaMH = Guid.NewGuid().ToString();
                     File.Move("F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
 
@@ -112,13 +92,13 @@ namespace MotoStore.Views.Pages.IOPagePages
                     cmd.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Thêm dữ liệu thành công");
-                }
+                
             }
         }
 
         private void txtTenSP_LostFocus(object sender, RoutedEventArgs e)
         {
-            bool checkcheck = true;
+            bool checkTenSP = true;
             for (int i = 0; i < txtTenSP.Text.Length; i++)
             {
                 if ((txtTenSP.Text[i] >= 48 && txtTenSP.Text[i] <= 57))
@@ -128,12 +108,12 @@ namespace MotoStore.Views.Pages.IOPagePages
                     timer.Interval = new(0, 0, 0, 0, 200);
                     lblThongBao.Visibility = Visibility.Visible;
                     timer.Start();
-                    checkcheck = false;
+                    checkTenSP = false;
                     break;
                 }
 
             }
-            if (checkcheck)
+            if (checkTenSP)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
             }
@@ -141,7 +121,7 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void txtGiaNhapSP_LostFocus(object sender, RoutedEventArgs e)
         {
-            bool checkcheck = true;
+            bool checkGiaNhapSP = true;
             for (int i = 0; i < txtGiaNhapSP.Text.Length; i++)
             {
                 if (!(txtGiaNhapSP.Text[i] >= 48 && txtGiaNhapSP.Text[i] <= 57))
@@ -151,12 +131,33 @@ namespace MotoStore.Views.Pages.IOPagePages
                     timer.Interval = new(0, 0, 0, 0, 200);
                     lblThongBao.Visibility = Visibility.Visible;
                     timer.Start();
-                    checkcheck = false;
+                    checkGiaNhapSP = false;
                     break;
                 }
 
             }
-            if (checkcheck)
+            if (checkGiaNhapSP)
+            {
+                lblThongBao.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void txtPhanKhoiSP_LostFocus(object sender, RoutedEventArgs e) //Check Phân Phối của Xe
+        {
+            checkPhanKhoi = true;
+            for (int i = 0; i < txtPhanKhoiSP.Text.Length; i++)
+            {
+                if (!(txtPhanKhoiSP.Text[i] >= 48 && txtPhanKhoiSP.Text[i] <= 57))
+                {
+                    lblThongBao.Content = "Phân Khối không chứa các ký tự!";
+                    timer.Interval = new(0, 0, 0, 0, 200);
+                    lblThongBao.Visibility = Visibility.Visible;
+                    checkPhanKhoi = false;
+                    break;
+
+                }
+            }
+            if (checkPhanKhoi)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
             }

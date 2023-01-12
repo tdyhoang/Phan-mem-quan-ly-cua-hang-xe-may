@@ -24,11 +24,28 @@
                Foreground="Red"
                FontWeight="Medium"
                Margin="143,57,634,363"/>
-        <Label x:Name="lblThongBao" Height="30" FontSize="15"
+        <Label x:Name="lblThongBao" Height="20" FontSize="10" Width="150"
                                Foreground="red" 
                                FontWeight="Medium" 
-                               Margin="23,272,624,148"
+                               Margin="30,85,488,349"
                                />
+        <Label x:Name="lblThongBaoNS" Height="20" FontSize="10"  Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="25,145,479,287"
+                               />
+        
+        <Label x:Name="lblThongBaoSDT" Height="20" FontSize="10" Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="500,81,24,349"
+                               />
+        <Label x:Name="lblThongBaoEmail" Height="20" FontSize="10" Width="150"
+                               Foreground="red" 
+                               FontWeight="Medium" 
+                               Margin="500,144,24,286"
+                               />
+
         <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus"/>
         <Label x:Name="lbNgaySinhKH"
                Content="Ngày Sinh: " 
@@ -43,7 +60,7 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075"/>
+        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075" LostFocus="txtDiaChiKH_LostFocus"/>
         <Label x:Name="lbSDTKhachHang"
                Content=" SĐT: " 
                Margin="536,58,113,367"
@@ -64,7 +81,7 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top">
+        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top" >
             <ComboBoxItem>Nam</ComboBoxItem>
             <ComboBoxItem>Nữ</ComboBoxItem>
         </ComboBox>
