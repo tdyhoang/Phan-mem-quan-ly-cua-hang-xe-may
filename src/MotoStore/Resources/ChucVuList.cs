@@ -11,10 +11,10 @@ namespace MotoStore.Resources
     {
         public ChucVuList()
         {
-            this.Add("NVTuVan");
-            this.Add("NVSuaXe");
-            this.Add("NVBanHang");
-            this.Add("NVQuanLy");
+            Add("NVTuVan");
+            Add("NVSuaXe");
+            Add("NVBanHang");
+            Add("NVQuanLy");
         }
     }
 }

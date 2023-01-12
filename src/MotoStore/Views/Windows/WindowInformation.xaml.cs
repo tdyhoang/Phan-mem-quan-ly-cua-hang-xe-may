@@ -41,7 +41,7 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

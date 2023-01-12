@@ -26,7 +26,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         public IOSanPhamPage()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
             var products = GetProducts();
             if (products.Count > 0)
                 ListViewProduct.ItemsSource = products;

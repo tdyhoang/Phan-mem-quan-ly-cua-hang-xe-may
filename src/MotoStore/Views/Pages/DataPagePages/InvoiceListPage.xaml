@@ -37,71 +37,107 @@
             <ui:NavigationSeparator Margin="5,0" />
             <Menu>
                 <ui:MenuItem Header="Lọc" SymbolIcon="Filter24" AllowDrop="True">
-                    <StackPanel Orientation="Horizontal">
-                        <ui:Button Content="Xóa điều kiện lọc" Icon="FilterDismiss24" Margin="5,0" Click="ClearFilter" />
-                        <ui:Button Content="Lọc" Icon="Filter24" Margin="5,0" />
-                    </StackPanel>
+                    <ui:MenuItem StaysOpenOnClick="True">
+                        <ui:MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:Button Content="Xóa điều kiện lọc" Icon="FilterDismiss24" Margin="5,0" Click="ClearFilter" />
+                                <ui:Button Content="Lọc" Icon="Filter24" HorizontalAlignment="Right" Margin="5,0" />
+                            </StackPanel>
+                        </ui:MenuItem.Header>
+                    </ui:MenuItem>
                     <ui:MenuItem Header="Lọc theo ngày vào làm">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Từ ngày:" Margin="5,0" />
-                            <DatePicker Name="dpCDFrom" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
-                                <DatePicker.Resources>
-                                    <Style TargetType="{x:Type DatePickerTextBox}">
-                                        <Setter Property="Control.Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Đến ngày:" Margin="5,0" />
-                            <DatePicker Name="dpCDTo" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
-                                <DatePicker.Resources>
-                                    <Style TargetType="{x:Type DatePickerTextBox}">
-                                        <Setter Property="Control.Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </StackPanel>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Từ ngày:" Margin="5,0" />
+                                    <DatePicker Name="dpCDFrom" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
+                                        <DatePicker.Resources>
+                                            <Style TargetType="{x:Type DatePickerTextBox}">
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DatePicker.Resources>
+                                    </DatePicker>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Đến ngày:" Margin="5,0" />
+                                    <DatePicker Name="dpCDTo" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
+                                        <DatePicker.Resources>
+                                            <Style TargetType="{x:Type DatePickerTextBox}">
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DatePicker.Resources>
+                                    </DatePicker>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
                     </ui:MenuItem>
                     <ui:MenuItem Header="Lọc theo số lượng">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Từ:" Margin="5,0" />
-                            <TextBox Name="tbxQntFrom" Margin="5,0">
-                                <i:Interaction.Behaviors>
-                                    <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True" />
-                                </i:Interaction.Behaviors>
-                            </TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Đến:" Margin="5,0" />
-                            <TextBox Name="tbxQntTo" Margin="5,0">
-                                <i:Interaction.Behaviors>
-                                    <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True" />
-                                </i:Interaction.Behaviors>
-                            </TextBox>
-                        </StackPanel>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Từ:" Margin="5,0" />
+                                    <TextBox Name="tbxQntFrom" Margin="5,0">
+                                        <i:Interaction.Behaviors>
+                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
+                                        </i:Interaction.Behaviors>
+                                    </TextBox>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Đến:" Margin="5,0" />
+                                    <TextBox Name="tbxQntTo" Margin="5,0">
+                                        <i:Interaction.Behaviors>
+                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
+                                        </i:Interaction.Behaviors>
+                                    </TextBox>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
                     </ui:MenuItem>
                     <ui:MenuItem Header="Lọc theo thành tiền">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Từ:" Margin="5,0" />
-                            <TextBox Name="tbxTotFrom" Margin="5,0" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Đến:" Margin="5,0" />
-                            <TextBox Name="tbxTotTo" Margin="5,0" />
-                        </StackPanel>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Từ:" Margin="5,0" />
+                                    <TextBox Name="tbxTotFrom" Margin="5,0">
+                                        <i:Interaction.Behaviors>
+                                            <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True" />
+                                        </i:Interaction.Behaviors>
+                                    </TextBox>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
+                        <ui:MenuItem StaysOpenOnClick="True">
+                            <ui:MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Đến:" Margin="5,0" />
+                                    <TextBox Name="tbxTotTo" Margin="5,0">
+                                        <i:Interaction.Behaviors>
+                                            <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True" />
+                                        </i:Interaction.Behaviors>
+                                    </TextBox>
+                                </StackPanel>
+                            </ui:MenuItem.Header>
+                        </ui:MenuItem>
                     </ui:MenuItem>
                 </ui:MenuItem>
             </Menu>
@@ -132,7 +168,7 @@
                 <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaMh}" />
                 <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=MaKh}" />
                 <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=MaNv}" />
-                <DataGridTextColumn Header="Ngày lập HĐ" Binding="{Binding Path=NgayLapHd, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Ngày lập HĐ" Binding="{Binding Path=NgayLapHd, Converter={StaticResource DateTimeConverter}}" />
                 <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuong}" />
                 <DataGridTextColumn Header="Thành tiền" Binding="{Binding Path=ThanhTien}" />
             </ui:DataGrid.Columns>

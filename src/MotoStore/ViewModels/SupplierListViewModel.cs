@@ -15,27 +15,12 @@ namespace MotoStore.ViewModels
 {
     public partial class SupplierListViewModel : ObservableObject, INavigationAware
     {
-        public List<NhaCungCap> TableData;
-
         public void OnNavigatedTo()
         {
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new();
-                TableData = con.NhaCungCaps.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

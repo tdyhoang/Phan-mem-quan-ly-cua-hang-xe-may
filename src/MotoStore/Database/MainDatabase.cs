@@ -36,6 +36,7 @@ public partial class MainDatabase : DbContext
     public virtual DbSet<UserApp> UserApps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,6 +50,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaDdh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('DH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaDDH");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -94,6 +96,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaHd)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('HD'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaHD");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -140,6 +143,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaKh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('KH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaKH");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
@@ -220,6 +224,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaMh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('MH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaMH");
             entity.Property(e => e.GiaBanMh)
                 .HasColumnType("money")
@@ -238,6 +243,7 @@ public partial class MainDatabase : DbContext
                 .HasMaxLength(5)
                 .IsUnicode(false)
                 .HasColumnName("MaNCC");
+            entity.Property(e => e.Mau).HasMaxLength(15);
             entity.Property(e => e.MoTa).HasMaxLength(75);
             entity.Property(e => e.TenMh)
                 .HasMaxLength(30)
@@ -260,6 +266,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaNcc)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('CC'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaNCC");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
@@ -287,6 +294,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('NV'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaNV");
             entity.Property(e => e.ChucVu).HasMaxLength(10);
             entity.Property(e => e.DiaChi).HasMaxLength(40);
@@ -320,6 +328,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaBh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
+                .HasComputedColumnSql("('BH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaBH");
             entity.Property(e => e.GhiChu).HasMaxLength(60);
             entity.Property(e => e.Id)

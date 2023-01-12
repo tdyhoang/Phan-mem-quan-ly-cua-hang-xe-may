@@ -16,8 +16,8 @@ namespace MotoStore.Helpers
         const NumberStyles validNumberStyles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
         public TextBoxInputBehavior()
         {
-            this.InputMode = TextBoxInputMode.None;
-            this.JustPositiveDecimalInput = false;
+            InputMode = TextBoxInputMode.None;
+            JustPositiveDecimalInput = false;
         }
 
         public TextBoxInputMode InputMode { get; set; }
@@ -58,7 +58,7 @@ namespace MotoStore.Helpers
             {
                 var pastedText = (string)e.DataObject.GetData(typeof(string));
 
-                if (!this.IsValidInput(this.GetText(pastedText)))
+                if (!IsValidInput(GetText(pastedText)))
                 {
                     System.Media.SystemSounds.Beep.Play();
                     e.CancelCommand();
@@ -75,7 +75,7 @@ namespace MotoStore.Helpers
         {
             if (e.Key == Key.Space)
             {
-                if (!this.IsValidInput(this.GetText(" ")))
+                if (!IsValidInput(GetText(" ")))
                 {
                     System.Media.SystemSounds.Beep.Play();
                     e.Handled = true;
@@ -85,7 +85,7 @@ namespace MotoStore.Helpers
 
         private void AssociatedObjectPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!this.IsValidInput(this.GetText(e.Text)))
+            if (!IsValidInput(GetText(e.Text)))
             {
                 System.Media.SystemSounds.Beep.Play();
                 e.Handled = true;
@@ -94,7 +94,7 @@ namespace MotoStore.Helpers
 
         private string GetText(string input)
         {
-            var txt = this.AssociatedObject;
+            var txt = AssociatedObject;
 
             int selectionStart = txt.SelectionStart;
             if (txt.Text.Length < selectionStart)
@@ -133,7 +133,7 @@ namespace MotoStore.Helpers
 
                     if (input.Contains('-'))
                     {
-                        if (this.JustPositiveDecimalInput)
+                        if (JustPositiveDecimalInput)
                             return false;
 
 

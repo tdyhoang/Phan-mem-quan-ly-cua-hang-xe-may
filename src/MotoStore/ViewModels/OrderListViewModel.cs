@@ -17,28 +17,12 @@ namespace MotoStore.ViewModels
 {
     public partial class OrderListViewModel : ObservableObject, INavigationAware
     {
-        public List<DonDatHang> TableData;
-
         public void OnNavigatedTo()
         {
-            RefreshDataGrid();
         }
 
         public void OnNavigatedFrom()
         {
-        }
-
-        private void RefreshDataGrid()
-        {
-            try
-            {
-                MainDatabase con = new();
-                TableData = con.DonDatHangs.ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
     }
 }

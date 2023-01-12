@@ -114,7 +114,7 @@ namespace MotoStore.Views.Pages.LoginPages
                         MessageBox.Show("Đổi Mật Khẩu Thành Công");
                         break;
                 }
-                this.NavigationService.Navigate(pgC);
+                NavigationService.Navigate(pgC);
             }
             else
             {

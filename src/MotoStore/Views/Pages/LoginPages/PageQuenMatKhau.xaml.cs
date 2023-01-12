@@ -179,7 +179,7 @@ namespace MotoStore.Views.Pages.LoginPages
                         }
                     }
                     if (chuyentrang)
-                        this.NavigationService.Navigate(pageGuiMa);
+                        NavigationService.Navigate(pageGuiMa);
                 }
                 //Nếu thoả mãn hết các điều kiện kiểm tra thì chuyển hướng tiếp sang Trang GuiMa
             }
@@ -217,7 +217,7 @@ namespace MotoStore.Views.Pages.LoginPages
 
         private void buttonQuayLai_Click(object sender, RoutedEventArgs e)
         { 
-            this.NavigationService.Navigate(pgC);
+            NavigationService.Navigate(pgC);
             //Hàm này để Quay lại Trang Chính(pgC)
         }
     }

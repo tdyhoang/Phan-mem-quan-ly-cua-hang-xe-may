@@ -29,8 +29,6 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         internal ObservableCollection<HoaDon> TableData = new();
 
-        bool isvalidtbxQntFrom = false;
-        bool isvalidtbxQntTo = false;
         bool isvalidtbxTotFrom = false;
         bool isvalidtbxTotTo = false;
 
@@ -62,7 +60,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             {
                 if (nhanVien.NgayLapHd < dpCDFrom.SelectedDate || nhanVien.NgayLapHd > dpCDTo.SelectedDate)
                     TableData.Remove(nhanVien);
-                else if ((isvalidtbxQntFrom && nhanVien.SoLuong < decimal.Parse(tbxQntFrom.Text)) || (isvalidtbxQntTo && nhanVien.SoLuong > decimal.Parse(tbxQntTo.Text)))
+                else if ((!string.IsNullOrEmpty(tbxQntFrom.Text) && nhanVien.SoLuong < decimal.Parse(tbxQntFrom.Text)) || (!string.IsNullOrEmpty(tbxQntTo.Text) && nhanVien.SoLuong > decimal.Parse(tbxQntTo.Text)))
                     TableData.Remove(nhanVien);
                 else if ((isvalidtbxTotFrom && nhanVien.ThanhTien < decimal.Parse(tbxTotFrom.Text)) || (isvalidtbxTotTo && nhanVien.ThanhTien > decimal.Parse(tbxTotTo.Text)))
                     TableData.Remove(nhanVien);

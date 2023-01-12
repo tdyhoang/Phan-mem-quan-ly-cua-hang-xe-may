@@ -11,8 +11,8 @@ namespace MotoStore.Resources
     {
         public TinhTrangList()
         {
-            this.Add("Moi");
-            this.Add("Cu");
+            Add("Moi");
+            Add("Cu");
         }
     }
 }

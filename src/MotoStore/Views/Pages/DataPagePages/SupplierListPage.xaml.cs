@@ -31,10 +31,5 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
 
         }
-
-        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
     }
 }

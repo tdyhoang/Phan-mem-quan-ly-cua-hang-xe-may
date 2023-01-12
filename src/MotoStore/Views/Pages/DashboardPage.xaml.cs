@@ -442,21 +442,21 @@ namespace MotoStore.Views.Pages
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
-            if (File.Exists("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
+            if (File.Exists("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa))
             {
                 BitmapImage image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa);
+                image.UriSource = new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\" + PageChinh.getMa);
                 image.EndInit();
 
                 anhNhanVien.ImageSource = image;
             }
             else if (PageChinh.getSex == "Nữ")
-                anhNhanVien.ImageSource = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
+                anhNhanVien.ImageSource = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNu.png"));
             else
-                anhNhanVien.ImageSource = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
+                anhNhanVien.ImageSource = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\userNam.png"));
 
             if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
@@ -642,66 +642,6 @@ namespace MotoStore.Views.Pages
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;
-        }
-
-        private void brdSoNV_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdSoNV.Margin = new Thickness(15, 15, 0, 0);
-        }
-
-        private void brdSoNV_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdSoNV.Margin = new Thickness(15, 30, 0, 0);
-        }
-
-        private void brdSoXe_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdSoXe.Margin = new Thickness(15, 0, 0, 45);
-        }
-
-        private void brdSoXe_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdSoXe.Margin = new Thickness(15, 0, 0, 30);
-        }
-
-        private void brdLoiNhac_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdLoiNhac.Margin = new Thickness(0, 0, 20, 15);
-        }
-
-        private void brdLoiNhac_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdLoiNhac.Margin = new Thickness(0, 0, 20, 0);
-        }
-
-        private void border3thgtin_MouseMove(object sender, MouseEventArgs e)
-        {
-            border3thgtin.Opacity = 1;
-        }
-
-        private void border3thgtin_MouseLeave(object sender, MouseEventArgs e)
-        {
-            border3thgtin.Opacity = 0.8;
-        }
-
-        private void borderThgTinUser_MouseMove(object sender, MouseEventArgs e)
-        {
-            borderThgTinUser.Opacity = 1;
-        }
-
-        private void borderThgTinUser_MouseLeave(object sender, MouseEventArgs e)
-        {
-            borderThgTinUser.Opacity = 0.8;
-        }
-
-        private void borderLichvaButton_MouseMove(object sender, MouseEventArgs e)
-        {
-            borderLichvaButton.Opacity = 1;
-        }
-
-        private void borderLichvaButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            borderLichvaButton.Opacity = 0.8;
         }
     }
 }

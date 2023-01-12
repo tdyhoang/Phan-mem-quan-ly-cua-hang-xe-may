@@ -11,8 +11,8 @@ namespace MotoStore.Resources
     {
         public GioiTinhList()
         {
-            this.Add("Nu");
-            this.Add("Nam");
+            Add("Nu");
+            Add("Nam");
         }
     }
 }

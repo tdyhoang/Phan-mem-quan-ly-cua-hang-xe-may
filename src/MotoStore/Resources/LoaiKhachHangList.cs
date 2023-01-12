@@ -11,9 +11,9 @@ namespace MotoStore.Resources
     {
         public LoaiKhachHangList()
         {
-            this.Add("Vip");
-            this.Add("Thuong");
-            this.Add("Than quen");
+            Add("Vip");
+            Add("Thuong");
+            Add("Than quen");
         }
     }
 }
