@@ -50,7 +50,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaDdh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('DH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaDDH");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -96,7 +95,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaHd)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('HD'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaHD");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -143,7 +141,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaKh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('KH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaKH");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
@@ -224,7 +221,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaMh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('MH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaMH");
             entity.Property(e => e.GiaBanMh)
                 .HasColumnType("money")
@@ -266,7 +262,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaNcc)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('CC'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaNCC");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
             entity.Property(e => e.Email)
@@ -294,7 +289,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('NV'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaNV");
             entity.Property(e => e.ChucVu).HasMaxLength(10);
             entity.Property(e => e.DiaChi).HasMaxLength(40);
@@ -328,7 +322,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MaBh)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasComputedColumnSql("('BH'+right('000'+CONVERT([varchar](3),[ID]),(3)))", true)
                 .HasColumnName("MaBH");
             entity.Property(e => e.GhiChu).HasMaxLength(60);
             entity.Property(e => e.Id)
