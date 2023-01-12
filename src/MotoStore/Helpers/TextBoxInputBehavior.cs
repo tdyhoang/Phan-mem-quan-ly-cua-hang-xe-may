@@ -125,33 +125,10 @@ namespace MotoStore.Helpers
                     return CheckIsDigit(input);
 
                 case TextBoxInputMode.DecimalInput:
-                    decimal d;
-                    //Số thập phân chỉ có 1 dấu chấm
-                    if (input.ToCharArray().Where(x => x == '.').Count() > 1)
-                        return false;
+                    return CheckIsDecimal(input);
 
-
-                    if (input.Contains('-'))
-                    {
-                        if (JustPositiveDecimalInput)
-                            return false;
-
-
-                        if (input.IndexOf("-", StringComparison.Ordinal) > 0)
-                            return false;
-
-                        if (input.ToCharArray().Count(x => x == '-') > 1)
-                            return false;
-
-                        // Ban đầu được phép nhập 1 dấu trừ
-                        if (input.Length == 1)
-                            return true;
-                    }
-
-                    var result = decimal.TryParse(input, validNumberStyles, CultureInfo.CurrentCulture, out d);
-                    return result;
-
-
+                case TextBoxInputMode.DateInput:
+                    return CheckIsDigitOrSlash(input);
 
                 default: throw new ArgumentException("Unknown TextBoxInputMode");
 
@@ -162,12 +139,48 @@ namespace MotoStore.Helpers
         {
             return text.ToCharArray().All(Char.IsDigit);
         }
+
+        private bool CheckIsDecimal(string text)
+        {
+            // Số thập phân chỉ có 1 dấu chấm
+            if (text.ToCharArray().Where(x => x == '.').Count() > 1)
+                return false;
+
+
+            if (text.Contains('-'))
+            {
+                if (JustPositiveDecimalInput)
+                    return false;
+
+
+                if (text.IndexOf("-", StringComparison.Ordinal) > 0)
+                    return false;
+
+                if (text.ToCharArray().Count(x => x == '-') > 1)
+                    return false;
+
+                // Ban đầu được phép nhập 1 dấu trừ
+                if (text.Length == 1)
+                    return true;
+            }
+
+            return decimal.TryParse(text, validNumberStyles, CultureInfo.CurrentCulture, out _);
+        }
+
+        private static bool CheckIsDigitOrSlash(string text)
+        {
+            // Định dạng ngày d/M/yyyy, do đó chỉ chấp nhận 2 dấu gạch chéo
+            if (text.ToCharArray().Where(x => x == '.').Count() > 2)
+                return false;
+            return System.Text.RegularExpressions.Regex.IsMatch(text, "[0-9/]*");
+        }
     }
 
     public enum TextBoxInputMode
     {
         None,
         DecimalInput,
-        DigitInput
+        DigitInput,
+        DateInput
     }
 }

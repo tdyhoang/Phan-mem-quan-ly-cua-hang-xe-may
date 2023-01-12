@@ -7,7 +7,7 @@
            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
            xmlns:resources="clr-namespace:MotoStore.Resources"
            xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
-           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:helpers="clr-namespace:MotoStore.Helpers" d:DataContext="{d:DesignInstance Type=local:InvoiceListPage}"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:helpers="clr-namespace:MotoStore.Helpers" xmlns:models="clr-namespace:MotoStore.Models" d:DataContext="{d:DesignInstance Type=local:InvoiceListPage}"
            mc:Ignorable="d" 
            d:DesignHeight="450" d:DesignWidth="800"
            Title="InvoiceListPage"
@@ -56,7 +56,11 @@
                                                 <Setter Property="Control.Template">
                                                     <Setter.Value>
                                                         <ControlTemplate>
-                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}">
+                                                                <i:Interaction.Behaviors>
+                                                                    <helpers:TextBoxInputBehavior InputMode="DateInput" />
+                                                                </i:Interaction.Behaviors>
+                                                            </TextBox>
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
@@ -76,7 +80,11 @@
                                                 <Setter Property="Control.Template">
                                                     <Setter.Value>
                                                         <ControlTemplate>
-                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
+                                                            <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}">
+                                                                <i:Interaction.Behaviors>
+                                                                    <helpers:TextBoxInputBehavior InputMode="DateInput" />
+                                                                </i:Interaction.Behaviors>
+                                                            </TextBox>
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
@@ -94,7 +102,7 @@
                                     <TextBlock Text="Từ:" Margin="5,0" />
                                     <TextBox Name="tbxQntFrom" Margin="5,0">
                                         <i:Interaction.Behaviors>
-                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
+                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" />
                                         </i:Interaction.Behaviors>
                                     </TextBox>
                                 </StackPanel>
@@ -106,7 +114,7 @@
                                     <TextBlock Text="Đến:" Margin="5,0" />
                                     <TextBox Name="tbxQntTo" Margin="5,0">
                                         <i:Interaction.Behaviors>
-                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
+                                            <helpers:TextBoxInputBehavior InputMode="DigitInput" />
                                         </i:Interaction.Behaviors>
                                     </TextBox>
                                 </StackPanel>
@@ -169,8 +177,8 @@
                 <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=MaKh}" />
                 <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=MaNv}" />
                 <DataGridTextColumn Header="Ngày lập HĐ" Binding="{Binding Path=NgayLapHd, Converter={StaticResource DateTimeConverter}}" />
-                <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuong}" />
-                <DataGridTextColumn Header="Thành tiền" Binding="{Binding Path=ThanhTien}" />
+                <models:DataGridDigitColumn Header="Số lượng" Binding="{Binding Path=SoLuong}" />
+                <models:DataGridDecimalColumn Header="Thành tiền" Binding="{Binding Path=ThanhTien}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>
