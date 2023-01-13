@@ -15,6 +15,12 @@
 
 ### Cách dùng
 - Ở file xaml thêm 2 namespace là `xmlns:i="http://schemas.microsoft.com/xaml/behaviors"` và `xmlns:helpers="clr-namespace:MotoStore.Helpers"`
+- Trong textbox mở thêm 1 control như sau:
+	<TextBox ...>
+		<i:Interaction.Behaviors>
+			<helpers:TextBoxInputBehavior InputMode="..." JustPositiveDecimalInput="..." />
+		</i:Interaction.Behaviors>
+	</TextBox>
 - Có 3 InputMode:
     + `None`: Textbox gõ như bình thường, không có điều kiện
 	+ `DigitInput`: Textbox chỉ cho phép nhập các ký tự là chữ số
@@ -23,12 +29,17 @@
 	+ `DecimalInput`: Textbox chỉ cho phép nhập số thập phân
 	+ `DateInput`: Textbox chỉ cho phép nhập các ký tự là chữ số hoặc dấu chéo `/` (để nhập ngày tháng)
 	+ Ae có thể vào file `Helpers\TextBoxInputBehavior.cs` để tự định nghĩa thêm InputMode nếu cần
-- Thuộc tính `JustPositiveDecimalInput` nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm)
+- Thuộc tính bool `JustPositiveDecimalInput` chỉ dùng khi InputMode=Decimal, nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm). Giá trị mặc định là false.
 
 ## DateTimeConverter
 ### Tác dụng
 - Trong textbox: Nhận diện chuỗi nếu không phải là 1 ngày theo định dạng d/M/yyyy thì sẽ tự xóa
 - Trong các control có hiển thị chuỗi: Tự động chuyển chuỗi DateTime gốc thành định dạng dd/MM/yyyy để hiển thị ngày tháng đúng định dạng
+
+### Cách dùng
+- Ở file xaml thêm namespace `xmlns:helpers="clr-namespace:MotoStore.Helpers"`
+- Thêm 1 Page.Resource (tham khảo google) như sau: <helpers:DateTimeConverter x:Key="DateTimeConverter" />
+- Khi binding bất kỳ control nào với 1 biến DateTime thì binding dưới dạng: Binding="{Binding `Biến cần binding`, Converter={StaticResource DateTimeConverter}}"
 
 ## Việc cần làm
 - Danh sách đã đc sắp xếp theo thứ tự ưu tiên
