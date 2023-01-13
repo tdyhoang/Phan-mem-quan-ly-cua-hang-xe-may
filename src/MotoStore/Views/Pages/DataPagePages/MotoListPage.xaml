@@ -29,10 +29,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0">
             <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
@@ -41,7 +37,7 @@
         <!--Binding Fail TableData-->
         <ui:DataGrid Name="grdMoto"
                      Grid.Row="1"
-                     Grid.ColumnSpan="2"
+                     MaxHeight="568"
                      AutoGenerateColumns="False"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"

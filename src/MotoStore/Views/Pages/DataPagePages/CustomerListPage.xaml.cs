@@ -42,27 +42,10 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
-            DateTime? bdfrom = null;
-            DateTime? bdto = null;
             MainDatabase con = new();
             TableData = new(con.KhachHangs);
             foreach (var khachHang in TableData.ToList())
-            {
                 if (khachHang.DaXoa)
-                {
-                    TableData.Remove(khachHang);
-                    continue;
-                }
-                if (bdfrom is null || bdfrom > khachHang.NgSinh)
-                    bdfrom = khachHang.NgSinh;
-                if (bdto is null || bdto < khachHang.NgSinh)
-                    bdto = khachHang.NgSinh;
-            }
-            dpBDFrom.SelectedDate ??= bdfrom;
-            dpBDTo.SelectedDate ??= bdto;
-            // Filter
-            foreach (var khachHang in TableData.ToList())
-                if (khachHang.NgSinh < dpBDFrom.SelectedDate || khachHang.NgSinh > dpBDTo.SelectedDate)
                     TableData.Remove(khachHang);
             grdCustomer.ItemsSource = TableData;
         }
@@ -76,7 +59,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Open();
                 cmd = new("begin transaction\nset dateformat dmy", con);
                 cmd.ExecuteNonQuery();
-                string ngaySinhKh;
 
                 // Lý do cứ mỗi lần có cell sai là break:
                 // - Tránh trường hợp hiện MessageBox liên tục
@@ -86,39 +68,25 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                     if (obj is not KhachHang kh)
                         continue;
-                    // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
-                    if (kh.NgSinh.HasValue)
-                        ngaySinhKh = kh.NgSinh.Value.ToString("dd-MM-yyyy");
-                    else
-                        ngaySinhKh = string.Empty;
                     // Kiểm tra dữ liệu đã đúng theo định nghĩa chưa
                     if (string.IsNullOrEmpty(kh.GioiTinh) || (kh.GioiTinh != "Nam" && kh.GioiTinh != "Nữ"))
-                    {
-                        MessageBox.Show("Giới tính chỉ có thể là Nam hoặc Nữ (có dấu)!");
-                        return;
-                    }
+                        throw new("Giới tính chỉ có thể là Nam hoặc Nữ (có dấu)!");
                     if (!string.IsNullOrEmpty(kh.Sdt) && (kh.Sdt.Contains('+') || kh.Sdt.Contains('-')) && int.TryParse(kh.Sdt, out _))
-                    {
-                        MessageBox.Show("Số điện thoại không được chứa ký tự không phải chữ số!");
-                        return;
-                    }
+                        throw new("Số điện thoại không được chứa ký tự không phải chữ số!");
                     if (string.IsNullOrEmpty(kh.LoaiKh) || (kh.LoaiKh != "Vip" && kh.LoaiKh != "Thường" && kh.LoaiKh != "Thân quen"))
-                    {
-                        MessageBox.Show("Loại khách hàng phải là Vip, Thường hoặc Thân quen (có dấu)!");
-                        return;
-                    }
+                        throw new("Loại khách hàng phải là Vip, Thường hoặc Thân quen (có dấu)!");
 
                     // Thêm mới
                     if (string.IsNullOrEmpty(kh.MaKh))
                     {
-                        cmd = new("Insert into KhachHang values(N'" + kh.HoTenKh + "', '" + ngaySinhKh + "', N'" + kh.GioiTinh + "', N'" + kh.DiaChi + "', '" + kh.Sdt + "', '" + kh.Email + "', N'" + kh.LoaiKh + "', 0)", con);
+                        cmd = new($"Insert into KhachHang values(N'{kh.HoTenKh}', '{kh.NgSinh}', N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new("Update KhachHang Set HotenKh = N'" + kh.HoTenKh + "', NgSinh = '" + ngaySinhKh + "', GioiTinh = N'" + kh.GioiTinh + "', DiaChi = N'" + kh.DiaChi + "', Sdt = '" + kh.Sdt + "', Email = '" + kh.Email + "', LoaiKh = N'" + kh.LoaiKh + "', DaXoa = 0 Where MaKh = '" + kh.MaKh + "';", con);
+                        cmd = new($"Update KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = '{kh.NgSinh}', GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -160,12 +128,13 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void DeleteRow(object sender, RoutedEventArgs e)
         {
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlCommand cmd;
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
+                cmd = new("begin transaction", con);
+                cmd.ExecuteNonQuery();
 
                 foreach (object obj in grdCustomer.SelectedItems)
                 {
@@ -175,10 +144,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã KH
                     if (string.IsNullOrEmpty(kh.MaKh))
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        // !! Chưa tìm ra hướng xử lý
                         continue;
                     // Xóa hàng
                     else
@@ -191,6 +156,9 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
             catch (Exception ex)
             {
+                cmd = new("rollback transaction", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
                 MessageBox.Show(ex.Message);
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
@@ -217,12 +185,5 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void AddRow(object sender, RoutedEventArgs e)
             => TableData.Add(new());
-
-        private void ClearFilter(object sender, RoutedEventArgs e)
-        {
-            dpBDFrom.SelectedDate = null;
-            dpBDTo.SelectedDate = null;
-            RefreshDataGrid();
-        }
     }
 }

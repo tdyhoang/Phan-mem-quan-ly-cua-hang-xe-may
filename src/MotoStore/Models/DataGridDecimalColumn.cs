@@ -91,7 +91,7 @@ namespace MotoStore.Models
             // Số thập phân chỉ có 1 dấu chấm
             if (input.ToCharArray().Where(x => x == '.').Count() > 1)
                 return false;
-            return decimal.TryParse(input, validNumberStyles, CultureInfo.CurrentCulture, out _);
+            return string.IsNullOrEmpty(input) || decimal.TryParse(input, validNumberStyles, CultureInfo.CurrentCulture, out _);
         }
     }
 }

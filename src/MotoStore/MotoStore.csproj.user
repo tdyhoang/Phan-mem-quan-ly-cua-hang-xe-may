@@ -7,6 +7,15 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\DateFilter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\DecimalFilter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\IntegerFilter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\DataPagePages\CustomerListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +54,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\DateFilter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DecimalFilter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\IntegerFilter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Pages\DashboardPage.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -14,6 +14,10 @@ using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
+using System.Drawing;
+using System.Windows.Media;
+using DataGridExtensions;
+using MotoStore.Controls;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -29,9 +33,6 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         internal ObservableCollection<HoaDon> TableData = new();
 
-        bool isvalidtbxTotFrom = false;
-        bool isvalidtbxTotTo = false;
-
         public InvoiceListPage(ViewModels.InvoiceListViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -42,73 +43,64 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
-            DateTime? cdfrom = null;
-            DateTime? cdto = null;
             MainDatabase con = new();
             TableData = new(con.HoaDons);
-            foreach (var hoaDon in TableData.ToList())
-            {
-                if (cdfrom is null || cdfrom > hoaDon.NgayLapHd)
-                    cdfrom = hoaDon.NgayLapHd;
-                if (cdto is null || cdto < hoaDon.NgayLapHd)
-                    cdto = hoaDon.NgayLapHd;
-            }
-            dpCDFrom.SelectedDate ??= cdfrom;
-            dpCDTo.SelectedDate ??= cdto;
-            // Filter
-            foreach (var nhanVien in TableData.ToList())
-            {
-                if (nhanVien.NgayLapHd < dpCDFrom.SelectedDate || nhanVien.NgayLapHd > dpCDTo.SelectedDate)
-                    TableData.Remove(nhanVien);
-                else if ((!string.IsNullOrEmpty(tbxQntFrom.Text) && nhanVien.SoLuong < decimal.Parse(tbxQntFrom.Text)) || (!string.IsNullOrEmpty(tbxQntTo.Text) && nhanVien.SoLuong > decimal.Parse(tbxQntTo.Text)))
-                    TableData.Remove(nhanVien);
-                else if ((isvalidtbxTotFrom && nhanVien.ThanhTien < decimal.Parse(tbxTotFrom.Text)) || (isvalidtbxTotTo && nhanVien.ThanhTien > decimal.Parse(tbxTotTo.Text)))
-                    TableData.Remove(nhanVien);
-            }
             grdInvoice.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
+            MainDatabase mainDatabase = new();
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlCommand cmd;
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-                cmd = new("set dateformat dmy", con);
+                cmd = new("begin transaction\nset dateformat dmy", con);
                 cmd.ExecuteNonQuery();
-                string ngayLapHD;
 
                 // Lý do cứ mỗi lần có cell sai là break:
                 // - Tránh trường hợp hiện MessageBox liên tục
                 // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
                 foreach (object obj in grdInvoice.Items)
                 {
+                    bool khExist = false;
+                    bool mhExist = false;
+                    bool nvExist = false;
                     // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                     if (obj is not HoaDon hd)
                         continue;
-
-                    // Lấy chuỗi ngày lập hd theo format dd-MM-yyyy
-                    if (hd.NgayLapHd.HasValue)
-                        ngayLapHD = hd.NgayLapHd.Value.ToString("dd-MM-yyyy");
-                    else
-                        ngayLapHD = string.Empty;
-                    // Kiểm tra dữ liệu đã đúng theo định nghĩa chưa
+                    // Kiểm tra dữ liệu có tồn tại không
+                    foreach (var kh in mainDatabase.KhachHangs)
+                        if (!kh.DaXoa && hd.MaKh == kh.MaKh)
+                            khExist = true;
+                    if (!khExist)
+                        throw new("Mã khách hàng không tồn tại hoặc đã xóa!");
+                    foreach (var mh in mainDatabase.MatHangs)
+                        if (!mh.DaXoa && hd.MaMh == mh.MaMh)
+                            mhExist = true;
+                    if (!mhExist)
+                        throw new("Mã mặt hàng không tồn tại hoặc đã xóa!");
+                    foreach (var nv in mainDatabase.NhanViens)
+                        if (!nv.DaXoa && hd.MaNv == nv.MaNv)
+                            nvExist = true;
+                    if (!nvExist)
+                        throw new("Mã nhân viên không tồn tại hoặc đã xóa!");
+                    // Giá trị mặc định
                     hd.SoLuong ??= 0;
                     hd.ThanhTien ??= 0;
 
                     // Thêm mới
                     if (string.IsNullOrEmpty(hd.MaHd))
                     {
-                        cmd = new("Insert into HoaDon values('" + hd.MaMh + "', '" + hd.MaKh + "', '" + hd.MaNv + "', '" + ngayLapHD + "', " + hd.SoLuong + ", " + hd.ThanhTien + ")", con);
+                        cmd = new($"Insert into HoaDon values('{hd.MaMh}', '{hd.MaKh}', '{hd.MaNv}', '{hd.NgayLapHd}', {hd.SoLuong}, {hd.ThanhTien})", con);
                         cmd.ExecuteNonQuery();
                     }
 
                     // Cập nhật
                     else
                     {
-                        cmd = new("Update HoaDon Set MaMh = '" + hd.MaMh + "', MaKh = '" + hd.MaKh + "', MaNv = '" + hd.MaNv + "', NgayLapHd = '" + ngayLapHD + "', SoLuong = " + hd.SoLuong + ", ThanhTien = " + hd.ThanhTien + " Where MaHd = '" + hd.MaHd + "';", con);
+                        cmd = new($"Update HoaDon Set MaMh = '{hd.MaMh}', MaKh = '{hd.MaKh}', MaNv = '{hd.MaNv}', NgayLapHd = '{hd.NgayLapHd}', SoLuong = {hd.SoLuong}, ThanhTien = {hd.ThanhTien} Where MaHd = '{hd.MaHd}';", con);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -116,9 +108,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                 con.Close();
                 // Làm mới nội dung hiển thị cho khớp với database
                 RefreshDataGrid();
+                MessageBox.Show("Lưu chỉnh sửa thành công!");
             }
             catch (Exception ex)
             {
+                cmd = new("rollback transaction", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -127,6 +123,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (sender is not DataGrid dg)
+                return;
+            // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
+            if (grdInvoice.IsReadOnly)
                 return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -148,29 +147,22 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void DeleteRow(object sender, RoutedEventArgs e)
         {
+            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlCommand cmd;
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-                HoaDon hd;
+                cmd = new("begin transaction", con);
+                cmd.ExecuteNonQuery();
 
                 foreach (object obj in grdInvoice.SelectedItems)
                 {
                     // Bỏ qua ô trắng mà vẫn được Select
                     // is not HoaDon chỉ để an toàn
-                    if (obj is null || obj is not HoaDon)
-                        continue;
-                    hd = obj as HoaDon;
-                    if (hd is null)
+                    if (obj is not HoaDon hd)
                         continue;
                     // Trường hợp chưa thêm mới nên chưa có mã hd
                     if (string.IsNullOrEmpty(hd.MaHd))
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        // !! Chưa tìm ra hướng xử lý
                         continue;
                     // Xóa hàng
                     else
@@ -183,6 +175,9 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
             catch (Exception ex)
             {
+                cmd = new("rollback transaction", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
                 MessageBox.Show(ex.Message);
                 // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                 e.Handled = true;
@@ -193,23 +188,16 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                if (PageChinh.getChucVu.ToLower() == "quản lý")
-                {
-                    grdInvoice.IsReadOnly = false;
-                }
-                else
-                {
-                    grdInvoice.IsReadOnly = true;
-                }
+                bool isQuanLy = PageChinh.getChucVu.ToLower() == "quản lý";
+
+                grdInvoice.IsReadOnly = !isQuanLy;
+
+                if (sender is MenuItem item)
+                    item.IsEnabled = isQuanLy;
             }
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
             => TableData.Add(new());
-
-        private void ClearFilter(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

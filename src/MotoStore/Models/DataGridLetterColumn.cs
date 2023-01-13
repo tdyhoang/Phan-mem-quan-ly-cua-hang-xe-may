@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace MotoStore.Models
 {
-    class DataGridIsLetterColumn : DataGridTextColumn
+    class DataGridLetterColumn : DataGridTextColumn
     {
         TextBox? edittingCell;
 

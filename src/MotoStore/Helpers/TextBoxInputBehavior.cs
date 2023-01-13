@@ -181,7 +181,7 @@ namespace MotoStore.Helpers
                     return true;
             }
 
-            return decimal.TryParse(text, validNumberStyles, CultureInfo.CurrentCulture, out _);
+            return string.IsNullOrEmpty(text) || decimal.TryParse(text, validNumberStyles, CultureInfo.CurrentCulture, out _);
         }
 
         private static bool CheckIsDigitOrSlash(string text)

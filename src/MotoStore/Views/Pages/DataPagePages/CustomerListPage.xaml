@@ -9,6 +9,8 @@
            xmlns:core="clr-namespace:System;assembly=mscorlib"
            xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:CustomerListPage}"
            xmlns:helpers="clr-namespace:MotoStore.Helpers"
+           xmlns:controls="clr-namespace:MotoStore.Controls"
+           xmlns:models="clr-namespace:MotoStore.Models"
            xmlns:database="clr-namespace:MotoStore.Database"
            mc:Ignorable="d"
            d:DesignHeight="450" d:DesignWidth="800"
@@ -19,6 +21,15 @@
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
+        <ControlTemplate x:Key="DecimalFilter">
+            <controls:DecimalFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="IntegerFilter">
+            <controls:IntegerFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="DateFilter">
+            <controls:DateFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
         <helpers:DateTimeConverter x:Key="DateTimeConverter" />
     </ui:UiPage.Resources>
 
@@ -27,63 +38,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="5,0">
             <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
             <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
             <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
-            <ui:NavigationSeparator Margin="5,0" />
-            <Menu>
-                <ui:MenuItem Header="Lọc" SymbolIcon="Filter24" AllowDrop="True">
-                    <StackPanel Orientation="Horizontal">
-                        <ui:Button Content="Xóa điều kiện lọc" Icon="FilterDismiss24" Margin="5,0" Click="ClearFilter" />
-                        <ui:Button Content="Lọc" Icon="Filter24" Margin="5,0" />
-                    </StackPanel>
-                    <ui:MenuItem Header="Lọc theo ngày sinh">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Từ ngày:" Margin="5,0" />
-                            <DatePicker Name="dpBDFrom" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
-                                <DatePicker.Resources>
-                                    <Style TargetType="{x:Type DatePickerTextBox}">
-                                        <Setter Property="Control.Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Đến ngày:" Margin="5,0" />
-                            <DatePicker Name="dpBDTo" IsTodayHighlighted="True" SelectedDateFormat="Short" Margin="5,0">
-                                <DatePicker.Resources>
-                                    <Style TargetType="{x:Type DatePickerTextBox}">
-                                        <Setter Property="Control.Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" />
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </StackPanel>
-                    </ui:MenuItem>
-                </ui:MenuItem>
-            </Menu>
         </StackPanel>
         
         <ui:DataGrid Name="grdCustomer"
                      Grid.Row="1"
-                     Grid.ColumnSpan="2"
+                     MaxHeight="568"
                      AutoGenerateColumns="False"
                      CanUserAddRows="False"
                      SelectionUnit="FullRow"
@@ -107,10 +71,10 @@
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Header="Mã KH" Binding="{Binding MaKh, Mode=OneWay}" />
                 <DataGridTextColumn Header="Họ tên" Binding="{Binding HoTenKh}" />
-                <DataGridTextColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, Converter={StaticResource DateTimeConverter}}" />
+                <models:DataGridDateColumn Header="Ngày sinh" Binding="{Binding Path=NgSinh, Converter={StaticResource DateTimeConverter}}" dgx:DataGridFilterColumn.Template="{StaticResource DateFilter}" />
                 <DataGridTextColumn Header="Giới tính" Binding="{Binding Path=GioiTinh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" />
-                <DataGridTextColumn Header="SĐT" Binding="{Binding Sdt}" />
+                <models:DataGridDigitColumn Header="SĐT" Binding="{Binding Sdt}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
                 <DataGridTextColumn Header="Loại" Binding="{Binding Path=LoaiKh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
             </ui:DataGrid.Columns>

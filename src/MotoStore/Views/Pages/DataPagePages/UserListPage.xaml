@@ -20,7 +20,7 @@
     <Grid>
         <ui:DataGrid Name="grdUser"
                      Grid.Row="1"
-                     Grid.ColumnSpan="2"
+                     MaxHeight="568"
                      AutoGenerateColumns="False"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
