@@ -121,8 +121,15 @@ namespace MotoStore.Helpers
             {
                 case TextBoxInputMode.None:
                     return true;
+
                 case TextBoxInputMode.DigitInput:
                     return CheckIsDigit(input);
+
+                case TextBoxInputMode.LetterInput:
+                    return CheckIsLetter(input);
+
+                case TextBoxInputMode.LetterOrDigitInput:
+                    return CheckIsLetterOrDigit(input);
 
                 case TextBoxInputMode.DecimalInput:
                     return CheckIsDecimal(input);
@@ -138,6 +145,16 @@ namespace MotoStore.Helpers
         private static bool CheckIsDigit(string text)
         {
             return text.ToCharArray().All(Char.IsDigit);
+        }
+
+        private static bool CheckIsLetter(string text)
+        {
+            return text.ToCharArray().All(Char.IsLetter);
+        }
+
+        private static bool CheckIsLetterOrDigit(string text)
+        {
+            return text.ToCharArray().All(Char.IsLetterOrDigit);
         }
 
         private bool CheckIsDecimal(string text)
@@ -170,9 +187,9 @@ namespace MotoStore.Helpers
         private static bool CheckIsDigitOrSlash(string text)
         {
             // Định dạng ngày d/M/yyyy, do đó chỉ chấp nhận 2 dấu gạch chéo
-            if (text.ToCharArray().Where(x => x == '.').Count() > 2)
+            if (text.ToCharArray().Where(x => x == '/').Count() > 2)
                 return false;
-            return System.Text.RegularExpressions.Regex.IsMatch(text, "[0-9/]*");
+            return !System.Text.RegularExpressions.Regex.IsMatch(text, "[^0-9/]+");
         }
     }
 
@@ -181,6 +198,8 @@ namespace MotoStore.Helpers
         None,
         DecimalInput,
         DigitInput,
+        LetterInput,
+        LetterOrDigitInput,
         DateInput
     }
 }

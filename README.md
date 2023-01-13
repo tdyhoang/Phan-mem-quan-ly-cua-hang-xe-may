@@ -1,6 +1,13 @@
 # Phan mem quan ly cua hang xe may
 *Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
 
+## 1 lưu ý khác
+- Nếu đã lỡ commit lên github trước khi pull phần của ng khác về thì ae có thể vào phần history, sẽ thấy có 2 commit mới chưa đc push lên. Trong đó 1 là commit của mình và 2 là cái merge tự động của github. Backup file lại phòng khi làm sai sau đó thực hiện các bước để khắc phục:
+	+ B1: Undo commit merge tự động
+	+ B2: Qua phần changes và discard tất cả các file ở đó
+	+ B3: Undo commit phần mình vừa làm
+	+ B4: Thực hiện pull cập nhật sau đó commit và push phần của mình như bình thường
+
 ## TextBoxInputBehavior
 ### Tác dụng
 - Ngăn các ký tự không hợp lệ ở các textbox, hợp lệ hay không do tự mình quy định trong class này, tiện để dùng chung và kế thừa
@@ -11,10 +18,17 @@
 - Có 3 InputMode:
     + `None`: Textbox gõ như bình thường, không có điều kiện
 	+ `DigitInput`: Textbox chỉ cho phép nhập các ký tự là chữ số
+	+ `LetterInput`: Textbox chỉ cho phép nhập các ký tự là chữ cái
+	+ `LetterOrDigitInput`: Textbox không cho phép nhập các ký tự đặc biệt (để nhập mã...)
 	+ `DecimalInput`: Textbox chỉ cho phép nhập số thập phân
 	+ `DateInput`: Textbox chỉ cho phép nhập các ký tự là chữ số hoặc dấu chéo `/` (để nhập ngày tháng)
 	+ Ae có thể vào file `Helpers\TextBoxInputBehavior.cs` để tự định nghĩa thêm InputMode nếu cần
 - Thuộc tính `JustPositiveDecimalInput` nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm)
+
+## DateTimeConverter
+### Tác dụng
+- Trong textbox: Nhận diện chuỗi nếu không phải là 1 ngày theo định dạng d/M/yyyy thì sẽ tự xóa
+- Trong các control có hiển thị chuỗi: Tự động chuyển chuỗi DateTime gốc thành định dạng dd/MM/yyyy để hiển thị ngày tháng đúng định dạng
 
 ## Việc cần làm
 - Danh sách đã đc sắp xếp theo thứ tự ưu tiên
