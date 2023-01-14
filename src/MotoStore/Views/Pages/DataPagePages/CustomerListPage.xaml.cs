@@ -17,6 +17,11 @@ using System.Windows.Controls.Primitives;
 using MotoStore.Views.Pages.LoginPages;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Drawing;
+using System.Text.RegularExpressions;
+using System.Transactions;
+using System.Xml.Linq;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -52,56 +57,68 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-            SqlCommand cmd;
-            try
+            if ((from c in (from object i in grdCustomer.ItemsSource select grdCustomer.ItemContainerGenerator.ContainerFromItem(i)) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
             {
-                con.Open();
-                cmd = new("begin transaction\nset dateformat dmy", con);
-                cmd.ExecuteNonQuery();
-
-                // Lý do cứ mỗi lần có cell sai là break:
-                // - Tránh trường hợp hiện MessageBox liên tục
-                // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                foreach (object obj in grdCustomer.Items)
+                MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
+                return;
+            }
+            SqlCommand cmd;
+            using (SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString))
+            {
+                try
                 {
-                    // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                    if (obj is not KhachHang kh)
-                        continue;
-                    // Kiểm tra dữ liệu đã đúng theo định nghĩa chưa
-                    if (string.IsNullOrEmpty(kh.GioiTinh) || (kh.GioiTinh != "Nam" && kh.GioiTinh != "Nữ"))
-                        throw new("Giới tính chỉ có thể là Nam hoặc Nữ (có dấu)!");
-                    if (!string.IsNullOrEmpty(kh.Sdt) && (kh.Sdt.Contains('+') || kh.Sdt.Contains('-')) && int.TryParse(kh.Sdt, out _))
-                        throw new("Số điện thoại không được chứa ký tự không phải chữ số!");
-                    if (string.IsNullOrEmpty(kh.LoaiKh) || (kh.LoaiKh != "Vip" && kh.LoaiKh != "Thường" && kh.LoaiKh != "Thân quen"))
-                        throw new("Loại khách hàng phải là Vip, Thường hoặc Thân quen (có dấu)!");
-
-                    // Thêm mới
-                    if (string.IsNullOrEmpty(kh.MaKh))
+                    con.Open();
+                    using (var trans = con.BeginTransaction())
                     {
-                        cmd = new($"Insert into KhachHang values(N'{kh.HoTenKh}', '{kh.NgSinh}', N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)", con);
-                        cmd.ExecuteNonQuery();
-                    }
+                        try
+                        {
+                            cmd = new("set dateformat dmy", con);
+                            cmd.Transaction = trans;
 
-                    // Cập nhật
-                    else
-                    {
-                        cmd = new($"Update KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = '{kh.NgSinh}', GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';", con);
-                        cmd.ExecuteNonQuery();
+                            // Lý do cứ mỗi lần có cell sai là break:
+                            // - Tránh trường hợp hiện MessageBox liên tục
+                            // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
+                            foreach (var obj in grdCustomer.Items)
+                            {
+                                // Trường hợp gặp dòng trắng được người dùng thêm mà chưa chỉnh sửa
+                                if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                                    continue;
+                                if (obj is not KhachHang kh)
+                                    continue;
+                                // Kiểm tra dữ liệu null & gán giá trị mặc định
+                                string ngSinh = string.Empty;
+                                if (kh.NgSinh.HasValue)
+                                    ngSinh = kh.NgSinh.Value.ToString("dd/MM/yyyy");
+                                if (string.IsNullOrEmpty(kh.GioiTinh))
+                                    throw new("Giới tính không được để trống!");
+                                if (string.IsNullOrEmpty(kh.LoaiKh))
+                                    throw new("Loại khách hàng không được để trống!");
+
+                                // Thêm mới
+                                if (string.IsNullOrEmpty(kh.MaKh))
+                                    cmd.CommandText += $"\nInsert into KhachHang values(N'{kh.HoTenKh}', '{ngSinh}', N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)";
+
+                                // Cập nhật
+                                else
+                                    cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = '{ngSinh}', GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';";
+                            }
+                            cmd.ExecuteNonQuery();
+                            trans.Commit();
+                            // Làm mới nội dung hiển thị cho khớp với database
+                            RefreshDataGrid();
+                            MessageBox.Show("Lưu chỉnh sửa thành công!");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            trans.Rollback();
+                        }
                     }
                 }
-
-                con.Close();
-                // Làm mới nội dung hiển thị cho khớp với database
-                RefreshDataGrid();
-                MessageBox.Show("Lưu chỉnh sửa thành công!");
-            }
-            catch (Exception ex)
-            {
-                cmd = new("rollback transaction", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show(ex.Message);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -119,7 +136,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
             DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
-            if (e.Key == Key.Delete && !dgr.IsEditing)
+            if (e.Key == System.Windows.Input.Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
                 DeleteRow(sender, e);
@@ -128,40 +145,48 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void DeleteRow(object sender, RoutedEventArgs e)
         {
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            try
+            using (SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString))
             {
-                con.Open();
-                cmd = new("begin transaction", con);
-                cmd.ExecuteNonQuery();
-
-                foreach (object obj in grdCustomer.SelectedItems)
+                try
                 {
-                    // Bỏ qua ô trắng mà vẫn được Select
-                    // is not KhachHang chỉ để an toàn
-                    if (obj is not KhachHang kh)
-                        continue;
-                    // Trường hợp chưa thêm mới nên chưa có mã KH
-                    if (string.IsNullOrEmpty(kh.MaKh))
-                        continue;
-                    // Xóa hàng
-                    else
+                    con.Open();
+                    using (var trans = con.BeginTransaction())
                     {
-                        cmd = new("Update KhachHang Set DaXoa = 1 Where MaKh = '" + kh.MaKh + "'", con);
-                        cmd.ExecuteNonQuery();
+                        try
+                        {
+                            cmd = new(" ", con);
+                            cmd.Transaction = trans;
+
+                            foreach (var obj in grdCustomer.SelectedItems)
+                            {
+                                if (obj is not KhachHang kh)
+                                    continue;
+                                // Trường hợp chưa thêm mới nên chưa có mã KH
+                                if (string.IsNullOrEmpty(kh.MaKh))
+                                    continue;
+                                // Xóa hàng
+                                else
+                                    cmd.CommandText += $"Update KhachHang Set DaXoa = 1 Where MaKh = '{kh.MaKh}';\n";
+                            }
+                            cmd.ExecuteNonQuery();
+                            trans.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            trans.Rollback();
+                            MessageBox.Show(ex.Message);
+                            // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                            e.Handled = true;
+                        }
                     }
                 }
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                cmd = new("rollback transaction", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show(ex.Message);
-                // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                e.Handled = true;
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                    e.Handled = true;
+                }
             }
         }
 

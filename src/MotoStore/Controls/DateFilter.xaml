@@ -64,6 +64,7 @@
                                         </Style>
                                     </DatePicker.Resources>
                                 </DatePicker>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Đến:" />
                                 <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding Path=Maximum}">
                                     <DatePicker.Resources>
                                         <Style TargetType="{x:Type DatePickerTextBox}">

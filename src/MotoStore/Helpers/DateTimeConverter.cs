@@ -8,21 +8,19 @@ using System.Windows.Data;
 
 namespace MotoStore.Helpers
 {
-    class DateTimeConverter : IValueConverter
+    public class DateTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is DateTime test)
             {
-                if (test == DateTime.MinValue)
-                {
-                    return string.Empty;
-                }
+                if (value == default)
+                    return default(string);
                 var date = test.ToString("dd/MM/yyyy");
                 return (date);
             }
 
-            return string.Empty;
+            return default(string);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,13 +28,13 @@ namespace MotoStore.Helpers
             if (value is string test)
             {
                 if (string.IsNullOrEmpty(test))
-                    return DateTime.MinValue;
+                    return default(DateTime);
 
-                if (DateTime.TryParseExact(test, "d/M/yyyy", culture, DateTimeStyles.AllowWhiteSpaces, out _))
-                    return DateTime.ParseExact(test, "d/M/yyyy", culture, DateTimeStyles.AllowWhiteSpaces);
+                if (DateTime.TryParseExact(test, "d/M/yyyy", culture, DateTimeStyles.AllowWhiteSpaces, out DateTime result))
+                    return result;
             }
 
-            return DateTime.MinValue;
+            return default(DateTime);
         }
     }
 }

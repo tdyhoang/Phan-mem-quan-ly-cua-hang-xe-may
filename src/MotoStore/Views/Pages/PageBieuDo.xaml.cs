@@ -319,7 +319,7 @@ namespace MotoStore.Views.Pages
         {
             for(int i=0;i<txtTuNgay.Text.Length;i++)
             {
-                if (!((int)txtTuNgay.Text[i] >= 47 && (int)txtTuNgay.Text[i] <= 57))
+                if (!(txtTuNgay.Text[i] >= 47 && txtTuNgay.Text[i] <= 57))
                 {
                     MessageBox.Show("Ô Từ Ngày chứa kí tự không hợp lệ!");
                     txtTuNgay.Text = txtTuNgay.Text.Substring(0, txtTuNgay.Text.Length - 1);
@@ -361,7 +361,7 @@ namespace MotoStore.Views.Pages
         private void txtDenNgay_TextChanged(object sender, TextChangedEventArgs e)
         {
             for (int i = 0; i < txtDenNgay.Text.Length; i++)
-                if (!((int)txtDenNgay.Text[i] >= 47 && (int)txtDenNgay.Text[i] <= 57))
+                if (!(txtDenNgay.Text[i] >= 47 && txtDenNgay.Text[i] <= 57))
                 {
                     MessageBox.Show("Ô Đến Ngày chứa kí tự không hợp lệ!");
                     txtDenNgay.Text = txtDenNgay.Text.Substring(0, txtDenNgay.Text.Length - 1);
@@ -473,10 +473,10 @@ namespace MotoStore.Views.Pages
                  dothi.AxisX[0].MaxValue = ChartVal.Count;
                 //kết thúc Zoom hiện tại(nếu có), trả về Zoom ban đầu
                 TrucHoanhX.Separator.Step = 1; //Đặt giá trị của step mặc định là 1
-                 if ((double)ChartVal.Count / 30 - (int)(ChartVal.Count / 30) > 0)
-                     TrucHoanhX.Separator.Step = (int)ChartVal.Count / 30 + 1;
-                 else if((double)ChartVal.Count / 30 - (int)(ChartVal.Count / 30) == 0)
-                     TrucHoanhX.Separator.Step = (int)ChartVal.Count / 30;
+                 if ((double)ChartVal.Count / 30 - ChartVal.Count / 30 > 0)
+                     TrucHoanhX.Separator.Step = ChartVal.Count / 30 + 1;
+                 else if((double)ChartVal.Count / 30 - ChartVal.Count / 30 == 0)
+                     TrucHoanhX.Separator.Step = ChartVal.Count / 30;
                 //ĐK if else ở trên để tăng bước trục hoành dựa vào khoảng ngày
                 //0<NGÀY<30: step = 1, 30<NGÀY<60: step = 2 , ...  
 

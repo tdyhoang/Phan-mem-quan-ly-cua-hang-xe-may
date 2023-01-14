@@ -127,6 +127,8 @@ namespace MotoStore.Helpers
 
                 case TextBoxInputMode.LetterInput:
                     return CheckIsLetter(input);
+                case TextBoxInputMode.WordsInput:
+                    return CheckIsWords(input);
 
                 case TextBoxInputMode.LetterOrDigitInput:
                     return CheckIsLetterOrDigit(input);
@@ -150,6 +152,11 @@ namespace MotoStore.Helpers
         private static bool CheckIsLetter(string text)
         {
             return text.ToCharArray().All(Char.IsLetter);
+        }
+
+        private static bool CheckIsWords(string text)
+        {
+            return text.ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
 
         private static bool CheckIsLetterOrDigit(string text)
@@ -199,6 +206,7 @@ namespace MotoStore.Helpers
         DecimalInput,
         DigitInput,
         LetterInput,
+        WordsInput,
         LetterOrDigitInput,
         DateInput
     }
