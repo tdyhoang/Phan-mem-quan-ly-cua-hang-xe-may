@@ -4,6 +4,7 @@ CREATE DATABASE QLYCHBANXEMAY
 use QLYCHBANXEMAY
 set dateformat dmy
 
+
 Create table KhachHang
 (
 	ID int identity(1,1),
@@ -134,26 +135,29 @@ create table MatHang
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaMH primary key(MaMH)
 )
-
 alter table MatHang add constraint FK_MH foreign key(MaNCC) references NhaCungCap(MaNCC)
 
-Insert into MatHang values('Sirius', 110,null,21500000,26500000,13,'CC010','Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, màu đỏ đen, Còn mới',0)
-Insert into MatHang values('Sirius', 50,null,10000000,13500000,15,'CC010','Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, màu đen xám, Còn mới',0)
-Insert into MatHang values('Honda Air Blade',150,null,33500000,40500000,7,'CC001','Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, màu vàng đen, Còn mới',0)
-Insert into MatHang values('Exciter', 150,null, 38500000,45000000,5,'CC011','Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, màu xanh trắng, Còn mới',0)
-Insert into MatHang values('Raider F150', 150,null, 21500000,27500000,10,'CC006','Suzuki',N'Việt Nam',N'Màu đỏ đen, Còn mới',0)
+Insert into MatHang values('Sirius', 50, N'đen xám',10000000,13500000,15,'CC010','Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
+Insert into MatHang values('Sirius', 110, N'đỏ đen',21500000,26500000,13,'CC010','Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values('Honda Air Blade',150, N'vàng đen',33500000,40500000,7,'CC001','Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
+Insert into MatHang values('Exciter', 150, N'xanh biển', 38500000,45000000,5,'CC011','Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values('Raider F150', 150, N'đỏ đen', 21500000,27500000,10,'CC006','Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
 
-Insert into MatHang values('Vision', 150,null,22500000,29500000,10,'CC001','Honda',N'Nhật Bản',N'Màu đỏ đen, Còn mới',0)
-Insert into MatHang values('Lead', 110,null,24500000,31500000,10,'CC001','Honda',N'Nhật Bản',N'Màu trắng khói, Còn mới',0)
-Insert into MatHang values('Kawasaki Z1000',1043,null,410000000,435500000,10,'CC003','Kawasaki',N'Nhật Bản',N'Màu xanh đen, Còn mới',0)
-Insert into MatHang values('Kawasaki Ninja ZX-10R', 150,null, 699000000,729000000,5,'CC003','Kawasaki',N'Nhật Bản',N'Màu xanh lục đen, Còn mới',0)
-Insert into MatHang values('Attila 50', 110,null, 20500000,25700000,10,'CC007','Sym',N'Đài Loan',N'Màu xám khói, Còn mới',0)
+Insert into MatHang values('Vision', 150, N'đỏ đen',22500000,29500000,10,'CC001','Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values('Lead', 110, N'trắng khói',24500000,31500000,10,'CC001','Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values('Kawasaki Z1000',1043, N'xanh đen',410000000,435500000,10,'CC003','Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values('Kawasaki Ninja ZX-10R', 150, N'xanh lục đen', 699000000,729000000,5,'CC003','Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values('Attila 50', 110, N'đỏ', 20500000,25700000,10,'CC007','Sym',N'Đài Loan',N'Còn mới',0)
 
-Insert into MatHang values('Vespa Print 2020', 110,null,23500000,30500000,10,'CC005','Piaggio',N'Ý',N'Màu đỏ đen, Còn mới',0)
-Insert into MatHang values('SH 150', 150,null,115000000,129250000,9,'CC001','Honda',N'Nhật Bản',N'Màu vàng đen, Phanh Abs, còn mới',0)
-Insert into MatHang values('Wave Alpha',110,null,20500000,24500000,15,'CC001','Honda',N'Nhật Bản',N'Màu trắng đen, Còn mới',0)
-Insert into MatHang values('Sirius FI', 110,null, 22500000,27500000,10,'CC011','Yamaha',N'Việt Nam',N'Màu đen khói, Còn mới',0)
-Insert into MatHang values('EVO200', 100,null, 23500000,22500000,15,'CC009','Vinfast',N'Việt Nam',N'Màu vàng, Còn mới',0)
+Insert into MatHang values('Vespa Print 2020', 110, N'đỏ đen',23500000,30500000,10,'CC005','Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
+Insert into MatHang values('SH 150', 150, N'xanh lam',115000000,129250000,9,'CC001','Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
+Insert into MatHang values('Wave Alpha',110, N'trắng',20500000,24500000,15,'CC001','Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
+Insert into MatHang values('Sirius FI', 110, N'đen khói', 22500000,27500000,10,'CC011','Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values('EVO200', 100, N'vàng', 23500000,22500000,15,'CC009','Vinfast',N'Việt Nam',N'Còn mới',0)
+
+Update MatHang 
+Set SoPhanKhoi ='1040'
+where MaMH='MH009'
 
 Create table HoaDon
 (

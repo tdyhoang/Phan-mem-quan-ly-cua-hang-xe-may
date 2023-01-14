@@ -50,7 +50,6 @@
     <None Remove="Views\Pages\IO_Images\MH008.png" />
     <None Remove="Views\Pages\IO_Images\MH009.png" />
     <None Remove="Views\Pages\IO_Images\MH010.png" />
-    <None Remove="Views\Pages\IO_Images\MH011.png" />
     <None Remove="Views\Pages\IO_Images\MH012.png" />
     <None Remove="Views\Pages\IO_Images\MH013.png" />
     <None Remove="Views\Pages\IO_Images\MH014.png" />
@@ -62,6 +61,7 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Resource Include="Views\Pages\IO_Images\MH006.png" />
     <Resource Include="Views\Pages\Images\hdsd.png" />
     <Resource Include="Views\Pages\Images\huongdanLich.png" />
     <Resource Include="Views\Pages\Images\huongdanLich2.png" />
@@ -105,19 +105,19 @@
     <Resource Include="Views\Pages\Images\userNu.png" />
     <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
     <Resource Include="Views\Pages\IO_Images\MH003.png" />
+    <Resource Include="Views\Pages\IO_Images\MH008.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Pages\IO_Images\MH009.png" />
     <Resource Include="Views\Pages\IO_Images\MH010.png" />
-    <Resource Include="Views\Pages\IO_Images\MH008.png" />
     <Resource Include="Views\Pages\IO_Images\MH002.png" />
     <Resource Include="Views\Pages\IO_Images\MH015.png" />
     <Resource Include="Views\Pages\IO_Images\MH004.png" />
     <Resource Include="Views\Pages\IO_Images\MH014.png" />
-    <Resource Include="Views\Pages\IO_Images\MH009.png" />
     <Resource Include="Views\Pages\IO_Images\MH007.png" />
     <Resource Include="Views\Pages\IO_Images\MH005.png" />
     <Resource Include="Views\Pages\IO_Images\MH012.png" />
     <Resource Include="Views\Pages\IO_Images\MH001.png" />
-    <Resource Include="Views\Pages\IO_Images\MH011.png" />
-    <Resource Include="Views\Pages\IO_Images\MH006.png" />
     <Resource Include="Views\Pages\IO_Images\MH013.png" />
   </ItemGroup>
 

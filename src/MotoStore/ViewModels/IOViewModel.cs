@@ -8,6 +8,7 @@ using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using MotoStore.Views.Pages.IOPagePages;
+using MotoStore.Views.Pages;
 
 namespace MotoStore.ViewModels
 {
@@ -28,10 +29,12 @@ namespace MotoStore.ViewModels
         internal IONhaSXPage ionhasxpage = new();
         public void OnNavigatedTo()
         {
+              
         }
 
         public void OnNavigatedFrom()
         {
+            //MessageBox.Show("SIUUU FROM");
         }
     }
 }

@@ -131,7 +131,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     if (user.UserName == txtUser.Text && user.Password == txtPassword.Password)
                     {
                         isValid = true;             //Mở cổng đăng nhập
-                        getSex=(string)mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.GioiTinh).FirstOrDefault();
+                        getSex = (string)mDb.NhanViens.Where(u => u.MaNv == user.MaNv).Select(u => u.GioiTinh).FirstOrDefault();
                         getMa = user.MaNv;   
                         getMa = getMa.ToUpper();  //Set lại giá trị Upper vì nếu để getMa không thôi thì nó sẽ không khớp với dữ liệu trên mDb
 

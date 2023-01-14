@@ -7,20 +7,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IOPage">
-
+    <!--Trang này chỉ có nhiệm vụ duy nhất là chứa cái Root Frame phục vụ cho việc Navigate-->
     <Grid>
-        <Border Background="#97BCC7">
-           
-        </Border>
-
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <Button x:Name="btnAddSPPage" Content="Sản Phẩm" MinWidth="120" Click="btnAddSPPage_Click" Background="#DBEFE1" FontSize="15"/>
-
-            <Button x:Name="btnAddNSXPage" Content="Nhà Cung Cấp" MinWidth="120" Click="btnAddNSXPage_Click" Background=" #649FDF" FontSize="15"/>
-            <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="120" Click="btnAddKhachHang_Click" Background="#6BC3D2" FontSize="15"/>
-            <Button x:Name="btnAddHoaDon" Content="Hóa Đơn" MinWidth="120" Click="btnAddHoaDon_Click" Background="#75D481" FontSize="15"/>
+            <Button x:Name="btnSPPage" Content="Sản Phẩm" MinWidth="120" Click="btnSPPage_Click" Background="#DBEFE1" FontSize="15" FontWeight="Medium"/>
+            <Button x:Name="btnAddNSXPage" Content="Nhà Cung Cấp" MinWidth="120" Click="btnAddNSXPage_Click" Background=" #649FDF" FontSize="15" FontWeight="Medium"/>
+            <Button x:Name="btnAddKhachHang" Content="Khách Hàng" MinWidth="120" Click="btnAddKhachHang_Click" Background="#6BC3D2" FontSize="15" FontWeight="Medium"/>
+            <Button x:Name="btnAddHoaDon" Content="Hóa Đơn" MinWidth="120" Click="btnAddHoaDon_Click" Background="#75D481" FontSize="15" FontWeight="Medium"/>
         </StackPanel>
-        <Frame x:Name="IOMain" Margin="0,35,0,0" VerticalAlignment="Top" />
-
+        <Frame x:Name="IOMainFr" Margin="0,35,0,0" VerticalAlignment="Top" x:FieldModifier="public"/>
+        <!--"/Views/Pages/IOPagePages/IOSanPhamPage.xaml"-->
     </Grid>
 </Page>
