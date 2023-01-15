@@ -122,6 +122,9 @@ namespace MotoStore.Helpers
                 case TextBoxInputMode.None:
                     return true;
 
+                case TextBoxInputMode.NonSpecialInput:
+                    return CheckIsNonSpecial(input);
+
                 case TextBoxInputMode.DigitInput:
                     return CheckIsDigit(input);
 
@@ -142,6 +145,11 @@ namespace MotoStore.Helpers
                 default: throw new ArgumentException("Unknown TextBoxInputMode");
 
             }
+        }
+
+        private static bool CheckIsNonSpecial(string text)
+        {
+            return text.ToCharArray().All(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c));
         }
 
         private static bool CheckIsDigit(string text)
@@ -203,6 +211,7 @@ namespace MotoStore.Helpers
     public enum TextBoxInputMode
     {
         None,
+        NonSpecialInput,
         DecimalInput,
         DigitInput,
         LetterInput,

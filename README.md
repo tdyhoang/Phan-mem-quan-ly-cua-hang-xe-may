@@ -21,8 +21,9 @@
 			<helpers:TextBoxInputBehavior InputMode="..." JustPositiveDecimalInput="..." />
 		</i:Interaction.Behaviors>
 	</TextBox>
-- Có 7 InputMode:
+- Có 8 InputMode:
     + `None`: Textbox gõ như bình thường, không có điều kiện
+	+ `NonSpecialInput`: chỉ cho phép chữ, số hoặc khoảng trắng, không cho phép các ký tự đặc biệt khác
 	+ `DigitInput`: Textbox chỉ cho phép nhập các ký tự là chữ số
 	+ `LetterInput`: Textbox chỉ cho phép nhập các ký tự là chữ cái
 	+ `WordsInput`: Textbox chỉ cho phép nhập các ký tự là chữ cái hoặc khoảng trắng (dùng cho các loại tên, loại khách hàng,...)
