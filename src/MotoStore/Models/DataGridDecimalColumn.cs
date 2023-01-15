@@ -12,7 +12,6 @@ namespace MotoStore.Models
 {
     internal class DataGridDecimalColumn : DataGridTextColumn
     {
-        const NumberStyles validNumberStyles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
         TextBox? edittingCell;
 
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
@@ -88,10 +87,7 @@ namespace MotoStore.Models
 
         private static bool IsValidInput(string input)
         {
-            // Số thập phân chỉ có 1 dấu chấm
-            if (input.ToCharArray().Where(x => x == '.').Count() > 1)
-                return false;
-            return string.IsNullOrEmpty(input) || decimal.TryParse(input, validNumberStyles, CultureInfo.CurrentCulture, out _);
+            return string.IsNullOrEmpty(input) || decimal.TryParse(input, out _);
         }
     }
 }

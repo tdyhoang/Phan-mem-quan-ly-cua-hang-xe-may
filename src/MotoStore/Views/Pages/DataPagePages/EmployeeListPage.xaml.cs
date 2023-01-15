@@ -39,40 +39,11 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshDataGrid()
         {
-            DateTime? bdfrom = null;
-            DateTime? bdto = null;
-            DateTime? jdfrom = null;
-            DateTime? jdto = null;
             MainDatabase con = new();
             TableData = new(con.NhanViens);
             foreach (var nhanVien in TableData.ToList())
-            {
                 if (nhanVien.DaXoa)
-                {
                     TableData.Remove(nhanVien);
-                    continue;
-                }
-                if (bdfrom is null || bdfrom > nhanVien.NgSinh)
-                    bdfrom = nhanVien.NgSinh;
-                if (bdto is null || bdto < nhanVien.NgSinh)
-                    bdto = nhanVien.NgSinh;
-                if (jdfrom is null || jdfrom > nhanVien.NgVl)
-                    jdfrom = nhanVien.NgVl;
-                if (jdto is null || jdto < nhanVien.NgVl)
-                    jdto = nhanVien.NgVl;
-            }
-            dpBDFrom.SelectedDate ??= bdfrom;
-            dpBDTo.SelectedDate ??= bdto;
-            dpJDFrom.SelectedDate ??= jdfrom;
-            dpJDTo.SelectedDate ??= jdto;
-            // Filter
-            foreach (var nhanVien in TableData.ToList())
-            {
-                if (nhanVien.NgSinh < dpBDFrom.SelectedDate || nhanVien.NgSinh > dpBDTo.SelectedDate)
-                    TableData.Remove(nhanVien);
-                else if (nhanVien.NgVl < dpJDFrom.SelectedDate || nhanVien.NgVl > dpJDTo.SelectedDate)
-                    TableData.Remove(nhanVien);
-            }
             grdEmployee.ItemsSource = TableData;
         }
 
@@ -227,14 +198,5 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void AddRow(object sender, RoutedEventArgs e)
             => TableData.Add(new());
-
-        private void ClearFilter(object sender, RoutedEventArgs e)
-        {
-            dpBDFrom.SelectedDate = null;
-            dpBDTo.SelectedDate = null;
-            dpJDFrom.SelectedDate = null;
-            dpJDTo.SelectedDate = null;
-            RefreshDataGrid();
-        }
     }
 }

@@ -123,7 +123,7 @@ namespace MotoStore.Views.Pages
 
         void timer_Tick(object sender, EventArgs e)
         {
-            lblGioHeThong.Content = $"Bây giờ là: {DateTime.Now.ToString("HH:mm:ss")}";
+            lblGioHeThong.Content = $"Bây giờ là: {DateTime.Now:HH:mm:ss}";
         }
 
         private void btnDgXuat_Click(object sender, RoutedEventArgs e)
@@ -137,7 +137,7 @@ namespace MotoStore.Views.Pages
             SqlCommand cmd;
             con.Open();
             DateTime DT = DateTime.Now;
-            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DT.ToString("dd-MM-yyyy HH:mm:ss")}', N'đăng xuất')", con);
+            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -234,7 +234,7 @@ namespace MotoStore.Views.Pages
 
             if (enableLenLich)
             {
-                string ngaylenlich = $"{Lich.SelectedDate.Value.ToString("dd/MM/yyyy")} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                string ngaylenlich = $"{Lich.SelectedDate.Value:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
                 //if có ngày được select
                 if (Lich.SelectedDate.HasValue)
                 {
@@ -280,7 +280,7 @@ namespace MotoStore.Views.Pages
                                 SqlCommand cmd = new($"set dateformat dmy\nInsert into LenLich values(NewID(),'{PageChinh.getMa}', '{lich} {cbGioBD.Text}:{cbPhutBD.Text}:00', '{lich} {cbGioKT.Text}:{cbPhutKT.Text}:00', N'{richText}')", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getMa}', '{DT.ToString("dd-MM-yyyy HH:mm:ss")}', N'lên lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'lên lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Lên lịch thành công!");
@@ -326,7 +326,7 @@ namespace MotoStore.Views.Pages
                     }
                     else
                     {
-                        string strGiomuonXoa = $"{Lich.SelectedDate.Value.ToString("dd-MM-yyyy")} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                        string strGiomuonXoa = $"{Lich.SelectedDate.Value:dd-MM-yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
                         bool Deleted = false;
                         foreach (var gio in mdb.LenLichs.ToList())
                         {
@@ -337,7 +337,7 @@ namespace MotoStore.Views.Pages
                                 SqlCommand cmd = new($"set dateformat dmy\ndelete from LenLich where NgLenLichBD='{strGiomuonXoa}'", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getMa}', '{DT.ToString("dd-MM-yyyy HH:mm:ss")}', N'xoá lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Xoá Sự Kiện thành công");
@@ -442,21 +442,21 @@ namespace MotoStore.Views.Pages
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
-            if (File.Exists(@$"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/{PageChinh.getMa}"))
+            if (File.Exists(@$"Avatars/{PageChinh.getMa}"))
             {
                 BitmapImage image = new();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new($@"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/{PageChinh.getMa}", UriKind.Relative);
+                image.UriSource = new($@"pack://application:,,,/Avatars/{PageChinh.getMa}");
                 image.EndInit();
 
                 anhNhanVien.ImageSource = image;
             }
             else if (PageChinh.getSex == "Nữ")
-                anhNhanVien.ImageSource = new BitmapImage(new(@"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/userNu.png", UriKind.Relative));
+                anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
             else
-                anhNhanVien.ImageSource = new BitmapImage(new(@"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/userNam.png", UriKind.Relative));
+                anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
 
             if (String.Equals(PageChinh.getChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
             {
@@ -503,8 +503,8 @@ namespace MotoStore.Views.Pages
             //Nếu có xoá file ảnh hiện tại và đổi tên file Backup thành file ảnh hiệện tại
             //Nếu 0 có BaKUP thì quay lại hình Default
             //sau If sẽ hiện lỗi messagebox
-            string destFile = @$"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/{PageChinh.getMa}.BackUp";
-            string newPathToFile = @$"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/{PageChinh.getMa}";
+            string destFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}.BackUp";
+            string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
             try
@@ -521,7 +521,7 @@ namespace MotoStore.Views.Pages
                     image.BeginInit();
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                    image.UriSource = new(newPathToFile, UriKind.Relative);
+                    image.UriSource = new(newPathToFile);
                     image.EndInit();
                     anhNhanVien.ImageSource = image;
 
@@ -550,9 +550,9 @@ namespace MotoStore.Views.Pages
                 else
                 {
                     if (PageChinh.getSex == "Nữ")
-                        anhNhanVien.ImageSource = new BitmapImage(new(@"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/userNu.png",  UriKind.Relative));
+                        anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
                     else
-                        anhNhanVien.ImageSource = new BitmapImage(new(@"/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Avatars/userNam.png", UriKind.Relative));
+                        anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
                 }
                 MessageBox.Show(ex.Message);
             }
@@ -623,7 +623,7 @@ namespace MotoStore.Views.Pages
             borderHuongDan.Visibility = Visibility.Visible;
             BitmapImage bi3 = new();
             bi3.BeginInit();
-            bi3.UriSource = new("/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Views/Pages/Images/huongdanLich.png", UriKind.Relative);
+            bi3.UriSource = new("/Views/Pages/Images/huongdanLich.png", UriKind.Relative);
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;
@@ -638,7 +638,7 @@ namespace MotoStore.Views.Pages
         {
             BitmapImage bi3 = new();
             bi3.BeginInit();
-            bi3.UriSource = new("/Phan-mem-quan-ly-cua-hang-xe-may/src/MotoStore/Views/Pages/Images/huongdanLich2.png", UriKind.Relative);
+            bi3.UriSource = new("/Views/Pages/Images/huongdanLich2.png", UriKind.Relative);
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;

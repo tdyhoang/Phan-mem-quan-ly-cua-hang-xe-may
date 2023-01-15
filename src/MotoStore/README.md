@@ -1,7 +1,6 @@
 # Phan mem quan ly cua hang xe may
-*Recommended Markdown Viewer: [Markdown Editor](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)*
 
-## 1 lưu ý khác
+## Lưu ý khi commit
 - Nếu đã lỡ commit lên github trước khi pull phần của ng khác về thì ae có thể vào phần history, sẽ thấy có 2 commit mới chưa đc push lên. Trong đó 1 là commit của mình và 2 là cái merge tự động của github. Backup file lại phòng khi làm sai sau đó thực hiện các bước để khắc phục:
 	+ B1: Undo commit merge tự động
 	+ B2: Qua phần changes và discard tất cả các file ở đó
@@ -15,7 +14,7 @@
 
 ### Cách dùng
 - Ở file xaml thêm 2 namespace là `xmlns:i="http://schemas.microsoft.com/xaml/behaviors"` và `xmlns:helpers="clr-namespace:MotoStore.Helpers"`
-- Trong textbox mở thêm 1 control như sau:
+- Trong textbox mở thêm 1 control như sau:  
 	<TextBox ...>
 		<i:Interaction.Behaviors>
 			<helpers:TextBoxInputBehavior InputMode="..." JustPositiveDecimalInput="..." />

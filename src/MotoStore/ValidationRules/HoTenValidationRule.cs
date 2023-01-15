@@ -15,7 +15,7 @@ namespace MotoStore.ValidationRules
             {
                 if (value.ToString().Length > 30)
                     return new(false, "Tên quá dài, tối đa 30 ký tự!");
-                if (!value.ToString().ToCharArray().All(c => Char.IsLetter(c) || Char.IsWhiteSpace(c)))
+                if (!value.ToString().ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
                     return new(false, "Tên không được chứa số hoặc ký tự đặc biệt!");
             }
 

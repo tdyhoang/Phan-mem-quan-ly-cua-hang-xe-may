@@ -20,7 +20,7 @@ namespace MotoStore.ValidationRules
             if (DateTime.TryParseExact(value.ToString(), "d/M/yyyy", cultureInfo, DateTimeStyles.AllowWhiteSpaces, out _))
                 return new(true, default);
 
-            return new(false, "Nhập ngày theo định dạng dd/MM/yyyy");
+            return new(false, "Nhập ngày hợp lệ, có trên theo định dạng dd/MM/yyyy");
         }
     }
 }

@@ -31,7 +31,6 @@
         <ControlTemplate x:Key="DateFilter">
             <controls:DateFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
         </ControlTemplate>
-        <helpers:DateTimeConverter x:Key="DateTimeConverter" />
     </ui:UiPage.Resources>
 
     <Grid>
@@ -73,7 +72,6 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-
                 <helpers:DateTimeConverter x:Key="DateTimeConverter" />
             </ui:DataGrid.Resources>
 
@@ -97,15 +95,15 @@
                         </Binding>
                     </models:DataGridDateColumn.Binding>
                 </models:DataGridDateColumn>
-                <DataGridTextColumn Header="Giới tính" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
-                    <DataGridTextColumn.Binding>
+                <models:DataGridLetterColumn Header="Giới tính" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                    <models:DataGridLetterColumn.Binding>
                         <Binding Path="GioiTinh">
                             <Binding.ValidationRules>
                                 <validationrules:GioiTinhValidationRule />
                             </Binding.ValidationRules>
                         </Binding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                    </models:DataGridLetterColumn.Binding>
+                </models:DataGridLetterColumn>
                 <DataGridTextColumn Header="Địa chỉ" EditingElementStyle="{StaticResource errorToolTip}">
                     <DataGridTextColumn.Binding>
                         <Binding Path="DiaChi">
