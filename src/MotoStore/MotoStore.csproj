@@ -33,27 +33,26 @@
     <None Remove="Views\Pages\Images\IconXeMay.png" />
     <None Remove="Views\Pages\Images\money.png" />
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
-    <None Remove="Views\Pages\Images\NhanVien.png" />
     <None Remove="Views\Pages\Images\NhvienNgSuat.png" />
     <None Remove="Views\Pages\Images\SoXe-removebg-preview.png" />
     <None Remove="Views\Pages\Images\userNam.png" />
     <None Remove="Views\Pages\Images\userNu.png" />
     <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
     <None Remove="Views\Pages\Images\VIP-removebg-preview.png" />
-    <None Remove="Views\Pages\IO_Images\MH001.png" />
-    <None Remove="Views\Pages\IO_Images\MH002.png" />
-    <None Remove="Views\Pages\IO_Images\MH003.png" />
-    <None Remove="Views\Pages\IO_Images\MH004.png" />
-    <None Remove="Views\Pages\IO_Images\MH005.png" />
-    <None Remove="Views\Pages\IO_Images\MH006.png" />
-    <None Remove="Views\Pages\IO_Images\MH007.png" />
-    <None Remove="Views\Pages\IO_Images\MH008.png" />
-    <None Remove="Views\Pages\IO_Images\MH009.png" />
-    <None Remove="Views\Pages\IO_Images\MH010.png" />
-    <None Remove="Views\Pages\IO_Images\MH012.png" />
-    <None Remove="Views\Pages\IO_Images\MH013.png" />
-    <None Remove="Views\Pages\IO_Images\MH014.png" />
-    <None Remove="Views\Pages\IO_Images\MH015.png" />
+    <None Remove="Products Images\MH001.png" />
+    <None Remove="Products Images\MH002.png" />
+    <None Remove="Products Images\MH003.png" />
+    <None Remove="Products Images\MH004.png" />
+    <None Remove="Products Images\MH005.png" />
+    <None Remove="Products Images\MH006.png" />
+    <None Remove="Products Images\MH007.png" />
+    <None Remove="Products Images\MH008.png" />
+    <None Remove="Products Images\MH009.png" />
+    <None Remove="Products Images\MH010.png" />
+    <None Remove="Products Images\MH012.png" />
+    <None Remove="Products Images\MH013.png" />
+    <None Remove="Products Images\MH014.png" />
+    <None Remove="Products Images\MH015.png" />
     <None Remove="Views\Pages\LoginPages\motorworkshop.jpg" />
     <None Remove="Views\Pages\LoginPages\NhanVien.png" />
     <None Remove="Views\Pages\LoginPages\SoXe-removebg-preview.png" />
@@ -61,7 +60,7 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
-    <Resource Include="Views\Pages\IO_Images\MH006.png" />
+    <Resource Include="Products Images\MH006.png" />
     <Resource Include="Views\Pages\Images\hdsd.png" />
     <Resource Include="Views\Pages\Images\huongdanLich.png" />
     <Resource Include="Views\Pages\Images\huongdanLich2.png" />
@@ -101,24 +100,24 @@
     <Resource Include="Views\Pages\Images\NhanVien.png" />
     <Resource Include="Views\Pages\Images\NhvienNgSuat.png" />
     <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
-    <Resource Include="Views\Pages\Images\userNam.png" />
-    <Resource Include="Views\Pages\Images\userNu.png" />
+    <Resource Include="Avatars\userNam.png" />
+    <Resource Include="Avatars\userNu.png" />
     <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
-    <Resource Include="Views\Pages\IO_Images\MH003.png" />
-    <Resource Include="Views\Pages\IO_Images\MH008.png">
+    <Resource Include="Products Images\MH003.png" />
+    <Resource Include="Products Images\MH008.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Views\Pages\IO_Images\MH009.png" />
-    <Resource Include="Views\Pages\IO_Images\MH010.png" />
-    <Resource Include="Views\Pages\IO_Images\MH002.png" />
-    <Resource Include="Views\Pages\IO_Images\MH015.png" />
-    <Resource Include="Views\Pages\IO_Images\MH004.png" />
-    <Resource Include="Views\Pages\IO_Images\MH014.png" />
-    <Resource Include="Views\Pages\IO_Images\MH007.png" />
-    <Resource Include="Views\Pages\IO_Images\MH005.png" />
-    <Resource Include="Views\Pages\IO_Images\MH012.png" />
-    <Resource Include="Views\Pages\IO_Images\MH001.png" />
-    <Resource Include="Views\Pages\IO_Images\MH013.png" />
+    <Resource Include="Products Images\MH009.png" />
+    <Resource Include="Products Images\MH010.png" />
+    <Resource Include="Products Images\MH002.png" />
+    <Resource Include="Products Images\MH015.png" />
+    <Resource Include="Products Images\MH004.png" />
+    <Resource Include="Products Images\MH014.png" />
+    <Resource Include="Products Images\MH007.png" />
+    <Resource Include="Products Images\MH005.png" />
+    <Resource Include="Products Images\MH012.png" />
+    <Resource Include="Products Images\MH001.png" />
+    <Resource Include="Products Images\MH013.png" />
   </ItemGroup>
 
   <ItemGroup>

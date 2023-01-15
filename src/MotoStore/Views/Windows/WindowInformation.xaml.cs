@@ -24,7 +24,7 @@ namespace MotoStore.Views.Windows
         public WindowInformation()
         {
             InitializeComponent();
-            MainDatabase mdb = new MainDatabase();
+            MainDatabase mdb = new();
             //switch(tung loai thong tin o day)
             rtbThongTin.AppendText("-Tên Mặt Hàng: "+ReportPage.tenXeBanChay+"\n");
             rtbThongTin.AppendText("-Mã Mặt Hàng: " + ReportPage.tenXeBanChay+"\n");

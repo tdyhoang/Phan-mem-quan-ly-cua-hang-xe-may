@@ -40,8 +40,8 @@ namespace MotoStore.Views.Pages
 
             SrC.Add(new PieSeries()
             {
-                Title = ReportPage.tenXeBanChay,
-                Values = new ChartValues<int> { ReportPage.SoLgXeBanChay },
+                Title = tenXeBanChay,
+                Values = new ChartValues<int> { SoLgXeBanChay },
                 LabelPoint = PointLabel,
                 DataLabels = true,
                 Fill = Brushes.Red
@@ -202,7 +202,7 @@ namespace MotoStore.Views.Pages
             }
             
             string commandText = "Set Dateformat dmy\nSelect Sum(SoLuong) from HoaDon Where NgayLapHD >=@StartDate and NgayLapHD < @EndDate";
-            SqlCommand command = new SqlCommand(commandText, con);
+            SqlCommand command = new(commandText, con);
             command.Parameters.Add("@StartDate", System.Data.SqlDbType.SmallDateTime);
             command.Parameters["@StartDate"].Value = StartDate;
             command.Parameters.Add("@EndDate", System.Data.SqlDbType.SmallDateTime);
@@ -221,7 +221,7 @@ namespace MotoStore.Views.Pages
 
             string commandTextMoney = "Set Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon Where NgayLapHD >=@StartDate and NgayLapHD < @EndDate";
             
-            SqlCommand commandMoney = new SqlCommand(commandTextMoney, con);
+            SqlCommand commandMoney = new(commandTextMoney, con);
             commandMoney.Parameters.Add("@StartDate", System.Data.SqlDbType.SmallDateTime);
             commandMoney.Parameters["@StartDate"].Value = StartDate;
             commandMoney.Parameters.Add("@EndDate", System.Data.SqlDbType.SmallDateTime);

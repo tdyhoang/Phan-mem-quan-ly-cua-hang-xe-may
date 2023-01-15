@@ -34,7 +34,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> items = new(); //Tạo Danh Sách Product phục vụ cho tìm kiếm(Filter)
             foreach (var xe in mdb.MatHangs)
             {
-                items.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                items.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                 {
                     ProductId = xe.MaMh,
                     Mau = xe.Mau
@@ -56,7 +56,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             string AnhXE;
             foreach (MatHang matHang1 in matHang)
             {
-                AnhXE = "/Views/Pages/IO_Images/" + matHang1.MaMh + ".png"; //Ảnh của từng xe(gán theo mã xe có sẵn )
+                AnhXE = $"/Products Images/{matHang1.MaMh}.png"; //Ảnh của từng xe(gán theo mã xe có sẵn )
                 products.Add(new(matHang1.TenMh, matHang1.GiaBanMh, AnhXE));
             }
             return products;
@@ -81,9 +81,9 @@ namespace MotoStore.Views.Pages.IOPagePages
                 return true; //Text rỗng hoặc chứa khoảng trắng thì hiện toàn bộ item(Sản Phẩm)
             else
             {
-                return (((item as Product).ProductId.IndexOf(txtTimKiem.Text, System.StringComparison.OrdinalIgnoreCase) >= 0) 
-                    || ((item as Product).NameProduct.IndexOf(txtTimKiem.Text, System.StringComparison.OrdinalIgnoreCase) >= 0) 
-                    || (item as Product).Mau.IndexOf(txtTimKiem.Text, System.StringComparison.OrdinalIgnoreCase) >= 0);
+                return (((item as Product).ProductId.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
+                    || ((item as Product).NameProduct.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
+                    || (item as Product).Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0);
                 //Nếu text KHÔNG RỖNG thì trả về 1 trong 3 thuộc tính đc nhập trong textbox.
             }
         }
@@ -116,7 +116,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> ListItems = new(); 
             foreach(var xe in mdb.MatHangs.ToList())
                 if (xe.SoPhanKhoi.Value < 110)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                     {
                         ProductId = xe.MaMh,
                         Mau = xe.Mau,
@@ -134,7 +134,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> ListItems = new();
             foreach (var xe in mdb.MatHangs.ToList())
                 if (xe.SoPhanKhoi.Value >= 110)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                     {
                         ProductId = xe.MaMh,
                         Mau = xe.Mau,
@@ -174,7 +174,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> ListItems = new();
             foreach (var xe in mdb.MatHangs.ToList())
             {
-                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                 {
                     ProductId = xe.MaMh,
                     Mau=xe.Mau,
@@ -213,7 +213,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                         foreach (var xe in mdb.MatHangs.ToList())
                         {
                             if (xe.SoPhanKhoi.Value >= int.Parse(txtTu.Text) && xe.SoPhanKhoi.Value <= int.Parse(txtDen.Text))
-                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                                 {
                                     ProductId = xe.MaMh,
                                     Mau = xe.Mau,
@@ -226,7 +226,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                         foreach (var xe in mdb.MatHangs.ToList())
                         {
                             if (xe.GiaBanMh.Value >= decimal.Parse(txtTu.Text) && xe.GiaBanMh.Value <= decimal.Parse(txtDen.Text))
-                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                                 {
                                     ProductId = xe.MaMh,
                                     Mau = xe.Mau,
@@ -247,7 +247,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> ListItems = new();
             foreach (var xe in mdb.MatHangs.ToList())
                 if (xe.GiaBanMh.Value < 30000000)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                     {
                         ProductId = xe.MaMh,
                         Mau = xe.Mau,
@@ -263,7 +263,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             List<Product> ListItems = new();
             foreach (var xe in mdb.MatHangs.ToList())
                 if (xe.GiaBanMh.Value >= 30000000)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + xe.MaMh + ".png")
+                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
                     {
                         ProductId = xe.MaMh,
                         Mau = xe.Mau,
