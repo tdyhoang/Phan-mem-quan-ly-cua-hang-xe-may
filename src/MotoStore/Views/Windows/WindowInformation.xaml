@@ -117,6 +117,9 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center" Margin="0,356,0,0">
         </Button>
+        <Image x:Name="AnhChiTietSP" Source="{Binding imageCTSP}" Height="80" Width="120">
+            
+        </Image>
 
     </Grid>
 </Window>

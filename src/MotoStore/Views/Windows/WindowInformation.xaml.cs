@@ -32,6 +32,7 @@ namespace MotoStore.Views.Windows
             rtbThongTin.AppendText("-Số Phân Khối: " + ReportPage.tenXeBanChay + "\n");
             rtbThongTin.AppendText("-Số Lượng Bán Ra: " + ReportPage.tenXeBanChay + "\n");
             rtbThongTin.AppendText("-Số Lượng Tồn Kho: " + ReportPage.tenXeBanChay + "\n");
+
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)

@@ -1,9 +1,11 @@
 ﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IOKhachHangPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+      xmlns:helpers="clr-namespace:MotoStore.Helpers"  
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MotoStore.Views.Pages.IOPagePages"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IOKhachHangPage">
@@ -46,28 +48,44 @@
                                Margin="500,144,24,286"
                                />
 
-        <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus"/>
+        <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbNgaySinhKH"
                Content="Ngày Sinh: " 
                Margin="24,120,613,287"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" VerticalAlignment="Top" LostFocus="txtNgaySinhKH_LostFocus"/>
+        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" VerticalAlignment="Top" LostFocus="txtNgaySinhKH_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="DateInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbDiaChiKH"
                Content="Địa Chỉ: " 
                Margin="24,180,620,243"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075" LostFocus="txtDiaChiKH_LostFocus"/>
+        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075" LostFocus="txtDiaChiKH_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbSDTKhachHang"
                Content=" SĐT: " 
                Margin="536,58,113,367"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top" LostFocus="txtSDTKH_LostFocus"/>
+    <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top" LostFocus="txtSDTKH_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbEmailKH"
                Content="Email: " 
                Margin="536,125,108,300"
