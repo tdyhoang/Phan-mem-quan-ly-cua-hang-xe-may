@@ -49,71 +49,65 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            if ((from c in (from object i in grdEmployee.ItemsSource select grdEmployee.ItemContainerGenerator.ContainerFromItem(i)) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            {
+                MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
+                return;
+            }
             SqlCommand cmd;
+            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             try
             {
                 con.Open();
-                cmd = new("begin transaction\nset dateformat dmy", con);
-                cmd.ExecuteNonQuery();
-                string ngaySinhNv, ngayVaoLam;
-
-                // Lý do cứ mỗi lần có cell sai là break:
-                // - Tránh trường hợp hiện MessageBox liên tục
-                // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                foreach (object obj in grdEmployee.Items)
+                using var trans = con.BeginTransaction();
+                try
                 {
-                    // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                    if (obj is not NhanVien nv)
-                        continue;
-                    // Lấy chuỗi ngày sinh theo format dd-MM-yyyy
-                    if (nv.NgSinh.HasValue)
-                        ngaySinhNv = nv.NgSinh.Value.ToString("dd-MM-yyyy");
-                    else
-                        ngaySinhNv = string.Empty;
-                    // Lấy chuỗi ngày vào làm theo format dd-MM-yyyy
-                    if (nv.NgVl.HasValue)
-                        ngayVaoLam = nv.NgVl.Value.ToString("dd-MM-yyyy");
-                    else
-                        ngayVaoLam = string.Empty;
-                    // Kiểm tra dữ liệu đã đúng theo định nghĩa chưa
-                    if (string.IsNullOrEmpty(nv.GioiTinh) || (nv.GioiTinh != "Nam" && nv.GioiTinh != "Nữ"))
-                    {
-                        MessageBox.Show("Giới tính chỉ có thể là Nam hoặc Nữ (có dấu)!");
-                        return;
-                    }
-                    if (!string.IsNullOrEmpty(nv.Sdt) && (nv.Sdt.Contains('+') || nv.Sdt.Contains('-')) && int.TryParse(nv.Sdt, out _))
-                    {
-                        MessageBox.Show("Số điện thoại không được chứa ký tự không phải chữ số!");
-                        return;
-                    }
-                    nv.Luong ??= 0;
+                    cmd = new("set dateformat dmy", con);
+                    cmd.Transaction = trans;
 
-                    // Thêm mới
-                    if (string.IsNullOrEmpty(nv.MaNv))
+                    // Lý do cứ mỗi lần có cell sai là break:
+                    // - Tránh trường hợp hiện MessageBox liên tục
+                    // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
+                    foreach (object obj in grdEmployee.Items)
                     {
-                        cmd = new("Insert into NhanVien values(N'" + nv.HoTenNv + "', '" + ngaySinhNv + "', N'" + nv.GioiTinh + "', N'" + nv.DiaChi + "', '" + nv.Sdt + "', '" + nv.Email + "', N'" + nv.ChucVu + "', '" + ngayVaoLam + "', " + nv.Luong + "0)", con);
-                        cmd.ExecuteNonQuery();
-                    }
+                        // Trường hợp gặp dòng trắng được người dùng thêm mà chưa chỉnh sửa
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                            continue;
+                        if (obj is not NhanVien nv)
+                            continue;
+                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        string ngaySinhNv = string.Empty;
+                        string ngayVaoLam = string.Empty;
+                        if (nv.NgSinh.HasValue)
+                            ngaySinhNv = nv.NgSinh.Value.ToString("dd-MM-yyyy");
+                        if (nv.NgVl.HasValue)
+                            ngayVaoLam = nv.NgVl.Value.ToString("dd-MM-yyyy");
+                        if (string.IsNullOrEmpty(nv.GioiTinh))
+                            throw new("Giới tính không được để trống!");
+                        nv.Luong ??= 0;
 
-                    // Cập nhật
-                    else
-                    {
-                        cmd = new("Update NhanVien Set HoTenNv = N'" + nv.HoTenNv + "', NgSinh = '" + ngaySinhNv + "', GioiTinh = N'" + nv.GioiTinh + "', DiaChi = N'" + nv.DiaChi + "', Sdt = '" + nv.Sdt + "', Email = '" + nv.Email + "', ChucVu = N'" + nv.ChucVu + "', ngVL = '" + ngayVaoLam + "', Luong = " + nv.Luong + ", DaXoa = 0 Where Manv = '" + nv.MaNv + "';", con);
-                        cmd.ExecuteNonQuery();
+                        // Thêm mới
+                        if (string.IsNullOrEmpty(nv.MaNv))
+                            cmd.CommandText += $"\nInsert into NhanVien values(N'{nv.HoTenNv}', '{ngaySinhNv}', N'{nv.GioiTinh}', N'{nv.DiaChi}', '{nv.Sdt}', '{nv.Email}', N'{nv.ChucVu}', '{ngayVaoLam}', {nv.Luong}, 0)";
+
+                        // Cập nhật
+                        else
+                            cmd.CommandText += $"\nUpdate NhanVien Set HoTenNv = N'{nv.HoTenNv}', NgSinh = '{ngaySinhNv}', GioiTinh = N'{nv.GioiTinh}', DiaChi = N'{nv.DiaChi}', Sdt = '{nv.Sdt}', Email = '{nv.Email}', ChucVu = N'{nv.ChucVu}', ngVL = '{ngayVaoLam}', Luong = {nv.Luong}, DaXoa = 0 Where Manv = '{nv.MaNv}';";
                     }
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                    // Làm mới nội dung hiển thị cho khớp với database
+                    RefreshDataGrid();
+                    MessageBox.Show("Lưu chỉnh sửa thành công!");
                 }
-
-                con.Close();
-                // Làm mới nội dung hiển thị cho khớp với database
-                RefreshDataGrid();
-                MessageBox.Show("Lưu chỉnh sửa thành công!");
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    trans.Rollback();
+                }
             }
             catch (Exception ex)
             {
-                cmd = new("rollback transaction", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
                 MessageBox.Show(ex.Message);
             }
         }
@@ -141,34 +135,38 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void DeleteRow(object sender, RoutedEventArgs e)
         {
+            SqlCommand cmd;
+            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-
-                foreach (object obj in grdEmployee.SelectedItems)
+                using var trans = con.BeginTransaction();
+                try
                 {
-                    // Bỏ qua ô trắng mà vẫn được Select
-                    // is not NhanVien chỉ để an toàn
-                    if (obj is not NhanVien nv)
-                        continue;
-                    // Trường hợp chưa thêm mới nên chưa có mã nv
-                    if (string.IsNullOrEmpty(nv.MaNv))
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        // !! Chưa tìm ra hướng xử lý
-                        continue;
-                    // Xóa hàng
-                    else
+                    cmd = new(" ", con);
+                    cmd.Transaction = trans;
+
+                    foreach (object obj in grdEmployee.SelectedItems)
                     {
-                        cmd = new("Update NhanVien Set DaXoa = 1 Where Manv = '" + nv.MaNv + "'", con);
-                        cmd.ExecuteNonQuery();
+                        if (obj is not NhanVien nv)
+                            continue;
+                        // Trường hợp chưa thêm mới nên chưa có mã nv
+                        if (string.IsNullOrEmpty(nv.MaNv))
+                            continue;
+                        // Xóa hàng
+                        else
+                            cmd.CommandText += $"Update NhanVien Set DaXoa = 1 Where Manv = '{nv.MaNv}'\n";
                     }
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
                 }
-                con.Close();
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                    e.Handled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -187,7 +185,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                bool isQuanLy = PageChinh.getChucVu.ToLower() == "quản lý";
+                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
 
                 grdEmployee.IsReadOnly = !isQuanLy;
 

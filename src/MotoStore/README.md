@@ -7,6 +7,10 @@
 	+ B3: Undo commit phần mình vừa làm
 	+ B4: Thực hiện pull cập nhật sau đó commit và push phần của mình như bình thường
 
+## CustomValidationRule
+### Cách dùng
+- Nằm ở namespace helpers, file này sẽ tổng hợp toàn bộ các ValidationRule và sẽ có thuộc tính ValidationMode để chọn loại ValidationRule muốn áp dụng
+
 ## TextBoxInputBehavior
 ### Tác dụng
 - Ngăn các ký tự không hợp lệ ở các textbox, hợp lệ hay không do tự mình quy định trong class này, tiện để dùng chung và kế thừa
@@ -20,7 +24,7 @@
 			<helpers:TextBoxInputBehavior InputMode="..." JustPositiveDecimalInput="..." />
 		</i:Interaction.Behaviors>
 	</TextBox>
-- Có 8 InputMode:
+- Có 9 InputMode:
     + `None`: Textbox gõ như bình thường, không có điều kiện
 	+ `NonSpecialInput`: chỉ cho phép chữ, số hoặc khoảng trắng, không cho phép các ký tự đặc biệt khác
 	+ `DigitInput`: Textbox chỉ cho phép nhập các ký tự là chữ số
@@ -28,9 +32,10 @@
 	+ `WordsInput`: Textbox chỉ cho phép nhập các ký tự là chữ cái hoặc khoảng trắng (dùng cho các loại tên, loại khách hàng,...)
 	+ `LetterOrDigitInput`: Textbox không cho phép nhập các ký tự đặc biệt (để nhập mã...)
 	+ `DecimalInput`: Textbox chỉ cho phép nhập số thập phân
+	+ `IntegerInput`: Textbox chỉ cho phép nhập số nguyên
 	+ `DateInput`: Textbox chỉ cho phép nhập các ký tự là chữ số hoặc dấu chéo `/` (để nhập ngày tháng)
 	+ Ae có thể vào file `Helpers\TextBoxInputBehavior.cs` để tự định nghĩa thêm InputMode nếu cần
-- Thuộc tính bool `JustPositiveDecimalInput` chỉ dùng khi InputMode=Decimal, nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm). Giá trị mặc định là false.
+- Thuộc tính bool `JustPositiveDecimalInput` chỉ dùng khi InputMode=DecimalInput hoặc InputMode=IntegerInput, nếu là `True` thì không cho phép nhập dấu trừ `-`, ngược lại nếu là `False` thì cho phép (để nhập số âm). Giá trị mặc định là false.
 
 ## DateTimeConverter
 ### Tác dụng

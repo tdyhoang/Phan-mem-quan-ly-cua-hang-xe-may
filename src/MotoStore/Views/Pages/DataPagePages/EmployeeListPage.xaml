@@ -7,11 +7,15 @@
            xmlns:resources="clr-namespace:MotoStore.Resources"
            xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
            xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:EmployeeListPage}"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages"
+           d:DataContext="{d:DesignInstance Type=local:EmployeeListPage}"
            mc:Ignorable="d" 
            d:DesignHeight="450" d:DesignWidth="800"
            Title="EmployeeListPage"
-           xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:helpers="clr-namespace:MotoStore.Helpers" xmlns:controls="clr-namespace:MotoStore.Controls" xmlns:validationrules="clr-namespace:MotoStore.ValidationRules" xmlns:models="clr-namespace:MotoStore.Models">
+           xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+           xmlns:helpers="clr-namespace:MotoStore.Helpers"
+           xmlns:controls="clr-namespace:MotoStore.Controls"
+           xmlns:models="clr-namespace:MotoStore.Models">
 
     <ui:UiPage.Resources>
         <ControlTemplate x:Key="MultipleChoiceFilter">
@@ -77,7 +81,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="HoTenNv">
                             <Binding.ValidationRules>
-                                <validationrules:HoTenValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="HoTenValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -86,7 +90,7 @@
                     <models:DataGridDateColumn.Binding>
                         <Binding Path="NgSinh" Converter="{StaticResource DateTimeConverter}">
                             <Binding.ValidationRules>
-                                <validationrules:DateValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="DateValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridDateColumn.Binding>
@@ -95,7 +99,7 @@
                     <models:DataGridLetterColumn.Binding>
                         <Binding Path="GioiTinh">
                             <Binding.ValidationRules>
-                                <validationrules:GioiTinhValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="GioiTinhValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridLetterColumn.Binding>
@@ -104,7 +108,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="DiaChi">
                             <Binding.ValidationRules>
-                                <validationrules:DiaChiValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="DiaChiValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -113,7 +117,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="Sdt">
                             <Binding.ValidationRules>
-                                <validationrules:SDTValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="SDTValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -122,30 +126,30 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="Email">
                             <Binding.ValidationRules>
-                                <validationrules:EmailValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="EmailValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Chức vụ" Binding="{Binding Path=ChucVu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <models:DataGridWordsColumn Header="Chức vụ" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}">
+                    <models:DataGridWordsColumn.Binding>
+                        <Binding Path="ChucVu">
+                            <Binding.ValidationRules>
+                                <helpers:CustomValidationRule ValidationMode="ChucVuValidation" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </models:DataGridWordsColumn.Binding>
+                </models:DataGridWordsColumn>
                 <models:DataGridDateColumn Header="Ngày vào làm" dgx:DataGridFilterColumn.Template="{StaticResource DateFilter}" EditingElementStyle="{StaticResource errorToolTip}">
                     <models:DataGridDateColumn.Binding>
                         <Binding Path="NgVl" Converter="{StaticResource DateTimeConverter}">
                             <Binding.ValidationRules>
-                                <validationrules:DateValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="DateValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridDateColumn.Binding>
                 </models:DataGridDateColumn>
-                <models:DataGridDecimalColumn Header="Lương" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" EditingElementStyle="{StaticResource errorToolTip}">
-                    <models:DataGridDecimalColumn.Binding>
-                        <Binding Path="Luong">
-                            <Binding.ValidationRules>
-                                <validationrules:DateValidationRule />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </models:DataGridDecimalColumn.Binding>
-                </models:DataGridDecimalColumn>
+                <models:DataGridDecimalColumn Header="Lương" Binding="{Binding Path=Luong}" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" />
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </Grid>

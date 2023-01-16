@@ -7,11 +7,11 @@
            xmlns:resources="clr-namespace:MotoStore.Resources"
            xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
            xmlns:core="clr-namespace:System;assembly=mscorlib"
-           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" d:DataContext="{d:DesignInstance Type=local:CustomerListPage}"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages"
+           d:DataContext="{d:DesignInstance Type=local:CustomerListPage}"
            xmlns:helpers="clr-namespace:MotoStore.Helpers"
            xmlns:controls="clr-namespace:MotoStore.Controls"
            xmlns:models="clr-namespace:MotoStore.Models"
-           xmlns:validationrules="clr-namespace:MotoStore.ValidationRules"
            xmlns:database="clr-namespace:MotoStore.Database"
            mc:Ignorable="d"
            d:DesignHeight="450" d:DesignWidth="800"
@@ -81,7 +81,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="HoTenKh">
                             <Binding.ValidationRules>
-                                <validationrules:HoTenValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="HoTenValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -90,7 +90,7 @@
                     <models:DataGridDateColumn.Binding>
                         <Binding Path="NgSinh" Converter="{StaticResource DateTimeConverter}">
                             <Binding.ValidationRules>
-                                <validationrules:DateValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="DateValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridDateColumn.Binding>
@@ -99,7 +99,7 @@
                     <models:DataGridLetterColumn.Binding>
                         <Binding Path="GioiTinh">
                             <Binding.ValidationRules>
-                                <validationrules:GioiTinhValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="GioiTinhValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridLetterColumn.Binding>
@@ -108,7 +108,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="DiaChi">
                             <Binding.ValidationRules>
-                                <validationrules:DiaChiValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="DiaChiValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -117,7 +117,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="Sdt">
                             <Binding.ValidationRules>
-                                <validationrules:SDTValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="SDTValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -126,7 +126,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="Email">
                             <Binding.ValidationRules>
-                                <validationrules:EmailValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="EmailValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -135,7 +135,7 @@
                     <models:DataGridWordsColumn.Binding>
                         <Binding Path="LoaiKh">
                             <Binding.ValidationRules>
-                                <validationrules:LoaiKhValidationRule />
+                                <helpers:CustomValidationRule ValidationMode="LoaiKhValidation" />
                             </Binding.ValidationRules>
                         </Binding>
                     </models:DataGridWordsColumn.Binding>

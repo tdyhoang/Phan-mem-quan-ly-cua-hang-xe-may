@@ -13,7 +13,8 @@ namespace MotoStore.Helpers
 {
     public class TextBoxInputBehavior : Behavior<TextBox>
     {
-        const NumberStyles validNumberStyles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
+        const NumberStyles validDecimalNumberStyles = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
+        const NumberStyles validIntegerNumberStyles = NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
         public TextBoxInputBehavior()
         {
             InputMode = TextBoxInputMode.None;
@@ -130,6 +131,7 @@ namespace MotoStore.Helpers
 
                 case TextBoxInputMode.LetterInput:
                     return CheckIsLetter(input);
+
                 case TextBoxInputMode.WordsInput:
                     return CheckIsWords(input);
 
@@ -138,6 +140,9 @@ namespace MotoStore.Helpers
 
                 case TextBoxInputMode.DecimalInput:
                     return CheckIsDecimal(input);
+
+                case TextBoxInputMode.IntegerInput:
+                    return CheckIsInteger(input);
 
                 case TextBoxInputMode.DateInput:
                     return CheckIsDigitOrSlash(input);
@@ -196,7 +201,29 @@ namespace MotoStore.Helpers
                     return true;
             }
 
-            return string.IsNullOrEmpty(text) || decimal.TryParse(text, validNumberStyles, CultureInfo.CurrentCulture, out _);
+            return string.IsNullOrEmpty(text) || decimal.TryParse(text, validDecimalNumberStyles, CultureInfo.CurrentCulture, out _);
+        }
+
+        private bool CheckIsInteger(string text)
+        {
+            if (text.Contains('-'))
+            {
+                if (JustPositiveDecimalInput)
+                    return false;
+
+
+                if (text.IndexOf("-", StringComparison.Ordinal) > 0)
+                    return false;
+
+                if (text.ToCharArray().Count(x => x == '-') > 1)
+                    return false;
+
+                // Ban đầu được phép nhập 1 dấu trừ
+                if (text.Length == 1)
+                    return true;
+            }
+
+            return string.IsNullOrEmpty(text) || int.TryParse(text, validIntegerNumberStyles, CultureInfo.CurrentCulture, out _);
         }
 
         private static bool CheckIsDigitOrSlash(string text)
@@ -213,6 +240,7 @@ namespace MotoStore.Helpers
         None,
         NonSpecialInput,
         DecimalInput,
+        IntegerInput,
         DigitInput,
         LetterInput,
         WordsInput,
