@@ -31,7 +31,6 @@ namespace MotoStore.Views.Windows
             Visibility = Visibility.Collapsed;
             LoginView lgv = new();
             lgv.ShowDialog();
-            
         }
 
         

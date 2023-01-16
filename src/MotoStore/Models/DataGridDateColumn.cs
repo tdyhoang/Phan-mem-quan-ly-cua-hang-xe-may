@@ -7,13 +7,14 @@ namespace MotoStore.Models
 {
     public class DataGridDateColumn : DataGridTextColumn
     {
-        TextBox? edittingCell;
+        TextBox? editingCell;
 
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
-            edittingCell = editingElement as TextBox;
-            edittingCell.PreviewTextInput += AssociatedObjectPreviewTextInput;
-            DataObject.AddPastingHandler(edittingCell, Pasting);
+            editingCell = editingElement as TextBox;
+            editingCell.PreviewTextInput += AssociatedObjectPreviewTextInput;
+            editingCell.PreviewKeyDown += AssociatedObjectPreviewKeyDown;
+            DataObject.AddPastingHandler(editingCell, Pasting);
             return base.PrepareCellForEdit(editingElement, editingEventArgs);
         }
 
@@ -59,7 +60,7 @@ namespace MotoStore.Models
 
         private string GetText(string input)
         {
-            var txt = edittingCell;
+            var txt = editingCell;
 
             int selectionStart = txt.SelectionStart;
             if (txt.Text.Length < selectionStart)

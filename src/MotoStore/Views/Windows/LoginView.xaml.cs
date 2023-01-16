@@ -16,7 +16,6 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class LoginView
     {
-        
         public LoginView()
         {
             InitializeComponent();
@@ -36,8 +35,8 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            Window.GetWindow(this).Close();
             Application.Current.Shutdown();
         }
-
     }
 }

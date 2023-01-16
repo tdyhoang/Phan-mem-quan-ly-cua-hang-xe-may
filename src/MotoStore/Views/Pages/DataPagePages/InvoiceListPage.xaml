@@ -30,7 +30,6 @@
         <ControlTemplate x:Key="DateFilter">
             <controls:DateFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
         </ControlTemplate>
-        <helpers:DateTimeConverter x:Key="DateTimeConverter" />
     </ui:UiPage.Resources>
 
     <Grid>
@@ -41,17 +40,19 @@
 
         <StackPanel Orientation="Horizontal" Margin="5,0">
             <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
-            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
+            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
+            <ui:Button Name="btnAdd" Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
         </StackPanel>
 
         <ui:DataGrid Name="grdInvoice"
                      Grid.Row="1"
                      MaxHeight="568"
                      AutoGenerateColumns="False"
+                     CanUserAddRows="False"
+                     SelectionUnit="FullRow"
                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
                      dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding TableData}"
+                     ItemsSource="{Binding TableData, Mode=TwoWay}"
                      PreviewKeyDown="PreviewKeyDown">
 
             <ui:DataGrid.Resources>
@@ -63,11 +64,27 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
+                <Style TargetType="TextBox" x:Key="errorToolTip">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="true">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <helpers:DateTimeConverter x:Key="DateTimeConverter" />
             </ui:DataGrid.Resources>
 
             <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã HĐ" Binding="{Binding Path=MaHd, Mode=OneWay}" dgx:DataGridFilterColumn.IsFilterVisible="True" />
-                <models:DataGridLetterOrDigitColumn Header="Mã MH" Binding="{Binding Path=MaMh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
+                <DataGridTextColumn Header="Mã HĐ" Binding="{Binding Path=MaHd, Mode=OneWay}" />
+                <models:DataGridLetterOrDigitColumn Header="Mã MH" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                    <models:DataGridLetterOrDigitColumn.Binding>
+                        <Binding Path="MaMh">
+                            <Binding.ValidationRules>
+                                <helpers:CustomValidationRule ValidationMode="MaMhValidation" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </models:DataGridLetterOrDigitColumn.Binding>
+                </models:DataGridLetterOrDigitColumn>
                 <models:DataGridLetterOrDigitColumn Header="Mã KH" Binding="{Binding Path=MaKh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <models:DataGridLetterOrDigitColumn Header="Mã NV" Binding="{Binding Path=MaNv}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
                 <models:DataGridDateColumn Header="Ngày lập HĐ" Binding="{Binding Path=NgayLapHd, Converter={StaticResource DateTimeConverter}}" dgx:DataGridFilterColumn.Template="{StaticResource DateFilter}" />
