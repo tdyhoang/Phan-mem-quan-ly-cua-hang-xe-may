@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MotoStore.Views.Pages.IOPagePages
+﻿namespace MotoStore.Views.Pages.IOPagePages
 {
     public class Product
     {

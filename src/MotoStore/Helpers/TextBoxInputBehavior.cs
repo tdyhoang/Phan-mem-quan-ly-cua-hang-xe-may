@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
@@ -159,12 +156,12 @@ namespace MotoStore.Helpers
 
         private static bool CheckIsDigit(string text)
         {
-            return text.ToCharArray().All(Char.IsDigit);
+            return text.ToCharArray().All(char.IsDigit);
         }
 
         private static bool CheckIsLetter(string text)
         {
-            return text.ToCharArray().All(Char.IsLetter);
+            return text.ToCharArray().All(char.IsLetter);
         }
 
         private static bool CheckIsWords(string text)
@@ -174,7 +171,7 @@ namespace MotoStore.Helpers
 
         private static bool CheckIsLetterOrDigit(string text)
         {
-            return text.ToCharArray().All(Char.IsLetterOrDigit);
+            return text.ToCharArray().All(char.IsLetterOrDigit);
         }
 
         private bool CheckIsDecimal(string text)

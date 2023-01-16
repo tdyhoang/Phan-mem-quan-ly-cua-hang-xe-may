@@ -1,11 +1,5 @@
-﻿using System.Data;
-using System.Windows;
-using System.Linq;
+﻿using System.Windows;
 using Wpf.Ui.Common.Interfaces;
-using MotoStore.Models;
-using System.Collections.Generic;
-using System;
-using MotoStore.Database;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {

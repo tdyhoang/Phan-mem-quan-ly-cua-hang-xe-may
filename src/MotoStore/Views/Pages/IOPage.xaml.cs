@@ -1,15 +1,8 @@
 ﻿using Wpf.Ui.Common.Interfaces;
-using MotoStore.Views.Pages.IOPagePages;
-using System.Windows.Controls;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Data;
-using MotoStore.Database;
-using System.Linq;
 
 namespace MotoStore.Views.Pages
 {
-    
+
     /// <summary>
     /// Interaction logic for IOPage.xaml
     /// </summary>

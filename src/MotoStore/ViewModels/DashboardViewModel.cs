@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using MotoStore.Views.Pages.LoginPages;
-using System.Windows;
 using Wpf.Ui.Common.Interfaces;
 
 namespace MotoStore.ViewModels

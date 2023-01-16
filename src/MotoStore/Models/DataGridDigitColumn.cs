@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
-using MotoStore.Helpers;
-using System.Globalization;
 
 namespace MotoStore.Models
 {
@@ -88,7 +83,7 @@ namespace MotoStore.Models
 
         private static bool IsValidInput(string input)
         {
-            return input.ToCharArray().All(Char.IsDigit);
+            return input.ToCharArray().All(char.IsDigit);
         }
     }
 }

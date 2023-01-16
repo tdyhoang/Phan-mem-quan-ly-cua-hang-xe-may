@@ -1,11 +1,8 @@
 ﻿using MotoStore.Database;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace MotoStore.Helpers
@@ -34,7 +31,7 @@ namespace MotoStore.Helpers
                 case ValidationRules.MaNccValidation: return MaNccValidation(value);
                 case ValidationRules.MaNvValidation: return MaNvValidation(value);
                 case ValidationRules.SDTValidation: return SDTValidation(value);
-                default: throw new ArgumentException("Unknown ValidationRule");
+                default: throw new("Unknown ValidationRule");
             }
         }
 
@@ -170,7 +167,7 @@ namespace MotoStore.Helpers
             {
                 if (value.ToString().Length > 10)
                     return new(false, "SĐT quá dài, tối đa 10 ký tự!");
-                if (!value.ToString().ToCharArray().All(Char.IsDigit))
+                if (!value.ToString().ToCharArray().All(char.IsDigit))
                     return new(false, "SĐT chỉ được chứa các ký tự số!");
             }
 

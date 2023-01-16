@@ -1,20 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MotoStore.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
 using Wpf.Ui.Common;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Controls;
-using System.Windows.Navigation;
-using Wpf.Ui.Controls.Navigation;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Controls;
 using Wpf.Ui.Mvvm.Contracts;
-using Wpf.Ui.Mvvm.Services;
-using System.Windows;
 using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.ViewModels
@@ -43,7 +33,7 @@ namespace MotoStore.ViewModels
         {
             if (PageChinh.getChucVu.ToLower() == "quản lý")
             {
-                NavigationItems = new ObservableCollection<INavigationControl>
+                NavigationItems = new()
                 {
                     new NavigationItem()
                     {
@@ -91,7 +81,7 @@ namespace MotoStore.ViewModels
             }
             else
             {
-                NavigationItems = new ObservableCollection<INavigationControl>
+                NavigationItems = new()
                 {
                     new NavigationItem()
                     {

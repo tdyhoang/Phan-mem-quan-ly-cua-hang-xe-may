@@ -1,16 +1,11 @@
 ﻿using MotoStore.Database;
-using MotoStore.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
 using System.Windows;
 using System.Linq;
 using System.Data;
-using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
-using System.Windows.Data;
 using Microsoft.Data.SqlClient;
-using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;

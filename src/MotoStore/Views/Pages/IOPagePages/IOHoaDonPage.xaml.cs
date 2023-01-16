@@ -1,28 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Data.SqlClient;
-using System.Globalization;
 using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
 using System.Collections.ObjectModel;
-using System.Reflection.Metadata;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace MotoStore.Views.Pages.IOPagePages
-    
+
 {
     /// <summary>
     /// Interaction logic for IOHoaDonPage.xaml
@@ -33,14 +22,12 @@ namespace MotoStore.Views.Pages.IOPagePages
         internal ObservableCollection<KhachHang> KhachHangs;
         private readonly DispatcherTimer timer = new();
         private readonly DateTime dt = DateTime.Now;
-        static private int dem = 0;   //Biến đếm số lần nháy
-        private bool Nhay = false;
         bool checkNgayXHD = false;
         bool checkSoLuong= false;
         private readonly MainDatabase mainDatabase = new();
        
         internal List<HoaDon> TableData = new();
-        internal HoaDon hd = new HoaDon();
+        internal HoaDon hd = new();
         public IOHoaDonPage()
         {
 
@@ -168,7 +155,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             decimal? thanhtien = 0;
             if (string.IsNullOrEmpty(txtGiamGiaHD.Text)  || string.IsNullOrEmpty(txtSoLuongHD.Text))
             {
-                txtThanhTienHD.Text = String.Empty;
+                txtThanhTienHD.Text = string.Empty;
                 return;
             }
 
@@ -227,7 +214,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 }    
             }
             cmbMaSPHD.ItemsSource = matHangs;
-            cmbMaSPHD.Text=String.Empty;
+            cmbMaSPHD.Text= string.Empty;
         }
         public void RefreshKhachHang()
         {
@@ -241,7 +228,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 }
             }
             cmbMaKHHD.ItemsSource = KhachHangs;
-            cmbMaKHHD.Text = String.Empty;
+            cmbMaKHHD.Text = string.Empty;
         }
  
         

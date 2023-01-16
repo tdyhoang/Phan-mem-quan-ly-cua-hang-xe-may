@@ -1,27 +1,14 @@
 ﻿using MotoStore.Database;
-using MotoStore.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
 using System.Windows;
 using System.Linq;
 using System.Data;
-using System.Diagnostics;
 using Wpf.Ui.Common.Interfaces;
-using System.Windows.Data;
 using Microsoft.Data.SqlClient;
-using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using MotoStore.Views.Pages.LoginPages;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Drawing;
-using System.Text.RegularExpressions;
-using System.Transactions;
-using System.Xml.Linq;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -132,7 +119,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
             DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
-            if (e.Key == System.Windows.Input.Key.Delete && !dgr.IsEditing)
+            if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
                 DeleteRow(sender, e);

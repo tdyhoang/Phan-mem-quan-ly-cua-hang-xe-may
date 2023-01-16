@@ -2,29 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using MotoStore.Views.Pages.LoginPages;
 using Microsoft.Data.SqlClient;
-using System.Windows.Markup;
 using System.Globalization;
-using System.Windows.Media.Animation;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Win32;
-using System.Net.NetworkInformation;
 using System.IO;
-using Path = System.IO.Path;
 
 namespace MotoStore.Views.Pages
 {
@@ -289,10 +278,10 @@ namespace MotoStore.Views.Pages
                                     soSuKien++;
                                     txtblLoiNhac.Text = $"{"",-5}Tuần Này Có:\n {soSuKien} Sự Kiện Đáng\n Chú Ý, Xem Chi\n Tiết Ở Lịch!";
                                 }
-                                cbGioBD.Text = String.Empty;
-                                cbPhutBD.Text = String.Empty;
-                                cbGioKT.Text = String.Empty;
-                                cbPhutKT.Text = String.Empty;
+                                cbGioBD.Text = string.Empty;
+                                cbPhutBD.Text = string.Empty;
+                                cbGioKT.Text = string.Empty;
+                                cbPhutKT.Text = string.Empty;
                                 rtb.Document.Blocks.Clear();
                                 enableLenLich = false;
                                 enableXoaLich = false;
@@ -458,7 +447,7 @@ namespace MotoStore.Views.Pages
             else
                 anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
 
-            if (String.Equals(PageChinh.getChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(PageChinh.getChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
             {
                 lblXinChao.Content = $"  Xin Chào, {PageChinh.getTen}";
                 lblChucVu.Content = "Nhân Viên Quản Lý";

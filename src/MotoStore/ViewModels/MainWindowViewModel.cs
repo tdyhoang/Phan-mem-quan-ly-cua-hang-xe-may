@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MotoStore.Views.Pages.LoginPages;
-using MotoStore.Views.Windows;
 using System;
 using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
@@ -15,7 +13,7 @@ namespace MotoStore.ViewModels
         private bool _isInitialized = false;
 
         [ObservableProperty]
-        private string _applicationTitle = String.Empty;
+        private string _applicationTitle = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<INavigationControl> _navigationItems = new();

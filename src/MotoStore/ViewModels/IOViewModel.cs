@@ -1,14 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Win32;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using MotoStore.Views.Pages.IOPagePages;
-using MotoStore.Views.Pages;
 
 namespace MotoStore.ViewModels
 {
