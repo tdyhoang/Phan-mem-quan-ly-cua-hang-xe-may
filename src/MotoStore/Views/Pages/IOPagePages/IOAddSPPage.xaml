@@ -19,7 +19,7 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtTenSP" Margin="249,30,501,0" VerticalAlignment="Top" LostFocus="txtTenSP_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput"/>
+                <helpers:TextBoxInputBehavior InputMode="NonSpecialInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Label x:Name="lbGiaNhap"
@@ -39,29 +39,31 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbXuatXuSP" Margin="252,147,499,0" VerticalAlignment="Top">
-            <ComboBoxItem>Nhật Bản</ComboBoxItem>
-            <ComboBoxItem>Việt Nam</ComboBoxItem>
-            <ComboBoxItem>Thái Lan</ComboBoxItem>
-            <ComboBoxItem>Trung Quốc</ComboBoxItem>
-        </ComboBox>
+        <TextBox x:Name="txtXuatXuSP" Margin="252,147,499,0" VerticalAlignment="Top" LostFocus="txtXuatXuSP_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbHangSanXuat"
                Content="Hãng Sản Xuất: " 
                Margin="575,97,69,309"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbHangSXSP" Margin="709,98,42,0" VerticalAlignment="Top">
-            <ComboBoxItem>Honda</ComboBoxItem>
-            <ComboBoxItem>Yamaha</ComboBoxItem>
-            <ComboBoxItem>Suzuki</ComboBoxItem>
-
-        </ComboBox>
-        <Label x:Name="lblThongBao" Height="30" FontSize="15"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="17,232,630,188"
-                               />
+        <TextBox x:Name="txtHangSXSP" Margin="709,98,42,0" VerticalAlignment="Top" LostFocus="txtHangSXSP_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <Label x:Name="lblThongBao" 
+               Height="30"
+               Width="310"
+               FontSize="15"
+               Foreground="red" 
+               FontWeight="Medium" 
+               Margin="17,232,630,188"
+               Content="Các ô có dấu(*) không được để trống!"
+               Visibility="Collapsed"/>
         <Label x:Name="lblDauSao" 
                Height="30"
                FontSize="15"

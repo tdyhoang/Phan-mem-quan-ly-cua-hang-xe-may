@@ -32,14 +32,11 @@ namespace MotoStore.Views.Pages.IOPagePages
             InitializeComponent();
             timer.Tick += Timer_Tick;
         }
-        private int flag = 0;  //Đặt cờ để check xem nút Đăng Nhập có được Click vào hay chưa
-        static public bool isValid = false;
         private readonly DispatcherTimer timer = new();
+        private MainDatabase mdb = new();
         private readonly DateTime dt = DateTime.Now;
-        bool checkTenSP= false;
-        bool checkGiaNhapSP=false;
-        bool checkPhanKhoi=false;
-
+        private SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        static private int DcPhepThem = 0; //Check xem có đc phép thêm(các ô (*) kh đc bỏ trống)
         static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
 
@@ -67,99 +64,129 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 Uri fileUri = new(openFileDialog.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
-                File.Copy(openFileDialog.FileName, "F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png");
+                File.Move(openFileDialog.FileName, "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png");
             }
         }
        
 
-            private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
+        private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
-
-           
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if (!(checkTenSP && checkGiaNhapSP && checkPhanKhoi ))
+            if (DcPhepThem != 5)
             {
-                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
+                MessageBox.Show("Các trường dữ liệu quan trọng (Có dấu(*)) bị thiếu, vui lòng xem lại!");
             }
             else
             {
-                    string MaMH = Guid.NewGuid().ToString();
-                    File.Move("F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Views\\Pages\\IO_Images\\Temp.png", "F:\\New folder\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\IO_Images\\" + MaMH+".png");
 
-                    con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + MaMH +  "', N'" + txtTenSP.Text + "','"  + txtPhanKhoiSP.Text + "','" + txtGiaNhapSP.Text  + "','" + cmbHangSXSP.Text + "',N'" + cmbXuatXuSP.Text + "','" + txtMoTaSP.Text + " ' )", con);
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    MessageBox.Show("Thêm dữ liệu thành công");
-                
+                //File.Move("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png", "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + MaMH+".png");
+                con.Open();
+                foreach (var xe in mdb.MatHangs)
+                {
+                    if (xe.MaNccNavigation.TenNcc == txtHangSXSP.Text) //Prob here
+                    {
+                        cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, null, '"+xe.MaNcc+"', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', '" + txtMoTaSP.Text + "',0)", con);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        MessageBox.Show("Thêm dữ liệu thành công");
+                        DcPhepThem = 0;
+                    }
+                }
             }
         }
 
         private void txtTenSP_LostFocus(object sender, RoutedEventArgs e)
         {
             bool checkTenSP = true;
-            for (int i = 0; i < txtTenSP.Text.Length; i++)
+            if (string.IsNullOrWhiteSpace(txtTenSP.Text)) 
             {
-                if ((txtTenSP.Text[i] >= 48 && txtTenSP.Text[i] <= 57))
-                {
-
-                    lblThongBao.Content = "Tên Sản Phẩm không hợp lệ!";
-                    timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
-                    timer.Start();
-                    checkTenSP = false;
-                    break;
-                }
-
+                timer.Interval = new(0, 0, 0, 0, 200);
+                lblThongBao.Visibility = Visibility.Visible;
+                timer.Start();
+                checkTenSP = false;
+                if (DcPhepThem > 0)
+                    DcPhepThem--;
             }
             if (checkTenSP)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
+                DcPhepThem++;
             }
         }
 
         private void txtGiaNhapSP_LostFocus(object sender, RoutedEventArgs e)
         {
             bool checkGiaNhapSP = true;
-            for (int i = 0; i < txtGiaNhapSP.Text.Length; i++)
+            if (string.IsNullOrEmpty(txtGiaNhapSP.Text))
             {
-                if (!(txtGiaNhapSP.Text[i] >= 48 && txtGiaNhapSP.Text[i] <= 57))
-                {
-
-                    lblThongBao.Content = "Giá Nhập không hợp lệ!";
-                    timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
-                    timer.Start();
-                    checkGiaNhapSP = false;
-                    break;
-                }
-
+                timer.Interval = new(0, 0, 0, 0, 200);
+                lblThongBao.Visibility = Visibility.Visible;
+                timer.Start();
+                checkGiaNhapSP = false;
+                if (DcPhepThem > 0)
+                    DcPhepThem--;
             }
             if (checkGiaNhapSP)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
+                DcPhepThem++;
+            }
+        }
+
+        private void txtXuatXuSP_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool checkXS = true;
+            if (string.IsNullOrWhiteSpace(txtXuatXuSP.Text))
+            {
+                timer.Interval = new(0, 0, 0, 0, 200);
+                lblThongBao.Visibility = Visibility.Visible;
+                timer.Start();
+                checkXS = false;
+                if (DcPhepThem > 0)
+                    DcPhepThem--;
+            }
+            if (checkXS)
+            {
+                lblThongBao.Visibility = Visibility.Collapsed;
+                DcPhepThem++;
             }
         }
 
         private void txtPhanKhoiSP_LostFocus(object sender, RoutedEventArgs e) //Check Phân Phối của Xe
         {
-            checkPhanKhoi = true;
-            for (int i = 0; i < txtPhanKhoiSP.Text.Length; i++)
+            bool checkPhanKhoi = true;
+            if (string.IsNullOrEmpty(txtPhanKhoiSP.Text))
             {
-                if (!(txtPhanKhoiSP.Text[i] >= 48 && txtPhanKhoiSP.Text[i] <= 57))
-                {
-                    lblThongBao.Content = "Phân Khối không chứa các ký tự!";
-                    timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
-                    checkPhanKhoi = false;
-                    break;
-
-                }
+                timer.Interval = new(0, 0, 0, 0, 200);
+                lblThongBao.Visibility = Visibility.Visible;
+                timer.Start();
+                checkPhanKhoi = false;
+                if (DcPhepThem > 0)
+                    DcPhepThem--;
             }
             if (checkPhanKhoi)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
+                DcPhepThem++;
+            }
+        }
+
+        private void txtHangSXSP_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool checkHangSP = true;
+            if (string.IsNullOrEmpty(txtHangSXSP.Text))
+            {
+                timer.Interval = new(0, 0, 0, 0, 200);
+                lblThongBao.Visibility = Visibility.Visible;
+                timer.Start();
+                checkHangSP = false;
+                if (DcPhepThem > 0)
+                    DcPhepThem--;
+            }
+            if (checkHangSP)
+            {
+                lblThongBao.Visibility = Visibility.Collapsed;
+                DcPhepThem++;
             }
         }
     }
