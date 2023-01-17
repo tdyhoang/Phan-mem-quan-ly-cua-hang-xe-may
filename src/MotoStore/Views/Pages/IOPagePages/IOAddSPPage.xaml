@@ -87,7 +87,7 @@
                  Height="35"
                  Width="240"
                  VerticalAlignment="Top"
-                 Margin="0,30,330,0">
+                 Margin="0,30,330,0" TextChanged="txtTenSP_TextChanged">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="NonSpecialInput"/>
                         </i:Interaction.Behaviors>

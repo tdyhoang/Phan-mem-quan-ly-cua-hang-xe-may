@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using Microsoft.Data.SqlClient;
+using System.Globalization;
 using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using System.ComponentModel;
+using MotoStore.Helpers;
+using System.Runtime.CompilerServices;
 
 namespace MotoStore.Views.Pages.IOPagePages
 
@@ -16,28 +30,57 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// <summary>
     /// Interaction logic for IOHoaDonPage.xaml
     /// </summary>
-    public partial class IOHoaDonPage : Page
+    public partial class IOHoaDonPage : Page, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        //Update dữ liệu cho giao diện
+        //Phần Biding cho ValidationRule
+        private string _DateHD;
+        public string DateHD
+        {
+            get => _DateHD;
+            set
+            {
+
+                _DateHD = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
         internal ObservableCollection<MatHang> matHangs;
         internal ObservableCollection<KhachHang> KhachHangs;
         private readonly DispatcherTimer timer = new();
         private readonly DateTime dt = DateTime.Now;
+        static private int dem = 0;   //Biến đếm số lần nháy
+        private bool Nhay = false;
         bool checkNgayXHD = false;
-        bool checkSoLuong= false;
+        bool checkSoLuong = false;
         private readonly MainDatabase mainDatabase = new();
-       
+
         internal List<HoaDon> TableData = new();
-        internal HoaDon hd = new();
+        internal HoaDon hd = new HoaDon();
+
+
+
+
         public IOHoaDonPage()
         {
 
             InitializeComponent();
             RefreshMatHang();
             RefreshKhachHang();
-            txtNgayXuatHD.Text =DateTime.Today.ToShortDateString();
+            txtNgayXuatHD.Text = DateTime.Today.ToShortDateString();
+            DataContext = this;
 
         }
-        
+
 
         //private void Timer_Tick(object sender, EventArgs e)
         //{
@@ -58,43 +101,23 @@ namespace MotoStore.Views.Pages.IOPagePages
         //}
         private void btnAddNewHoaDon_Click(object sender, RoutedEventArgs e)
         {
-            
+
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if (checkNgayXHD)
+            if ((checkNgayXHD))
             {
                 MessageBox.Show("Vui lòng nhập đúng thông tin! ");
             }
             else
             {
-                    con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into HoaDon values(  N'" + cmbMaSPHD.Text + "','" + cmbMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text + " ' )", con);
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    MessageBox.Show("Thêm dữ liệu thành công");
-                
+                con.Open();
+                cmd = new("Set Dateformat dmy\nInsert into HoaDon values(  N'" + cmbMaSPHD.Text + "','" + cmbMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text + " ' )", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                MessageBox.Show("Thêm dữ liệu thành công");
+
             }
-        }
-
-        //private void txtNgayXuatHD_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    //Check Ngày xuất HĐon
-        //    checkNgayXHD = true;
-        //    DateTime date;
-        //    if (!(DateTime.TryParseExact(txtNgayXuatHD.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)))
-        //    {
-        //        lblThongBao.Content = "Ngày xuất hóa đơn không hợp lệ!";
-        //        timer.Interval = new(0, 0, 0, 0, 200);
-        //        lblThongBao.Visibility = Visibility.Visible;
-        //        timer.Start();
-        //        checkNgayXHD = false;
-        //    }
-        //    if (checkNgayXHD)
-        //    {
-        //        lblThongBao.Visibility = Visibility.Collapsed;
-        //    }
-        //}
-
+        }    
         private void txtSoLuongHD_LostFocus(object sender, RoutedEventArgs e)
         {
             checkSoLuong = true;
@@ -120,20 +143,21 @@ namespace MotoStore.Views.Pages.IOPagePages
 
 
         public void UpdateGiamGia()
-        {       
+        {
             string LoaiKH = string.Empty;
-            foreach(var cus in KhachHangs)
+            foreach (var cus in KhachHangs)
             {
-                if(cmbMaKHHD.Text==cus.MaKh)
+                if (cmbMaKHHD.Text == cus.MaKh)
                 {
-                    LoaiKH= cus.LoaiKh;
-                }    
-            }      
-            LoaiKH??=string.Empty;
-    
+                    LoaiKH = cus.LoaiKh;
+                }
+            }
+            LoaiKH ??= string.Empty;
+
             switch (LoaiKH)
             {
-                case "Vip": txtGiamGiaHD.Text = "15%";
+                case "Vip":
+                    txtGiamGiaHD.Text = "15%";
                     break;
                 case "Thân quen":
                     txtGiamGiaHD.Text = "5%";
@@ -149,13 +173,13 @@ namespace MotoStore.Views.Pages.IOPagePages
         }
         public void UpdateThanhTien()
         {
-            
+
             decimal? giamgia = 0;
             decimal? giaban = 0;
             decimal? thanhtien = 0;
-            if (string.IsNullOrEmpty(txtGiamGiaHD.Text)  || string.IsNullOrEmpty(txtSoLuongHD.Text))
+            if (string.IsNullOrEmpty(txtGiamGiaHD.Text) || string.IsNullOrEmpty(txtSoLuongHD.Text))
             {
-                txtThanhTienHD.Text = string.Empty;
+                txtThanhTienHD.Text = String.Empty;
                 return;
             }
 
@@ -167,11 +191,11 @@ namespace MotoStore.Views.Pages.IOPagePages
                     giaban ??= 0;
                 }
             }
-            txtThanhTienHD.Text= string.Empty;
+            txtThanhTienHD.Text = string.Empty;
 
-           
-                
-                           
+
+
+
             switch (txtGiamGiaHD.Text)
             {
                 case "0%":
@@ -187,11 +211,11 @@ namespace MotoStore.Views.Pages.IOPagePages
                     giamgia = 0;
                     break;
             }
-            thanhtien = giaban * int.Parse(txtSoLuongHD.Text) * (1 - giamgia);
+            thanhtien = (giaban * int.Parse(txtSoLuongHD.Text) * (1 - giamgia));
             txtThanhTienHD.Text = thanhtien.ToString();
         }
 
-       
+
 
         private void txtSoLuongHD_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -201,20 +225,20 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void txtGiamGiaHD_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateThanhTien();
-        } 
-        public void  RefreshMatHang()
+        }
+        public void RefreshMatHang()
         {
             MainDatabase dtb = new();
             matHangs = new(dtb.MatHangs);
             foreach (var mat in matHangs.ToList())
             {
-                if(mat.DaXoa)
+                if (mat.DaXoa)
                 {
                     matHangs.Remove(mat);
-                }    
+                }
             }
             cmbMaSPHD.ItemsSource = matHangs;
-            cmbMaSPHD.Text= string.Empty;
+            cmbMaSPHD.Text = String.Empty;
         }
         public void RefreshKhachHang()
         {
@@ -228,16 +252,16 @@ namespace MotoStore.Views.Pages.IOPagePages
                 }
             }
             cmbMaKHHD.ItemsSource = KhachHangs;
-            cmbMaKHHD.Text = string.Empty;
+            cmbMaKHHD.Text = String.Empty;
         }
- 
-        
+
+
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            RefreshMatHang();    
+            RefreshMatHang();
 
         }
-      
+
 
 
         private void btnRefreshKH_Click(object sender, RoutedEventArgs e)
@@ -245,15 +269,15 @@ namespace MotoStore.Views.Pages.IOPagePages
             RefreshKhachHang();
         }
 
-     
+
 
         private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Source is ComboBox)
             {
-                if (e.Key == Key.Up || e.Key == Key.Down || e.Key==Key.Return || e.Key==Key.Enter)
+                if (e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.Return || e.Key == Key.Enter)
                 {
-                    e.Handled= true;    
+                    e.Handled = true;
                 }
             }
         }

@@ -87,7 +87,11 @@ namespace MotoStore.Views.Pages.IOPagePages
                 }
                 
             }
-            if(checkTenNSX)
+            if (string.IsNullOrEmpty(txtTenNSX.Text))
+            {
+                checkTenNSX = false;
+            }
+            if (checkTenNSX)
             {
                 lblThongBao.Visibility = Visibility.Collapsed;
             }
@@ -151,6 +155,10 @@ namespace MotoStore.Views.Pages.IOPagePages
                     checkGia = false;
                     break;
                 }
+            }
+            if (string.IsNullOrEmpty(txtNuocSX.Text))
+            {
+                checkGia = false;
             }
             if (checkGia)
             {

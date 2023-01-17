@@ -9,11 +9,12 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      TextElement.FontSize="13" Name="HDPage"
       Title="IOHoaDonPage">
 
     <Page.Resources>
         <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
-        
+
     </Page.Resources>
     <Grid>
 
@@ -63,7 +64,7 @@
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
         </StackPanel>
-        
+
 
         <!--Mã Sản Phẩm trong Hóa Đơn-->
         <Label x:Name="lbMaKHHD"
@@ -111,7 +112,7 @@
 
             </ComboBox>
         </StackPanel>
-        
+
 
         <!--Mã Nhân Viên trong Hóa Đơn-->
         <Label x:Name="lbNgayXuatHD"
@@ -127,33 +128,26 @@
                Foreground="Red"
                FontWeight="Medium"
                Margin="153,47,624,373"/>
-        
+
         <Label x:Name="lblThongBao1" Height="20" FontSize="10" Width="150"
                                Foreground="red" 
                                FontWeight="Medium" 
                                Margin="630,74,33,360"
                                />
-        <TextBox x:Name="txtNgayXuatHD" Margin="248,157,502,0" VerticalAlignment="Top" Height="35"  >
+        <!--phần errormess trong Resource của App.xaml-->
+        <TextBox  x:Name="txtNgayXuatHD" Validation.ErrorTemplate="{StaticResource errormessHD}" Margin="248,157,502,0" VerticalAlignment="Top" Height="35"  >
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DateInput"/>
             </i:Interaction.Behaviors>
             <TextBox.Text>
-                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" Mode="OneWayToSource" UpdateSourceTrigger="PropertyChanged"  >
+                <Binding Path="DateHD" ElementName="HDPage" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" >
                     <Binding.ValidationRules>
-                        <helpers:CustomValidationRule ValidationMode="DateValidation"/>
+                        <helpers:CustomValidationRule ValidationMode="DateValidation" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <StackPanel Margin="248,157,502,0" >
-                        <AdornedElementPlaceholder x:Name="textBox" Height="35" />
-                        <TextBlock Text="{Binding Path=(Validation.Errors)/ErrorContent}" 
-                                   Foreground="Red"/>
-                    </StackPanel>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
         </TextBox>
+
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
                Margin="591,42,53,384"

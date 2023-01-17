@@ -50,7 +50,7 @@
 
         <TextBox x:Name="txtTenKH" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
+                <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Label x:Name="lbNgaySinhKH"
@@ -72,7 +72,7 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" RenderTransformOrigin="0.238,-0.075" LostFocus="txtDiaChiKH_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput"/>
+                <helpers:TextBoxInputBehavior InputMode="None"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Label x:Name="lbSDTKhachHang"
@@ -92,28 +92,33 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailKH" Margin="669,109,81,0" VerticalAlignment="Top" LostFocus="txtEmailKH_LostFocus"/>
+        <TextBox x:Name="txtEmailKH" Margin="669,109,81,0" VerticalAlignment="Top" LostFocus="txtEmailKH_LostFocus">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="None"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Label x:Name="lbGioiTinh"
                Content="Giới Tính: " 
                Margin="536,243,156,179"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top" >
-            <ComboBoxItem>Nam</ComboBoxItem>
-            <ComboBoxItem>Nữ</ComboBoxItem>
-        </ComboBox>
+        
         <Label x:Name="lbLoaiKH"
                Content="Loại Khách Hàng: " 
                Margin="533,186,165,235"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbLoaiKH" Margin="670,170,75,0" VerticalAlignment="Top">
+        <ComboBox x:Name="cmbLoaiKH" Margin="670,170,75,0" VerticalAlignment="Top" LostFocus="cmbLoaiKH_LostFocus">
             <ComboBoxItem>Thường</ComboBoxItem>
             <ComboBoxItem>Thân Quen</ComboBoxItem>
             <ComboBoxItem>VIP</ComboBoxItem>
-
+        </ComboBox>
+        
+        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top" LostFocus="cmbGioiTinhKH_LostFocus">
+            <ComboBoxItem>Nam</ComboBoxItem>
+            <ComboBoxItem>Nữ</ComboBoxItem>
         </ComboBox>
         <Button x:Name="btnAddNewKhachHang" 
                 FontWeight="UltraBlack" 

@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Threading;
+using MotoStore.Database;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -27,7 +28,8 @@ namespace MotoStore.Views.Pages.IOPagePages
         bool checkSDT = true;
         bool checkDiaChi= true;
         bool checkEmail = false;
-       
+        bool checkGioiTinh = false;
+        bool checkLoaiKH= false;    
       
 
     static private int dem = 0;   //Biến đếm số lần nháy
@@ -56,7 +58,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT))
+            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT &&checkGioiTinh && checkLoaiKH))
             {
                 MessageBox.Show("Vui lòng nhập đúng thông tin! ");
             }     
@@ -87,6 +89,10 @@ namespace MotoStore.Views.Pages.IOPagePages
                     break;
                 }
 
+            }
+            if (string.IsNullOrEmpty(txtTenKH.Text))
+            {
+                checkTenKH = false;
             }
             if (checkTenKH)
             {
@@ -161,6 +167,22 @@ namespace MotoStore.Views.Pages.IOPagePages
                 checkDiaChi = true;
             }
         }
+        private void cmbLoaiKH_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(cmbLoaiKH.Text))
+            {
+                checkLoaiKH = true;
+            }    
+        }
 
+        private void cmbGioiTinhKH_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(cmbGioiTinhKH.Text))
+            {
+                checkGioiTinh = true;
+            }
+        }
+
+      
     }
 }

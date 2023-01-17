@@ -180,5 +180,10 @@ namespace MotoStore.Views.Pages.IOPagePages
                 DcPhepThem++;
             }
         }
+
+        private void txtTenSP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

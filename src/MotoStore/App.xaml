@@ -12,6 +12,17 @@
                 <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="errormessHD">
+                <!--errormessHD là thông báo lỗi của Ngày xuất Hóa Đơn-->
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Margin="0 35 15 0">
+
+                    </TextBlock>
+                </Grid>
+            </ControlTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

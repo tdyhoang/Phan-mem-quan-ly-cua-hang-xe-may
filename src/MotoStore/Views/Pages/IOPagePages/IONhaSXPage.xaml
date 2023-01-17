@@ -46,7 +46,7 @@
                Margin="164,47,613,373"/>
         <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNSX_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
+                <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Label x:Name="lbSDTNSX"
@@ -75,7 +75,7 @@
                FontWeight="Medium"/>
         <TextBox x:Name="txtNuocSX" Margin="222,206,528,0" VerticalAlignment="Top" LostFocus="txtNuocSX_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
+                <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click"/>
