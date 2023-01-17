@@ -328,7 +328,7 @@ namespace MotoStore.Views.Pages
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
         {
             string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
-            if (!(IsValidDateTimeTest(txtTuNgay.Text)))
+            if (!IsValidDateTimeTest(txtTuNgay.Text))
             {
                 MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(ngày/tháng/năm)!");
                 txtTuNgay.Clear();
@@ -363,7 +363,7 @@ namespace MotoStore.Views.Pages
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
         {
             string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
-            if (!(IsValidDateTimeTest(txtDenNgay.Text)))
+            if (!IsValidDateTimeTest(txtDenNgay.Text))
             {
                 MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(Ngày/Tháng/Năm)!");
                 txtDenNgay.Clear();

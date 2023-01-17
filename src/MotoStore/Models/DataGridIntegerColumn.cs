@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace MotoStore.Models
 {
-    internal class DataGridDecimalColumn : DataGridTextColumn
+    internal class DataGridIntegerColumn : DataGridTextColumn
     {
         TextBox? editingCell;
 
@@ -84,7 +84,7 @@ namespace MotoStore.Models
         {
             if (input.Contains('-'))
                 return false;
-            return string.IsNullOrEmpty(input) || decimal.TryParse(input, out _);
+            return string.IsNullOrEmpty(input) || int.TryParse(input, out _);
         }
     }
 }

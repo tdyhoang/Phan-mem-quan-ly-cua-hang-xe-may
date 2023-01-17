@@ -98,7 +98,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             if (dep is not DataGridRow && dep is not DataGridCell)
                 return;
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
-            DataGridRow dgr = (DataGridRow)(dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex));
+            DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
             if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa

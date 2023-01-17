@@ -92,9 +92,9 @@ namespace MotoStore.Views.Pages.IOPagePages
                 return true; //Text rỗng hoặc chứa khoảng trắng thì hiện toàn bộ item(Sản Phẩm)
             else
             {
-                return (((item as Product).ProductId.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
+                return ((item as Product).ProductId.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
                     || ((item as Product).NameProduct.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
-                    || (item as Product).Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    || (item as Product).Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0;
                 //Nếu text KHÔNG RỖNG thì trả về 1 trong 3 thuộc tính đc nhập trong textbox.
             }
         }

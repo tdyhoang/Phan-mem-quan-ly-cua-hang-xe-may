@@ -76,7 +76,7 @@ namespace MotoStore.Views.Pages.IOPagePages
              checkTenKH = true;
             for (int i = 0; i < txtTenKH.Text.Length; i++)
             {
-                if ((txtTenKH.Text[i] >= 48 && txtTenKH.Text[i] <= 57))
+                if (txtTenKH.Text[i] >= 48 && txtTenKH.Text[i] <= 57)
                 {
 
                     lblThongBao.Content = "Tên Khách Hàng không hợp lệ!";
@@ -99,7 +99,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
              checkNgaySinh = true;
             DateTime date;
-            if (!(DateTime.TryParseExact(txtNgaySinhKH.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date)))
+            if (!DateTime.TryParseExact(txtNgaySinhKH.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
                 lblThongBaoNS.Content = "Ngày Sinh không hợp lệ!";
                 timer.Interval = new(0, 0, 0, 0, 200);
@@ -139,7 +139,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void txtEmailKH_LostFocus(object sender, RoutedEventArgs e)
         {
              checkEmail = true;
-            if (!(txtEmailKH.Text.Contains("@gmail.com"))) //Check Email Khách hàng
+            if (!txtEmailKH.Text.Contains("@gmail.com")) //Check Email Khách hàng
             {
                 lblThongBaoEmail.Content = "Email Khách Hàng không hợp lệ!";
                 timer.Interval = new(0, 0, 0, 0, 200);

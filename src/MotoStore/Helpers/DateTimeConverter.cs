@@ -10,10 +10,10 @@ namespace MotoStore.Helpers
         {
             if (value is DateTime test)
             {
-                if (value == default)
+                if (test == default)
                     return default(string);
                 var date = test.ToString("dd/MM/yyyy");
-                return (date);
+                return date;
             }
 
             return default(string);

@@ -75,7 +75,7 @@ namespace MotoStore.Views.Pages.IOPagePages
              checkTenNSX = true;
             for (int i = 0; i < txtTenNSX.Text.Length; i++)
             {
-                if ((txtTenNSX.Text[i] >= 48 && txtTenNSX.Text[i] <= 57))
+                if (txtTenNSX.Text[i] >= 48 && txtTenNSX.Text[i] <= 57)
                 {
 
                     lblThongBao.Content = "Tên Nhà Cung Cấp không hợp lệ!";
@@ -119,7 +119,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void txtEmailNSX_LostFocus(object sender, RoutedEventArgs e)
         {
              checkEmail = true;
-            if (!(txtEmailNSX.Text.Contains("@gmail.com")))
+            if (!txtEmailNSX.Text.Contains("@gmail.com"))
             {       
                 lblThongBaoEmail.Content = "Email không hợp lệ";
                 timer.Interval = new(0, 0, 0, 0, 200);
@@ -143,7 +143,7 @@ namespace MotoStore.Views.Pages.IOPagePages
              checkGia = true;
             for (int i = 0; i < txtNuocSX.Text.Length; i++)
             {
-                if ((txtNuocSX.Text[i] >= 48 && txtNuocSX.Text[i] <= 57))
+                if (txtNuocSX.Text[i] >= 48 && txtNuocSX.Text[i] <= 57)
                 {
                     lblThongBaoQG.Content = "Nước Sản Xuất không hợp lệ!";
                     timer.Interval = new(0, 0, 0, 0, 200);

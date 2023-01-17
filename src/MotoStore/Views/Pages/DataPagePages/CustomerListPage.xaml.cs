@@ -44,7 +44,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            if ((from c in (from object i in grdCustomer.ItemsSource select grdCustomer.ItemContainerGenerator.ContainerFromItem(i)) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            if ((from c in from object i in grdCustomer.ItemsSource select grdCustomer.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
             {
                 MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
                 return;
@@ -71,13 +71,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                         if (obj is not KhachHang kh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
-                        string ngSinh = string.Empty;
-                        if (kh.NgSinh.HasValue)
-                            ngSinh = kh.NgSinh.Value.ToString("dd/MM/yyyy");
                         if (string.IsNullOrEmpty(kh.GioiTinh))
                             throw new("Giới tính không được để trống!");
                         if (string.IsNullOrEmpty(kh.LoaiKh))
                             throw new("Loại khách hàng không được để trống!");
+                        string ngSinh = string.Empty;
+                        if (kh.NgSinh.HasValue)
+                            ngSinh = kh.NgSinh.Value.ToString("dd/MM/yyyy");
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(kh.MaKh))
@@ -111,7 +111,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             if (sender is not DataGrid dg)
                 return;
             // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
-            if (grdCustomer.IsReadOnly)
+            if (dg.IsReadOnly)
                 return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -122,58 +122,52 @@ namespace MotoStore.Views.Pages.DataPagePages
             if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
-                DeleteRow(sender, e);
-            }
-        }
-
-        private void DeleteRow(object sender, RoutedEventArgs e)
-        {
-            SqlCommand cmd;
-            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-            try
-            {
-                con.Open();
-                using var trans = con.BeginTransaction();
+                SqlCommand cmd;
+                using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
                 try
                 {
-                    cmd = new(" ", con);
-                    cmd.Transaction = trans;
-
-                    foreach (var obj in grdCustomer.SelectedItems)
+                    con.Open();
+                    using var trans = con.BeginTransaction();
+                    try
                     {
-                        if (obj is not KhachHang kh)
-                            continue;
-                        // Trường hợp chưa thêm mới nên chưa có mã KH
-                        if (string.IsNullOrEmpty(kh.MaKh))
-                            continue;
-                        // Xóa hàng
-                        else
-                            cmd.CommandText += $"Update KhachHang Set DaXoa = 1 Where MaKh = '{kh.MaKh}';\n";
+                        cmd = new(" ", con);
+                        cmd.Transaction = trans;
+
+                        foreach (var obj in dg.SelectedItems)
+                        {
+                            if (obj is not KhachHang kh)
+                                continue;
+                            // Trường hợp chưa thêm mới nên chưa có mã KH
+                            if (string.IsNullOrEmpty(kh.MaKh))
+                                continue;
+                            // Xóa hàng
+                            else
+                                cmd.CommandText += $"Update KhachHang Set DaXoa = 1 Where MaKh = '{kh.MaKh}';\n";
+                        }
+                        cmd.ExecuteNonQuery();
+                        trans.Commit();
                     }
-                    cmd.ExecuteNonQuery();
-                    trans.Commit();
+                    catch (Exception ex)
+                    {
+                        trans.Rollback();
+                        MessageBox.Show(ex.Message);
+                        // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                        e.Handled = true;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    trans.Rollback();
                     MessageBox.Show(ex.Message);
                     // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                     e.Handled = true;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                e.Handled = true;
-            }
         }
 
         private void RefreshView(object sender, RoutedEventArgs e)
-        {
-            RefreshDataGrid();
-        }
+            => RefreshDataGrid();
 
+        // Tắt các hoạt động chỉnh sửa data nếu không phải quản lý
         private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
@@ -182,12 +176,25 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                 grdCustomer.IsReadOnly = !isQuanLy;
 
-                if (sender is MenuItem item)
-                    item.IsEnabled = isQuanLy;
+                if (sender is Button button)
+                    button.IsEnabled = isQuanLy;
             }
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
             => TableData.Add(new());
+
+        // Đẩy event mousewheel cho scrollviewer xử lý
+        private void grdCustomer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = MouseWheelEvent,
+                Source = sender
+            };
+            var parent = ((Control)sender).Parent as UIElement;
+            parent?.RaiseEvent(eventArg);
+        }
     }
 }

@@ -101,6 +101,9 @@ namespace MotoStore.Controls
             if (!int.TryParse(value.ToString(), out var number))
                 return false;
 
+            if (Max == default)
+                return true;
+
             return (number >= Min) && (number <= Max);
         }
     }
