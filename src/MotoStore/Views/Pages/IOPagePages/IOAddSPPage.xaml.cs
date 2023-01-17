@@ -53,8 +53,9 @@ namespace MotoStore.Views.Pages.IOPagePages
             if (openFileDialog.ShowDialog() == true)
             {
                 Uri fileUri = new(openFileDialog.FileName);
+
                 ImageSP.Source = new BitmapImage(fileUri);
-                File.Move(openFileDialog.FileName, "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png");
+               // File.Move(openFileDialog.FileName, "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png");
             }
         }
        

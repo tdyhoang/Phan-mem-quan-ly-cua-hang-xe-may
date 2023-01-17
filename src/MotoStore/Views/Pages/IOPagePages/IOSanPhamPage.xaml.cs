@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using MotoStore.Database;
 using MotoStore.Views.Windows;
+using Wpf.Ui.Controls.Interfaces;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -63,9 +64,26 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-           WindowInformation windowInformation = new();
-            windowInformation.ShowDialog();
-
+            ContentPresenter c = (ContentPresenter)ListViewProduct.ItemContainerGenerator.ContainerFromIndex(14);
+            TextBlock t2 = c.ContentTemplate.FindName("txtNameProd", c) as TextBlock;
+            TextBlock t3 = c.ContentTemplate.FindName("txtGiaProd", c) as TextBlock;
+            string ten;
+            decimal gia;
+            string anh;
+            foreach(var xe in mdb.MatHangs.ToList())
+            {
+                if(xe.TenMh == t2.Text)
+                {
+                    //Tìm theo tên, giải pháp thô sơ tạm thời
+                    ten = xe.TenMh;
+                    gia = xe.GiaBanMh.Value;
+                    anh = $"/Products Images/{xe.MaMh}.png";
+                    Product thamso = new Product(ten, gia, anh);
+                    WindowInformation WI = new WindowInformation(thamso);
+                    WI.ShowDialog();
+                    break;
+                }
+            }
         }
 
         private bool Filter(object item)

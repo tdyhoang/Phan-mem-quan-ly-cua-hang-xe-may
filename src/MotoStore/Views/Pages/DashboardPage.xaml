@@ -75,7 +75,6 @@
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
                         <GradientStop Color="#462AD8" Offset="1"/>
-                        
                         <GradientStop Color="#8A16C1" Offset="0.75"/>
                     </LinearGradientBrush>
                 </Border.Background>
