@@ -7,12 +7,11 @@
         mc:Ignorable="d"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:helpers="clr-namespace:MotoStore.Helpers"
-        Title="WindowInformation" Height="400" Width="500"
+        Title="WindowInformation" Height="450" Width="500"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        MouseDown="Window_MouseDown"
-        Initialized="WindowInformation_Initialized">
+        MouseDown="Window_MouseDown">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -60,8 +59,8 @@
             </Border.Background>
         </Border>
 
-        <Border Height="300"
-                Width="450"
+        <Border Height="350"
+                Width="500"
                 VerticalAlignment="Center"
                 Margin="0"
                 CornerRadius="45"
@@ -70,19 +69,26 @@
                 <Border HorizontalAlignment="Right"
                         Margin="0,0,0,0" 
                         VerticalAlignment="Top" 
-                        Width="200"  
-                        Height="200" 
+                        Width="175"  
+                        Height="175" 
                         BorderBrush="White" 
                         BorderThickness="3"
-                        CacheMode="BitmapCache" 
                         CornerRadius="30">
                     <!-- left-top and bottom-right round corners. -->
-                    <Border.Background>
-                        <ImageBrush x:Name="anhSP" 
-                                    Stretch="Fill">
-                        </ImageBrush>
-                    </Border.Background>
+                    <Image x:Name="anhSP"
+                           Stretch="Uniform">
+                    </Image>
                 </Border>
+                <Button x:Name="btnCapNhatAnh"
+                        Content="Cập Nhật Ảnh"
+                        FontSize="15"
+                        FontWeight="Medium"
+                        Height="35"
+                        Width="115"
+                        HorizontalAlignment="Right"
+                        Margin="0,50,25,0"
+                        Click="btnCapNhatAnh_Click">
+                </Button>
                 <Label Height="35"
                        Width="100"
                        Content="Mã Mặt Hàng: "
@@ -98,7 +104,7 @@
                        Foreground="white"
                        FontSize="15"
                        FontWeight="Medium"
-                       Margin="0,15,100,0"
+                       Margin="0,15,145,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center"></Label>
 
@@ -112,12 +118,12 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
                 <Label Height="35"
-                       Width="100"
+                       Width="150"
                        x:Name="lblTenMH"
-                       Foreground="white"
-                       FontSize="15"
+                       Foreground="White"
+                       FontSize="14"
                        FontWeight="Medium"
-                       Margin="125,50,0,0"
+                       Margin="125,51,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
@@ -151,13 +157,14 @@
                        HorizontalAlignment="Left"></Label>
                 <TextBox x:Name="txtGiaBan"
                            Height="35"
-                           Width="120"
-                           Text="siuuu"
+                           Width="150"
                            Background="#0fff"
                            Foreground="White"
                            FontSize="15"
                            FontWeight="Medium"
-                           Margin="0,0,150,40"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Center"
+                           Margin="0,112,185,0"
                            GotFocus="txtGiaBan_GotFocus"
                            LostFocus="txtGiaBan_LostFocus">
                     <i:Interaction.Behaviors>
@@ -176,10 +183,12 @@
                        HorizontalAlignment="Left"></Label>
                 <TextBox x:Name="txtMau"
                          Height="35"
-                         Width="120"
+                         Width="100"
                          FontWeight="Medium"
                          FontSize="15"
-                         Margin="0,30,150,0"
+                         VerticalAlignment="Top"
+                         HorizontalAlignment="Center"
+                         Margin="0,147,250,0"
                          Background="#0fff"
                          Foreground="White"
                          GotFocus="txtMau_GotFocus"
@@ -208,6 +217,79 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
+                <Label Height="35"
+                       Width="65"
+                       Content="Tồn Kho: "
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="15,225,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"></Label>
+                <TextBox x:Name="txtTonKho"
+                         Height="35"
+                         Width="90"
+                         FontWeight="Medium"
+                         FontSize="15"
+                         Margin="0,215,270,0"
+                         VerticalAlignment="Top"
+                         HorizontalAlignment="Center"
+                         Background="#0fff"
+                         Foreground="White"
+                         GotFocus="txtTonKho_GotFocus"
+                         LostFocus="txtTonKho_LostFocus">
+                    <i:Interaction.Behaviors>
+                        <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False"/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+
+                <Label Height="35"
+                       Width="115"
+                       Content="Hãng Sản Xuất:"
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="15,260,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"></Label>
+                <Label Height="35"
+                       Width="100"
+                       x:Name="lblHangSX"
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="135,260,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"></Label>
+
+                <Label Height="35"
+                       Width="100"
+                       Content="Xuất Xứ: "
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="15,295,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"></Label>
+                <Label Height="35"
+                       Width="100"
+                       x:Name="lblXuatXu"
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="100,295,0,0"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"></Label>
+                <Button x:Name="btnLuu"
+                Height="25"
+                Width="120"
+                Content="Lưu Chỉnh Sửa"
+                FontSize="15"
+                FontWeight="Bold"
+                Click="btnLuu_Click"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center">
+                </Button>
             </Grid>
         </Border>
 
@@ -239,16 +321,6 @@
                 Click="btnClose_Click"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right">
-        </Button>
-        <Button x:Name="btnHD"
-                Height="25"
-                Width="120"
-                Content="Thêm Hàng"
-                FontSize="17"
-                FontWeight="Bold"
-                Click="btnClose_Click"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Center" Margin="0,356,0,0">
         </Button>
 
     </Grid>

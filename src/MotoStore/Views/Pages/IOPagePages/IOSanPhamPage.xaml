@@ -62,36 +62,37 @@
                 </Grid.RowDefinitions>
 
                 <ScrollViewer Grid.Row="1">
-                    <StackPanel>
-                        <StackPanel Margin="20 0">
-                            <ItemsControl x:Name="ListViewProduct" ItemsSource="{Binding Product}" x:FieldModifier="public" Grid.Row="1">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Margin="10" Width="174" Height="160" MouseDown="Border_MouseDown">
-                                        <StackPanel x:Name="stkProd">
-                                                <Border Width="120" 
-                                                        Height="105" 
-                                                        CornerRadius="31" 
-                                                        Margin="5"
-                                                        Background="LightSkyBlue">
-                                                    <Image x:Name="anhSP" Source="{Binding Image}"></Image>
-                                            </Border>
-                                            <TextBlock x:Name="txtNameProd" Margin="31,5,5,5" Text="{Binding NameProduct}" FontSize="13" Width="150" FontWeight="Medium" Foreground="White"/>
-                                            <TextBlock x:Name="txtGiaProd" Margin="31,-5,5,5" Text="{Binding ValueMoney, StringFormat={}{0:0$}}" FontSize="15" FontWeight="Black"/>
-                                        </StackPanel>
-                                    </Border>
-                                    </DataTemplate>
-
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </StackPanel>
-                    </StackPanel>
+                    <ListView x:Name="ListViewProduct" 
+                                  ItemsSource="{Binding matHangs}" 
+                                  Grid.Row="1"
+                                  PreviewKeyDown="ListViewProduct_PreviewKeyDown"
+                                  PreviewMouseWheel="PreviewMouseWheel"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  SelectionChanged="ListViewProduct_SelectionChanged">
+                        <ListView.ItemsPanel>
+                            <!--Dùng để đặt WrapPanel-->
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="1050"></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="30">
+                                    <StackPanel x:Name="stkProd">
+                                        <Border Width="120" 
+                                                Height="105" 
+                                                CornerRadius="31" 
+                                                Margin="5"
+                                                Background="LightSkyBlue">
+                                            <Image x:Name="anhSP" Source="{Binding Item2}"></Image>
+                                        </Border>
+                                        <TextBlock x:Name="txtNameProd" HorizontalAlignment="Center" Text="{Binding Item1.TenMh}" FontSize="14" FontWeight="Medium"/>
+                                        <TextBlock x:Name="txtGiaProd" HorizontalAlignment="Center" Text="{Binding Item1.GiaBanMh, StringFormat={}{0:N0}}" FontSize="15" FontWeight="Black"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </ScrollViewer>
             </Grid>
             </Border>
@@ -120,24 +121,13 @@
                  Grid.Row="0" 
                  VerticalAlignment="Top"
                  Margin="0,9,100,0"></TextBox>
-        <Button x:Name="btnKhac"
-                Content="Khác"
-                FontSize="19"
-                FontWeight="Medium"
-                Height="35"
-                Width="70"
-                Grid.Row="0"
-                VerticalAlignment="Top"
-                Margin="150,10,0,0"
-                Click="btnKhac_Click"></Button>
         <Menu x:Name="menuLoc"
               Height="36"
               Width="100"
               Grid.Row="0"
               VerticalAlignment="Top"
-              Margin="330,7,0,0"
-              Visibility="Collapsed">
-            <MenuItem Header="Tìm Theo:"
+              Margin="180,8,0,0">
+            <MenuItem Header="Lọc Theo:"
                       Height="50"
                       FontSize="17"
                       FontWeight="Medium"
@@ -147,20 +137,6 @@
                       FontSize="19"
                       FontWeight="Medium"
                       Width="130">
-                    <MenuItem x:Name="subItemDuoi30Tr"
-                      Header="Dưới 30 Triệu"
-                      Height="35"
-                      FontSize="17"
-                      FontWeight="Medium"
-                      Width="130"
-                      Click="subItemDuoi30Tr_Click"></MenuItem>
-                    <MenuItem x:Name="subItemTren30Tr"
-                      Header="Trên 30 Triệu"
-                      Height="35"
-                      FontSize="17"
-                      FontWeight="Medium"
-                      Width="130"
-                      Click="subItemTren30Tr_Click"></MenuItem>
                     <MenuItem x:Name="subItemTuChonGia"
                       Header="Tự Chọn"
                       Height="35"
@@ -175,20 +151,6 @@
                       FontSize="19"
                       FontWeight="Medium"
                       Width="130">
-                    <MenuItem x:Name="subItemDuoi100CC"
-                      Header="Dưới 110CC"
-                      Height="35"
-                      FontSize="15"
-                      FontWeight="Medium"
-                      Width="130"
-                      Click="subItemDuoi100CC_Click"></MenuItem>
-                    <MenuItem x:Name="subItemTren100CC"
-                      Header="Từ 110CC Trở Lên"
-                      Height="35"
-                      FontSize="15"
-                      FontWeight="Medium"
-                      Width="140"
-                      Click="subItemTren100CC_Click"></MenuItem>
                     <MenuItem x:Name="subItemTuChon"
                       Header="Tự Chọn"
                       Height="35"
@@ -215,21 +177,21 @@
                  Foreground="Black"
                  VerticalAlignment="Top"
                  HorizontalAlignment="Right"
-                 Margin="0,15,265,0"
-                 Visibility="Collapsed">
+                 Margin="0,15,340,0"
+                 Visibility="Visible">
         </Label>
         <TextBox x:Name="txtTu"
                  Height="30"
-                 Width="50"
+                 Width="115"
                  Grid.Row="0"
                  VerticalAlignment="Top"
-                 Margin="560,10,0,0"
+                 Margin="475,12,0,0"
                  FontSize="12"
                  FontWeight="Medium"
                  LostFocus="txtTu_LostFocus"
-                 Visibility="Collapsed">
+                 Visibility="Visible">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="DigitInput"  JustPositiveDecimalInput="True" />
+                <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
             </i:Interaction.Behaviors>
         </TextBox>
         <Label x:Name="lblDen"
@@ -240,35 +202,35 @@
                  Foreground="Black"
                  VerticalAlignment="Top"
                  HorizontalAlignment="Right"
-                 Margin="0,15,165,0"
-                 Visibility="Collapsed">
+                 Margin="0,15,175,0"
+                 Visibility="Visible">
         </Label>
         <TextBox x:Name="txtDen"
                  Height="30"
-                 Width="50"
+                 Width="115"
                  Grid.Row="0"
                  VerticalAlignment="Top"
-                 Margin="755,10,0,0"
+                 Margin="800,12,0,0"
                  FontSize="12"
                  FontWeight="Medium"
                  LostFocus="txtDen_LostFocus"
-                 Visibility="Collapsed">
+                 Visibility="Visible">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="DigitInput"  JustPositiveDecimalInput="True" />
+                <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
             </i:Interaction.Behaviors>
         </TextBox>
         <Button x:Name="btnTim"
                 Content="Tìm"
                 FontWeight="Medium"
-                FontSize="15"
+                FontSize="17"
                 Click="btnTim_Click"
                 VerticalAlignment="Top"
                 Height="30"
-                Width="60"
+                Width="50"
                 HorizontalAlignment="Right"
                 Grid.Row="0"
-                Margin="0,10,40,0"
-                Visibility="Collapsed"></Button>
+                Margin="0,11,0,0"
+                Visibility="Visible"></Button>
         <Button x:Name="btnAddNewPageSP"
                 Content="Thêm Mới"
                 FontSize="19"

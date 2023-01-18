@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,43 +18,29 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// </summary>
     public partial class IOSanPhamPage : Page
     {
-        MainDatabase mdb = new();
+        internal ObservableCollection<Tuple<MatHang, string>> matHangs;
         public IOSanPhamPage()
         {
             InitializeComponent();
             DataContext = this;
-            var products = GetProducts();
-            if (products.Count > 0)
-                ListViewProduct.ItemsSource = products;
-            List<Product> items = new(); //Tạo Danh Sách Product phục vụ cho tìm kiếm(Filter)
-            foreach (var xe in mdb.MatHangs)
+            Refresh();              
+        }
+
+        public void Refresh()
+        {
+            MainDatabase mdb = new();
+            matHangs = new();
+            foreach (var xe in mdb.MatHangs.ToList())
             {
-                items.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                {
-                    ProductId = xe.MaMh,
-                    Mau = xe.Mau
-                });
+                if (xe.DaXoa)
+                    continue;
+                matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
             }
-            //Chạy vòng lặp trên để thêm từng Sản Phẩm vào Danh Sách
-            ListViewProduct.ItemsSource = items;
-            //Gán ItemSource của ListViewProduct chính là Danh Sách items vừa thêm ở trên
+            ListViewProduct.ItemsSource = matHangs;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
             //biến view kiểu CollectionView dùng để gom nhóm, tìm kiếm, filter, điều hướng dữ liệu, gán nó bằng ItemsSource ở trên
             view.Filter = Filter;
-            GC.Collect();   
-        }
-        private List<Product> GetProducts()
-        {
-            MainDatabase db = new();
-            List<Product> products = new(); //..
-            List<MatHang> matHang = db.MatHangs.ToList();
-            string AnhXE;
-            foreach (MatHang matHang1 in matHang)
-            {
-                AnhXE = $"/Products Images/{matHang1.MaMh}.png"; //Ảnh của từng xe(gán theo mã xe có sẵn )
-                products.Add(new(matHang1.TenMh, matHang1.GiaBanMh, AnhXE));
-            }
-            return products;
+            GC.Collect();
         }
 
         private void btnAddNewPageSP_Click(object sender, RoutedEventArgs e)
@@ -64,25 +51,10 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ContentPresenter c = (ContentPresenter)ListViewProduct.ItemContainerGenerator.ContainerFromIndex(14);
-            TextBlock t2 = c.ContentTemplate.FindName("txtNameProd", c) as TextBlock;
-            TextBlock t3 = c.ContentTemplate.FindName("txtGiaProd", c) as TextBlock;
-            string ten;
-            decimal gia;
-            string anh;
-            foreach(var xe in mdb.MatHangs.ToList())
+            if(ListViewProduct.SelectedItem is Tuple<MatHang, string> mathang)
             {
-                if(xe.TenMh == t2.Text)
-                {
-                    //Tìm theo tên, giải pháp thô sơ tạm thời
-                    ten = xe.TenMh;
-                    gia = xe.GiaBanMh.Value;
-                    anh = $"/Products Images/{xe.MaMh}.png";
-                    Product thamso = new Product(ten, gia, anh);
-                    WindowInformation WI = new WindowInformation(thamso);
-                    WI.ShowDialog();
-                    break;
-                }
+                WindowInformation WI = new WindowInformation(mathang,this);
+                WI.ShowDialog();
             }
         }
 
@@ -90,70 +62,21 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             if(string.IsNullOrWhiteSpace(txtTimKiem.Text))
                 return true; //Text rỗng hoặc chứa khoảng trắng thì hiện toàn bộ item(Sản Phẩm)
-            else
+            if(item is Tuple< MatHang,string> mh)
             {
-                return ((item as Product).ProductId.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
-                    || ((item as Product).NameProduct.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0) 
-                    || (item as Product).Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0;
-                //Nếu text KHÔNG RỖNG thì trả về 1 trong 3 thuộc tính đc nhập trong textbox.
+                if (mh.Item1.MaMh.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+                if (mh.Item1.TenMh.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+                if (mh.Item1.Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
             }
+            return false;
         }
 
         private void txtTimKiem_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource).Refresh();
-        }
-        static int solanbam = 0;
-        private void btnKhac_Click(object sender, RoutedEventArgs e)
-        {
-            if (solanbam == 0)
-            {
-                menuLoc.Visibility = Visibility.Visible;
-                txtTimKiem.Clear();
-                txtTimKiem.Visibility = Visibility.Collapsed;
-                solanbam = 1;
-            }
-            else
-            {
-                menuLoc.Visibility = Visibility.Collapsed;
-                txtTimKiem.Visibility = Visibility.Visible;
-                solanbam = 0;
-            }
-        }
-
-        private void subItemDuoi100CC_Click(object sender, RoutedEventArgs e)
-        {
-            //ListViewProduct.ClearValue(ItemsControl.ItemsSourceProperty);
-            List<Product> ListItems = new(); 
-            foreach(var xe in mdb.MatHangs.ToList())
-                if (xe.SoPhanKhoi.Value < 110)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                    {
-                        ProductId = xe.MaMh,
-                        Mau = xe.Mau,
-                        ValueMoney = xe.GiaBanMh
-                    });
-            ListViewProduct.ItemsSource = ListItems;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            view.Filter = Filter;
-            //3 dòng trên dùng để filter sản phẩm
-        }
-
-        private void subItemTren100CC_Click(object sender, RoutedEventArgs e)
-        {
-            //ListViewProduct.ClearValue(ItemsControl.ItemsSourceProperty);
-            List<Product> ListItems = new();
-            foreach (var xe in mdb.MatHangs.ToList())
-                if (xe.SoPhanKhoi.Value >= 110)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                    {
-                        ProductId = xe.MaMh,
-                        Mau = xe.Mau,
-                        ValueMoney = xe.GiaBanMh
-                    });
-            ListViewProduct.ItemsSource = ListItems;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            view.Filter = Filter;
         }
         static string luachon;
         private void subItemTuChon_Click(object sender, RoutedEventArgs e)
@@ -182,19 +105,13 @@ namespace MotoStore.Views.Pages.IOPagePages
             txtDen.Visibility = Visibility.Collapsed;
             lblDen.Visibility = Visibility.Collapsed;
             btnTim.Visibility = Visibility.Collapsed;
-            List<Product> ListItems = new();
-            foreach (var xe in mdb.MatHangs.ToList())
-            {
-                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                {
-                    ProductId = xe.MaMh,
-                    Mau=xe.Mau,
-                    ValueMoney=xe.GiaBanMh
-                });
-            }
+            ObservableCollection<Tuple<MatHang, string>> ListItems = new();
+            foreach (var xe in matHangs.ToList())
+                    ListItems.Add(new(xe.Item1, xe.Item2));
             ListViewProduct.ItemsSource = ListItems;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
             view.Filter = Filter;
+            //3 dòng trên dùng để filter sản phẩm
         }
 
         private void txtTu_LostFocus(object sender, RoutedEventArgs e)
@@ -211,78 +128,67 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void btnTim_Click(object sender, RoutedEventArgs e)
         {
-            List<Product> ListItems = new();
+            ObservableCollection<Tuple<MatHang, string>> ListItems = new();
             if (string.IsNullOrWhiteSpace(txtTu.Text) || string.IsNullOrWhiteSpace(txtDen.Text))
                 MessageBox.Show("Vui lòng điền đầy đủ khoảng trống", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
             else
             {
-                switch(luachon)
+                switch (luachon)
                 {
-                    default: MessageBox.Show("0 co gi");
-                        break;
                     case "PK":
-                        foreach (var xe in mdb.MatHangs.ToList())
+                        foreach (var xe in matHangs.ToList())
                         {
-                            if (xe.SoPhanKhoi.Value >= int.Parse(txtTu.Text) && xe.SoPhanKhoi.Value <= int.Parse(txtDen.Text))
-                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                                {
-                                    ProductId = xe.MaMh,
-                                    Mau = xe.Mau,
-                                    ValueMoney = xe.GiaBanMh
-                                });
+                            if (xe.Item1.SoPhanKhoi.Value >= int.Parse(txtTu.Text) && xe.Item1.SoPhanKhoi.Value <= int.Parse(txtDen.Text))
+                                ListItems.Add(new(xe.Item1, xe.Item2));
                         }
-                        MessageBox.Show("PK");
                         break;
                     case "Gia":
-                        foreach (var xe in mdb.MatHangs.ToList())
+
+                        foreach (var xe in matHangs.ToList())
                         {
-                            if (xe.GiaBanMh.Value >= decimal.Parse(txtTu.Text) && xe.GiaBanMh.Value <= decimal.Parse(txtDen.Text))
-                                ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                                {
-                                    ProductId = xe.MaMh,
-                                    Mau = xe.Mau,
-                                    ValueMoney = xe.GiaBanMh
-                                });
+                            if (xe.Item1.GiaBanMh.Value >= int.Parse(txtTu.Text) && xe.Item1.GiaBanMh.Value <= int.Parse(txtDen.Text))
+                                ListItems.Add(new(xe.Item1, xe.Item2));
                         }
-                        MessageBox.Show("Gia");
                         break;
                 }
-                ListViewProduct.ItemsSource = ListItems;
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-                view.Filter = Filter;
             }
-        }
-
-        private void subItemDuoi30Tr_Click(object sender, RoutedEventArgs e)
-        {
-            List<Product> ListItems = new();
-            foreach (var xe in mdb.MatHangs.ToList())
-                if (xe.GiaBanMh.Value < 30000000)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                    {
-                        ProductId = xe.MaMh,
-                        Mau = xe.Mau,
-                        ValueMoney = xe.GiaBanMh
-                    });
             ListViewProduct.ItemsSource = ListItems;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
             view.Filter = Filter;
         }
 
-        private void subItemTren30Tr_Click(object sender, RoutedEventArgs e)
+        private void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            List<Product> ListItems = new();
-            foreach (var xe in mdb.MatHangs.ToList())
-                if (xe.GiaBanMh.Value >= 30000000)
-                    ListItems.Add(new Product(xe.TenMh, xe.GiaBanMh, $"/Products Images/{xe.MaMh}.png")
-                    {
-                        ProductId = xe.MaMh,
-                        Mau = xe.Mau,
-                        ValueMoney = xe.GiaBanMh
-                    });
-            ListViewProduct.ItemsSource = ListItems;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            view.Filter = Filter;
+            e.Handled = true;
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = MouseWheelEvent,
+                Source = sender
+            };
+            var parent = ((Control)sender).Parent as UIElement;
+            parent?.RaiseEvent(eventArg);
+        }
+
+        private void ListViewProduct_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void ListViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(sender is ListView lv)
+            {
+                if (lv.SelectedItems.Count > 1)
+                {
+                    e.Handled = true;
+                }
+                else if (lv.SelectedItem is Tuple<MatHang, string> mathang)
+                {
+                    WindowInformation WI = new WindowInformation(mathang,this);
+                    WI.ShowDialog();
+                    lv.SelectedItem = null;
+                }
+            }
         }
     }
 }

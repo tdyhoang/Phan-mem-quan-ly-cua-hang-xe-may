@@ -46,9 +46,8 @@
             <Border>
                 <Border.Background>
                     <ImageBrush Opacity="0.9" ImageSource="/Views/Pages/Images/motorworkshop.jpg"/>
-                    
-                </Border.Background>
 
+                </Border.Background>
 
                 <Grid>
                     
