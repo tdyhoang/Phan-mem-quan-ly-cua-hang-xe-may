@@ -14,8 +14,8 @@ namespace MotoStore.Helpers
         const NumberStyles validIntegerNumberStyles = NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
         public TextBoxInputBehavior()
         {
-            InputMode = TextBoxInputMode.None;
-            JustPositiveDecimalInput = false;
+            InputMode = default;
+            JustPositiveDecimalInput = default;
         }
 
         public TextBoxInputMode InputMode { get; set; }
@@ -23,7 +23,7 @@ namespace MotoStore.Helpers
 
         public static readonly DependencyProperty JustPositiveDecimalInputProperty =
          DependencyProperty.Register("JustPositiveDecimalInput", typeof(bool),
-         typeof(TextBoxInputBehavior), new FrameworkPropertyMetadata(false));
+         typeof(TextBoxInputBehavior), new FrameworkPropertyMetadata(default));
 
         public bool JustPositiveDecimalInput
         {
@@ -115,38 +115,19 @@ namespace MotoStore.Helpers
 
         private bool IsValidInput(string input)
         {
-            switch (InputMode)
+            return InputMode switch
             {
-                case TextBoxInputMode.None:
-                    return true;
-
-                case TextBoxInputMode.NonSpecialInput:
-                    return CheckIsNonSpecial(input);
-
-                case TextBoxInputMode.DigitInput:
-                    return CheckIsDigit(input);
-
-                case TextBoxInputMode.LetterInput:
-                    return CheckIsLetter(input);
-
-                case TextBoxInputMode.WordsInput:
-                    return CheckIsWords(input);
-
-                case TextBoxInputMode.LetterOrDigitInput:
-                    return CheckIsLetterOrDigit(input);
-
-                case TextBoxInputMode.DecimalInput:
-                    return CheckIsDecimal(input);
-
-                case TextBoxInputMode.IntegerInput:
-                    return CheckIsInteger(input);
-
-                case TextBoxInputMode.DateInput:
-                    return CheckIsDigitOrSlash(input);
-
-                default: throw new ArgumentException("Unknown TextBoxInputMode");
-
-            }
+                TextBoxInputMode.None => true,
+                TextBoxInputMode.NonSpecialInput => CheckIsNonSpecial(input),
+                TextBoxInputMode.DigitInput => CheckIsDigit(input),
+                TextBoxInputMode.LetterInput => CheckIsLetter(input),
+                TextBoxInputMode.WordsInput => CheckIsWords(input),
+                TextBoxInputMode.LetterOrDigitInput => CheckIsLetterOrDigit(input),
+                TextBoxInputMode.DecimalInput => CheckIsDecimal(input),
+                TextBoxInputMode.IntegerInput => CheckIsInteger(input),
+                TextBoxInputMode.DateInput => CheckIsDigitOrSlash(input),
+                _ => throw new ArgumentException("Unknown TextBoxInputMode"),
+            };
         }
 
         private static bool CheckIsNonSpecial(string text)

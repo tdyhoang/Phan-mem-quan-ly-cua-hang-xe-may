@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Markup;
+using Microsoft.EntityFrameworkCore;
 
 namespace MotoStore.Database;
 
@@ -34,7 +37,6 @@ public partial class MainDatabase : DbContext
     public virtual DbSet<UserApp> UserApps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -357,26 +359,28 @@ public partial class MainDatabase : DbContext
 
         modelBuilder.Entity<UserApp>(entity =>
         {
-            entity.HasKey(e => e.UserName).HasName("PK_UserName");
+            entity.HasKey(e => e.MaNv).HasName("PK_UA_MaNV");
 
             entity.ToTable("UserApp");
 
-            entity.Property(e => e.UserName)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-            entity.Property(e => e.Email)
-                .HasMaxLength(30)
-                .IsUnicode(false);
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456128712F8").IsUnique();
+
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
                 .IsUnicode(false)
                 .HasColumnName("MaNV");
+            entity.Property(e => e.Email)
+                .HasMaxLength(30)
+                .IsUnicode(false);
             entity.Property(e => e.Password)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.UserName)
+                .HasMaxLength(15)
+                .IsUnicode(false);
 
-            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.UserApps)
-                .HasForeignKey(d => d.MaNv)
+            entity.HasOne(d => d.MaNvNavigation).WithOne(p => p.UserApp)
+                .HasForeignKey<UserApp>(d => d.MaNv)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UA_MaNV");
         });

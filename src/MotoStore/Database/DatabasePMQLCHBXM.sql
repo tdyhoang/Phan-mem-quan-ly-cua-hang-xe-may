@@ -9,7 +9,7 @@ Create table KhachHang
 (
 	ID int identity(1,1),
 	MaKH as 'KH' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	HoTenKH NVARCHAR(30),
+	HoTenKH NVARCHAR(30) not null,
 	NgSinh smalldatetime,
 	GioiTinh NVARCHAR(3) not null,
 	DiaChi NVARCHAR(40),
@@ -98,7 +98,7 @@ create table NhaCungCap
 (
 	ID int identity(1,1),
 	MaNCC as 'CC' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	TenNCC varchar(15),
+	TenNCC varchar(15) not null,
 	SDT  varchar(15),
 	Email varchar(45),
 	DiaChi NVarchar(40),
@@ -122,12 +122,12 @@ create table MatHang
 (
 	ID int identity(1,1),
 	MaMH as 'MH' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	TenMH varchar(30),
-	SoPhanKhoi int,
+	TenMH varchar(30) not null,
+	SoPhanKhoi int not null,
 	Mau Nvarchar(15),
 	GiaNhapMH money,
 	GiaBanMH money,
-	SoLuongTonKho int,
+	SoLuongTonKho int not null,
 	MaNCC varchar(5) not null,
 	HangSX /*TenNSX*/ varchar(15),
 	XuatXu /*NuocSX*/ Nvarchar(15),
@@ -167,8 +167,8 @@ Create table HoaDon
 	MaKH  varchar(5) not null,                     /*Hoá đơn bán hàng cho khách hàng nào, Do nhân viên nào phụ trách*/
 	MaNV  varchar(5) not null,
 	NgayLapHD  smalldatetime,
-	SoLuong int,                               /*số lượng xe*/
-	ThanhTien money,
+	SoLuong int not null,                               /*số lượng xe*/
+	ThanhTien money not null,
 	constraint PK_MaHD primary key(MaHD)
 )
 
@@ -245,11 +245,11 @@ Insert into ThongTinBaoHanh values('MH011','KH036','NV003','12/7/2021','Thay nh�
 /*Tài khoản mà Mật khẩu đăng nhập dành cho NV Quản Lý và NV Văn Phòng*/
 create table UserApp
 (
-	MaNV varchar(5) not null,
-	UserName varchar(15),
+	MaNV varchar(5),
+	UserName varchar(15) unique not null,
 	Password varchar(20) not null,
 	Email  Varchar(30) not null,   /*Email để khôi phục mật khẩu nếu cần*/
-	constraint PK_UserName primary key(UserName)
+	constraint PK_UA_MaNV primary key(MaNV)
 )
 
 alter table UserApp add constraint FK_UA_MaNV foreign key(MaNV) references NhanVien(MaNV)

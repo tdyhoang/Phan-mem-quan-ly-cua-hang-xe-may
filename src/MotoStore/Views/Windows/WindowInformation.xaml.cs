@@ -108,8 +108,8 @@ namespace MotoStore.Views.Windows
             //string newPathToFile = $"/Products Images/{mathang.Item1.MaMh}.png";
             //dùng 2 dòng trên bị lỗi Could not find a part of the path 'C:\Products Images\ ... 
 
-            string destFile ="C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\"+ mathang.Item1.MaMh + ".BKup";
-            string newPathToFile = "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
+            string destFile ="D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\"+ mathang.Item1.MaMh + ".BKup";
+            string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
             if (OFD.ShowDialog() == true)
             {
                 if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới

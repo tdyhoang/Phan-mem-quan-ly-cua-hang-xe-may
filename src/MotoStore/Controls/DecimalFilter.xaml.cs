@@ -23,25 +23,25 @@ namespace MotoStore.Controls
         /// </summary>
         public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(DecimalFilter), new FrameworkPropertyMetadata("Nhập giới hạn:", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public decimal Minimum
+        public decimal? Minimum
         {
-            get => (decimal)GetValue(MinimumProperty);
+            get => (decimal?)GetValue(MinimumProperty);
             set => SetValue(MinimumProperty, value);
         }
         /// <summary>
         /// Biến giá trị giới hạn dưới (minimum)
         /// </summary>
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(decimal), typeof(DecimalFilter), new FrameworkPropertyMetadata(default(decimal), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (sender, _) => ((DecimalFilter)sender).Range_Changed()));
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(decimal?), typeof(DecimalFilter), new FrameworkPropertyMetadata(default(decimal?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (sender, _) => ((DecimalFilter)sender).Range_Changed()));
 
-        public decimal Maximum
+        public decimal? Maximum
         {
-            get => (decimal)GetValue(MaximumProperty);
+            get => (decimal?)GetValue(MaximumProperty);
             set => SetValue(MaximumProperty, value);
         }
         /// <summary>
         /// Biến giá trị giới hạn trên (maximum)
         /// </summary>
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(decimal), typeof(DecimalFilter), new FrameworkPropertyMetadata(default(decimal), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (sender, _) => ((DecimalFilter)sender).Range_Changed()));
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(decimal?), typeof(DecimalFilter), new FrameworkPropertyMetadata(default(decimal?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, (sender, _) => ((DecimalFilter)sender).Range_Changed()));
 
 
         public bool IsPopupVisible
@@ -83,15 +83,15 @@ namespace MotoStore.Controls
 
     public partial class DecimalContentFilter : IContentFilter
     {
-        public DecimalContentFilter(decimal min, decimal max)
+        public DecimalContentFilter(decimal? min, decimal? max)
         {
             Min = min;
             Max = max;
         }
 
-        public decimal Min { get; }
+        public decimal? Min { get; }
 
-        public decimal Max { get; }
+        public decimal? Max { get; }
 
         public bool IsMatch(object? value)
         {
@@ -101,8 +101,12 @@ namespace MotoStore.Controls
             if (!decimal.TryParse(value.ToString(), out var number))
                 return false;
 
-            if (Max == default)
+            if (Max == default && Min == default)
                 return true;
+            if (Max == default)
+                return number >= Min;
+            if (Min == default)
+                return number <= Max;
 
             return (number >= Min) && (number <= Max);
         }

@@ -8,11 +8,11 @@ namespace MotoStore.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is DateTime test)
+            if (value is DateTime dt)
             {
-                if (test == default)
+                if (dt == default)
                     return default(string);
-                var date = test.ToString("dd/MM/yyyy");
+                var date = dt.ToString("dd/MM/yyyy");
                 return date;
             }
 
@@ -21,12 +21,12 @@ namespace MotoStore.Helpers
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string test)
+            if (value is string dt)
             {
-                if (string.IsNullOrEmpty(test))
+                if (string.IsNullOrEmpty(dt))
                     return default(DateTime);
 
-                if (DateTime.TryParseExact(test, "d/M/yyyy", culture, DateTimeStyles.AllowWhiteSpaces, out DateTime result))
+                if (DateTime.TryParseExact(dt, "d/M/yyyy", culture, DateTimeStyles.AllowWhiteSpaces, out DateTime result))
                     return result;
             }
 

@@ -10,29 +10,29 @@ namespace MotoStore.Helpers
     public class CustomValidationRule : ValidationRule
     {
         public CustomValidationRule()
-            => ValidationMode = ValidationRules.None;
+            => ValidationMode = default;
 
         public ValidationRules ValidationMode { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            switch (ValidationMode)
+            return ValidationMode switch
             {
-                case ValidationRules.None: return new(true, default);
-                case ValidationRules.ChucVuValidation: return ChucVuValidation(value);
-                case ValidationRules.DateValidation: return DateValidation(value, cultureInfo);
-                case ValidationRules.DiaChiValidation: return DiaChiValidation(value);
-                case ValidationRules.EmailValidation: return EmailValidation(value);
-                case ValidationRules.GioiTinhValidation: return GioiTinhValidation(value);
-                case ValidationRules.HoTenValidation: return HoTenValidation(value);
-                case ValidationRules.LoaiKhValidation: return LoaiKhValidation(value);
-                case ValidationRules.MaKhValidation: return MaKhValidation(value);
-                case ValidationRules.MaMhValidation: return MaMhValidation(value);
-                case ValidationRules.MaNccValidation: return MaNccValidation(value);
-                case ValidationRules.MaNvValidation: return MaNvValidation(value);
-                case ValidationRules.SDTValidation: return SDTValidation(value);
-                default: throw new("Unknown ValidationRule");
-            }
+                ValidationRules.None => new(true, default),
+                ValidationRules.ChucVuValidation => ChucVuValidation(value),
+                ValidationRules.DateValidation => DateValidation(value, cultureInfo),
+                ValidationRules.DiaChiValidation => DiaChiValidation(value),
+                ValidationRules.EmailValidation => EmailValidation(value),
+                ValidationRules.GioiTinhValidation => GioiTinhValidation(value),
+                ValidationRules.HoTenValidation => HoTenValidation(value),
+                ValidationRules.LoaiKhValidation => LoaiKhValidation(value),
+                ValidationRules.MaKhValidation => MaKhValidation(value),
+                ValidationRules.MaMhValidation => MaMhValidation(value),
+                ValidationRules.MaNccValidation => MaNccValidation(value),
+                ValidationRules.MaNvValidation => MaNvValidation(value),
+                ValidationRules.SDTValidation => SDTValidation(value),
+                _ => throw new("Unknown ValidationRule"),
+            };
         }
 
         private static ValidationResult ChucVuValidation(object value)

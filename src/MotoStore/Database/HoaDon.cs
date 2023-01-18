@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
@@ -16,9 +17,9 @@ public partial class HoaDon
 
     public DateTime? NgayLapHd { get; set; }
 
-    public int? SoLuong { get; set; }
+    public int SoLuong { get; set; }
 
-    public decimal? ThanhTien { get; set; }
+    public decimal ThanhTien { get; set; }
 
     public virtual KhachHang MaKhNavigation { get; set; } = null!;
 

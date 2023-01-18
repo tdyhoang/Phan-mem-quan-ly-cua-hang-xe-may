@@ -16,7 +16,6 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <ui:UiPage.Resources>
-        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ui:UiPage.Resources>
 
     <StackPanel Margin="56,0">

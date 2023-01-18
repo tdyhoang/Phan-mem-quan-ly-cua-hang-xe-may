@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
@@ -8,7 +9,7 @@ public partial class NhaCungCap
 
     public string MaNcc { get; set; } = null!;
 
-    public string? TenNcc { get; set; }
+    public string TenNcc { get; set; } = null!;
 
     public string? Sdt { get; set; }
 

@@ -39,5 +39,5 @@ public partial class NhanVien
 
     public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 
-    public virtual ICollection<UserApp> UserApps { get; } = new List<UserApp>();
+    public virtual UserApp? UserApp { get; set; }
 }

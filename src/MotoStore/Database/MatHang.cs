@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
@@ -8,9 +9,9 @@ public partial class MatHang
 
     public string MaMh { get; set; } = null!;
 
-    public string? TenMh { get; set; }
+    public string TenMh { get; set; } = null!;
 
-    public int? SoPhanKhoi { get; set; }
+    public int SoPhanKhoi { get; set; }
 
     public string? Mau { get; set; }
 
@@ -18,7 +19,7 @@ public partial class MatHang
 
     public decimal? GiaBanMh { get; set; }
 
-    public int? SoLuongTonKho { get; set; }
+    public int SoLuongTonKho { get; set; }
 
     public string MaNcc { get; set; } = null!;
 

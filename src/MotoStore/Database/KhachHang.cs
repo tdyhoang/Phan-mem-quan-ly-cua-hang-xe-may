@@ -9,7 +9,7 @@ public partial class KhachHang
 
     public string MaKh { get; set; } = null!;
 
-    public string? HoTenKh { get; set; }
+    public string HoTenKh { get; set; } = null!;
 
     public DateTime? NgSinh { get; set; }
 

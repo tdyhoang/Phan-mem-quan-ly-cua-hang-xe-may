@@ -154,22 +154,13 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
             LoaiKH ??= string.Empty;
 
-            switch (LoaiKH)
+            txtGiamGiaHD.Text = LoaiKH switch
             {
-                case "Vip":
-                    txtGiamGiaHD.Text = "15%";
-                    break;
-                case "Thân quen":
-                    txtGiamGiaHD.Text = "5%";
-                    break;
-                case "Thường":
-                    txtGiamGiaHD.Text = "0%";
-                    break;
-                default:
-                    txtGiamGiaHD.Text = "0%";
-                    break;
-            }
-
+                "Vip" => "15%",
+                "Thân quen" => "5%",
+                "Thường" => "0%",
+                _ => "0%",
+            };
         }
         public void UpdateThanhTien()
         {
@@ -196,21 +187,13 @@ namespace MotoStore.Views.Pages.IOPagePages
 
 
 
-            switch (txtGiamGiaHD.Text)
+            giamgia = txtGiamGiaHD.Text switch
             {
-                case "0%":
-                    giamgia = 0;
-                    break;
-                case "5%":
-                    giamgia = (decimal)0.05;
-                    break;
-                case "15%":
-                    giamgia = (decimal)0.15;
-                    break;
-                default:
-                    giamgia = 0;
-                    break;
-            }
+                "0%" => (decimal?)0,
+                "5%" => (decimal)0.05,
+                "15%" => (decimal)0.15,
+                _ => (decimal?)0,
+            };
             thanhtien = (giaban * int.Parse(txtSoLuongHD.Text) * (1 - giamgia));
             txtThanhTienHD.Text = thanhtien.ToString();
         }

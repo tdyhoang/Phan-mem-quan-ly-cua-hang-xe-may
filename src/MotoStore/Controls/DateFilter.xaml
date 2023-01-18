@@ -53,11 +53,11 @@
                                             <Setter Property="Control.Template">
                                                 <Setter.Value>
                                                     <ControlTemplate>
-                                                        <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}">
+                                                        <ui:TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" ClearButtonEnabled="True">
                                                             <i:Interaction.Behaviors>
                                                                 <helpers:TextBoxInputBehavior InputMode="DateInput" />
                                                             </i:Interaction.Behaviors>
-                                                        </TextBox>
+                                                        </ui:TextBox>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -71,11 +71,11 @@
                                             <Setter Property="Control.Template">
                                                 <Setter.Value>
                                                     <ControlTemplate>
-                                                        <TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}">
+                                                        <ui:TextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, Converter={StaticResource DateTimeConverter}}" ClearButtonEnabled="True">
                                                             <i:Interaction.Behaviors>
                                                                 <helpers:TextBoxInputBehavior InputMode="DateInput" />
                                                             </i:Interaction.Behaviors>
-                                                        </TextBox>
+                                                        </ui:TextBox>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>

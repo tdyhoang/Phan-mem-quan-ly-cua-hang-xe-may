@@ -102,7 +102,9 @@ namespace MotoStore.Controls
                 return false;
 
             if (Max == default)
-                return true;
+                return number >= Min;
+            if (Min == default)
+                return number <= Max;
 
             return (number >= Min) && (number <= Max);
         }
