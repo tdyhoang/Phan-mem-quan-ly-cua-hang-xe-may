@@ -95,7 +95,7 @@
                         <models:DataGridDateColumn.Binding>
                             <Binding Path="NgSinh" Converter="{StaticResource DateTimeConverter}">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="DateValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </models:DataGridDateColumn.Binding>
@@ -113,7 +113,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="DiaChi">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="DiaChiValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="DiaChiValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>
@@ -122,7 +122,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="Sdt">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="SDTValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="SDTValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>
@@ -131,7 +131,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="Email">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="EmailValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="EmailValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>

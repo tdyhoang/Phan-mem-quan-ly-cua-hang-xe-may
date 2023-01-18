@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -74,19 +75,17 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Mã mặt hàng không được để trống!");
                         if (string.IsNullOrEmpty(hd.MaNv))
                             throw new("Mã nhân viên không được để trống!");
-                        string ngayLapHd = string.Empty;
+                        string ngayLapHd = "null";
                         if (hd.NgayLapHd.HasValue)
-                            ngayLapHd = hd.NgayLapHd.Value.ToString("dd/MM/yyyy");
-                        hd.SoLuong ??= 0;
-                        hd.ThanhTien ??= 0;
+                            ngayLapHd = $"'{hd.NgayLapHd.Value:dd/MM/yyyy}'";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(hd.MaHd))
-                            cmd.CommandText += $"\nInsert into HoaDon values('{hd.MaMh}', '{hd.MaKh}', '{hd.MaNv}', '{ngayLapHd}', {hd.SoLuong}, {hd.ThanhTien})";
+                            cmd.CommandText += $"\nInsert into HoaDon values('{hd.MaMh}', '{hd.MaKh}', '{hd.MaNv}', {ngayLapHd}, {hd.SoLuong}, {hd.ThanhTien})";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate HoaDon Set MaMh = '{hd.MaMh}', MaKh = '{hd.MaKh}', MaNv = '{hd.MaNv}', NgayLapHd = '{ngayLapHd}', SoLuong = {hd.SoLuong}, ThanhTien = {hd.ThanhTien} Where MaHd = '{hd.MaHd}';";
+                            cmd.CommandText += $"\nUpdate HoaDon Set MaMh = '{hd.MaMh}', MaKh = '{hd.MaKh}', MaNv = '{hd.MaNv}', NgayLapHd = {ngayLapHd}, SoLuong = {hd.SoLuong}, ThanhTien = {hd.ThanhTien} Where MaHd = '{hd.MaHd}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -183,7 +182,13 @@ namespace MotoStore.Views.Pages.DataPagePages
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-            => TableData.Add(new());
+        {
+            HoaDon hd = new()
+            {
+                NgayLapHd = DateTime.Today
+            };
+            TableData.Add(hd);
+        }
 
         // Đẩy event mousewheel cho scrollviewer xử lý
         private void grdInvoice_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -196,6 +201,57 @@ namespace MotoStore.Views.Pages.DataPagePages
             };
             var parent = ((Control)sender).Parent as UIElement;
             parent?.RaiseEvent(eventArg);
+        }
+
+        private void grdInvoice_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            try
+            {
+                DataGridColumn col = e.Column;
+                DataGridRow row = e.Row;
+                var editingElement = e.EditingElement as TextBox;
+                var newValue = editingElement.Text;
+
+                if (row.Item is not HoaDon hd || Validation.GetHasError(editingElement) || string.IsNullOrEmpty(newValue))
+                    return;
+                switch (col.Header)
+                {
+                    case "Mã MH": hd.MaMh = newValue; break;
+                    case "Mã KH": hd.MaKh = newValue; break;
+                    case "Số lượng": hd.SoLuong = int.Parse(newValue); break;
+                    default: return;
+                }
+                if (string.IsNullOrEmpty(hd.MaMh) || string.IsNullOrEmpty(hd.MaKh))
+                    return;
+
+                MainDatabase mdb = new();
+                string loaiKh = default;
+                decimal giamGia = default;
+                decimal? giaBan = default;
+
+                foreach (var kh in mdb.KhachHangs)
+                    if (!kh.DaXoa && kh.MaKh == hd.MaKh)
+                        loaiKh = kh.LoaiKh;
+                foreach (var mh in mdb.MatHangs)
+                    if (!mh.DaXoa && mh.MaMh == hd.MaMh)
+                        giaBan = mh.GiaBanMh;
+
+                if (giaBan is null)
+                    return;
+                switch (loaiKh)
+                {
+                    case "Vip": giamGia = 0.15M; break;
+                    case "Thân quen": giamGia = 0.05M; break;
+                    case "Thường": giamGia = 0; break;
+                    default: return;
+                }
+
+                ((HoaDon)e.Row.Item).ThanhTien = giaBan.Value * hd.SoLuong * (1 - giamGia);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

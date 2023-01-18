@@ -9,6 +9,9 @@
          xmlns:local="clr-namespace:MotoStore.Controls"
          mc:Ignorable="d" 
          xmlns:dgx="clr-namespace:DataGridExtensions;assembly=DataGridExtensions">
+    <Control.Resources>
+        <helpers:FilterDedicatedNumericConverter x:Key="NumericConverter" />
+    </Control.Resources>
     <Control.Template>
         <ControlTemplate>
             <Grid>
@@ -43,13 +46,13 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Từ:" />
-                                <ui:TextBox Name="txtMin" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Minimum}">
+                                <ui:TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Path=Minimum, Converter={StaticResource NumericConverter}}">
                                     <i:Interaction.Behaviors>
                                         <helpers:TextBoxInputBehavior InputMode="DecimalInput" />
                                     </i:Interaction.Behaviors>
                                 </ui:TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Đến:" />
-                                <ui:TextBox Name="txtMax" Grid.Column="1" Grid.Row="1" Text="{Binding Path=Maximum}">
+                                <ui:TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=Maximum, Converter={StaticResource NumericConverter}}">
                                     <i:Interaction.Behaviors>
                                         <helpers:TextBoxInputBehavior InputMode="DecimalInput" />
                                     </i:Interaction.Behaviors>

@@ -58,7 +58,8 @@
                          dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                          ItemsSource="{Binding TableData, Mode=TwoWay}"
                          PreviewKeyDown="PreviewKeyDown"
-                         PreviewMouseWheel="grdInvoice_PreviewMouseWheel">
+                         PreviewMouseWheel="grdInvoice_PreviewMouseWheel"
+                         CellEditEnding="grdInvoice_CellEditEnding">
 
                 <ui:DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
@@ -112,7 +113,7 @@
                         <models:DataGridDateColumn.Binding>
                             <Binding Path="NgayLapHd" Converter="{StaticResource DateTimeConverter}">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="DateValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </models:DataGridDateColumn.Binding>

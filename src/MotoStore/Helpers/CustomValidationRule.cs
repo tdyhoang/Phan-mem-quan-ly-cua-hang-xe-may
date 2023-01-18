@@ -2,7 +2,9 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MotoStore.Helpers
@@ -10,12 +12,18 @@ namespace MotoStore.Helpers
     public class CustomValidationRule : ValidationRule
     {
         public CustomValidationRule()
-            => ValidationMode = default;
+        {
+            ValidationMode = default;
+            IsNullable = default;
+        }
 
         public ValidationRules ValidationMode { get; set; }
+        public bool IsNullable { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
+            if (value is null && IsNullable)
+                return new(false, "Không được để trống!");
             return ValidationMode switch
             {
                 ValidationRules.None => new(true, default),
@@ -46,9 +54,7 @@ namespace MotoStore.Helpers
 
         private static ValidationResult DateValidation(object value, CultureInfo cultureInfo)
         {
-            if (string.IsNullOrEmpty(value.ToString()))
-                return new(true, default);
-            if (DateTime.TryParseExact(value.ToString(), "d/M/yyyy", cultureInfo, DateTimeStyles.AllowWhiteSpaces, out _))
+            if (string.IsNullOrEmpty(value.ToString()) || DateTime.TryParseExact(value.ToString(), "d/M/yyyy", cultureInfo, DateTimeStyles.AllowWhiteSpaces, out _))
                 return new(true, default);
 
             return new(false, "Nhập ngày hợp lệ, có trên theo định dạng dd/MM/yyyy");
@@ -65,11 +71,12 @@ namespace MotoStore.Helpers
 
         private static ValidationResult EmailValidation(object value)
         {
-            if (!string.IsNullOrEmpty(value.ToString()))
-                if (value.ToString().Length > 40)
-                    return new(false, "Địa chỉ quá dài, tối đa 40 ký tự!");
+            if (!string.IsNullOrEmpty(value.ToString()) && value.ToString().Length > 30)
+                return new(false, "Email quá dài, tối đa 30 ký tự!");
+            if (string.IsNullOrEmpty(value.ToString()) || MailAddress.TryCreate(value.ToString(), out _))
+                return new(true, default);
 
-            return new(true, default);
+            return new(false, "Email sai định dạng!");
         }
 
         private static ValidationResult GioiTinhValidation(object value)

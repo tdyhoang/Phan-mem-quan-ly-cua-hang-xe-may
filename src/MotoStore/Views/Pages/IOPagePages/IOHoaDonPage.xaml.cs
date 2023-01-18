@@ -95,7 +95,7 @@ namespace MotoStore.Views.Pages.IOPagePages
 
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if ((checkNgayXHD))
+            if (checkNgayXHD)
             {
                 MessageBox.Show("Vui lòng nhập đúng thông tin! ");
             }
@@ -182,7 +182,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 "15%" => (decimal)0.15,
                 _ => (decimal?)0,
             };
-            thanhtien = (giaban * int.Parse(txtSoLuongHD.Text) * (1 - giamgia));
+            thanhtien = giaban * int.Parse(txtSoLuongHD.Text) * (1 - giamgia);
             txtThanhTienHD.Text = thanhtien.ToString();
         }
 

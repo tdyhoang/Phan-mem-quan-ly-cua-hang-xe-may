@@ -75,17 +75,17 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Giới tính không được để trống!");
                         if (string.IsNullOrEmpty(kh.LoaiKh))
                             throw new("Loại khách hàng không được để trống!");
-                        string ngSinh = string.Empty;
+                        string ngSinh = "null";
                         if (kh.NgSinh.HasValue)
-                            ngSinh = kh.NgSinh.Value.ToString("dd/MM/yyyy");
+                            ngSinh = $"'{kh.NgSinh.Value:dd/MM/yyyy}'";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(kh.MaKh))
-                            cmd.CommandText += $"\nInsert into KhachHang values(N'{kh.HoTenKh}', '{ngSinh}', N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)";
+                            cmd.CommandText += $"\nInsert into KhachHang values(N'{kh.HoTenKh}', {ngSinh}, N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = '{ngSinh}', GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';";
+                            cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = {ngSinh}, GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
