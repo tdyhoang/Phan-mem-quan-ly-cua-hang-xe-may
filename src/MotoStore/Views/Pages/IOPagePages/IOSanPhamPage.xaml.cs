@@ -138,7 +138,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                     case "PK":
                         foreach (var xe in matHangs.ToList())
                         {
-                            if (xe.Item1.SoPhanKhoi.Value >= int.Parse(txtTu.Text) && xe.Item1.SoPhanKhoi.Value <= int.Parse(txtDen.Text))
+                            if (xe.Item1.SoPhanKhoi >= int.Parse(txtTu.Text) && xe.Item1.SoPhanKhoi <= int.Parse(txtDen.Text))
                                 ListItems.Add(new(xe.Item1, xe.Item2));
                         }
                         break;
@@ -189,6 +189,11 @@ namespace MotoStore.Views.Pages.IOPagePages
                     lv.SelectedItem = null;
                 }
             }
+        }
+
+        private void btnLamMoi_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
         }
     }
 }

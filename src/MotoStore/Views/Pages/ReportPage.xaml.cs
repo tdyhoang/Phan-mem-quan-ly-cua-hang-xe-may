@@ -51,7 +51,7 @@ namespace MotoStore.Views.Pages
             SrC.Add(new PieSeries()
             {
                 Title = tenXeBanChay2,
-                Values = new ChartValues<int> { XeBanChay2.Tong.Value },
+                Values = new ChartValues<int> { XeBanChay2.Tong },
                 LabelPoint = PointLabel,
                 DataLabels = true,
                 Fill = Brushes.Purple
@@ -63,7 +63,7 @@ namespace MotoStore.Views.Pages
             SrC.Add(new PieSeries()
             {
                 Title = tenXeBanChay3,
-                Values = new ChartValues<int> { XeBanChay3.Tong.Value },
+                Values = new ChartValues<int> { XeBanChay3.Tong },
                 LabelPoint = PointLabel,
                 DataLabels = true,
                 Fill = Brushes.SkyBlue
@@ -75,7 +75,7 @@ namespace MotoStore.Views.Pages
             SrC.Add(new PieSeries()
             {
                 Title = tenXeBanChay4,
-                Values = new ChartValues<int> { XeBanChay4.Tong.Value },
+                Values = new ChartValues<int> { XeBanChay4.Tong },
                 LabelPoint = PointLabel,
                 DataLabels = true,
                 Fill = Brushes.Orange
@@ -87,7 +87,7 @@ namespace MotoStore.Views.Pages
             SrC.Add(new PieSeries()
             {
                 Title = tenXeBanChay5,
-                Values = new ChartValues<int> { XeBanChay5.Tong.Value },
+                Values = new ChartValues<int> { XeBanChay5.Tong },
                 LabelPoint = PointLabel,
                 DataLabels = true,
                 Fill = Brushes.ForestGreen
@@ -173,7 +173,7 @@ namespace MotoStore.Views.Pages
             tenXeBanChay = mdb.MatHangs.Where(i => i.MaMh == XeBanChay.IdXe).Select(i => i.TenMh).FirstOrDefault();
             txtblThgTinMHBanChay.Text = tenXeBanChay + "\nMã Mặt Hàng:\n" + XeBanChay.IdXe;
             //3 Dòng trên để tìm ra mặt hàng bán chạy nhất
-            SoLgXeBanChay = XeBanChay.Tong.Value;
+            SoLgXeBanChay = XeBanChay.Tong;
 
             var NVNgSuat = mdb.HoaDons.GroupBy(u => u.MaNv).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdNv = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             var tenNVNgSuat = mdb.NhanViens.Where(i => i.MaNv == NVNgSuat.IdNv).Select(i => i.HoTenNv).FirstOrDefault();

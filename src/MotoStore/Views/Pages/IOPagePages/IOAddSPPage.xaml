@@ -51,7 +51,7 @@
         </Border.Background>
 
         <Grid>
-            <Border Height="250"
+            <Border Height="480"
                     CornerRadius="25"
                     VerticalAlignment="Top"
                     Margin="0,15,0,0">
@@ -87,7 +87,9 @@
                  Height="35"
                  Width="240"
                  VerticalAlignment="Top"
-                 Margin="0,30,330,0" TextChanged="txtTenSP_TextChanged">
+                 Margin="0,30,330,0"
+                 FontSize="15"
+                 FontWeight="Medium">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="NonSpecialInput"/>
                         </i:Interaction.Behaviors>
@@ -95,8 +97,8 @@
                     
                     <Label x:Name="lbGiaNhap"
                Content="Giá Nhập: " 
-               Margin="45,0,0,35"
-               VerticalAlignment="Center"
+               Margin="45,100,0,0"
+               VerticalAlignment="Top"
                FontSize="15"
                Foreground="White"
                FontWeight="Medium"/>
@@ -106,14 +108,17 @@
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="115,0,0,50"
+            Margin="120,85,0,0"
+            VerticalAlignment="Top"
             HorizontalAlignment="Left"/>
                     <TextBox x:Name="txtGiaNhapSP"
                              Height="35"
                              Width="240"
-                             Margin="0,0,330,35" 
-                             VerticalAlignment="Center" 
-                             LostFocus="txtGiaNhapSP_LostFocus">
+                             Margin="0,90,330,0" 
+                             VerticalAlignment="Top" 
+                             LostFocus="txtGiaNhapSP_LostFocus"
+                             FontSize="15"
+                             FontWeight="Medium">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True"/>
                         </i:Interaction.Behaviors>
@@ -121,8 +126,8 @@
                     
                     <Label x:Name="lbXuatXu"
                Content="Xuất Xứ: " 
-               Margin="45,90,0,0"
-               VerticalAlignment="Center"            
+               Margin="45,160,0,0"
+               VerticalAlignment="Top"            
                FontSize="15"
                Foreground="White"
                FontWeight="Medium"/>
@@ -133,15 +138,17 @@
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Margin="110,75,0,0"/>
+            Margin="110,145,0,0"/>
                     <TextBox x:Name="txtXuatXuSP" 
-                             Margin="0,90,330,0"
+                             Margin="0,150,330,0"
                              Height="35"
                              Width="240"
-                             VerticalAlignment="Center" 
-                             LostFocus="txtXuatXuSP_LostFocus">
+                             VerticalAlignment="Top" 
+                             LostFocus="txtXuatXuSP_LostFocus"
+                             FontSize="15"
+                             FontWeight="Medium">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
                         </i:Interaction.Behaviors>
@@ -149,37 +156,31 @@
                     
                     <Label x:Name="lbHangSanXuat"
                Content="Hãng Sản Xuất: " 
-               Margin="215,0,0,15"
+               Margin="215,95,0,0"
                Height="35"
                Width="115"
                FontSize="15"
+               VerticalAlignment="Top"
                Foreground="White"
                FontWeight="Medium"/>
-                    <Label x:Name="lblDauSao_Copy3" 
-            Height="30"
-            FontSize="20"
-            Content="*"
-            Foreground="Red"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            FontWeight="Medium"
-            Margin="325,0,0,40"/>
                     <TextBox x:Name="txtMoTaSP" 
                              Margin="620,30,0,0"
                              Height="35"
                              Width="240"
-                             VerticalAlignment="Top">
+                             VerticalAlignment="Top"
+                             FontSize="15"
+                 FontWeight="Medium">
                     </TextBox>
                     
                     <Label x:Name="lblThongBao" 
                Height="30"
-               Width="310"
-               FontSize="15"
+               Width="350"
+               FontSize="20"
                Foreground="red" 
                FontWeight="Medium" 
-               Margin="40,0,0,10"
+               Margin="0,0,15,15"
                VerticalAlignment="Bottom"
-               HorizontalAlignment="Left"
+               HorizontalAlignment="Right"
                Content="Các ô có dấu(*) không được để trống!"
                Visibility="Collapsed"/>
                     
@@ -193,11 +194,12 @@
                Foreground="White"
                FontWeight="Medium"/>
                     <TextBox x:Name="txtHangSXSP"
-                             Margin="620,0,0,35" 
-                             VerticalAlignment="Center"
+                             Margin="620,85,0,0" 
+                             VerticalAlignment="Top"
                              Height="35"
                              Width="240"
-                             LostFocus="txtHangSXSP_LostFocus">
+                             FontSize="15"
+                 FontWeight="Medium">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="LetterInput"/>
                         </i:Interaction.Behaviors>
@@ -205,41 +207,106 @@
                     
                     <Label x:Name="lbPhanKhoiSP"
                Content="Phân Khối: " 
-               Margin="183,115,0,0"
+               Margin="180,160,0,0"
                FontSize="15"
                Foreground="White"
                Height="35"
                Width="80"
-               FontWeight="Medium"/>
+               FontWeight="Medium"
+               VerticalAlignment="top"/>
                     <Label x:Name="lblDauSao_Copy2" 
             Height="30"
             FontSize="20"
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="270,0,0,65"
-            VerticalAlignment="Bottom"
+            Margin="265,145,0,0"
+            VerticalAlignment="Top"
             HorizontalAlignment="Center"/>
                     <TextBox x:Name="txtPhanKhoiSP" 
-                             Margin="620,90,0,0" 
-                             VerticalAlignment="Center" 
+                             Margin="620,150,0,0" 
+                             VerticalAlignment="Top" 
                              LostFocus="txtPhanKhoiSP_LostFocus"
                              Height="35"
-                             Width="240">
+                             Width="240"
+                             FontSize="15"
+                 FontWeight="Medium">
                         <i:Interaction.Behaviors>
                             <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
                         </i:Interaction.Behaviors>
                     </TextBox>
                     
                     <Button x:Name="btnLoadImageSP" 
-                    Content="Chọn ảnh Sản Phẩm" 
-                    Margin="0,0,0,10" 
-                    VerticalAlignment="Bottom"
+                    Content="Chọn Ảnh Sản Phẩm" 
+                    Margin="100,0,0,0" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Height="35"
                     Width="150"
                     FontSize="15"
                     FontWeight="Medium"
                     Click="btnLoadImageSP_Click"/>
+
+                    <Label Content="Mã Nhà Cung Cấp:"
+                           Foreground="White"
+                           FontSize="15"
+                           FontWeight="Medium"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Margin="230,0,0,15">
+                    </Label>
+                    <Label 
+            Height="30"
+            FontSize="20"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="365,0,0,45"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="cmbMaNCC" 
+                              ItemsSource="{Binding}" 
+                              IsEditable="True" 
+                              DropDownClosed="cmbMaNCC_DropDownClosed"
+                              Height="40"
+                              Width="240"
+                              Margin="620,0,0,30"
+                              FontSize="15"
+                              FontWeight="Medium"
+                              LostFocus="cmbMaNCC_LostFocus">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Grid x:Name="gd" TextElement.Foreground="Black">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Margin="5" Grid.Column="0" Text="{Binding MaNcc}" FontSize="15" FontWeight="Medium"/>
+                                                <TextBlock Margin="5" Grid.Column="1" Text="{Binding TenNcc}" FontSize="15" FontWeight="Medium"/>
+                                                <TextBlock Margin="5" Grid.Column="2" Text="{Binding DiaChi}" FontSize="15" FontWeight="Medium"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="ComboBoxItem.IsSelected" Value="True">
+                                                    <Setter TargetName="gd"  Property="Background" Value="Gray"></Setter>
+                                                    <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
+                                                </Trigger>
+                                                
+                                                <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
+                                                    <Setter TargetName="gd"  Property="Background" Value="DarkMagenta"></Setter>
+                                                    <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+
                 </Grid>
             </Border>
        
@@ -257,7 +324,8 @@
                     Height="200"
                     Width="300"
                     VerticalAlignment="Bottom"
-                    Margin="0,0,0,80"
+                    HorizontalAlignment="Left"
+                    Margin="20,0,0,80"
                     CornerRadius="20">
                 <Image x:Name="ImageSP"
                        Height="190"

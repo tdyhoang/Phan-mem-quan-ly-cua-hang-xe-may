@@ -45,7 +45,7 @@
         Hàng 2: của sản phẩm
         Hàng cuối: của Thêm Mới-->
         <Frame x:Name="AddSP" NavigationUIVisibility="Hidden" Margin="0,0,0,0" />
-         
+        
         <Border CornerRadius="30"
                 Margin="0,0,0,0">
             <Border.Background>
@@ -104,6 +104,17 @@
                                    VerticalAlignment="Top"
                                    HorizontalAlignment="Left"
                                    Grid.Row="0"/>
+        <Button x:Name="btnLamMoi"
+                Height="35"
+                Width="75"
+                FontSize="15"
+                FontWeight="Medium"
+                Content="Làm Mới"
+                Click="btnLamMoi_Click"
+                Grid.Row="0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="250,9,0,0"></Button>
         <Label Content="Lọc"
                FontSize="19"
                FontWeight="Medium"

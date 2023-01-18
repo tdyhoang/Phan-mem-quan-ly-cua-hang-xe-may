@@ -40,8 +40,8 @@ namespace MotoStore.Views.Windows
             lblHangSX.Content = mathang.Item1.HangSx;
             lblXuatXu.Content = mathang.Item1.XuatXu;
             lblDaBan.Content = mdb.HoaDons.Where(u => u.MaMh == mathang.Item1.MaMh).Select(u => u.SoLuong).Sum().ToString() + " Chiếc";
-            int SLtonkho = mdb.MatHangs.Select(u => u.SoLuongTonKho).FirstOrDefault().Value;
-            int SLdaban = mdb.HoaDons.Where(u => u.MaMh == mathang.Item1.MaMh).Select(u => u.SoLuong).Sum().Value;
+            int SLtonkho = mdb.MatHangs.Where(u=>u.MaMh == mathang.Item1.MaMh).Select(u => u.SoLuongTonKho).FirstOrDefault();
+            int SLdaban = mdb.HoaDons.Where(u => u.MaMh == mathang.Item1.MaMh).Select(u => u.SoLuong).Sum();
             txtTonKho.Text = (SLtonkho - SLdaban).ToString();
             if (mathang.Item1.GiaBanMh != null)
                 txtGiaBan.Text = string.Format("{0:C}", mathang.Item1.GiaBanMh);
@@ -135,7 +135,22 @@ namespace MotoStore.Views.Windows
 
         private void btnLuu_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("Bạn Có Chắc Muốn Lưu Chỉnh Sửa?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+            }
+            else
+            {
+                MainDatabase mdb = new();
+                SqlCommand cmd;
+                con.Open();
+                cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'",con);
+                cmd.ExecuteNonQuery();
+                DateTime dt = DateTime.Now;
+                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+                MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
+            }
         }
     }
 }

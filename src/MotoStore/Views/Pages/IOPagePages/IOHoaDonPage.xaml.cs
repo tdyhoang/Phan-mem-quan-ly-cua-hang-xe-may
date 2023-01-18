@@ -46,13 +46,10 @@ namespace MotoStore.Views.Pages.IOPagePages
             get => _DateHD;
             set
             {
-
                 _DateHD = value;
                 OnPropertyChanged();
             }
         }
-
-
 
         internal ObservableCollection<MatHang> matHangs;
         internal ObservableCollection<KhachHang> KhachHangs;
@@ -67,20 +64,14 @@ namespace MotoStore.Views.Pages.IOPagePages
         internal List<HoaDon> TableData = new();
         internal HoaDon hd = new HoaDon();
 
-
-
-
         public IOHoaDonPage()
         {
-
             InitializeComponent();
             RefreshMatHang();
             RefreshKhachHang();
             txtNgayXuatHD.Text = DateTime.Today.ToShortDateString();
             DataContext = this;
-
         }
-
 
         //private void Timer_Tick(object sender, EventArgs e)
         //{
@@ -111,13 +102,14 @@ namespace MotoStore.Views.Pages.IOPagePages
             else
             {
                 con.Open();
-                cmd = new("Set Dateformat dmy\nInsert into HoaDon values(  N'" + cmbMaSPHD.Text + "','" + cmbMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text + " ' )", con);
+                cmd = new("Set Dateformat dmy\nInsert into HoaDon values(N'" + cmbMaSPHD.Text + "','" + cmbMaKHHD.Text + "','" + PageChinh.getMa + "','" + txtNgayXuatHD.Text + "','" + txtSoLuongHD.Text + "','" + txtThanhTienHD.Text + " ' )", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
                 MessageBox.Show("Thêm dữ liệu thành công");
 
             }
         }    
+
         private void txtSoLuongHD_LostFocus(object sender, RoutedEventArgs e)
         {
             checkSoLuong = true;
@@ -141,7 +133,6 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
         }
 
-
         public void UpdateGiamGia()
         {
             string LoaiKH = string.Empty;
@@ -162,9 +153,9 @@ namespace MotoStore.Views.Pages.IOPagePages
                 _ => "0%",
             };
         }
+
         public void UpdateThanhTien()
         {
-
             decimal? giamgia = 0;
             decimal? giaban = 0;
             decimal? thanhtien = 0;
@@ -184,9 +175,6 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
             txtThanhTienHD.Text = string.Empty;
 
-
-
-
             giamgia = txtGiamGiaHD.Text switch
             {
                 "0%" => (decimal?)0,
@@ -198,8 +186,6 @@ namespace MotoStore.Views.Pages.IOPagePages
             txtThanhTienHD.Text = thanhtien.ToString();
         }
 
-
-
         private void txtSoLuongHD_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateThanhTien();
@@ -209,6 +195,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             UpdateThanhTien();
         }
+
         public void RefreshMatHang()
         {
             MainDatabase dtb = new();
@@ -223,6 +210,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             cmbMaSPHD.ItemsSource = matHangs;
             cmbMaSPHD.Text = String.Empty;
         }
+
         public void RefreshKhachHang()
         {
             MainDatabase dtb = new();
@@ -238,21 +226,16 @@ namespace MotoStore.Views.Pages.IOPagePages
             cmbMaKHHD.Text = String.Empty;
         }
 
-
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             RefreshMatHang();
 
         }
 
-
-
         private void btnRefreshKH_Click(object sender, RoutedEventArgs e)
         {
             RefreshKhachHang();
         }
-
-
 
         private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
