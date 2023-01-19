@@ -5,7 +5,6 @@ using System.Windows.Media;
 using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Threading;
-using MotoStore.Database;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {

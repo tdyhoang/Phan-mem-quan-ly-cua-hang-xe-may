@@ -5,20 +5,11 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class OrderListPage : INavigableView<ViewModels.OrderListViewModel>
+    public partial class OrderListPage
     {
-        public ViewModels.OrderListViewModel ViewModel
+        public OrderListPage()
         {
-            get;
-        }
-
-        public OrderListPage(ViewModels.OrderListViewModel viewModel)
-        {
-            ViewModel = viewModel;
-
             InitializeComponent();
-
-            ViewModel.OnNavigatedTo();
         }
     }
 }

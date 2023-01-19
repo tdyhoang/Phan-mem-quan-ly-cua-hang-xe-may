@@ -58,17 +58,12 @@ namespace MotoStore
                 services.AddScoped<Views.Pages.IOPage>();
                 services.AddScoped<ViewModels.IOViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.MotoListPage>();
-                services.AddScoped<ViewModels.MotoListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.EmployeeListPage>();
-                services.AddScoped<ViewModels.EmployeeListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.CustomerListPage>();
-                services.AddScoped<ViewModels.CustomerListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.SupplierListPage>();
-                services.AddScoped<ViewModels.SupplierListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.InvoiceListPage>();
-                services.AddScoped<ViewModels.InvoiceListViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.UserListPage>();
-                services.AddScoped<ViewModels.UserListViewModel>();
+                services.AddScoped<Views.Pages.DataPagePages.OrderListPage>();
                 services.AddScoped<Views.Windows.LoginView>();
                 services.AddScoped<Views.Pages.LoginPages.PageChinh>();
 

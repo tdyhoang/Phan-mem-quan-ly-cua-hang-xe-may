@@ -6,7 +6,7 @@
            xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
            xmlns:resources="clr-namespace:MotoStore.Resources"
            xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
-           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages"
+           xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages" xmlns:helpers="clr-namespace:MotoStore.Helpers" xmlns:controls="clr-namespace:MotoStore.Controls" xmlns:models="clr-namespace:MotoStore.Models"
            d:DataContext="{d:DesignInstance Type=local:MotoListPage}"
            mc:Ignorable="d" 
            d:DesignHeight="450" d:DesignWidth="800"
@@ -17,12 +17,15 @@
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
-        <ContextMenu x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=Self}}">
-            <ui:MenuItem Header="Làm mới dữ liệu" SymbolIcon="ArrowClockwise24" Click="RefreshView" />
-        </ContextMenu>
-        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
-            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
-        </Style>
+        <ControlTemplate x:Key="DecimalFilter">
+            <controls:DecimalFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="IntegerFilter">
+            <controls:IntegerFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="DateFilter">
+            <controls:DateFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
     </ui:UiPage.Resources>
 
     <Grid>
@@ -31,43 +34,125 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0">
-            <ui:Button Name="btnSave" Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
-        </DockPanel>
+        <StackPanel Orientation="Horizontal" Margin="5,0">
+            <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
+            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
+        </StackPanel>
 
-        <!--Binding Fail TableData-->
-        <ui:DataGrid Name="grdMoto"
-                     Grid.Row="1"
-                     MaxHeight="568"
-                     AutoGenerateColumns="False"
-                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
-                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding TableData}" 
-                     RowStyle="{StaticResource DefaultRowStyle}"
-                     PreviewKeyDown="PreviewKeyDown">
+        <ui:DynamicScrollViewer Grid.Row="1"
+                                MaxHeight="568"
+                                HorizontalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Visible">
+            <ui:DataGrid Name="grdMoto"
+                         HorizontalScrollBarVisibility="Disabled"
+                         VerticalScrollBarVisibility="Disabled"
+                         AutoGenerateColumns="False"
+                         CanUserAddRows="False"
+                         SelectionUnit="FullRow"
+                         dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                         dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                         ItemsSource="{Binding TableData, Mode=TwoWay}"
+                         PreviewKeyDown="PreviewKeyDown"
+                         PreviewMouseWheel="grdMoto_PreviewMouseWheel">
 
-            <ui:DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#0078D7" />
-                            <Setter Property="BorderBrush" Value="#0078D7" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ui:DataGrid.Resources>
+                <ui:DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="TextBox" x:Key="errorToolTip">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="true">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <helpers:DateTimeConverter x:Key="DateTimeConverter" />
+                </ui:DataGrid.Resources>
 
-            <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaMh, Mode=OneWay}" />
-                <DataGridTextColumn Header="Tên MH" Binding="{Binding Path=TenMh}" />
-                <DataGridTextColumn Header="Số PK" Binding="{Binding Path=SoPhanKhoi}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Giá nhập" Binding="{Binding Path=GiaNhapMh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Giá bán" Binding="{Binding Path=GiaBanMh}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Tồn kho" Binding="{Binding Path=SoLuongTonKho}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Hãng SX" Binding="{Binding Path=HangSx}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Xuất xứ" Binding="{Binding Path=XuatXu}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Mô tả" Binding="{Binding Path=MoTa}" />
-            </ui:DataGrid.Columns>
-        </ui:DataGrid>
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaMh, Mode=OneWay}" />
+                    <DataGridTextColumn Header="Tên MH" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="TenMh">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="TenMhValidation" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <models:DataGridIntegerColumn Header="Số phân khối" dgx:DataGridFilterColumn.Template="{StaticResource IntegerFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridIntegerColumn.Binding>
+                            <Binding Path="SoPhanKhoi">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="None" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridIntegerColumn.Binding>
+                    </models:DataGridIntegerColumn>
+                    <models:DataGridLetterColumn Header="Màu" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridLetterColumn.Binding>
+                            <Binding Path="Mau">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MauValidation" IsNullable="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridLetterColumn.Binding>
+                    </models:DataGridLetterColumn>
+                    <models:DataGridDecimalColumn Header="Giá nhập" Binding="{Binding Path=GiaNhapMh}" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" />
+                    <models:DataGridDecimalColumn Header="Giá bán" Binding="{Binding Path=GiaBanMh}" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" />
+                    <models:DataGridIntegerColumn Header="Tồn kho" dgx:DataGridFilterColumn.Template="{StaticResource IntegerFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridIntegerColumn.Binding>
+                            <Binding Path="SoLuongTonKho">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="None" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridIntegerColumn.Binding>
+                    </models:DataGridIntegerColumn>
+                    <DataGridTextColumn Header="Mã nhà cung cấp" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="MaNcc">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MaNccValidation" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Hãng SX" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="HangSx">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="HangSxValidation" IsNullable="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Xuất xứ" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="XuatXu">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="XuatXuValidation" IsNullable="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mô tả" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="MoTa">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MoTaValidation" IsNullable="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
+        </ui:DynamicScrollViewer>
     </Grid>
 </ui:UiPage>

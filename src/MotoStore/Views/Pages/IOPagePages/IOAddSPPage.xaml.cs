@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Data.SqlClient;
-using System.IO;
 using MotoStore.Database;
 using System.Windows.Threading;
 using System.Collections.ObjectModel;
@@ -27,8 +26,8 @@ namespace MotoStore.Views.Pages.IOPagePages
             DataContext = this;
         }
         private readonly DispatcherTimer timer = new();
-        private MainDatabase mdb = new();
-        private SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly MainDatabase mdb = new();
+        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
         static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
         internal ObservableCollection<NhaCungCap> nhaCungCaps;
@@ -45,7 +44,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 }
             }
             cmbMaNCC.ItemsSource = nhaCungCaps;
-            cmbMaNCC.Text = String.Empty;
+            cmbMaNCC.Text = string.Empty;
         }
 
         private void Timer_Tick(object sender, EventArgs e)

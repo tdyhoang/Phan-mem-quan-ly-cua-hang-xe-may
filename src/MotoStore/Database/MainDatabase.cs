@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Markup;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MotoStore.Database;
 
@@ -143,9 +140,7 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false)
                 .HasColumnName("MaKH");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email)
-                .HasMaxLength(30)
-                .IsUnicode(false);
+            entity.Property(e => e.Email).HasMaxLength(30);
             entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenKh)
                 .HasMaxLength(30)
@@ -230,7 +225,6 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("GiaNhapMH");
             entity.Property(e => e.HangSx)
                 .HasMaxLength(15)
-                .IsUnicode(false)
                 .HasColumnName("HangSX");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -243,7 +237,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.MoTa).HasMaxLength(75);
             entity.Property(e => e.TenMh)
                 .HasMaxLength(30)
-                .IsUnicode(false)
                 .HasColumnName("TenMH");
             entity.Property(e => e.XuatXu).HasMaxLength(15);
 
@@ -264,9 +257,7 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false)
                 .HasColumnName("MaNCC");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email)
-                .HasMaxLength(45)
-                .IsUnicode(false);
+            entity.Property(e => e.Email).HasMaxLength(45);
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
@@ -276,7 +267,6 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("SDT");
             entity.Property(e => e.TenNcc)
                 .HasMaxLength(15)
-                .IsUnicode(false)
                 .HasColumnName("TenNCC");
         });
 
@@ -292,9 +282,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("MaNV");
             entity.Property(e => e.ChucVu).HasMaxLength(10);
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email)
-                .HasMaxLength(30)
-                .IsUnicode(false);
+            entity.Property(e => e.Email).HasMaxLength(30);
             entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
@@ -363,21 +351,15 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("UserApp");
 
-            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456128712F8").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456F2655BA6").IsUnique();
 
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
                 .IsUnicode(false)
                 .HasColumnName("MaNV");
-            entity.Property(e => e.Email)
-                .HasMaxLength(30)
-                .IsUnicode(false);
-            entity.Property(e => e.Password)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.UserName)
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            entity.Property(e => e.Email).HasMaxLength(30);
+            entity.Property(e => e.Password).HasMaxLength(20);
+            entity.Property(e => e.UserName).HasMaxLength(15);
 
             entity.HasOne(d => d.MaNvNavigation).WithOne(p => p.UserApp)
                 .HasForeignKey<UserApp>(d => d.MaNv)

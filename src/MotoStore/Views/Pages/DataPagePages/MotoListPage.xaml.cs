@@ -8,34 +8,28 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
+using System.Collections.ObjectModel;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class MotoListPage : INavigableView<ViewModels.MotoListViewModel>
+    public partial class MotoListPage
     {
-        internal List<MatHang> TableData = new();
 
-        public ViewModels.MotoListViewModel ViewModel
-        {
-            get;
-        }
+        internal ObservableCollection<MatHang> TableData;
 
-        public MotoListPage(ViewModels.MotoListViewModel viewModel)
+        public MotoListPage()
         {
-            ViewModel = viewModel;
             InitializeComponent();
-
-            ViewModel.OnNavigatedTo();
             RefreshDataGrid();
         }
 
         private void RefreshDataGrid()
         {
             MainDatabase con = new();
-            TableData = con.MatHangs.ToList();
+            TableData = new(con.MatHangs);
             foreach (var MatHang in TableData.ToList())
                 if (MatHang.DaXoa)
                     TableData.Remove(MatHang);
@@ -44,43 +38,53 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
+            if ((from c in from object i in grdMoto.ItemsSource select grdMoto.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            {
+                MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
+                return;
+            }
+            SqlCommand cmd;
+            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             try
             {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
                 con.Open();
-                cmd = new("set dateformat dmy", con);
-                cmd.ExecuteNonQuery();
-
-                // Lý do cứ mỗi lần có cell sai là break:
-                // - Tránh trường hợp hiện MessageBox liên tục
-                // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                foreach (object obj in grdMoto.Items)
+                using var trans = con.BeginTransaction();
+                try
                 {
-                    // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                    // is not MatHang chỉ để an toàn
-                    if (obj is null || obj is not MatHang mh)
-                        continue;
+                    cmd = new("set dateformat dmy", con, trans);
 
-                    // Thêm mới
-                    if (string.IsNullOrEmpty(mh.MaMh))
+                    // Lý do cứ mỗi lần có cell sai là break:
+                    // - Tránh trường hợp hiện MessageBox liên tục
+                    // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
+                    foreach (object obj in grdMoto.Items)
                     {
-                        cmd = new("Insert into MatHang values('" + mh.TenMh + "', '" + mh.SoPhanKhoi + "', '" + mh.GiaNhapMh + "', '" + mh.GiaBanMh + "', '" + mh.SoLuongTonKho + "', '" + mh.MaNcc + "', N'" + mh.HangSx + "', N'" + mh.XuatXu + "', N'" + mh.MoTa + "0)", con);
-                        cmd.ExecuteNonQuery();
-                    }
+                        // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                            continue;
+                        if (obj is not MatHang mh)
+                            continue;
+                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        string giaNhapMh = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value.ToString() : "null";
+                        string giaBanMh = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value.ToString() : "null";
+                        // Thêm mới
+                        if (string.IsNullOrEmpty(mh.MaMh))
+                            cmd.CommandText += $"\nInsert into MatHang values(N'{mh.TenMh}', {mh.SoPhanKhoi}, N'{mh.Mau}', {giaNhapMh}, {giaBanMh}, {mh.SoLuongTonKho}, '{mh.MaNcc}', N'{mh.HangSx}', N'{mh.XuatXu}', N'{mh.MoTa}', 0)";
 
-                    // Cập nhật
-                    else
-                    {
-                        cmd = new("Update MatHang Set TenMh = '" + mh.TenMh + "', SoPhanKhoi = '" + mh.SoPhanKhoi + "', GiaNhapMh = '" + mh.GiaNhapMh + "', GiaBanMh = '" + mh.GiaBanMh + "', SoLuongTonKho = '" + mh.SoLuongTonKho + "', MaNCC = '" + mh.MaNcc + "', HangSx = N'" + mh.HangSx + "', XuatXu = N'" + mh.XuatXu + "', MoTa = N'" + mh.MoTa + "', DaXoa = 0 Where MaMh = '" + mh.MaMh + "';", con);
-                        cmd.ExecuteNonQuery();
+                        // Cập nhật
+                        else
+                            cmd.CommandText += $"\nUpdate MatHang Set TenMh = N'{mh.TenMh}', SoPhanKhoi = {mh.SoPhanKhoi}, Mau = N'{mh.Mau}', GiaNhapMh = {giaNhapMh}, GiaBanMh = {giaNhapMh}, SoLuongTonKho = {mh.SoLuongTonKho}, MaNCC = '{mh.MaNcc}', HangSx = N'{mh.HangSx}', XuatXu = N'{mh.XuatXu}', MoTa = N'{mh.MoTa}' Where MaMh = '{mh.MaMh}';";
                     }
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                    // Làm mới nội dung hiển thị cho khớp với database
+                    RefreshDataGrid();
+                    MessageBox.Show("Lưu chỉnh sửa thành công!");
                 }
-
-                con.Close();
-                // Làm mới nội dung hiển thị cho khớp với database
-                RefreshDataGrid();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    trans.Rollback();
+                }
             }
             catch (Exception ex)
             {
@@ -93,6 +97,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if (sender is not DataGrid dg)
                 return;
+            // Kiểm tra nếu không được phép chỉnh sửa thì không được xoá
+            if (dg.IsReadOnly)
+                return;
             // Kiểm tra xem key Delete có thực sự được bấm tại 1 hàng hoặc ô trong datagrid hay không
             DependencyObject dep = (DependencyObject)e.OriginalSource;
             if (dep is not DataGridRow && dep is not DataGridCell)
@@ -102,7 +109,44 @@ namespace MotoStore.Views.Pages.DataPagePages
             if (e.Key == Key.Delete && !dgr.IsEditing)
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
-                DeleteRow(sender, e);
+                SqlCommand cmd;
+                using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                try
+                {
+                    con.Open();
+                    using var trans = con.BeginTransaction();
+                    try
+                    {
+                        cmd = new(" ", con, trans);
+
+                        foreach (var obj in dg.SelectedItems)
+                        {
+                            if (obj is not MatHang mh)
+                                continue;
+                            // Trường hợp chưa thêm mới nên chưa có mã mh
+                            if (string.IsNullOrEmpty(mh.MaMh))
+                                continue;
+                            // Xóa hàng
+                            else
+                                cmd.CommandText += $"Update MatHang Set DaXoa = 1 Where MaMh = '{mh.MaMh}';\n";
+                        }
+                        cmd.ExecuteNonQuery();
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        trans.Rollback();
+                        MessageBox.Show(ex.Message);
+                        // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                        e.Handled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                    e.Handled = true;
+                }
             }
         }
 
@@ -111,64 +155,34 @@ namespace MotoStore.Views.Pages.DataPagePages
             RefreshDataGrid();
         }
 
-        private void DeleteRow(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MainDatabase mainDatabase = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-                SqlCommand cmd;
-                con.Open();
-                MatHang mh;
-
-                foreach (object obj in grdMoto.SelectedItems)
-                {
-                    // Bỏ qua ô trắng mà vẫn được Select
-                    // is not MatHang chỉ để an toàn
-                    if (obj is null || obj is not MatHang)
-                        continue;
-                    mh = obj as MatHang;
-                    if (mh is null)
-                        continue;
-                    // Trường hợp chưa thêm mới nên chưa có mã mh
-                    if (string.IsNullOrEmpty(mh.MaMh))
-                        // Vẫn chạy hàm xóa trên phần hiển thị thay vì refresh
-                        // Lý do: nếu refresh hiển thị cho khớp với database thì sẽ mất những chỉnh sửa
-                        // của người dùng trên datagrid trước khi nhấn phím delete do chưa được lưu.
-                        // !! Chưa tìm ra hướng xử lý
-                        continue;
-                    // Xóa hàng
-                    else
-                    {
-                        cmd = new("Update MatHang Set DaXoa = 1 Where MaMh = '" + mh.MaMh + "';", con);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                e.Handled = true;
-            }
-        }
-
         private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
-                if (PageChinh.getChucVu.ToLower() == "quản lý")
-                {
-                    btnSave.Visibility = Visibility.Visible;
-                    grdMoto.IsReadOnly = false;
-                }
-                else
-                {
-                    btnSave.Visibility = Visibility.Collapsed;
-                    grdMoto.IsReadOnly = true;
-                }
+                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+
+                grdMoto.IsReadOnly = !isQuanLy;
+
+                if (sender is Button button)
+                    button.IsEnabled = isQuanLy;
+
+                RefreshDataGrid();
             }
+        }
+
+        private void AddRow(object sender, RoutedEventArgs e)
+            => TableData.Add(new());
+
+        private void grdMoto_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = MouseWheelEvent,
+                Source = sender
+            };
+            var parent = ((Control)sender).Parent as UIElement;
+            parent?.RaiseEvent(eventArg);
         }
     }
 }

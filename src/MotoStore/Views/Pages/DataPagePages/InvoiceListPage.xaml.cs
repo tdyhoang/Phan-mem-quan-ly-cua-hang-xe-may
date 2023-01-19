@@ -9,27 +9,19 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class InvoiceListPage : INavigableView<ViewModels.InvoiceListViewModel>
+    public partial class InvoiceListPage
     {
-        public ViewModels.InvoiceListViewModel ViewModel
-        {
-            get;
-        }
-
         internal ObservableCollection<HoaDon> TableData;
 
-        public InvoiceListPage(ViewModels.InvoiceListViewModel viewModel)
+        public InvoiceListPage()
         {
-            ViewModel = viewModel;
             InitializeComponent();
-
             RefreshDataGrid();
         }
 
@@ -56,8 +48,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
-                    cmd = new("set dateformat dmy", con);
-                    cmd.Transaction = trans;
+                    cmd = new("set dateformat dmy", con, trans);
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
                     // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
@@ -75,9 +66,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Mã mặt hàng không được để trống!");
                         if (string.IsNullOrEmpty(hd.MaNv))
                             throw new("Mã nhân viên không được để trống!");
-                        string ngayLapHd = "null";
-                        if (hd.NgayLapHd.HasValue)
-                            ngayLapHd = $"'{hd.NgayLapHd.Value:dd/MM/yyyy}'";
+                        string ngayLapHd = hd.NgayLapHd.HasValue ? ngayLapHd = $"'{hd.NgayLapHd.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(hd.MaHd))
@@ -130,8 +119,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     using var trans = con.BeginTransaction();
                     try
                     {
-                        cmd = new(" ", con);
-                        cmd.Transaction = trans;
+                        cmd = new(" ", con, trans);
 
                         foreach (var obj in dg.SelectedItems)
                         {
@@ -178,6 +166,8 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                 if (sender is Button button)
                     button.IsEnabled = isQuanLy;
+
+                RefreshDataGrid();
             }
         }
 

@@ -6,19 +6,11 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class SupplierListPage : INavigableView<ViewModels.SupplierListViewModel>
+    public partial class SupplierListPage
     {
-        public ViewModels.SupplierListViewModel ViewModel
+        public SupplierListPage()
         {
-            get;
-        }
-
-        public SupplierListPage(ViewModels.SupplierListViewModel viewModel)
-        {
-            ViewModel = viewModel;
             InitializeComponent();
-
-            ViewModel.OnNavigatedTo();
         }
 
         private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

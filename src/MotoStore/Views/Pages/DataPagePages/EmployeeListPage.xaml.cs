@@ -15,20 +15,13 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class EmployeeListPage : INavigableView<ViewModels.EmployeeListViewModel>
+    public partial class EmployeeListPage
     {
-        public ViewModels.EmployeeListViewModel ViewModel
-        {
-            get;
-        }
-
         internal ObservableCollection<NhanVien> TableData;
 
-        public EmployeeListPage(ViewModels.EmployeeListViewModel viewModel)
+        public EmployeeListPage()
         {
-            ViewModel = viewModel;
             InitializeComponent();
-
             RefreshDataGrid();
         }
 
@@ -57,8 +50,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
-                    cmd = new("set dateformat dmy", con);
-                    cmd.Transaction = trans;
+                    cmd = new("set dateformat dmy", con, trans);
 
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
@@ -73,23 +65,17 @@ namespace MotoStore.Views.Pages.DataPagePages
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
                         if (string.IsNullOrEmpty(nv.GioiTinh))
                             throw new("Giới tính không được để trống!");
-                        string ngaySinhNv = "null";
-                        string ngayVaoLam = "null";
-                        string luong = "null";
-                        if (nv.NgSinh.HasValue)
-                            ngaySinhNv = $"'{nv.NgSinh.Value:dd-MM-yyyy}'";
-                        if (nv.NgVl.HasValue)
-                            ngayVaoLam = $"'{nv.NgVl.Value:dd-MM-yyyy}'";
-                        if (nv.Luong.HasValue)
-                            luong = nv.Luong.Value.ToString();
+                        string ngaySinhNv = nv.NgSinh.HasValue ? $"'{nv.NgSinh.Value:dd-MM-yyyy}'" : "null";
+                        string ngayVaoLam = nv.NgVl.HasValue ? ngayVaoLam = $"'{nv.NgVl.Value:dd-MM-yyyy}'" : "null";
+                        string luong = nv.Luong.HasValue ? nv.Luong.Value.ToString() : "null";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(nv.MaNv))
-                            cmd.CommandText += $"\nInsert into NhanVien values(N'{nv.HoTenNv}', {ngaySinhNv}, N'{nv.GioiTinh}', N'{nv.DiaChi}', '{nv.Sdt}', '{nv.Email}', N'{nv.ChucVu}', {ngayVaoLam}, {luong}, 0)";
+                            cmd.CommandText += $"\nInsert into NhanVien values(N'{nv.HoTenNv}', {ngaySinhNv}, N'{nv.GioiTinh}', N'{nv.DiaChi}', '{nv.Sdt}', N'{nv.Email}', N'{nv.ChucVu}', {ngayVaoLam}, {luong}, 0)";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate NhanVien Set HoTenNv = N'{nv.HoTenNv}', NgSinh = {ngaySinhNv}, GioiTinh = N'{nv.GioiTinh}', DiaChi = N'{nv.DiaChi}', Sdt = '{nv.Sdt}', Email = '{nv.Email}', ChucVu = N'{nv.ChucVu}', ngVL = {ngayVaoLam}, Luong = {luong}, DaXoa = 0 Where Manv = '{nv.MaNv}';";
+                            cmd.CommandText += $"\nUpdate NhanVien Set HoTenNv = N'{nv.HoTenNv}', NgSinh = {ngaySinhNv}, GioiTinh = N'{nv.GioiTinh}', DiaChi = N'{nv.DiaChi}', Sdt = '{nv.Sdt}', Email = N'{nv.Email}', ChucVu = N'{nv.ChucVu}', ngVL = {ngayVaoLam}, Luong = {luong} Where Manv = '{nv.MaNv}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -134,8 +120,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     using var trans = con.BeginTransaction();
                     try
                     {
-                        cmd = new(" ", con);
-                        cmd.Transaction = trans;
+                        cmd = new(" ", con, trans);
 
                         foreach (object obj in dg.SelectedItems)
                         {
@@ -182,6 +167,8 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                 if (sender is Button button)
                     button.IsEnabled = isQuanLy;
+
+                RefreshDataGrid();
             }
         }
 

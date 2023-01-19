@@ -19,7 +19,7 @@ namespace MotoStore.Views.Pages
     public partial class ReportPage : Page
     {
         private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
-        private MainDatabase mdb = new();
+        private readonly MainDatabase mdb = new();
         static public string tenXeBanChay;
         static public int SoLgXeBanChay;
         public ReportPage()

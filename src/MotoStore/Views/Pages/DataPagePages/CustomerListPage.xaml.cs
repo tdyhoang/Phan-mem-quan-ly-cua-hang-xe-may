@@ -15,20 +15,13 @@ namespace MotoStore.Views.Pages.DataPagePages
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class CustomerListPage : INavigableView<ViewModels.CustomerListViewModel>
+    public partial class CustomerListPage
     {
-        public ViewModels.CustomerListViewModel ViewModel
-        {
-            get;
-        }
-
         internal ObservableCollection<KhachHang> TableData;
 
-        public CustomerListPage(ViewModels.CustomerListViewModel viewModel)
+        public CustomerListPage()
         {
-            ViewModel = viewModel;
             InitializeComponent();
-
             RefreshDataGrid();
         }
 
@@ -57,8 +50,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
-                    cmd = new("set dateformat dmy", con);
-                    cmd.Transaction = trans;
+                    cmd = new("set dateformat dmy", con, trans);
 
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
@@ -75,17 +67,15 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Giới tính không được để trống!");
                         if (string.IsNullOrEmpty(kh.LoaiKh))
                             throw new("Loại khách hàng không được để trống!");
-                        string ngSinh = "null";
-                        if (kh.NgSinh.HasValue)
-                            ngSinh = $"'{kh.NgSinh.Value:dd/MM/yyyy}'";
+                        string ngSinh = kh.NgSinh.HasValue ? $"'{kh.NgSinh.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(kh.MaKh))
-                            cmd.CommandText += $"\nInsert into KhachHang values(N'{kh.HoTenKh}', {ngSinh}, N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', '{kh.Email}', N'{kh.LoaiKh}', 0)";
+                            cmd.CommandText += $"\nInsert into KhachHang values(N'{kh.HoTenKh}', {ngSinh}, N'{kh.GioiTinh}', N'{kh.DiaChi}', '{kh.Sdt}', N'{kh.Email}', N'{kh.LoaiKh}', 0)";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = {ngSinh}, GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = '{kh.Email}', LoaiKh = N'{kh.LoaiKh}', DaXoa = 0 Where MaKh = '{kh.MaKh}';";
+                            cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = N'{kh.HoTenKh}', NgSinh = {ngSinh}, GioiTinh = N'{kh.GioiTinh}', DiaChi = N'{kh.DiaChi}', Sdt = '{kh.Sdt}', Email = N'{kh.Email}', LoaiKh = N'{kh.LoaiKh}' Where MaKh = '{kh.MaKh}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -130,8 +120,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     using var trans = con.BeginTransaction();
                     try
                     {
-                        cmd = new(" ", con);
-                        cmd.Transaction = trans;
+                        cmd = new(" ", con, trans);
 
                         foreach (var obj in dg.SelectedItems)
                         {
@@ -178,6 +167,8 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                 if (sender is Button button)
                     button.IsEnabled = isQuanLy;
+
+                RefreshDataGrid();
             }
         }
 

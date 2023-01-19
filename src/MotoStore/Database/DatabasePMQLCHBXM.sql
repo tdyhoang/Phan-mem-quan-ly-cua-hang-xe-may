@@ -1,6 +1,6 @@
 ﻿/*Cơ sở dữ liệu cho Ứng dụng Quản Lý Cửa Hàng Bán Xe Máy*/
 CREATE DATABASE QLYCHBANXEMAY
-
+GO
 use QLYCHBANXEMAY
 set dateformat dmy
 
@@ -14,7 +14,7 @@ Create table KhachHang
 	GioiTinh NVARCHAR(3) not null,
 	DiaChi NVARCHAR(40),
 	SDT  VARCHAR(10),
-	Email VARCHAR(30),
+	Email NVARCHAR(30),
 	LoaiKH NVARCHAR(10) not null,
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaKH primary key(MAKH)
@@ -25,48 +25,48 @@ Create table KhachHang
 alter table KhachHang add constraint Check_GT check(GioiTinh='Nam' or GioiTinh=N'Nữ')
 alter table KhachHang add constraint Check_LoaiKH check(LoaiKH='Vip' or LoaiKH=N'Thường' or LoaiKH=N'Thân quen')
 
-Insert into KhachHang values(N'Nguyễn Văn A','11/9/1979','Nam',N'34/34B Nguyễn Trãi, Q1, TpHCM','0876890495','NguyenVanA79@gmail.com','Vip',0)
-Insert into KhachHang values(N'Nguyễn Văn B','9/11/1997','Nam',N'873 Lê Hồng Phong, Q5, TpHCM','0867850847','NguyenVanB97@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Trần Ngọc Hân','22/6/2000',N'Nữ',N'23/5 Nguyễn Trãi, Q5, TpHCM','0876890495','HanTran2k@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Nguyễn Văn Tâm','6/4/1971','Nam',N'50/34 Lê Đại Hành, Q10, TpHCM','0917325476','Tamnguyen71@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Phan Thị Thanh','31/12/1981',N'Nữ',N'34 Trương Định, Q3, TpHCM','0948531923','ThanhTP311281@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Đỗ Ngọc Khải','4/3/2001','Nam',N'215 Nguyễn Xiển, Q9, TpHCM','0876180684','DNKSBTC@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Nguyễn Văn A','11/9/1979','Nam',N'34/34B Nguyễn Trãi, Q1, TpHCM','0876890495',N'NguyenVanA79@gmail.com','Vip',0)
+Insert into KhachHang values(N'Nguyễn Văn B','9/11/1997','Nam',N'873 Lê Hồng Phong, Q5, TpHCM','0867850847',N'NguyenVanB97@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Trần Ngọc Hân','22/6/2000',N'Nữ',N'23/5 Nguyễn Trãi, Q5, TpHCM','0876890495',N'HanTran2k@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Nguyễn Văn Tâm','6/4/1971','Nam',N'50/34 Lê Đại Hành, Q10, TpHCM','0917325476',N'Tamnguyen71@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Phan Thị Thanh','31/12/1981',N'Nữ',N'34 Trương Định, Q3, TpHCM','0948531923',N'ThanhTP311281@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Đỗ Ngọc Khải','4/3/2001','Nam',N'215 Nguyễn Xiển, Q9, TpHCM','0876180684',N'DNKSBTC@gmail.com',N'Thường',0)
 
-Insert into KhachHang values(N'Trần B','22/9/1995',N'Nữ',N'Không Rõ','0987471210','tranB@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Võ Văn Đức','11/9/1989','Nam',N'TaynguyenSound','0987477640','VoVanDucTNS@gmail.com','Vip',0)
-Insert into KhachHang values(N'Trần A','11/10/1988','Nam',N'Unknown','0987477123','TranA@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Đặng Thị M','10/1/1981',N'Nữ',N'90 Nguyễn Xiển, Q9, TpHCM','0876180699','GGEZ@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Huỳnh E','31/12/2002','Nam',N'Không Rõ','0987479810','ebenairui@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Trần B','22/9/1995',N'Nữ',N'Không Rõ','0987471210',N'tranB@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Võ Văn Đức','11/9/1989','Nam',N'TaynguyenSound','0987477640',N'VoVanDucTNS@gmail.com','Vip',0)
+Insert into KhachHang values(N'Trần A','11/10/1988','Nam',N'Unknown','0987477123',N'TranA@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Đặng Thị M','10/1/1981',N'Nữ',N'90 Nguyễn Xiển, Q9, TpHCM','0876180699',N'GGEZ@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Huỳnh E','31/12/2002','Nam',N'Không Rõ','0987479810',N'ebenairui@gmail.com',N'Thường',0)
 
-Insert into KhachHang values(N'Tofu','11/9/1994',N'Nam',N'TaynguyenSound','0987477620','TofuTNS@gmail.com',N'Vip',0)
-Insert into KhachHang values(N'Chọn Cách','5/7/2003','Nam',N'Tây Nguyên Sầu Lắng','0987477511','Missu@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Nguyễn Văn B','3/4/1999','Nam',N'200 Nguyễn Văn Tăng, Q9, TpHCM','0876180685','123@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Về Chân Trời Xa','11/5/1989','Nam',N'TaynguyenSound','0925477610','115@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Huỳnh A','10/3/2004','Nam',N'Không Rõ','0987486610','12345@gmail.com',N'Vip',0)
+Insert into KhachHang values(N'Tofu','11/9/1994',N'Nam',N'TaynguyenSound','0987477620',N'TofuTNS@gmail.com',N'Vip',0)
+Insert into KhachHang values(N'Chọn Cách','5/7/2003','Nam',N'Tây Nguyên Sầu Lắng','0987477511',N'Missu@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Nguyễn Văn B','3/4/1999','Nam',N'200 Nguyễn Văn Tăng, Q9, TpHCM','0876180685',N'123@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Về Chân Trời Xa','11/5/1989','Nam',N'TaynguyenSound','0925477610',N'115@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Huỳnh A','10/3/2004','Nam',N'Không Rõ','0987486610',N'12345@gmail.com',N'Vip',0)
 
-Insert into KhachHang values(N'Nguyễn Văn D','4/3/2001',N'Nam',N'215 Nguyễn Xiển, Q9, TpHCM','0876180687','789@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Trần C','7/9/1999',N'Nữ',N'Không Rõ','0980171210','tranC@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Nỗi Niềm','11/12/2000',N'Nữ',N'TaynguyenSound','0987477610','buonvl@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Lê C','24/12/2003','Nam',N'Tháng 12 Lạnh Quá','0987967610','Th12LanhQua@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Lê Trần D','11/5/2003',N'Nữ',N'Không Rõ','0876180698','01i@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Nguyễn Văn D','4/3/2001',N'Nam',N'215 Nguyễn Xiển, Q9, TpHCM','0876180687',N'789@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Trần C','7/9/1999',N'Nữ',N'Không Rõ','0980171210',N'tranC@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Nỗi Niềm','11/12/2000',N'Nữ',N'TaynguyenSound','0987477610',N'buonvl@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Lê C','24/12/2003','Nam',N'Tháng 12 Lạnh Quá','0987967610',N'Th12LanhQua@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Lê Trần D','11/5/2003',N'Nữ',N'Không Rõ','0876180698',N'01i@gmail.com',N'Thường',0)
 
-Insert into KhachHang values(N'Mây Lang Thang','15/5/2000',N'Nam',N'Góc Nhỏ Riêng Tư','0987471210','MLTTNS@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Qua Những Tiếng Ve','11/5/2000','Nam',N'TaynguyenSound','0987474610','QNTVTNS@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Tùng Tea','11/9/1989','Nam',N'TaynguyenSound','0987477610','TeaTNS@gmail.com',N'Vip',0)
-Insert into KhachHang values(N'Lê D','20/1/1999','Nam',N'TSM','0147477610','TSM@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Nguyễn Văn C','12/3/2001','Nam',N'201 Nguyễn Xiển, Q9, TpHCM','0876180686','456@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Mây Lang Thang','15/5/2000',N'Nam',N'Góc Nhỏ Riêng Tư','0987471210',N'MLTTNS@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Qua Những Tiếng Ve','11/5/2000','Nam',N'TaynguyenSound','0987474610',N'QNTVTNS@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Tùng Tea','11/9/1989','Nam',N'TaynguyenSound','0987477610',N'TeaTNS@gmail.com',N'Vip',0)
+Insert into KhachHang values(N'Lê D','20/1/1999','Nam',N'TSM','0147477610',N'TSM@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Nguyễn Văn C','12/3/2001','Nam',N'201 Nguyễn Xiển, Q9, TpHCM','0876180686',N'456@gmail.com',N'Thường',0)
 
-Insert into KhachHang values(N'Lê A','23/4/1995',N'Nữ',N'TP Ban Mê','0987511610','TpBMT@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Lê F','12/1/1998','Nam',N'Tây Nguyên Chiều Lộng Gió','0987477310','LeF@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Huỳnh C','11-5-2004',N'Nam',N'Cả Một Trời Cao Nguyên','0987478010','113@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Huỳnh B','25/8/1989',N'Nữ',N'Lãng Duuu','0123477610','LangDuTNS@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Ngô Tất Tố','10/10/1995','Nam',N'400 Nguyễn Xiển, Q9, TpHCM','0876180100','DRX123@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Lê A','23/4/1995',N'Nữ',N'TP Ban Mê','0987511610',N'TpBMT@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Lê F','12/1/1998','Nam',N'Tây Nguyên Chiều Lộng Gió','0987477310',N'LeF@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Huỳnh C','11-5-2004',N'Nam',N'Cả Một Trời Cao Nguyên','0987478010',N'113@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Huỳnh B','25/8/1989',N'Nữ',N'Lãng Duuu','0123477610',N'LangDuTNS@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Ngô Tất Tố','10/10/1995','Nam',N'400 Nguyễn Xiển, Q9, TpHCM','0876180100',N'DRX123@gmail.com',N'Thân quen',0)
 
-Insert into KhachHang values(N'Lê E','2/10/1993',N'Nữ',N'Thiên An Môn','0987513010','TAM@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Huỳnh D','12/1/1998',N'Nữ',N'Phố Núi','0923477610','younggirl@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Lê B','25/2/2001',N'Nam',N'Ghé Qua','0765477610','GheQua@gmail.com',N'Thân quen',0)
-Insert into KhachHang values(N'Không Trông Thấy Rõ','11/9/2001',N'Nữ',N'Mỹ Tho, Tiền Giang','0987487610','0coemail@gmail.com',N'Thường',0)
-Insert into KhachHang values(N'Cường','11/9/1997','Nam',N'TaynguyenSound','0987477630','PeaCeeTNS@gmail.com',N'Vip',0)
+Insert into KhachHang values(N'Lê E','2/10/1993',N'Nữ',N'Thiên An Môn','0987513010',N'TAM@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Huỳnh D','12/1/1998',N'Nữ',N'Phố Núi','0923477610',N'younggirl@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Lê B','25/2/2001',N'Nam',N'Ghé Qua','0765477610',N'GheQua@gmail.com',N'Thân quen',0)
+Insert into KhachHang values(N'Không Trông Thấy Rõ','11/9/2001',N'Nữ',N'Mỹ Tho, Tiền Giang','0987487610',N'0coemail@gmail.com',N'Thường',0)
+Insert into KhachHang values(N'Cường','11/9/1997','Nam',N'TaynguyenSound','0987477630',N'PeaCeeTNS@gmail.com',N'Vip',0)
 
 Create table NhanVien
 (
@@ -77,7 +77,7 @@ Create table NhanVien
 	GioiTinh NVarChar(3) not null,
 	DiaChi   NVarchar(40),
 	SDT VARCHAR(10),
-	Email  Varchar(30),
+	Email  NVarchar(30),
 	ChucVu Nvarchar(10),
 	NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	Luong money,
@@ -86,50 +86,50 @@ Create table NhanVien
 )
 alter table NhanVien add constraint CK_GTNV check(GioiTinh = 'Nam' or GioiTinh=N'Nữ')
 
-Insert into NhanVien values(N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,0)
-Insert into NhanVien values(N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345','TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,0)
-Insert into NhanVien values(N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343','QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,0)
-Insert into NhanVien values(N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313','ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,0)
-Insert into NhanVien values(N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975','SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,0)
-Insert into NhanVien values(N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812','phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,0) /*Người Quản Lý*/
-Insert into NhanVien values(N'Hồ Thanh Hằng','19/8/2000',N'Nữ',N'Cao Ốc A Ngô Gia Tự, Q10, TpHCM','0947910521','HangTH2k@gmail.com',N'Văn Phòng','10/7/2019',5000000,0)
+Insert into NhanVien values(N'Trần Đại Nghĩa','1/12/1989','Nam',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313',N'NghiaTDai1289@gmail.com',N'Sửa Xe','3/2/2018',7000000,0)
+Insert into NhanVien values(N'Ngô Thanh Tuấn','12/6/1980','Nam',N'45 Nguyễn Cảnh Chân, Q1, TpHCM','0914102345',N'TuanNgoTh@gmail.com',N'Sửa Xe','10/2/2018',8500000,0)
+Insert into NhanVien values(N'Cao Thái Quý','12/1/1995','Nam',N'32/3 Trần Bình Trọng, Q5, TpHCM','0913476343',N'QuyCao95@gmail.com',N'Sửa Xe','11-5-2021',5000000,0)
+Insert into NhanVien values(N'Lê Hoài Thương','27/7/1998',N'Nữ',N'65/19 Cao Bá Quát, Q8, TpHCM','0911228313',N'ThuongLe98Hoai@gmail.com',N'Văn Phòng','26/3/2021',5500000,0)
+Insert into NhanVien values(N'Nguyễn Bá Sang','11/8/1996','Nam',N'23 Hoàng Diệu, Q7, TpHCM','0856910975',N'SangNBa11896@gmail.com',N'Văn Phòng','3/2/2018',6000000,0)
+Insert into NhanVien values(N'Phan Tấn Trung','26/2/1989','Nam',N'125/2 Hòa Hưng, Phuờng 12, Q10, TpHCM','0876701812',N'phantantrung3rb@gmail.com',N'Quản Lý','3/2/2018',12000000,0) /*Người Quản Lý*/
+Insert into NhanVien values(N'Hồ Thanh Hằng','19/8/2000',N'Nữ',N'Cao Ốc A Ngô Gia Tự, Q10, TpHCM','0947910521',N'HangTH2k@gmail.com',N'Văn Phòng','10/7/2019',5000000,0)
 
 create table NhaCungCap
 (
 	ID int identity(1,1),
 	MaNCC as 'CC' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	TenNCC varchar(15) not null,
+	TenNCC Nvarchar(15) not null,
 	SDT  varchar(15),
-	Email varchar(45),
+	Email Nvarchar(45),
 	DiaChi NVarchar(40),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_NNCC primary key(MaNCC)
 )
 
-Insert into NhaCungCap values('Yamaha','(30.24)38855080','YamahaMotorJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values('Yamaha','(84.24)38855080','YamahaMotorVietNamCNVP@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values('Suzuki','(84.89)47435209','SuzukiMotorVietNam@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values('Honda','(84.2)18943170','HondaMotorThaiLand@gmail.com',N'Thái Lan',0)
-Insert into NhaCungCap values('Honda','(30.2)18943170','HondaMotorJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values('Kawasaki','(0117)175','KawasakiJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values('Kawasaki','(084)175','KawasakiJapan@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values('Piaggio','(010)15432170','PiaggioItaly@gmail.com',N'Ý',0)
-Insert into NhaCungCap values('Sym','(123)170','SymTaiWan@gmail.com',N'Đài Loan',0)
-Insert into NhaCungCap values('Vinfast','(0631)17433170','VinfastVietNam@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values('Sym','(084)170','SymVietNam@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Yamaha','(30.24)38855080',N'YamahaMotorJapan@gmail.com',N'Nhật Bản',0)
+Insert into NhaCungCap values(N'Yamaha','(84.24)38855080',N'YamahaMotorVietNamCNVP@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Suzuki','(84.89)47435209',N'SuzukiMotorVietNam@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Honda','(84.2)18943170',N'HondaMotorThaiLand@gmail.com',N'Thái Lan',0)
+Insert into NhaCungCap values(N'Honda','(30.2)18943170',N'HondaMotorJapan@gmail.com',N'Nhật Bản',0)
+Insert into NhaCungCap values(N'Kawasaki','(0117)175',N'KawasakiJapan@gmail.com',N'Nhật Bản',0)
+Insert into NhaCungCap values(N'Kawasaki','(084)175',N'KawasakiJapan@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Piaggio','(010)15432170',N'PiaggioItaly@gmail.com',N'Ý',0)
+Insert into NhaCungCap values(N'Sym','(123)170',N'SymTaiWan@gmail.com',N'Đài Loan',0)
+Insert into NhaCungCap values(N'Vinfast','(0631)17433170',N'VinfastVietNam@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Sym','(084)170',N'SymVietNam@gmail.com',N'Việt Nam',0)
 
 create table MatHang
 (
 	ID int identity(1,1),
 	MaMH as 'MH' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	TenMH varchar(30) not null,
+	TenMH Nvarchar(30) not null,
 	SoPhanKhoi int not null,
 	Mau Nvarchar(15),
 	GiaNhapMH money,
 	GiaBanMH money,
 	SoLuongTonKho int not null,
 	MaNCC varchar(5) not null,
-	HangSX /*TenNSX*/ varchar(15),
+	HangSX /*TenNSX*/ Nvarchar(15),
 	XuatXu /*NuocSX*/ Nvarchar(15),
 	MoTa Nvarchar(75),
 	DaXoa bit DEFAULT 0 not null,
@@ -137,27 +137,23 @@ create table MatHang
 )
 alter table MatHang add constraint FK_MH foreign key(MaNCC) references NhaCungCap(MaNCC)
 
-Insert into MatHang values('Sirius', 50, N'đen xám',10000000,13500000,15,'CC010','Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
-Insert into MatHang values('Sirius', 110, N'đỏ đen',21500000,26500000,13,'CC010','Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values('Honda Air Blade',150, N'vàng đen',33500000,40500000,7,'CC001','Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
-Insert into MatHang values('Exciter', 150, N'xanh biển', 38500000,45000000,5,'CC011','Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values('Raider F150', 150, N'đỏ đen', 21500000,27500000,10,'CC006','Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Sirius', 50, N'đen xám',10000000,13500000,15,'CC010',N'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Sirius', 110, N'đỏ đen',21500000,26500000,13,'CC010',N'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Honda Air Blade',150, N'vàng đen',33500000,40500000,7,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
+Insert into MatHang values(N'Exciter', 150, N'xanh biển', 38500000,45000000,5,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Raider F150', 150, N'đỏ đen', 21500000,27500000,10,'CC006',N'Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
 
-Insert into MatHang values('Vision', 150, N'đỏ đen',22500000,29500000,10,'CC001','Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values('Lead', 110, N'trắng khói',24500000,31500000,10,'CC001','Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values('Kawasaki Z1000',1043, N'xanh đen',410000000,435500000,10,'CC003','Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values('Kawasaki Ninja ZX-10R', 150, N'xanh lục đen', 699000000,729000000,5,'CC003','Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values('Attila 50', 110, N'đỏ', 20500000,25700000,10,'CC007','Sym',N'Đài Loan',N'Còn mới',0)
+Insert into MatHang values(N'Vision', 150, N'đỏ đen',22500000,29500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Lead', 110, N'trắng khói',24500000,31500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Kawasaki Z1000',1043, N'xanh đen',410000000,435500000,10,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Kawasaki Ninja ZX-10R', 150, N'xanh lục đen', 699000000,729000000,5,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Attila 50', 110, N'đỏ', 20500000,25700000,10,'CC007',N'Sym',N'Đài Loan',N'Còn mới',0)
 
-Insert into MatHang values('Vespa Print 2020', 110, N'đỏ đen',23500000,30500000,10,'CC005','Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
-Insert into MatHang values('SH 150', 150, N'xanh lam',115000000,129250000,9,'CC001','Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
-Insert into MatHang values('Wave Alpha',110, N'trắng',20500000,24500000,15,'CC001','Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
-Insert into MatHang values('Sirius FI', 110, N'đen khói', 22500000,27500000,10,'CC011','Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
-Insert into MatHang values('EVO200', 100, N'vàng', 23500000,22500000,15,'CC009','Vinfast',N'Việt Nam',N'Còn mới',0)
-
-Update MatHang 
-Set SoPhanKhoi ='1040'
-where MaMH='MH009'
+Insert into MatHang values(N'Vespa Print 2020', 110, N'đỏ đen',23500000,30500000,10,'CC005',N'Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
+Insert into MatHang values(N'SH 150', 150, N'xanh lam',115000000,129250000,9,'CC001',N'Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
+Insert into MatHang values(N'Wave Alpha',110, N'trắng',20500000,24500000,15,'CC001',N'Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
+Insert into MatHang values(N'Sirius FI', 110, N'đen khói', 22500000,27500000,10,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'EVO200', 100, N'vàng', 23500000,22500000,15,'CC009',N'Vinfast',N'Việt Nam',N'Còn mới',0)
 
 Create table HoaDon
 (
@@ -238,26 +234,26 @@ alter table ThongTinBaoHanh add constraint FK_TTBH_MaMH foreign key(MaMH) refere
 alter table ThongTinBaoHanh add constraint FK_TTBH_MaKH foreign key(MaKH) references KhachHang(MaKH)
 alter table ThongTinBaoHanh add constraint FK_TTBH_MaNV foreign key(MaNV) references NhanVien(MaNV)
 
-Insert into ThongTinBaoHanh values('MH006','KH025','NV006','10/7/2021','Lỗi từ NSX, hư tay côn')
-Insert into ThongTinBaoHanh values('MH011','KH036','NV003','12/7/2021','Thay nhớt định kỳ')
+Insert into ThongTinBaoHanh values('MH006','KH025','NV006','10/7/2021',N'Lỗi từ NSX, hư tay côn')
+Insert into ThongTinBaoHanh values('MH011','KH036','NV003','12/7/2021',N'Thay nhớt định kỳ')
 
 
 /*Tài khoản mà Mật khẩu đăng nhập dành cho NV Quản Lý và NV Văn Phòng*/
 create table UserApp
 (
 	MaNV varchar(5),
-	UserName varchar(15) unique not null,
-	Password varchar(20) not null,
-	Email  Varchar(30) not null,   /*Email để khôi phục mật khẩu nếu cần*/
+	UserName Nvarchar(15) unique not null,
+	Password Nvarchar(20) not null,
+	Email NVarchar(30) not null,   /*Email để khôi phục mật khẩu nếu cần*/
 	constraint PK_UA_MaNV primary key(MaNV)
 )
 
 alter table UserApp add constraint FK_UA_MaNV foreign key(MaNV) references NhanVien(MaNV)
 
-Insert into UserApp values('NV006','Ngquanly1','123456ABCDEF','phantantrung3rb@gmail.com') /*NV Quản Lý*/ 
-Insert into UserApp values('NV004','Nhvien1','ABCDEF123456','ThuongLe98Hoai@gmail.com')  /*NV Văn Phòng*/
-Insert into UserApp values('NV005','Nhvien2', 'Englandvodich','SangNBa11896@gmail.com')   /*NV Văn Phòng*/
-Insert into UserApp values('NV007','Nhvien3', 'matkhaudenho','HangTH2k@gmail.com')   /*NV Văn Phòng*/
+Insert into UserApp values('NV006',N'Ngquanly1',N'123456ABCDEF',N'phantantrung3rb@gmail.com') /*NV Quản Lý*/ 
+Insert into UserApp values('NV004',N'Nhvien1',N'ABCDEF123456',N'ThuongLe98Hoai@gmail.com')  /*NV Văn Phòng*/
+Insert into UserApp values('NV005',N'Nhvien2', N'Englandvodich',N'SangNBa11896@gmail.com')   /*NV Văn Phòng*/
+Insert into UserApp values('NV007',N'Nhvien3', N'matkhaudenho',N'HangTH2k@gmail.com')   /*NV Văn Phòng*/
 
 create table DonDatHang
 (

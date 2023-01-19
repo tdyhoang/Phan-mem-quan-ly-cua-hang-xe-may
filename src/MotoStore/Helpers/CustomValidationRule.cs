@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace MotoStore.Helpers
@@ -32,13 +31,18 @@ namespace MotoStore.Helpers
                 ValidationRules.DiaChiValidation => DiaChiValidation(value),
                 ValidationRules.EmailValidation => EmailValidation(value),
                 ValidationRules.GioiTinhValidation => GioiTinhValidation(value),
+                ValidationRules.HangSxValidation => HangSxValidation(value),
                 ValidationRules.HoTenValidation => HoTenValidation(value),
                 ValidationRules.LoaiKhValidation => LoaiKhValidation(value),
                 ValidationRules.MaKhValidation => MaKhValidation(value),
                 ValidationRules.MaMhValidation => MaMhValidation(value),
                 ValidationRules.MaNccValidation => MaNccValidation(value),
                 ValidationRules.MaNvValidation => MaNvValidation(value),
+                ValidationRules.MauValidation => MauValidation(value),
+                ValidationRules.MoTaValidation => MoTaValidation(value),
                 ValidationRules.SDTValidation => SDTValidation(value),
+                ValidationRules.TenMhValidation => TenMhValidation(value),
+                ValidationRules.XuatXuValidation => XuatXuValidation(value),
                 _ => throw new("Unknown ValidationRule"),
             };
         }
@@ -89,6 +93,19 @@ namespace MotoStore.Helpers
             return new(false, "Giới tính phải là Nam hoặc Nữ (có dấu)!");
         }
 
+        private static ValidationResult HangSxValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+            {
+                if (value.ToString().Length > 15)
+                    return new(false, "Tên hãng sản xuất quá dài, tối đa 15 ký tự!");
+                if (!value.ToString().ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+                    return new(false, "Tên không được chứa số hoặc ký tự đặc biệt!");
+            }
+
+            return new(true, default);
+        }
+
         private static ValidationResult HoTenValidation(object value)
         {
             if (!string.IsNullOrEmpty(value.ToString()))
@@ -119,9 +136,8 @@ namespace MotoStore.Helpers
             if (!Regex.IsMatch(value.ToString(), @"^KH\d{3}$"))
                 return new(false, "Mã khách hàng phải theo cú pháp KH***, trong đó * là các chữ số");
             MainDatabase mdb = new();
-            foreach (var kh in mdb.KhachHangs)
-                if (!kh.DaXoa && value.ToString() == kh.MaKh)
-                    return new(true, default);
+            if (mdb.KhachHangs.Any(kh => kh.MaKh == value.ToString()))
+                return new(true, default);
 
             return new(false, "Mã khách hàng không tồn tại hoặc đã xóa");
         }
@@ -133,9 +149,8 @@ namespace MotoStore.Helpers
             if (!Regex.IsMatch(value.ToString(), @"^MH\d{3}$"))
                 return new(false, "Mã mặt hàng phải theo cú pháp MH***, trong đó * là các chữ số");
             MainDatabase mdb = new();
-            foreach (var mh in mdb.MatHangs)
-                if (!mh.DaXoa && value.ToString() == mh.MaMh)
-                    return new(true, default);
+            if (mdb.MatHangs.Any(mh => mh.MaMh == value.ToString()))
+                return new(true, default);
 
             return new(false, "Mã mặt hàng không tồn tại hoặc đã xóa");
         }
@@ -147,9 +162,8 @@ namespace MotoStore.Helpers
             if (!Regex.IsMatch(value.ToString(), @"^CC\d{3}$"))
                 return new(false, "Mã nhà cung cấp phải theo cú pháp CC***, trong đó * là các chữ số");
             MainDatabase mdb = new();
-            foreach (var mh in mdb.MatHangs)
-                if (!mh.DaXoa && value.ToString() == mh.MaMh)
-                    return new(true, default);
+            if (mdb.NhaCungCaps.Any(ncc => ncc.MaNcc == value.ToString()))
+                return new(true, default);
 
             return new(false, "Mã mặt hàng không tồn tại hoặc đã xóa");
         }
@@ -161,11 +175,28 @@ namespace MotoStore.Helpers
             if (!Regex.IsMatch(value.ToString(), @"^NV\d{3}$"))
                 return new(false, "Mã nhân viên phải theo cú pháp NV***, trong đó * là các chữ số");
             MainDatabase mdb = new();
-            foreach (var nv in mdb.NhanViens)
-                if (!nv.DaXoa && value.ToString() == nv.MaNv)
-                    return new(true, default);
+            if (mdb.NhanViens.Any(nv => nv.MaNv == value.ToString()))
+                return new(true, default);
 
             return new(false, "Mã nhân viên không tồn tại hoặc đã xóa");
+        }
+
+        private static ValidationResult MauValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+                if (value.ToString().Length > 15)
+                    return new(false, "Màu quá dài, tối đa 15 ký tự!");
+
+            return new(true, default);
+        }
+
+        private static ValidationResult MoTaValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+                if (value.ToString().Length > 75)
+                    return new(false, "Mô tả quá dài, tối đa 75 ký tự!");
+
+            return new(true, default);
         }
 
         private static ValidationResult SDTValidation(object value)
@@ -181,6 +212,28 @@ namespace MotoStore.Helpers
             return new(true, default);
         }
 
+        private static ValidationResult TenMhValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+                if (value.ToString().Length > 30)
+                    return new(false, "Tên quá dài, tối đa 30 ký tự!");
+
+            return new(true, default);
+        }
+
+        private static ValidationResult XuatXuValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+            {
+                if (value.ToString().Length > 15)
+                    return new(false, "Tên nước xuất xứ quá dài, tối đa 15 ký tự!");
+                if (!value.ToString().ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+                    return new(false, "Tên không được chứa số hoặc ký tự đặc biệt!");
+            }
+
+            return new(true, default);
+        }
+
         public enum ValidationRules
         {
             None,
@@ -189,13 +242,18 @@ namespace MotoStore.Helpers
             DiaChiValidation,
             EmailValidation,
             GioiTinhValidation,
+            HangSxValidation,
             HoTenValidation,
             LoaiKhValidation,
             MaKhValidation,
             MaMhValidation,
             MaNccValidation,
             MaNvValidation,
-            SDTValidation
+            MauValidation,
+            MoTaValidation,
+            SDTValidation,
+            TenMhValidation,
+            XuatXuValidation
         }
     }
 }

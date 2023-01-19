@@ -82,33 +82,33 @@
 
                 <ui:DataGrid.Columns>
                     <DataGridTextColumn Header="Mã HĐ" Binding="{Binding Path=MaHd, Mode=OneWay}" />
-                    <models:DataGridLetterOrDigitColumn Header="Mã MH" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
-                        <models:DataGridLetterOrDigitColumn.Binding>
+                    <DataGridTextColumn Header="Mã MH" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
                             <Binding Path="MaMh">
                                 <Binding.ValidationRules>
                                     <helpers:CustomValidationRule ValidationMode="MaMhValidation" />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </models:DataGridLetterOrDigitColumn.Binding>
-                    </models:DataGridLetterOrDigitColumn>
-                    <models:DataGridLetterOrDigitColumn Header="Mã KH" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
-                        <models:DataGridLetterOrDigitColumn.Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mã KH" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
                             <Binding Path="MaKh">
                                 <Binding.ValidationRules>
                                     <helpers:CustomValidationRule ValidationMode="MaKhValidation" />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </models:DataGridLetterOrDigitColumn.Binding>
-                    </models:DataGridLetterOrDigitColumn>
-                    <models:DataGridLetterOrDigitColumn Header="Mã NV" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" EditingElementStyle="{StaticResource errorToolTip}">
-                        <models:DataGridLetterOrDigitColumn.Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mã NV" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
                             <Binding Path="MaNv">
                                 <Binding.ValidationRules>
                                     <helpers:CustomValidationRule ValidationMode="MaNvValidation" />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </models:DataGridLetterOrDigitColumn.Binding>
-                    </models:DataGridLetterOrDigitColumn>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <models:DataGridDateColumn Header="Ngày lập HĐ" dgx:DataGridFilterColumn.Template="{StaticResource DateFilter}" EditingElementStyle="{StaticResource errorToolTip}">
                         <models:DataGridDateColumn.Binding>
                             <Binding Path="NgayLapHd" Converter="{StaticResource DateTimeConverter}">
@@ -118,8 +118,24 @@
                             </Binding>
                         </models:DataGridDateColumn.Binding>
                     </models:DataGridDateColumn>
-                    <models:DataGridIntegerColumn Header="Số lượng" Binding="{Binding Path=SoLuong}" dgx:DataGridFilterColumn.Template="{StaticResource IntegerFilter}" />
-                    <models:DataGridDecimalColumn Header="Thành tiền" Binding="{Binding Path=ThanhTien}" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" />
+                    <models:DataGridIntegerColumn Header="Số lượng" dgx:DataGridFilterColumn.Template="{StaticResource IntegerFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridIntegerColumn.Binding>
+                            <Binding Path="SoLuong">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="None" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridIntegerColumn.Binding>
+                    </models:DataGridIntegerColumn>
+                    <models:DataGridDecimalColumn Header="Thành tiền" dgx:DataGridFilterColumn.Template="{StaticResource DecimalFilter}" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridDecimalColumn.Binding>
+                            <Binding Path="ThanhTien">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="None" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridDecimalColumn.Binding>
+                    </models:DataGridDecimalColumn>
                 </ui:DataGrid.Columns>
             </ui:DataGrid>
         </ui:DynamicScrollViewer>
