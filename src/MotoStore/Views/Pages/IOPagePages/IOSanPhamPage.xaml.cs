@@ -64,11 +64,11 @@ namespace MotoStore.Views.Pages.IOPagePages
                 return true; //Text rỗng hoặc chứa khoảng trắng thì hiện toàn bộ item(Sản Phẩm)
             if(item is Tuple< MatHang,string> mh)
             {
-                if (mh.Item1.MaMh.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (mh.Item1.MaMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (mh.Item1.TenMh.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (mh.Item1.TenMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (mh.Item1.Mau.IndexOf(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (mh.Item1.Mau.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
