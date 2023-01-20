@@ -48,9 +48,6 @@
                                             <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
                                         </Trigger>
 
-
-
-
                                         <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
                                             <Setter TargetName="gd"  Property="Background" Value="Blue"></Setter>
                                             <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
@@ -141,7 +138,7 @@
             <TextBox.Text>
                 <Binding Path="DateHD" ElementName="HDPage" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" >
                     <Binding.ValidationRules>
-                        <helpers:CustomValidationRule ValidationMode="DateValidation" />
+                        <helpers:CustomValidationRule ValidationMode="DateValidation"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

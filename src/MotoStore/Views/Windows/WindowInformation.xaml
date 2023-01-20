@@ -75,7 +75,11 @@
                         BorderThickness="3"
                         CornerRadius="30">
                     <!-- left-top and bottom-right round corners. -->
+                    <!--<Border.Background>
+                        <ImageBrush x:Name="anhSP" Stretch="Fill"></ImageBrush>
+                    </Border.Background>-->
                     <Image x:Name="anhSP"
+                           Source="{Binding mathang.Item2}"
                            Stretch="Uniform">
                     </Image>
                 </Border>
@@ -127,7 +131,8 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
-                <Label Height="35"
+                <Label x:Name="lblSoPhanKhoi"
+                       Height="35"
                        Width="100"
                        Content="Số Phân Khối: "
                        Foreground="white"
@@ -146,8 +151,9 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
-                <Label Height="35"
-                       Width="60"
+                <Label x:Name="lblGia"
+                       Height="35"
+                       Width="115"
                        Content="Giá Bán: "
                        Foreground="white"
                        FontSize="15"
@@ -172,8 +178,9 @@
                     </i:Interaction.Behaviors>
                 </TextBox>
 
-                <Label Height="35"
-                       Width="65"
+                <Label x:Name="lblMau"
+                       Height="35"
+                       Width="115"
                        Content="Màu Sắc: "
                        Foreground="white"
                        FontSize="15"
@@ -183,12 +190,12 @@
                        HorizontalAlignment="Left"></Label>
                 <TextBox x:Name="txtMau"
                          Height="35"
-                         Width="100"
+                         Width="130"
                          FontWeight="Medium"
                          FontSize="15"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Center"
-                         Margin="0,147,250,0"
+                         Margin="0,147,120,0"
                          Background="#0fff"
                          Foreground="White"
                          GotFocus="txtMau_GotFocus"
@@ -198,8 +205,9 @@
                     </i:Interaction.Behaviors>
                 </TextBox>
     
-                <Label Height="35"
-                       Width="55"
+                <Label x:Name="lblDB"
+                       Height="35"
+                       Width="75"
                        Content="Đã Bán: "
                        Foreground="white"
                        FontSize="15"
@@ -217,8 +225,9 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
-                <Label Height="35"
-                       Width="65"
+                <Label x:Name="lblTonKho"
+                       Height="35"
+                       Width="80"
                        Content="Tồn Kho: "
                        Foreground="white"
                        FontSize="15"
@@ -228,10 +237,10 @@
                        HorizontalAlignment="Left"></Label>
                 <TextBox x:Name="txtTonKho"
                          Height="35"
-                         Width="90"
+                         Width="130"
                          FontWeight="Medium"
                          FontSize="15"
-                         Margin="0,215,270,0"
+                         Margin="0,215,150,0"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Center"
                          Background="#0fff"
@@ -243,8 +252,9 @@
                     </i:Interaction.Behaviors>
                 </TextBox>
 
-                <Label Height="35"
-                       Width="115"
+                <Label x:Name="lblHangSanXuat"
+                       Height="35"
+                       Width="145"
                        Content="Hãng Sản Xuất:"
                        Foreground="white"
                        FontSize="15"
@@ -258,12 +268,13 @@
                        Foreground="white"
                        FontSize="15"
                        FontWeight="Medium"
-                       Margin="135,260,0,0"
+                       Margin="175,260,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
 
-                <Label Height="35"
-                       Width="100"
+                <Label x:Name="lblXX"
+                       Height="35"
+                       Width="110"
                        Content="Xuất Xứ: "
                        Foreground="white"
                        FontSize="15"
@@ -272,12 +283,12 @@
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
                 <Label Height="35"
-                       Width="100"
+                       Width="130"
                        x:Name="lblXuatXu"
                        Foreground="white"
                        FontSize="15"
                        FontWeight="Medium"
-                       Margin="100,295,0,0"
+                       Margin="130,295,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
                 <Button x:Name="btnLuu"
@@ -290,15 +301,36 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Center">
                 </Button>
+                <Button x:Name="btnNext"
+                        Height="25"
+                        Width="50"
+                        VerticalAlignment="Bottom"
+                        Margin="200,0,0,0"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Content=">"
+                        Click="btnNext_Click">
+                </Button>
+                <Button x:Name="btnBack"
+                        Height="25"
+                        Width="50"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,200,0"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Content="&lt;"
+                        Click="btnBack_Click">
+                </Button>
             </Grid>
         </Border>
 
-        <Label Content="Thông Tin"
+        <Label x:Name="lblThongTin"
+               Content="Thông Tin"
                Foreground="Snow"
                FontWeight="Bold"
-               FontSize="25"
+               FontSize="20"
                VerticalAlignment="Top"
-               HorizontalAlignment="Center" Margin="0,15,0,0"></Label>
+               HorizontalAlignment="Center" Margin="0,20,0,0"></Label>
 
         <Button x:Name="btnMinimize"
                 Height="25"

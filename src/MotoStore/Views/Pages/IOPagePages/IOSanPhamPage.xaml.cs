@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ namespace MotoStore.Views.Pages.IOPagePages
     public partial class IOSanPhamPage : Page
     {
         internal ObservableCollection<Tuple<MatHang, string>> matHangs;
+        static string luachon = "0";
         public IOSanPhamPage()
         {
             InitializeComponent();
@@ -33,7 +35,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (xe.DaXoa)
                     continue;
                 matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
-            }
+            }            
             ListViewProduct.ItemsSource = matHangs;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
             //biến view kiểu CollectionView dùng để gom nhóm, tìm kiếm, filter, điều hướng dữ liệu, gán nó bằng ItemsSource ở trên
@@ -76,40 +78,12 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource).Refresh();
         }
-        static string luachon;
-        private void subItemTuChon_Click(object sender, RoutedEventArgs e)
-        {
-            lblTu.Visibility = Visibility.Visible;
-            txtTu.Visibility = Visibility.Visible;
-            txtDen.Visibility = Visibility.Visible;
-            lblDen.Visibility = Visibility.Visible;
-            btnTim.Visibility = Visibility.Visible;
-            if (subItemTuChon.IsChecked)
-            {
-                luachon = "PK";
-                subItemTuChon.IsChecked = false;
-            }
-            else if (subItemTuChonGia.IsChecked)
-            {
-                luachon = "Gia";
-                subItemTuChonGia.IsChecked = false;
-            }
-        }
 
         private void subItemQuayLai_Click(object sender, RoutedEventArgs e)
         {
-            lblTu.Visibility = Visibility.Collapsed;
-            txtTu.Visibility = Visibility.Collapsed;
-            txtDen.Visibility = Visibility.Collapsed;
-            lblDen.Visibility = Visibility.Collapsed;
-            btnTim.Visibility = Visibility.Collapsed;
-            ObservableCollection<Tuple<MatHang, string>> ListItems = new();
-            foreach (var xe in matHangs.ToList())
-                    ListItems.Add(new(xe.Item1, xe.Item2));
-            ListViewProduct.ItemsSource = ListItems;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            view.Filter = Filter;
-            //3 dòng trên dùng để filter sản phẩm
+            Refresh();
+            subItemLocTheo.Header = "Lọc Theo:";
+            luachon = "0";
         }
 
         private void txtTu_LostFocus(object sender, RoutedEventArgs e)
@@ -128,7 +102,9 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             ObservableCollection<Tuple<MatHang, string>> ListItems = new();
             if (string.IsNullOrWhiteSpace(txtTu.Text) || string.IsNullOrWhiteSpace(txtDen.Text))
-                MessageBox.Show("Vui lòng điền đầy đủ khoảng trống", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Vui lòng điền đầy đủ khoảng trống", "Nhắc Nhở", MessageBoxButton.OK, MessageBoxImage.Information);
+            else if (long.Parse(txtTu.Text) >= long.Parse(txtDen.Text))
+                MessageBox.Show("Giá trị trong ô Từ không được phép lớn hơn hoặc bằng giá trị trong ô Đến");
             else
             {
                 switch (luachon)
@@ -139,20 +115,25 @@ namespace MotoStore.Views.Pages.IOPagePages
                             if (xe.Item1.SoPhanKhoi >= int.Parse(txtTu.Text) && xe.Item1.SoPhanKhoi <= int.Parse(txtDen.Text))
                                 ListItems.Add(new(xe.Item1, xe.Item2));
                         }
+                        ListViewProduct.ItemsSource = ListItems;
+                        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
+                        view.Filter = Filter;
                         break;
                     case "Gia":
-
                         foreach (var xe in matHangs.ToList())
                         {
                             if (xe.Item1.GiaBanMh.Value >= int.Parse(txtTu.Text) && xe.Item1.GiaBanMh.Value <= int.Parse(txtDen.Text))
                                 ListItems.Add(new(xe.Item1, xe.Item2));
                         }
+                        ListViewProduct.ItemsSource = ListItems;
+                        CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
+                        view1.Filter = Filter;
+                        break;
+                    case "0":
+                        MessageBox.Show("Vui Lòng Chọn Điều Kiện Lọc!");
                         break;
                 }
             }
-            ListViewProduct.ItemsSource = ListItems;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            view.Filter = Filter;
         }
 
         private void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -192,6 +173,38 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
+        }
+
+        private void subItemGia_Click(object sender, RoutedEventArgs e)
+        {
+            luachon = "Gia";
+            subItemGia.IsChecked = false;
+            subItemLocTheo.Header = "Giá";
+        }
+
+        private void subItemPK_Click(object sender, RoutedEventArgs e)
+        {
+            luachon = "PK";
+            subItemPK.IsChecked = false;
+            subItemLocTheo.Header = "Phân Khối";
+        }
+
+        private void txtTu_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           /* if(luachon=="Gia")
+            {
+                if (!string.IsNullOrWhiteSpace(txtTu.Text))
+                    txtTu.Text = string.Format("{0:#.00}", Convert.ToDecimal(txtTu.Text) / 100);
+            } */
+        }
+
+        private void txtDen_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           /* if (luachon == "Gia")
+            {
+                if (!string.IsNullOrWhiteSpace(txtDen.Text))
+                    txtDen.Text = string.Format("{0:#.00}", Convert.ToDecimal(txtDen.Text) / 100);
+            } */
         }
     }
 }

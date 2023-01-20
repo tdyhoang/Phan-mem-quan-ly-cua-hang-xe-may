@@ -5,6 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MotoStore.Views.Pages"
       xmlns:livechart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:helpers="clr-namespace:MotoStore.Helpers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageBieuDo">
@@ -64,7 +66,8 @@
                                   Series="{Binding SrC}"
                                   FontSize="15"
                                   FontWeight="Medium"
-                                  LegendLocation="Bottom">
+                                  LegendLocation="Bottom"
+                                  DataClick="dothi_DataClick">
 
                 <livechart:CartesianChart.AxisX>
                     <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="9.25" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
@@ -111,17 +114,20 @@
                               FontSize="15"
                               FontWeight="Medium">
                     <MenuItem x:Name="subitemNamTrc"
-                              Header="Năm Trước"
+                              Header="2 Năm Bất Kỳ"
                               Foreground="black"
                               FontSize="15"
                               FontWeight="Medium"
-                              Click="subitemNamTrc_Click"></MenuItem>
+                              Click="subitemNamTrc_Click"
+                              IsCheckable="True">
+                    </MenuItem>
                     <MenuItem x:Name="subitem2NamTrc"
-                              Header="2 Năm Trước"
+                              Header="3 Năm Bất Kỳ"
                               Foreground="black"
                               FontSize="15"
                               FontWeight="Medium"
-                              Click="subitem2NamTrc_Click"></MenuItem>
+                              Click="subitem2NamTrc_Click"
+                              IsCheckable="True"></MenuItem>
                 </MenuItem>
 
                 <MenuItem     x:Name="subitemChonNgayXem"
@@ -138,7 +144,8 @@
               Width="490"
               VerticalAlignment="Top"
               HorizontalAlignment="Left"
-              Margin="0,50,0,0">
+              Margin="0,50,0,0"
+              Visibility="Collapsed">
             <Label Content="Từ Ngày:"
                    Foreground="Black"
                    FontWeight="Medium"
@@ -182,7 +189,59 @@
                 HorizontalAlignment="Right"
                 Margin="0,0,0,0"></Button>
         </Grid>
-        
+
+        <Grid x:Name="gridchonNam"
+              Visibility="Collapsed">
+            <Label x:Name="lblNhapNam"
+               Height="30"
+               Width="220"
+               Content="Nhập 2 năm muốn so sánh:"
+               FontSize="15"
+               FontWeight="Medium"
+               Foreground="White"
+               VerticalAlignment="Top"
+               Margin="200,55,0,0"></Label>
+            <TextBox x:Name="namNhat"
+                 FontWeight="Medium"
+                 Width="60"
+                 VerticalAlignment="Top"
+                 Margin="430,50,0,0">
+                <i:Interaction.Behaviors>
+                    <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <TextBox x:Name="namHai"
+                 FontWeight="Medium"
+                 Width="60"
+                 VerticalAlignment="Top"
+                 Margin="580,50,0,0">
+                <i:Interaction.Behaviors>
+                    <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <TextBox x:Name="namBa"
+                 FontWeight="Medium"
+                 Width="60"
+                 VerticalAlignment="Top"
+                 Margin="730,50,0,0"
+                 Visibility="Collapsed">
+                <i:Interaction.Behaviors>
+                    <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False" />
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <Button x:Name="btnXemNam"
+                Height="25"
+                Width="50"
+                Content="Xem"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                FontSize="15"
+                FontWeight="Medium"
+                Margin="0,55,40,0"
+                Click="btnXemNam_Click">
+            </Button>
+        </Grid>
+
         <Button x:Name="btnTuChon"
                 Content="Tự Chọn"
                 FontSize="20"
@@ -267,5 +326,6 @@
                 </Button>
             </Grid>
         </Border>
+        
     </Grid>
 </Page>

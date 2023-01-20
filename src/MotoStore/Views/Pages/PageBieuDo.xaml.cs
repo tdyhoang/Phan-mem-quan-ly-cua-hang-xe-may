@@ -10,6 +10,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using Microsoft.Data.SqlClient;
 using MotoStore.Database;
+using MotoStore.Views.Windows;
 
 namespace MotoStore.Views.Pages
 {
@@ -20,6 +21,8 @@ namespace MotoStore.Views.Pages
     {
         private readonly MainDatabase mdb = new();
         private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private int luachon;
+        private static bool CanClick = true;
         public PageBieuDo()
         {
             InitializeComponent();
@@ -39,6 +42,7 @@ namespace MotoStore.Views.Pages
             for (DateTime date = DateTime.Parse(now).AddDays(-29.0); date < DateTime.Now; date = date.AddDays(1.0))
             {
                 SqlCommand cmd = new("Set dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
+                //Bình Thường trên SQL sẽ là NgayLapHD = '@Today' nhưng ở Linq này kh được chứa ''
                 cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
                 cmd.Parameters["@Today"].Value = date;
                 SqlDataReader sda = cmd.ExecuteReader();
@@ -49,16 +53,17 @@ namespace MotoStore.Views.Pages
                     else
                         ListDoanhThu.Add(0);
                 }
-                if (date == DateTime.Parse(now)) //Ngày đầu
-                    Labels.Add(date.ToString("d-M-yyyy"));
-                else if (date == DateTime.Parse(now).AddDays(-29.0))//date == DateTime.Parse(lastdate)) //Ngày cuối, có chút vấn đề ở đây
-                    Labels.Add(date.ToString("d-M-yyyy"));
-                else if (date.Day == 1)
-                    Labels.Add(date.ToString("d-M"));
-                else if (int.Parse(date.ToString("dd")) == DateTime.DaysInMonth(date.Year, date.Month))
-                    Labels.Add(date.ToString("d-M"));
-                else //Ngày thường
-                    Labels.Add(date.ToString("dd"));
+                /* if (date == DateTime.Parse(now)) //Ngày đầu
+                     Labels.Add(date.ToString("d-M-yyyy"));
+                 else if (date == DateTime.Parse(now).AddDays(-29.0))//date == DateTime.Parse(lastdate)) //Ngày cuối, có chút vấn đề ở đây
+                     Labels.Add(date.ToString("d-M-yyyy"));
+                 else if (date.Day == 1)
+                     Labels.Add(date.ToString("d-M-yyyy"));
+                 else if (int.Parse(date.ToString("d-M-yyyy")) == DateTime.DaysInMonth(date.Year, date.Month))
+                     Labels.Add(date.ToString("d-M-yyyy"));
+                 else //Ngày thường
+                     Labels.Add(date.ToString("d-M-yyyy")); */
+                Labels.Add(date.ToString("d-M-yyyy"));
             }
                     
             SrC.Add(new LineSeries
@@ -95,7 +100,7 @@ namespace MotoStore.Views.Pages
             gridChonNgay.Visibility = Visibility.Collapsed;
         }
 
-        private void subitemNamTrc_Click(object sender, RoutedEventArgs e)
+        private void subitemNamTrc_Click(object sender, RoutedEventArgs e) //ss 2 năm
         {
             /*Mỗi lần nhấn menu Năm Trước này, ta sẽ clear hết các trường
               dữ liệu cũ, clear luôn thanh chọn ngày xem(Nếu có)
@@ -103,203 +108,38 @@ namespace MotoStore.Views.Pages
              */
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
+            lblNhapNam.Content = "Nhập 2 năm muốn so sánh:";
             lblSeries.Content = "Tháng";
             lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
             borderHuongDan.Visibility = Visibility.Collapsed;
-
-            while (dothi.Series.Count > 0) 
-                dothi.Series.RemoveAt(0);  //Clear dữ liệu cũ
-            Labels.Clear();  //Clear Nhãn cũ
-
-            for (int i = 1; i <= 12; i++)
-                Labels.Add(i.ToString()); //Đổ 12 tháng vào Nhãn
-            dothi.AxisX[0].MinValue = 0;  //kết thúc Zoom hiện tại(nếu có), trả về Zoom vốn có
-            dothi.AxisX[0].MaxValue = 12; //.....
-
-            dothi.FontSize = 20;
-            TrucHoanhX.FontSize = 20;
-            dothi.Zoom = ZoomingOptions.None; //Không cho Zoom
-            dothi.Pan = PanningOptions.None;  //Không cho Pan(Lia đồ thị)
-            TrucHoanhX.Separator.Step = 1; //Set step Trục hoành = 1 để nhìn rõ 12 Tháng
-
-            decimal[] arrVal2022 = new decimal[12];
-            decimal[] arrVal2021 = new decimal[12];
-            string StartDate2022;
-            string EndDate2022;
-            string StartDate2021;
-            string EndDate2021;
-            /*Mảng doanh thu từng tháng của 2 năm 22 và 21,
-              cùng với đó là các tham số để truyền vào câu 
-              lệnh Query trên C#
-              */
-
-            con.Open(); //<Mở kết nối để đọc dữ liệu vào 2 mảng
-            for (int i = 1; i <= 12; i++)
-            {
-                StartDate2022 = "1/" + i + "/2022";
-                int thangsau2022 = i + 1;
-                if (i == 12)
-                    EndDate2022 = "1/1/2023";
-                else
-                    EndDate2022 = "1/" + thangsau2022 + "/2022";
-
-                SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
-                cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
-                cmd.Parameters["@StartDate2022"].Value = StartDate2022;
-                cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
-                cmd.Parameters["@EndDate2022"].Value = EndDate2022;
-
-                SqlDataReader sda = cmd.ExecuteReader();
-                if (sda.Read())
-                {
-                    if (sda[0] != DBNull.Value)
-                        arrVal2022[i - 1] = (decimal)sda[0];
-                    else
-                        arrVal2022[i - 1] = 0;
-                }
-
-                StartDate2021 = "1/" + i + "/2021";
-                int thangsau2021 = i + 1;
-                if (i == 12)
-                    EndDate2021 = "1/1/2022";
-                else
-                    EndDate2021 = "1/" + thangsau2021 + "/2021";
-                SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
-                cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
-                cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
-                cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
-                cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
-                SqlDataReader sda2 = cmd2.ExecuteReader();
-                if (sda2.Read())
-                {
-                    if (sda2[0] != DBNull.Value)
-                        arrVal2021[i - 1] = (decimal)sda2[0];
-                    else
-                        arrVal2021[i - 1] = 0;
-                }
-            }
-            con.Close();
-
-            //Hàng dưới thêm dữ liệu vào đồ thị
-            SrC.Add(new ColumnSeries
-            {
-                Title = "2021",
-                Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
-                Fill = Brushes.DeepSkyBlue
-            });
-            SrC.Add(new ColumnSeries
-            {
-                Title = "2022",
-                Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
-                Fill = Brushes.Red
-            });
-
-            Values = value => value.ToString("N");
+            gridchonNam.Visibility = Visibility.Visible;
+            namBa.Visibility = Visibility.Collapsed;
+            luachon = 1;
+            subitem2NamTrc.IsChecked = false;
+            CanClick = false;
         }
 
-        private void subitem2NamTrc_Click(object sender, RoutedEventArgs e)
+        private void subitem2NamTrc_Click(object sender, RoutedEventArgs e)  //ss 3 năm
         {
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
+            lblNhapNam.Content = "Nhập 3 năm muốn so sánh:";
             lblSeries.Content = "Tháng";
             lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
             borderHuongDan.Visibility = Visibility.Collapsed;
-
-            while (dothi.Series.Count > 0)
-                dothi.Series.RemoveAt(0);
-            Labels.Clear();
-            for (int i = 1; i <= 12; i++)
-                Labels.Add(i.ToString());
-            dothi.AxisX[0].MinValue = 0;
-            dothi.AxisX[0].MaxValue = 12;
-
-            dothi.FontSize = 20;
-            TrucHoanhX.FontSize = 20;
-            dothi.Zoom = ZoomingOptions.None;
-            dothi.Pan = PanningOptions.None;
-            TrucHoanhX.Separator.Step = 1;
-
-            decimal[] arrVal2022 = new decimal[12];
-            decimal[] arrVal2021 = new decimal[12];
-            string StartDate2022;
-            string EndDate2022;
-            string StartDate2021;
-            string EndDate2021;
-
-            con.Open();
-            for (int i = 1; i <= 12; i++)
-            {
-                StartDate2022 = "1/" + i + "/2022";
-                int thangsau2022 = i + 1;
-                if (i == 12)
-                    EndDate2022 = "1/1/2023";
-                else
-                    EndDate2022 = "1/" + thangsau2022 + "/2022";
-
-                SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
-                cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
-                cmd.Parameters["@StartDate2022"].Value = StartDate2022;
-                cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
-                cmd.Parameters["@EndDate2022"].Value = EndDate2022;
-
-                SqlDataReader sda = cmd.ExecuteReader();
-                if (sda.Read())
-                {
-                    if (sda[0] != DBNull.Value)
-                        arrVal2022[i - 1] = (decimal)sda[0];
-                    else
-                        arrVal2022[i - 1] = 0;
-                }
-
-                StartDate2021 = "1/" + i + "/2021";
-                int thangsau2021 = i + 1;
-                if (i == 12)
-                    EndDate2021 = "1/1/2022";
-                else
-                    EndDate2021 = "1/" + thangsau2021 + "/2021";
-                SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
-                cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
-                cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
-                cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
-                cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
-                SqlDataReader sda2 = cmd2.ExecuteReader();
-                if (sda2.Read())
-                {
-                    if (sda2[0] != DBNull.Value)
-                        arrVal2021[i - 1] = (decimal)sda2[0];
-                    else
-                        arrVal2021[i - 1] = 0;
-                }
-            }
-            con.Close();
-
-            SrC.Add(new ColumnSeries
-            {
-                Title = "2021",
-                Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
-                Fill = Brushes.DeepSkyBlue
-            });
-            SrC.Add(new ColumnSeries
-            {
-                Title = "2022",
-                Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
-                Fill = Brushes.Red
-            });
-
-            //Add dữ liệu 2020 ở phía dưới
-            /*SrC.Add(new ColumnSeries
-            {
-                Title = "2020",
-                Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
-                Fill = Brushes.Green
-            });*/
+            gridchonNam.Visibility = Visibility.Visible;
+            namBa.Visibility = Visibility.Visible;
+            luachon = 2;
+            subitemNamTrc.IsChecked = false;
+            CanClick = false;
         }
 
         private void subitemChonNgayXem_Click(object sender, RoutedEventArgs e)
         {
             gridChonNgay.Visibility = Visibility.Visible;
+            gridchonNam.Visibility = Visibility.Collapsed;
             //Hiện mục chọn ngày mỗi khi click vào menu Chọn Ngày Xem
         }
 
@@ -399,6 +239,7 @@ namespace MotoStore.Views.Pages
                 MessageBox.Show("Vui Lòng Nhập Đầy Đủ 2 Ngày");
             else //Thoả mãn hết các điều kiện => được phép xem 
             {
+                CanClick = true; //Cho phép bấm vào DataPoint
                 while (dothi.Series.Count > 0)
                     dothi.Series.RemoveAt(0);
                 Labels.Clear();
@@ -425,22 +266,23 @@ namespace MotoStore.Views.Pages
                         else
                             ChartVal.Add(0);
                     }
-                    if (date == DateTime.Parse(txtTuNgay.Text))
-                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày đầu của txtTuNgay(thêm NĂM sau đuôi)
+                    Labels.Add(date.ToString("d-M-yyyy"));
+                   /* if (date == DateTime.Parse(txtTuNgay.Text))
+                        Labels.Add(date.ToString("dd-M-yyyy")); //Ngày đầu của txtTuNgay(thêm NĂM sau đuôi)
                     else if (date.Day == 1)
                     {
                         if (date.Month != 1)
-                            Labels.Add(date.ToString("d-M")); //Ngày đầu tháng(Thêm tháng đằng sau)
+                            Labels.Add(date.ToString("dd-M")); //Ngày đầu tháng(Thêm tháng đằng sau)
                         else
-                            Labels.Add(date.ToString("d-M-yyyy")); //Ngày đầu tháng 1(Thêm năm đằng sau)
+                            Labels.Add(date.ToString("dd-M-yyyy")); //Ngày đầu tháng 1(Thêm năm đằng sau)
                     }
                     else if (int.Parse(date.ToString("dd")) == DateTime.DaysInMonth(date.Year, date.Month))
-                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày cuối Tháng (Thêm tháng đằng sau)
+                        Labels.Add(date.ToString("dd-M-yyyy")); //Ngày cuối Tháng (Thêm tháng đằng sau)
                     else if (date == DateTime.Parse(txtDenNgay.Text))
-                        Labels.Add(date.ToString("d-M-yyyy")); //Ngày cuối của txtDenNgay(thêm NĂM sau đuôi)
+                        Labels.Add(date.ToString("dd-M-yyyy")); //Ngày cuối của txtDenNgay(thêm NĂM sau đuôi)
                     else
-                        Labels.Add(date.Day.ToString()); //Ngày thường
-                    //Cần ngày đầu tháng
+                        Labels.Add(date.ToString("dd")); //Ngày thường
+                    //Cần ngày đầu tháng */
                 }
                 con.Close();
                 SrC.Add(new LineSeries
@@ -476,6 +318,226 @@ namespace MotoStore.Views.Pages
             }
         }
 
+        private void btnXemNam_Click(object sender, RoutedEventArgs e)
+        {
+            if (luachon == 1)
+            {
+                if (string.IsNullOrEmpty(namNhat.Text) || string.IsNullOrEmpty(namHai.Text))
+                    MessageBox.Show("Có trường dữ liệu rỗng, vui lòng kiểm tra lại!");
+                else
+                {
+                    while (dothi.Series.Count > 0)
+                        dothi.Series.RemoveAt(0);  //Clear dữ liệu cũ
+                    Labels.Clear();  //Clear Nhãn cũ
+
+                    for (int i = 1; i <= 12; i++)
+                        Labels.Add(i.ToString()); //Đổ 12 tháng vào Nhãn
+                    dothi.AxisX[0].MinValue = 0;  //kết thúc Zoom hiện tại(nếu có), trả về Zoom vốn có
+                    dothi.AxisX[0].MaxValue = 12; //.....
+
+                    dothi.FontSize = 20;
+                    TrucHoanhX.FontSize = 20;
+                    dothi.Zoom = ZoomingOptions.None; //Không cho Zoom
+                    dothi.Pan = PanningOptions.None;  //Không cho Pan(Lia đồ thị)
+                    TrucHoanhX.Separator.Step = 1; //Set step Trục hoành = 1 để nhìn rõ 12 Tháng
+
+                    decimal[] arrVal2022 = new decimal[12];
+                    decimal[] arrVal2021 = new decimal[12];
+                    string StartDate2022;
+                    string EndDate2022;
+                    string StartDate2021;
+                    string EndDate2021;
+                    /*Mảng doanh thu từng tháng của 2 năm 22 và 21,
+                      cùng với đó là các tham số để truyền vào câu 
+                      lệnh Query trên C#
+                      */
+
+                    con.Open(); //<Mở kết nối để đọc dữ liệu vào 2 mảng
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        StartDate2022 = "1/" + i + "/" + namNhat.Text;
+                        int thangsau2022 = i + 1;
+                        if (i == 12)
+                            EndDate2022 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
+                        else
+                            EndDate2022 = "1/" + thangsau2022 + "/" + namNhat.Text;
+
+                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
+                        cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@StartDate2022"].Value = StartDate2022;
+                        cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@EndDate2022"].Value = EndDate2022;
+
+                        SqlDataReader sda = cmd.ExecuteReader();
+                        if (sda.Read())
+                        {
+                            if (sda[0] != DBNull.Value)
+                                arrVal2022[i - 1] = (decimal)sda[0];
+                            else
+                                arrVal2022[i - 1] = 0;
+                        }
+
+                        StartDate2021 = "1/" + i + "/" + namHai.Text;
+                        int thangsau2021 = i + 1;
+                        if (i == 12)
+                            EndDate2021 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
+                        else
+                            EndDate2021 = "1/" + thangsau2021 + "/" + namHai.Text;
+                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
+                        cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
+                        cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
+                        SqlDataReader sda2 = cmd2.ExecuteReader();
+                        if (sda2.Read())
+                        {
+                            if (sda2[0] != DBNull.Value)
+                                arrVal2021[i - 1] = (decimal)sda2[0];
+                            else
+                                arrVal2021[i - 1] = 0;
+                        }
+                    }
+                    con.Close();
+
+                    //Hàng dưới thêm dữ liệu vào đồ thị
+                    SrC.Add(new ColumnSeries
+                    {
+                        Title = namNhat.Text,
+                        Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
+                        Fill = Brushes.Red
+                    });
+                    SrC.Add(new ColumnSeries
+                    {
+                        Title = namHai.Text,
+                        Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
+                        Fill = Brushes.DeepSkyBlue
+                    });
+
+                    Values = value => value.ToString("N");
+                }
+            }
+            else //SS 3 nam
+            {
+                if (string.IsNullOrEmpty(namNhat.Text) || string.IsNullOrEmpty(namHai.Text) || string.IsNullOrEmpty(namBa.Text))
+                    MessageBox.Show("Có trường dữ liệu rỗng, vui lòng kiểm tra lại!");
+                else
+                {
+                    while (dothi.Series.Count > 0)
+                        dothi.Series.RemoveAt(0);
+                    Labels.Clear();
+                    for (int i = 1; i <= 12; i++)
+                        Labels.Add(i.ToString());
+                    dothi.AxisX[0].MinValue = 0;
+                    dothi.AxisX[0].MaxValue = 12;
+
+                    dothi.FontSize = 20;
+                    TrucHoanhX.FontSize = 20;
+                    dothi.Zoom = ZoomingOptions.None;
+                    dothi.Pan = PanningOptions.None;
+                    TrucHoanhX.Separator.Step = 1;
+
+                    decimal[] arrVal2022 = new decimal[12];
+                    decimal[] arrVal2021 = new decimal[12];
+                    decimal[] arrVal2020 = new decimal[12];
+                    string StartDate2022;
+                    string EndDate2022;
+                    string StartDate2021;
+                    string EndDate2021;
+                    string StartDate2020;
+                    string EndDate2020;
+
+                    con.Open();
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        StartDate2022 = "1/" + i + "/" + namNhat.Text;
+                        int thangsau2022 = i + 1;
+                        if (i == 12)
+                            EndDate2022 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
+                        else
+                            EndDate2022 = "1/" + thangsau2022 + "/" + namNhat.Text;
+
+                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
+                        cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@StartDate2022"].Value = StartDate2022;
+                        cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@EndDate2022"].Value = EndDate2022;
+
+                        SqlDataReader sda = cmd.ExecuteReader();
+                        if (sda.Read())
+                        {
+                            if (sda[0] != DBNull.Value)
+                                arrVal2022[i - 1] = (decimal)sda[0];
+                            else
+                                arrVal2022[i - 1] = 0;
+                        }
+
+                        StartDate2021 = "1/" + i + "/" + namHai.Text;
+                        int thangsau2021 = i + 1;
+                        if (i == 12)
+                            EndDate2021 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
+                        else
+                            EndDate2021 = "1/" + thangsau2021 + "/" + namHai.Text;
+
+                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
+                        cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
+                        cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
+                        SqlDataReader sda2 = cmd2.ExecuteReader();
+                        if (sda2.Read())
+                        {
+                            if (sda2[0] != DBNull.Value)
+                                arrVal2021[i - 1] = (decimal)sda2[0];
+                            else
+                                arrVal2021[i - 1] = 0;
+                        }
+
+                        StartDate2020 = "1/" + i + "/" + namBa.Text;
+                        int thangsau2020 = i + 1;
+                        if (i == 12)
+                            EndDate2020 = "1/1/" + (int.Parse(namBa.Text) + 1).ToString();
+                        else
+                            EndDate2020 = "1/" + thangsau2020 + "/" + namBa.Text;
+
+                        SqlCommand cmd3 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2020 and NgayLapHD < @EndDate2020", con);
+                        cmd3.Parameters.Add("@StartDate2020", System.Data.SqlDbType.SmallDateTime);
+                        cmd3.Parameters["@StartDate2020"].Value = StartDate2020;
+                        cmd3.Parameters.Add("@EndDate2020", System.Data.SqlDbType.SmallDateTime);
+                        cmd3.Parameters["@EndDate2020"].Value = EndDate2020;
+                        SqlDataReader sda3 = cmd3.ExecuteReader();
+                        if (sda3.Read())
+                        {
+                            if (sda3[0] != DBNull.Value)
+                                arrVal2020[i - 1] = (decimal)sda3[0];
+                            else
+                                arrVal2020[i - 1] = 0;
+                        }
+                    }
+                    con.Close();
+
+                    SrC.Add(new ColumnSeries
+                    {
+                        Title = namNhat.Text,
+                        Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
+                        Fill = Brushes.Red
+                    });
+                    SrC.Add(new ColumnSeries
+                    {
+                        Title = namHai.Text,
+                        Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
+                        Fill = Brushes.DeepSkyBlue
+                    });
+                    SrC.Add(new ColumnSeries
+                    {
+                        Title = namBa.Text,
+                        Values = new ChartValues<decimal> { arrVal2020[0], arrVal2020[1], arrVal2020[2], arrVal2020[3], arrVal2020[4], arrVal2020[5], arrVal2020[6], arrVal2020[7], arrVal2020[8], arrVal2020[9], arrVal2020[10], arrVal2020[11] },
+                        Fill = Brushes.Green
+                    });
+                    Values = value => value.ToString("N");
+                }                   
+            }
+        }
+
         private void TrucHoanhX_PreviewRangeChanged(LiveCharts.Events.PreviewRangeChangedEventArgs eventArgs)
         {
             //if less than -0.5, cancel
@@ -503,5 +565,37 @@ namespace MotoStore.Views.Pages
         {
             borderHuongDan.Visibility = Visibility.Collapsed;
         }
+
+        private void dothi_DataClick(object sender, ChartPoint chartPoint)
+        {
+            if (CanClick)
+            {
+                string getNgay = TrucHoanhX.Labels[(int)chartPoint.X];
+                //Xử Lý công đoạn lấy ngày ở đây
+                /* int getDayLB0 = DateTime.Parse(Labels[0]).Day;
+                 int getMonthLB0 = DateTime.Parse(Labels[0]).Month;
+                 int getYearLB0 = DateTime.Parse(Labels[0]).Year;
+                 string Ngay = TrucHoanhX.Labels[(int)chartPoint.X];
+                 int GetNgay = int.Parse(Ngay.Substring(0, 2)); //Lấy cái ngày của dataPoint vừa bấm
+                 if (getDayLB0 < GetNgay) 
+                 {
+                     //Tức là getNgay cùng tháng của Labels[0] và nó lớn hơn ngày Labels[0]
+                     Ngay = GetNgay.ToString() + "-" + getMonthLB0 + "-" + getYearLB0; //Ghép lại thành ngày hoàn chỉnh
+                 }
+                 else
+                 {
+                  //Có quá nhiều công đoạn ở đây, ... zzzz
+                 }
+
+
+                 //if (getDayLB0 > )
+
+                 //if (getNgay>=Labels[0])
+                 //if getNgay nam trong nam nao thi them nam va thang do dang sau */
+                WindowInformation wd = new WindowInformation(getNgay);
+                wd.ShowDialog();
+            }
+        }
+
     }
 }

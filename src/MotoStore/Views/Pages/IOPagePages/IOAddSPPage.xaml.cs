@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MotoStore.Views.Pages.LoginPages;
+using System.Security.Cryptography;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -67,6 +68,11 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnLoadImageSP_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
+            openFileDialog.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
+            //string destFile = @$"pack://application:,,,/Avatars/{}.BackUp";
+            //string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}";
+            //destFile: file dự phòng
+            //newPathToFile: file ảnh mới
             if (openFileDialog.ShowDialog() == true)
             {
                 Uri fileUri = new(openFileDialog.FileName);
@@ -86,12 +92,13 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 //File.Move("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png", "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + MaMH+".png");
                 con.Open();
-                cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '"+cmbMaNCC.Text+"', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
+                cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
                 cmd.ExecuteNonQuery();
                 DateTime dt = DateTime.Now;
                 cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mặt hàng mới')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
+
                 MessageBox.Show("Thêm dữ liệu thành công");
             }
         }

@@ -138,38 +138,29 @@
               Grid.Row="0"
               VerticalAlignment="Top"
               Margin="180,8,0,0">
-            <MenuItem Header="Lọc Theo:"
+            <MenuItem x:Name="subItemLocTheo"
+                      Header="Lọc Theo:"
                       Height="50"
-                      FontSize="17"
+                      FontSize="15"
                       FontWeight="Medium"
                       Width="100">
-                <MenuItem Header="Giá"
-                      Height="35"
-                      FontSize="19"
-                      FontWeight="Medium"
-                      Width="130">
-                    <MenuItem x:Name="subItemTuChonGia"
-                      Header="Tự Chọn"
-                      Height="35"
-                      FontSize="17"
-                      FontWeight="Medium"
-                      Width="130"
-                      Click="subItemTuChon_Click"
-                      IsCheckable="True"></MenuItem>
-                </MenuItem>
-                <MenuItem Header="Phân Khối"
-                      Height="35"
-                      FontSize="19"
-                      FontWeight="Medium"
-                      Width="130">
-                    <MenuItem x:Name="subItemTuChon"
-                      Header="Tự Chọn"
+                <MenuItem x:Name="subItemGia"
+                      Header="Giá"
                       Height="35"
                       FontSize="15"
                       FontWeight="Medium"
                       Width="130"
-                      Click="subItemTuChon_Click"
-                      IsCheckable="True"></MenuItem>
+                      IsCheckable="True"
+                      Click="subItemGia_Click">
+                </MenuItem>
+                <MenuItem x:Name="subItemPK"
+                      Header="Phân Khối"
+                      Height="35"
+                      FontSize="15"
+                      FontWeight="Medium"
+                      Width="130"
+                      IsCheckable="True"
+                      Click="subItemPK_Click">
                 </MenuItem>
                 <MenuItem x:Name="subItemQuayLai"
                       Header="Quay Lại"
@@ -200,7 +191,8 @@
                  FontSize="12"
                  FontWeight="Medium"
                  LostFocus="txtTu_LostFocus"
-                 Visibility="Visible">
+                 Visibility="Visible"
+                 TextChanged="txtTu_TextChanged">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
             </i:Interaction.Behaviors>
@@ -225,7 +217,8 @@
                  FontSize="12"
                  FontWeight="Medium"
                  LostFocus="txtDen_LostFocus"
-                 Visibility="Visible">
+                 Visibility="Visible"
+                 TextChanged="txtDen_TextChanged">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="True" />
             </i:Interaction.Behaviors>
