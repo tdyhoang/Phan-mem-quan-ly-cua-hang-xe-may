@@ -66,7 +66,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         if (string.IsNullOrEmpty(nv.GioiTinh))
                             throw new("Giới tính không được để trống!");
                         string ngaySinhNv = nv.NgSinh.HasValue ? $"'{nv.NgSinh.Value:dd-MM-yyyy}'" : "null";
-                        string ngayVaoLam = nv.NgVl.HasValue ? ngayVaoLam = $"'{nv.NgVl.Value:dd-MM-yyyy}'" : "null";
+                        string ngayVaoLam = nv.NgVl.HasValue ? $"'{nv.NgVl.Value:dd-MM-yyyy}'" : "null";
                         string luong = nv.Luong.HasValue ? nv.Luong.Value.ToString() : "null";
 
                         // Thêm mới
@@ -155,22 +155,6 @@ namespace MotoStore.Views.Pages.DataPagePages
 
         private void RefreshView(object sender, RoutedEventArgs e)
             => RefreshDataGrid();
-
-        // Tắt các hoạt động chỉnh sửa data nếu không phải quản lý
-        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-            {
-                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
-
-                grdEmployee.IsReadOnly = !isQuanLy;
-
-                if (sender is Button button)
-                    button.IsEnabled = isQuanLy;
-
-                RefreshDataGrid();
-            }
-        }
 
         private void AddRow(object sender, RoutedEventArgs e)
             => TableData.Add(new());

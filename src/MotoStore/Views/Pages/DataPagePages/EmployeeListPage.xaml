@@ -40,8 +40,8 @@
 
         <StackPanel Orientation="Horizontal" Margin="5,0">
             <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
-            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" />
             <ui:NavigationSeparator Margin="5,0" />
         </StackPanel>
 
@@ -57,7 +57,7 @@
                          SelectionUnit="FullRow"
                          dgx:DataGridFilter.IsAutoFilterEnabled="True"
                          dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                         ItemsSource="{Binding TableData, Mode=TwoWay}"
+                         ItemsSource="{Binding Path=TableData, Mode=TwoWay}"
                          PreviewKeyDown="PreviewKeyDown"
                          PreviewMouseWheel="grdEmployee_PreviewMouseWheel">
 

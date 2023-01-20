@@ -7,46 +7,116 @@
            xmlns:resources="clr-namespace:MotoStore.Resources"
            xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
            xmlns:local="clr-namespace:MotoStore.Views.Pages.DataPagePages"
-           xmlns:viewmodels="clr-namespace:MotoStore.ViewModels"
-           d:DataContext="{d:DesignInstance Type=viewmodels:OrderListViewModel}"
+           xmlns:controls="clr-namespace:MotoStore.Controls" xmlns:helpers="clr-namespace:MotoStore.Helpers" xmlns:models="clr-namespace:MotoStore.Models"
+           d:DataContext="{d:DesignInstance Type=local:OrderListPage}"
            mc:Ignorable="d" 
            d:DesignHeight="450" d:DesignWidth="800"
-           Title="OrderListPage">
+           Title="OrderListPage"
+           IsVisibleChanged="UiPage_IsVisibleChanged">
 
     <ui:UiPage.Resources>
         <ControlTemplate x:Key="MultipleChoiceFilter">
             <dgx:MultipleChoiceFilter />
         </ControlTemplate>
+        <ControlTemplate x:Key="DecimalFilter">
+            <controls:DecimalFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="IntegerFilter">
+            <controls:IntegerFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
+        <ControlTemplate x:Key="DateFilter">
+            <controls:DateFilter Filter="{Binding Path=Filter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgx:DataGridFilterColumnControl}}" />
+        </ControlTemplate>
     </ui:UiPage.Resources>
 
     <Grid>
-        <ui:DataGrid Name="grdOrder"
-                     Grid.Row="1"
-                     MaxHeight="568"
-                     AutoGenerateColumns="False"
-                     dgx:DataGridFilter.IsAutoFilterEnabled="True"
-                     dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                     ItemsSource="{Binding Path=TableData}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <ui:DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridCell}">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#0078D7" />
-                            <Setter Property="BorderBrush" Value="#0078D7" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ui:DataGrid.Resources>
+        <StackPanel Orientation="Horizontal" Margin="5,0">
+            <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
+            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
+            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
+        </StackPanel>
 
-            <ui:DataGrid.Columns>
-                <DataGridTextColumn Header="Mã ĐĐH" Binding="{Binding Path=MaDonDh, Mode=OneWay}" />
-                <DataGridTextColumn Header="Mã MH" Binding="{Binding Path=MaKh}" />
-                <DataGridTextColumn Header="Số lượng" Binding="{Binding Path=SoLuongHang}" dgx:DataGridFilterColumn.Template="{StaticResource MultipleChoiceFilter}" />
-                <DataGridTextColumn Header="Mã KH" Binding="{Binding Path=SoLuong}" />
-                <DataGridTextColumn Header="Mã NV" Binding="{Binding Path=GiamGia}" />
-                <DataGridTextColumn Header="Ngày đặt hàng" Binding="{Binding Path=Ngdh, StringFormat=dd/MM/yyyy}" />
-            </ui:DataGrid.Columns>
-        </ui:DataGrid>
+        <ui:DynamicScrollViewer Grid.Row="1"
+                                MaxHeight="568"
+                                HorizontalScrollBarVisibility="Visible"
+                                VerticalScrollBarVisibility="Visible">
+            <ui:DataGrid Name="grdOrder"
+                         HorizontalScrollBarVisibility="Disabled"
+                         VerticalScrollBarVisibility="Disabled"
+                         AutoGenerateColumns="False"
+                         CanUserAddRows="False"
+                         SelectionUnit="FullRow"
+                         dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                         dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
+                         ItemsSource="{Binding Path=TableData, Mode=TwoWay}"
+                         PreviewKeyDown="PreviewKeyDown"
+                         PreviewMouseWheel="grdOrder_PreviewMouseWheel">
+
+                <ui:DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="TextBox" x:Key="errorToolTip">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="true">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <helpers:DateTimeConverter x:Key="DateTimeConverter" />
+                </ui:DataGrid.Resources>
+
+                <ui:DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã ĐĐH" Binding="{Binding Path=MaDdh, Mode=OneWay}" />
+                    <DataGridTextColumn Header="Mã MH" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="MaMh">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MaMhValidation" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mã KH" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="MaKh">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MaKhValidation" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Mã NV" EditingElementStyle="{StaticResource errorToolTip}">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="MaNv">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="MaNvValidation" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <models:DataGridIntegerColumn Header="Số lượng" Binding="{Binding Path=SoLuongHang}" dgx:DataGridFilterColumn.Template="{StaticResource IntegerFilter}" />
+                    <models:DataGridDateColumn Header="Ngày đặt hàng" EditingElementStyle="{StaticResource errorToolTip}">
+                        <models:DataGridDateColumn.Binding>
+                            <Binding Path="Ngdh" Converter="{StaticResource DateTimeConverter}">
+                                <Binding.ValidationRules>
+                                    <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </models:DataGridDateColumn.Binding>
+                    </models:DataGridDateColumn>
+                </ui:DataGrid.Columns>
+            </ui:DataGrid>
+        </ui:DynamicScrollViewer>
     </Grid>
 </ui:UiPage>

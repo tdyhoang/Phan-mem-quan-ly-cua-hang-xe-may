@@ -164,7 +164,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 grdMoto.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
-                    button.IsEnabled = isQuanLy;
+                    button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 RefreshDataGrid();
             }

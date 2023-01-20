@@ -58,15 +58,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                     foreach (var obj in grdCustomer.Items)
                     {
                         // Trường hợp gặp dòng trắng được người dùng thêm mà chưa chỉnh sửa
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "Thường")))
                             continue;
                         if (obj is not KhachHang kh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
                         if (string.IsNullOrEmpty(kh.GioiTinh))
                             throw new("Giới tính không được để trống!");
-                        if (string.IsNullOrEmpty(kh.LoaiKh))
-                            throw new("Loại khách hàng không được để trống!");
                         string ngSinh = kh.NgSinh.HasValue ? $"'{kh.NgSinh.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
@@ -166,14 +164,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                 grdCustomer.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
-                    button.IsEnabled = isQuanLy;
+                    button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 RefreshDataGrid();
             }
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-            => TableData.Add(new());
+            => TableData.Add(new() { LoaiKh = "Thường" });
 
         // Đẩy event mousewheel cho scrollviewer xử lý
         private void grdCustomer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

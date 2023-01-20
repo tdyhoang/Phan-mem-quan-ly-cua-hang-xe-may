@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
+using MotoStore.Helpers;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -39,7 +40,6 @@ namespace MotoStore.Views.Pages.DataPagePages
                 MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
                 return;
             }
-            MainDatabase mainDatabase = new();
             SqlCommand cmd;
             using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             try
@@ -55,7 +55,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     foreach (var obj in grdInvoice.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, DateTime.Today.ToString("dd/MM/yyyy"))))
                             continue;
                         if (obj is not HoaDon hd)
                             continue;
@@ -66,7 +66,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Mã mặt hàng không được để trống!");
                         if (string.IsNullOrEmpty(hd.MaNv))
                             throw new("Mã nhân viên không được để trống!");
-                        string ngayLapHd = hd.NgayLapHd.HasValue ? ngayLapHd = $"'{hd.NgayLapHd.Value:dd/MM/yyyy}'" : "null";
+                        string ngayLapHd = hd.NgayLapHd.HasValue ? $"'{hd.NgayLapHd.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(hd.MaHd))
@@ -165,20 +165,14 @@ namespace MotoStore.Views.Pages.DataPagePages
                 grdInvoice.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
-                    button.IsEnabled = isQuanLy;
+                    button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 RefreshDataGrid();
             }
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-        {
-            HoaDon hd = new()
-            {
-                NgayLapHd = DateTime.Today
-            };
-            TableData.Add(hd);
-        }
+            => TableData.Add(new() { NgayLapHd = DateTime.Today });
 
         // Đẩy event mousewheel cho scrollviewer xử lý
         private void grdInvoice_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -202,7 +196,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 var editingElement = e.EditingElement as TextBox;
                 var newValue = editingElement.Text;
 
-                if (row.Item is not HoaDon hd || Validation.GetHasError(editingElement) || string.IsNullOrEmpty(newValue))
+                if (row.Item is not HoaDon hd || string.IsNullOrEmpty(newValue))
                     return;
                 switch (col.Header)
                 {

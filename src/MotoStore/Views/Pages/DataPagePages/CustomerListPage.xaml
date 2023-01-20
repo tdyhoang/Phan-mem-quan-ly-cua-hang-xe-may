@@ -57,7 +57,7 @@
                          SelectionUnit="FullRow"
                          dgx:DataGridFilter.IsAutoFilterEnabled="True"
                          dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
-                         ItemsSource="{Binding TableData, Mode=TwoWay}"
+                         ItemsSource="{Binding Path=TableData, Mode=TwoWay}"
                          PreviewKeyDown="PreviewKeyDown"
                          PreviewMouseWheel="grdCustomer_PreviewMouseWheel">
 

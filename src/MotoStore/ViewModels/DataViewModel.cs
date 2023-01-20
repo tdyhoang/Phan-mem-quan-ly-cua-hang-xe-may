@@ -39,42 +39,49 @@ namespace MotoStore.ViewModels
                     {
                         Content = "Danh Sách Mặt Hàng",
                         PageTag = "motolist",
-                        Icon = SymbolRegular.VehicleBicycle20,
+                        Icon = SymbolRegular.VehicleBicycle24,
                         PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Nhân Viên",
                         PageTag = "employeelist",
-                        Icon = SymbolRegular.ContactCard20,
+                        Icon = SymbolRegular.ContactCard24,
                         PageType = typeof(Views.Pages.DataPagePages.EmployeeListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Khách Hàng",
                         PageTag = "customerlist",
-                        Icon = SymbolRegular.PeopleQueue20,
+                        Icon = SymbolRegular.PeopleCommunity24,
                         PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Hóa Đơn",
                         PageTag = "invoicelist",
-                        Icon = SymbolRegular.TextBulletListSquare20,
+                        Icon = SymbolRegular.TextBulletListSquare24,
                         PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
                     },
                     new NavigationItem()
                     {
-                        Content = "Nhà Cung Cấp",
+                        Content = "Danh Sách Nhà Cung Cấp",
                         PageTag = "supplierlist",
-                        Icon = SymbolRegular.PeopleCall20,
+                        Icon = SymbolRegular.PeopleTeamToolbox24,
                         PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
+                    },
+                     new NavigationItem()
+                    {
+                        Content = "Danh Sách Đơn Đặt Hàng",
+                        PageTag = "orderlist",
+                        Icon = SymbolRegular.DocumentBulletListClock24,
+                        PageType = typeof(Views.Pages.DataPagePages.OrderListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Tài Khoản",
                         PageTag = "userlist",
-                        Icon = SymbolRegular.PersonCircle20,
+                        Icon = SymbolRegular.PersonCircle24,
                         PageType = typeof(Views.Pages.DataPagePages.UserListPage)
                     }
                 };
@@ -87,29 +94,36 @@ namespace MotoStore.ViewModels
                     {
                         Content = "Danh Sách Mặt Hàng",
                         PageTag = "motolist",
-                        Icon = SymbolRegular.VehicleBicycle20,
+                        Icon = SymbolRegular.VehicleBicycle24,
                         PageType = typeof(Views.Pages.DataPagePages.MotoListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Khách Hàng",
                         PageTag = "customerlist",
-                        Icon = SymbolRegular.PeopleQueue20,
+                        Icon = SymbolRegular.PeopleCommunity24,
                         PageType = typeof(Views.Pages.DataPagePages.CustomerListPage)
                     },
                     new NavigationItem()
                     {
                         Content = "Danh Sách Hóa Đơn",
                         PageTag = "invoicelist",
-                        Icon = SymbolRegular.TextBulletListSquare20,
+                        Icon = SymbolRegular.TextBulletListSquare24,
                         PageType = typeof(Views.Pages.DataPagePages.InvoiceListPage)
                     },
                     new NavigationItem()
                     {
-                        Content = "Nhà Cung Cấp",
+                        Content = "Danh Sách Nhà Cung Cấp",
                         PageTag = "supplierlist",
-                        Icon = SymbolRegular.PeopleCall20,
+                        Icon = SymbolRegular.PeopleTeamToolbox24,
                         PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
+                    },
+                     new NavigationItem()
+                    {
+                        Content = "Danh Sách Đơn Đặt Hàng",
+                        PageTag = "orderlist",
+                        Icon = SymbolRegular.DocumentBulletListClock24,
+                        PageType = typeof(Views.Pages.DataPagePages.OrderListPage)
                     }
                 };
             }
