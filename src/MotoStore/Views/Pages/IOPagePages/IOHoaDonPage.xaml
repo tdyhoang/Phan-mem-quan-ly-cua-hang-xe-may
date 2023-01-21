@@ -14,10 +14,19 @@
 
     <Page.Resources>
         <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
+        <ControlTemplate x:Key="errormessHD">
+            <!--errormessHD là thông báo lỗi của Ngày xuất Hóa Đơn-->
+            <Grid>
+                <AdornedElementPlaceholder/>
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Margin="0 35 15 0">
 
+                </TextBlock>
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
     <Grid>
-
+        <Border Background="LightBlue" Height="580"/>
         <Label x:Name="lbMaSPHD"
                Content="Mã Sản Phẩm: " 
                Margin="45,50,602,367"
@@ -123,7 +132,7 @@
                Content="*"
                Foreground="Red"
                FontWeight="Medium"
-               Margin="153,47,624,373"/>
+               Margin="159,0,0,450"/>
 
         <Label x:Name="lblThongBao1" Height="20" FontSize="10" Width="150"
                                Foreground="red" 
@@ -170,7 +179,7 @@
                Foreground="Black"
                FontWeight="Medium"/>
         <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
-        <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click" FontSize="15"/>
+        <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click" FontSize="15" Background="LightGreen"/>
         <ui:Button x:Name="btnRefresh" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefresh_Click" Margin="528,36,0,0" VerticalAlignment="Top" FontSize="15"/>
         <ui:Button x:Name="btnRefreshKH" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefreshKH_Click" Margin="528,97,0,0" VerticalAlignment="Top" FontSize="15"/>
         <Label x:Name="lblDauSao_Copy" 
@@ -179,21 +188,21 @@
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="159,102,618,318"/>
+            Margin="159,0,618,340"/>
         <Label x:Name="lblDauSao_Copy1" 
             Height="30"
             FontSize="15"
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="161,160,616,260"/>
+            Margin="159,30,616,260"/>
         <Label x:Name="lblDauSao_Copy2" 
             Height="30"
             FontSize="15"
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="685,34,92,386"/>
+            Margin="670,0,0,470"/>
 
 
     </Grid>

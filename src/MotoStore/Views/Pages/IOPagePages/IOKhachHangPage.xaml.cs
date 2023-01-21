@@ -25,10 +25,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         bool checkTenKH = false;
         bool checkNgaySinh= false;
         bool checkSDT = true;
-        bool checkDiaChi= true;
-        bool checkEmail = false;
-        bool checkGioiTinh = false;
-        bool checkLoaiKH= false;    
+        bool checkEmail = false;     
       
 
     static private int dem = 0;   //Biến đếm số lần nháy
@@ -57,10 +54,14 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             SqlCommand cmd;
-            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT &&checkGioiTinh && checkLoaiKH))
+            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT ))
             {
                 MessageBox.Show("Vui lòng nhập đúng thông tin! ");
             }     
+            if(string.IsNullOrWhiteSpace(cmbGioiTinhKH.Text) || string.IsNullOrWhiteSpace(cmbLoaiKH.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
+            }    
             else
             {                      
                     con.Open();
@@ -159,29 +160,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
         }
 
-        private void txtDiaChiKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtDiaChiKH.Text))
-            {
-                checkDiaChi = true;
-            }
-        }
-        private void cmbLoaiKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if(string.IsNullOrEmpty(cmbLoaiKH.Text))
-            {
-                checkLoaiKH = true;
-            }    
-        }
-
-        private void cmbGioiTinhKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(cmbGioiTinhKH.Text))
-            {
-                checkGioiTinh = true;
-            }
-        }
-
+     
       
     }
 }

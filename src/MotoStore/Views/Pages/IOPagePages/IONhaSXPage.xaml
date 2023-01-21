@@ -10,7 +10,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IONhaSXPage">
 
+
     <Grid>
+        <Border Background="LightBlue" Height="580"/>
         <Label x:Name="lbTenNSX"
                Content="Tên Nhà Cung Cấp: " 
                Margin="26,50,623,370"
@@ -43,7 +45,7 @@
                Content="*"
                Foreground="Red"
                FontWeight="Medium"
-               Margin="164,47,613,373"/>
+               Margin="160,0,6,450"/>
         <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNSX_LostFocus">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
@@ -78,14 +80,14 @@
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
-        <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click"/>
+        <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click" Background="LightGreen"/>
         <Label x:Name="lblDauSao_Copy" 
             Height="30"
             FontSize="15"
             Content="*"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="106,215,660,205"/>
+            Margin="106,100,660,205"/>
 
 
     </Grid>
