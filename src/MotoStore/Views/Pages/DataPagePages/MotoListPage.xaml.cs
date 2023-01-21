@@ -64,6 +64,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                         if (obj is not MatHang mh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        if (string.IsNullOrWhiteSpace(mh.TenMh))
+                            throw new("Tên mặt hàng không được để trống!");
+                        if (string.IsNullOrEmpty(mh.MaNcc))
+                            throw new("Mã nhà cung cấp không được để trống!");
                         string giaNhapMh = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value.ToString() : "null";
                         string giaBanMh = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value.ToString() : "null";
                         // Thêm mới

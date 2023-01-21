@@ -63,6 +63,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                         if (obj is not KhachHang kh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        if (string.IsNullOrWhiteSpace(kh.HoTenKh))
+                            throw new("Họ tên không được để trống!");
                         if (string.IsNullOrEmpty(kh.GioiTinh))
                             throw new("Giới tính không được để trống!");
                         string ngSinh = kh.NgSinh.HasValue ? $"'{kh.NgSinh.Value:dd/MM/yyyy}'" : "null";

@@ -171,5 +171,11 @@ namespace MotoStore.Views.Pages.DataPagePages
             var parent = ((Control)sender).Parent as UIElement;
             parent?.RaiseEvent(eventArg);
         }
+
+        private void UiPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+                RefreshDataGrid();
+        }
     }
 }

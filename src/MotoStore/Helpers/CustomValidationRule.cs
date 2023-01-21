@@ -41,7 +41,7 @@ namespace MotoStore.Helpers
                 ValidationRules.MauValidation => MauValidation(value),
                 ValidationRules.MoTaValidation => MoTaValidation(value),
                 ValidationRules.SDTValidation => SDTValidation(value),
-                ValidationRules.TenMhValidation => TenMhValidation(value),
+                ValidationRules.TenValidation => TenValidation(value),
                 ValidationRules.XuatXuValidation => XuatXuValidation(value),
                 _ => throw new("Unknown ValidationRule"),
             };
@@ -212,7 +212,7 @@ namespace MotoStore.Helpers
             return new(true, default);
         }
 
-        private static ValidationResult TenMhValidation(object value)
+        private static ValidationResult TenValidation(object value)
         {
             if (!string.IsNullOrEmpty(value.ToString()))
                 if (value.ToString().Length > 30)
@@ -252,7 +252,7 @@ namespace MotoStore.Helpers
             MauValidation,
             MoTaValidation,
             SDTValidation,
-            TenMhValidation,
+            TenValidation,
             XuatXuValidation
         }
     }

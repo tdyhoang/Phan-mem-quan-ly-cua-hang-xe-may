@@ -98,7 +98,7 @@ create table NhaCungCap
 (
 	ID int identity(1,1),
 	MaNCC as 'CC' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	TenNCC Nvarchar(15) not null,
+	TenNCC Nvarchar(30) not null,
 	SDT  varchar(15),
 	Email Nvarchar(45),
 	DiaChi NVarchar(40),

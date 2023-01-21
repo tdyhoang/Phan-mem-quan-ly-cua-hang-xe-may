@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace MotoStore.Database;
 
@@ -266,7 +268,7 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false)
                 .HasColumnName("SDT");
             entity.Property(e => e.TenNcc)
-                .HasMaxLength(15)
+                .HasMaxLength(30)
                 .HasColumnName("TenNCC");
         });
 
@@ -351,7 +353,7 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("UserApp");
 
-            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456F2655BA6").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456F30E6CE8").IsUnique();
 
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
