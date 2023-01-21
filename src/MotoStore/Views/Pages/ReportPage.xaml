@@ -64,16 +64,20 @@
                 MouseMove="brdMHBanE_MouseMove"
                 MouseLeave="brdMHBanE_MouseLeave">
                         <Grid>
-                            <Label Content="Mặt Hàng Bán Ít Nhất"
+                            <Label Content="Doanh Thu So Với&#10; Tháng  Trước"  
                         Foreground="Black"
-                        FontSize="13.5"
+                        FontSize="12"
                         FontWeight="Bold"
-                        Margin="7,15,0,0"/>
+                        Margin="20,5,0,0">
+                            </Label>
 
                             <TextBlock x:Name="txtblThgTinMHBanE"
-                        Height="80"
-                        Margin="110,35,0,10"
-                        FontSize="12"
+                        Height="50"
+                        Width="75"               
+                        FontSize="13"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="0,30,0,0"
                         FontWeight="Bold"
                         TextWrapping="Wrap">
                             </TextBlock>
@@ -83,7 +87,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="0,0,0,0">
                                 <TextBlock.Background>
-                                    <ImageBrush ImageSource="/Views/Pages/Images/IconLowSales.png" 
+                                    <ImageBrush x:Name="AnhMHBanE"
                                     Stretch="Uniform"/>
                                 </TextBlock.Background>
                             </TextBlock>
@@ -335,34 +339,19 @@
                 </livechart:CartesianChart>
             </Grid>
         </Border>
-        <Grid>
 
-            <livechart:PieChart x:Name="bieudoTron"
-                            LegendLocation="Right"
-                            Height="240"
-                            Width="360"
-                            FontSize="15"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            Foreground="White"
-                            FontWeight="Medium"
-                            Margin="0,0,0,10"
-                            Series="{Binding SrC}"
-                            >
-            </livechart:PieChart>
-
-            <Label Height="35"
-               Width="210"
-               Content="Top 5 Mặt Hàng Bán Chạy"
-               Foreground="White"
-               FontSize="17"
-               FontWeight="Medium"
-               VerticalContentAlignment="Bottom"
-               HorizontalAlignment="Left"
-               Margin="0,100,0,0"></Label>
-        </Grid>
-
-       
-
+        <Border x:Name="brdDH"
+            Background="Red"
+            Height="270"
+            Width="570"
+            CornerRadius="30"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Left"
+            Margin="35,0,0,15">
+            <Grid>
+                
+            </Grid>   
+        </Border>
+        
     </Grid>
 </Page>

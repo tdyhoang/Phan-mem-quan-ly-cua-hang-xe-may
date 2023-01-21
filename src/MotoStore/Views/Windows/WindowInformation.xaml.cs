@@ -55,6 +55,8 @@ namespace MotoStore.Views.Windows
             InitializeComponent();
             btnCapNhatAnh.Visibility = Visibility.Collapsed;
             btnLuu.Visibility = Visibility.Collapsed;
+            btnBack.Visibility = Visibility.Visible;
+            btnNext.Visibility = Visibility.Visible;
             lblThongTin.Content = "Các Sản Phẩm Bán Ra Trong Ngày " + ngay;
             lblSoPhanKhoi.Content = "Mã Hoá Đơn:";  //MaHD
             lblGia.Content = "Mã Khách Mua:";
@@ -161,7 +163,7 @@ namespace MotoStore.Views.Windows
                         listThanhTien.Add((decimal)sdaThanhTien[0]);
                     // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
                 }
-                txtTonKho.Text = listThanhTien[0].ToString();
+                txtTonKho.Text = string.Format("{0:C}", listThanhTien[0]);
 
                 SqlCommand cmdMaNV = new("Set dateformat dmy\nSelect NhanVien.MaNV from HoaDon join NhanVien on HoaDon.MaNV=NhanVien.MaNV where NgayLapHD = @Today", con);
                 cmdMaNV.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
@@ -189,6 +191,7 @@ namespace MotoStore.Views.Windows
 
                 con.Close();
                 anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[0] + ".png"));
+                index = 0; //Cứ mỗi lần khởi tạo WI biểu đồ thì sẽ gán index = 0 để tránh lỗi index was out of range
             }
             else
             {
@@ -350,9 +353,7 @@ namespace MotoStore.Views.Windows
             {
                 index += 1;
                 if (index == SoSP)
-                {
                     --index;
-                }
                 else
                 {
                     lblMaMH.Content = listMaMH[index];
@@ -361,7 +362,7 @@ namespace MotoStore.Views.Windows
                     txtGiaBan.Text = listMaKH[index];
                     txtMau.Text = listTenKH[index];
                     lblDaBan.Content = listSoLg[index];
-                    txtTonKho.Text = listThanhTien[index].ToString();
+                    txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
                     anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
@@ -379,9 +380,7 @@ namespace MotoStore.Views.Windows
             {
                 index -= 1;
                 if (index < 0) 
-                {
                     ++index;
-                }
                 else
                 {
                     lblMaMH.Content = listMaMH[index];
@@ -390,7 +389,7 @@ namespace MotoStore.Views.Windows
                     txtGiaBan.Text = listMaKH[index];
                     txtMau.Text = listTenKH[index];
                     lblDaBan.Content = listSoLg[index];
-                    txtTonKho.Text = listThanhTien[index].ToString();
+                    txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
                     anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));

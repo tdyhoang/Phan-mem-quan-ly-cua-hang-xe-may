@@ -76,6 +76,7 @@ namespace MotoStore.Views.Pages
             }); 
             con.Close();  
             Values = value => value.ToString("N");
+            dothi.AxisY[0].MinValue = 0;
             DataContext = this;            
         }
         
@@ -109,8 +110,6 @@ namespace MotoStore.Views.Pages
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
             lblNhapNam.Content = "Nhập 2 năm muốn so sánh:";
-            lblSeries.Content = "Tháng";
-            lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
             borderHuongDan.Visibility = Visibility.Collapsed;
             gridchonNam.Visibility = Visibility.Visible;
@@ -125,8 +124,6 @@ namespace MotoStore.Views.Pages
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
             lblNhapNam.Content = "Nhập 3 năm muốn so sánh:";
-            lblSeries.Content = "Tháng";
-            lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             dothi.ChartLegend.Visibility = Visibility.Visible;
             borderHuongDan.Visibility = Visibility.Collapsed;
             gridchonNam.Visibility = Visibility.Visible;
@@ -167,23 +164,17 @@ namespace MotoStore.Views.Pages
 
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
+            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
+            string minDate = ngaynhonhat.ToString("d-MM-yyyy");
             if (!IsValidDateTimeTest(txtTuNgay.Text))
             {
                 MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(ngày/tháng/năm)!");
                 txtTuNgay.Clear();
             }
             else if (DateTime.Parse(txtTuNgay.Text) > DateTime.Now)
-            {
-                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
-                txtTuNgay.Clear();
-            }
-            else if (DateTime.Parse(txtTuNgay.Text) < DateTime.Parse(ngaynhonhat))
-            {
-                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
-                txtTuNgay.Clear();
-            }
-            //Nếu ô Từ Ngày bị LostFocus mà trong ô đó chứa ngày kh hợp lệ thì xoá text ô đó
+                MessageBox.Show("Ô Từ Ngày CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định từ ngày " + txtTuNgay.Text + " trở đi sẽ = 0");
+            else if (DateTime.Parse(txtTuNgay.Text) < DateTime.Parse(minDate))
+                MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
         }
 
         private void txtDenNgay_TextChanged(object sender, TextChangedEventArgs e)
@@ -202,7 +193,8 @@ namespace MotoStore.Views.Pages
 
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            string ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().ToString();
+            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
+            string minDate = ngaynhonhat.ToString("d-MM-yyyy");
             if (!IsValidDateTimeTest(txtDenNgay.Text))
             {
                 MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(Ngày/Tháng/Năm)!");
@@ -214,15 +206,9 @@ namespace MotoStore.Views.Pages
                 txtDenNgay.Clear();
             }
             else if (DateTime.Parse(txtDenNgay.Text) > DateTime.Now)
-            {
-                MessageBox.Show("Chưa có dữ liệu ở ô đến ngày, hãy nhập lại");
-                txtDenNgay.Clear();
-            }
-            else if (DateTime.Parse(txtDenNgay.Text) < DateTime.Parse(ngaynhonhat))
-            {
-                MessageBox.Show("Chưa có dữ liệu ở ngày này, hãy nhập lại");
-                txtDenNgay.Clear();
-            }
+                MessageBox.Show("Chưa có dữ liệu ở Ô Đến Ngày, Doanh Thu mặc định từ ngày " + DateTime.Now.ToString("d-MM-yyyy") + " đến " + txtDenNgay.Text + " sẽ = 0");
+            else if (DateTime.Parse(txtDenNgay.Text) < DateTime.Parse(minDate))
+                MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
             /*Khi ô Đến Ngày LostFocus, ta sẽ check nó có phải ngày hợp lệ hay kh,
               và check xem nó có bé hơn hoặc = Từ Ngày hay kh
              */
@@ -230,6 +216,8 @@ namespace MotoStore.Views.Pages
 
         private void btnXem_Click(object sender, RoutedEventArgs e)
         {
+            lblSeries.Content = "Tháng";
+            lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
             /*Chỉ có duy nhất Lựa chọn hàm này là người dùng đc 
               phép Zoom, nên sẽ tìm MaxValue ở đây để tránh tình trạng
               Zoom quá mức nó sẽ ra giá trị Rác*/
@@ -310,7 +298,7 @@ namespace MotoStore.Views.Pages
                 //ĐK if else ở trên để tăng bước trục hoành dựa vào khoảng ngày
                 //0<NGÀY<30: step = 1, 30<NGÀY<60: step = 2 , ...  
 
-                dothi.AxisY[0].MaxValue = (double)maxVal * 1.1;
+                dothi.AxisY[0].MaxValue = (double)maxVal * 1.2;
                 /*1 dòng trên để set max value trục tung cho đồ thị,
                   tránh nó nhận giá trị RÁC khi Zoom quá*/
                 Values = value => value.ToString("N");
@@ -326,6 +314,7 @@ namespace MotoStore.Views.Pages
                     MessageBox.Show("Có trường dữ liệu rỗng, vui lòng kiểm tra lại!");
                 else
                 {
+                    lblSeries.Content = "         Tháng";
                     while (dothi.Series.Count > 0)
                         dothi.Series.RemoveAt(0);  //Clear dữ liệu cũ
                     Labels.Clear();  //Clear Nhãn cũ
@@ -343,6 +332,7 @@ namespace MotoStore.Views.Pages
 
                     decimal[] arrVal2022 = new decimal[12];
                     decimal[] arrVal2021 = new decimal[12];
+                    decimal maxVal = 0;
                     string StartDate2022;
                     string EndDate2022;
                     string StartDate2021;
@@ -399,6 +389,14 @@ namespace MotoStore.Views.Pages
                     }
                     con.Close();
 
+                    maxVal = arrVal2022[0];
+                    for (int j = 1; j < arrVal2022.Length; j++)
+                        if (arrVal2022[j] > maxVal)
+                            maxVal = arrVal2022[j];
+                    for (int j = 0; j < arrVal2021.Length; j++)
+                        if (arrVal2021[j] > maxVal)
+                            maxVal = arrVal2021[j];
+
                     //Hàng dưới thêm dữ liệu vào đồ thị
                     SrC.Add(new ColumnSeries
                     {
@@ -413,6 +411,7 @@ namespace MotoStore.Views.Pages
                         Fill = Brushes.DeepSkyBlue
                     });
 
+                    dothi.AxisY[0].MaxValue = (double)maxVal * 1.2;
                     Values = value => value.ToString("N");
                 }
             }
@@ -439,6 +438,7 @@ namespace MotoStore.Views.Pages
                     decimal[] arrVal2022 = new decimal[12];
                     decimal[] arrVal2021 = new decimal[12];
                     decimal[] arrVal2020 = new decimal[12];
+                    decimal maxVal = 0;
                     string StartDate2022;
                     string EndDate2022;
                     string StartDate2021;
@@ -515,6 +515,17 @@ namespace MotoStore.Views.Pages
                     }
                     con.Close();
 
+                    maxVal = arrVal2022[0];
+                    for (int j = 1; j < arrVal2022.Length; j++)
+                        if (arrVal2022[j] > maxVal)
+                            maxVal = arrVal2022[j];
+                    for (int j = 0; j < arrVal2021.Length; j++)
+                        if (arrVal2021[j] > maxVal)
+                            maxVal = arrVal2021[j];
+                    for (int j = 0; j < arrVal2020.Length; j++)
+                        if (arrVal2020[j] > maxVal)
+                            maxVal = arrVal2020[j];
+
                     SrC.Add(new ColumnSeries
                     {
                         Title = namNhat.Text,
@@ -533,6 +544,7 @@ namespace MotoStore.Views.Pages
                         Values = new ChartValues<decimal> { arrVal2020[0], arrVal2020[1], arrVal2020[2], arrVal2020[3], arrVal2020[4], arrVal2020[5], arrVal2020[6], arrVal2020[7], arrVal2020[8], arrVal2020[9], arrVal2020[10], arrVal2020[11] },
                         Fill = Brushes.Green
                     });
+                    dothi.AxisY[0].MaxValue = (double)maxVal * 1.2;
                     Values = value => value.ToString("N");
                 }                   
             }

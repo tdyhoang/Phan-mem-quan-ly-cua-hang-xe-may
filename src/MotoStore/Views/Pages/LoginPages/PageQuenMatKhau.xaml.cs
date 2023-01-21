@@ -175,29 +175,36 @@ namespace MotoStore.Views.Pages.LoginPages
 
         private void GuiMail()
         {
-            MailMessage mess = new();
-            mess.From = new("datrua3152003@gmail.com"); //Đây là Email gửi từ ứng dụng
-            Random rand = new();
-            ma = rand.Next(100000, 999999);
-            switch (buttonLanguage.Content)
+            try
             {
-                case "Tiếng Việt":
-                    mess.Subject = "Mã Xác Nhận Thay Đổi Mật Khẩu";
-                    mess.Body = "Mã Xác Nhận Của Bạn Là: " + ma.ToString();
-                    break;
-                case "English":
-                    mess.Subject = "Verify Change Password Code";
-                    mess.Body = "Your Verify Code Is: " + ma.ToString();
-                    break;
+                MailMessage mess = new();
+                mess.From = new("datrua3152003@gmail.com"); //Đây là Email gửi từ ứng dụng
+                Random rand = new();
+                ma = rand.Next(100000, 999999);
+                switch (buttonLanguage.Content)
+                {
+                    case "Tiếng Việt":
+                        mess.Subject = "Mã Xác Nhận Thay Đổi Mật Khẩu";
+                        mess.Body = "Mã Xác Nhận Của Bạn Là: " + ma.ToString();
+                        break;
+                    case "English":
+                        mess.Subject = "Verify Change Password Code";
+                        mess.Body = "Your Verify Code Is: " + ma.ToString();
+                        break;
+                }
+                mess.To.Add(new(txtEmail.Text));   //Email nhận là của người Nhân Viên Quản Lý
+                SmtpClient smtpClient1 = new("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("datrua3152003@gmail.com", "ewxeolqofypyfzgi"),
+                    EnableSsl = true,
+                };
+                smtpClient1.Send(mess);
             }
-            mess.To.Add(new(txtEmail.Text));   //Email nhận là của người Nhân Viên Quản Lý
-            SmtpClient smtpClient1 = new("smtp.gmail.com")
+            catch(Exception ex)
             {
-                Port = 587,
-                Credentials = new NetworkCredential("datrua3152003@gmail.com", "ewxeolqofypyfzgi"),
-                EnableSsl = true,
-            };
-            smtpClient1.Send(mess);
+                MessageBox.Show("Gửi Mail thất bại, Lỗi: " + ex.Message);
+            }
 
             /* Hàm này để ứng dụng gửi mã 6 số ngẫu nhiên
               về Email người Quản Lý để xác nhận thay đổi mật khẩu */

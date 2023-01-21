@@ -28,6 +28,7 @@
     <None Remove="Views\Pages\Images\BDD24832-B4B9-4195-962C-91909DDE76C6" />
     <None Remove="Views\Pages\Images\CalendaRicon-removebg-preview.png" />
     <None Remove="Views\Pages\Images\hdsd.png" />
+    <None Remove="Views\Pages\Images\highSaleIcon.png" />
     <None Remove="Views\Pages\Images\huongdanLich.png" />
     <None Remove="Views\Pages\Images\huongdanLich2.png" />
     <None Remove="Views\Pages\Images\IconLowSales.png" />
@@ -66,6 +67,7 @@
     <Resource Include="Products Images\MH011.png" />
     <Resource Include="Products Images\MH016.png" />
     <Resource Include="Views\Pages\Images\hdsd.png" />
+    <Resource Include="Views\Pages\Images\highSaleIcon.png" />
     <Resource Include="Views\Pages\Images\huongdanLich.png" />
     <Resource Include="Views\Pages\Images\huongdanLich2.png" />
     <Resource Include="Views\Pages\Images\IconLowSales.png" />

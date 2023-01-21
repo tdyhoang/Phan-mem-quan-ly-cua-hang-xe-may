@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
 namespace MotoStore.Views.Pages
@@ -26,26 +27,13 @@ namespace MotoStore.Views.Pages
         {
             InitializeComponent();
 
-            PointLabel = chartPoint =>
-            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-            //Lấy ra top 5 sp bán chạy
-
-            SrC.Add(new PieSeries()
-            {
-                Title = tenXeBanChay,
-                Values = new ChartValues<int> { SoLgXeBanChay },
-                LabelPoint = PointLabel,
-                DataLabels = true,
-                Fill = Brushes.Red
-            });
-
             /* var query = from item in mdb.HoaDons
                          group item by item.MaMh into g
                          orderby g.Sum(x => x.SoLuong) descending
                          select g;
              var topFive = query.Take(5); */
 
-            var XeBanChay2 = mdb.HoaDons.GroupBy(u => u.MaMh).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdXe = u.Key }).OrderByDescending(u => u.Tong).Skip(1).Take(1).Single();
+           /* var XeBanChay2 = mdb.HoaDons.GroupBy(u => u.MaMh).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdXe = u.Key }).OrderByDescending(u => u.Tong).Skip(1).Take(1).Single();
             var tenXeBanChay2 = mdb.MatHangs.Where(i => i.MaMh == XeBanChay2.IdXe).Select(i => i.TenMh).FirstOrDefault();
 
             SrC.Add(new PieSeries()
@@ -94,7 +82,7 @@ namespace MotoStore.Views.Pages
             });
 
             bieudoTron.Series = SrC;
-            //Các dòng trên của biểu đồ Tròn
+            //Các dòng trên của biểu đồ Tròn */
 
             //Các dòng dưới của biểu đồ Cột
             decimal[] arrTienKhach = new decimal[5];
@@ -211,8 +199,7 @@ namespace MotoStore.Views.Pages
             }
             txtblThgTinSoXeBanDc.Text = soxebandc.ToString();
 
-            string commandTextMoney = "Set Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon Where NgayLapHD >=@StartDate and NgayLapHD < @EndDate";
-            
+            string commandTextMoney = "Set Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon Where NgayLapHD >=@StartDate and NgayLapHD < @EndDate";           
             SqlCommand commandMoney = new(commandTextMoney, con);
             commandMoney.Parameters.Add("@StartDate", System.Data.SqlDbType.SmallDateTime);
             commandMoney.Parameters["@StartDate"].Value = StartDate;
@@ -229,14 +216,50 @@ namespace MotoStore.Views.Pages
             }
             txtblDoanhThu.Text = sotien.ToString() + "$";
 
+            int prevMonth = DateTime.Now.AddMonths(-1).Month;
+            int Year = DateTime.Now.Year;
+            decimal DTThgTrc = 0;
+            if (prevMonth == 12)
+                Year -= 1;
+            string StartDateThangTrc = "1/" + prevMonth + "/" + Year;
+            string EndDateThangTrc = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+            string commandTextDTThgTrc = "Set Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon Where NgayLapHD >=@StartDateThangTrc and NgayLapHD < @EndDateThangTrc";
+            SqlCommand commandDTThgTrc = new(commandTextDTThgTrc, con);
+            commandDTThgTrc.Parameters.Add("@StartDateThangTrc", System.Data.SqlDbType.SmallDateTime);
+            commandDTThgTrc.Parameters["@StartDateThangTrc"].Value = StartDateThangTrc;
+            commandDTThgTrc.Parameters.Add("@EndDateThangTrc", System.Data.SqlDbType.SmallDateTime);
+            commandDTThgTrc.Parameters["@EndDateThangTrc"].Value = EndDateThangTrc;
+            sda = commandDTThgTrc.ExecuteReader();
+            if (sda.Read())
+            {
+                if (sda[0] != DBNull.Value)
+                    DTThgTrc = (decimal)sda[0];
+                else
+                    DTThgTrc = 0;
+            }
+            decimal Diff = DTThgTrc - sotien;
+            if (Diff > 0)
+            {
+                txtblThgTinMHBanE.Text = "Giảm\n" + Diff.ToString() + "$";
+                //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/IconLowSales.png"));
+            }
+            else if (Diff == 0)
+            {
+                txtblThgTinMHBanE.Text = "Giữ Nguyên";
+            }
+            else
+            {
+                txtblThgTinMHBanE.Text = "Tăng\n" + Math.Abs(Diff).ToString() + "$";
+                //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/highSaleIcon.png"));
+                AnhMHBanE.ImageSource = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\highSaleIcon.png"));
+            }
+
             var KhVIP = mdb.HoaDons.GroupBy(u => u.MaKh).Select(u => new { Tong = u.Sum(u => u.ThanhTien), IdKhach = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             var tenKhVIP = mdb.KhachHangs.Where(u => u.MaKh == KhVIP.IdKhach).Select(u => u.HoTenKh).FirstOrDefault();
             txtblThgTinKHVIP.Text = tenKhVIP + "\nMã Khách Hàng:\n" + KhVIP.IdKhach;
             //đồ thị check if DBNULL nếu null thì cho = 0
         }
 
-        public SeriesCollection SrC { get; set; } = new(); //của biểu đồ Tròn
-        public Func<ChartPoint, string> PointLabel { get; set; } //của biểu đồ Tròn
         public SeriesCollection SeriesColKhach { get; set; } = new();
         public List<string> LabelsKhach { get; set; } = new();
 
