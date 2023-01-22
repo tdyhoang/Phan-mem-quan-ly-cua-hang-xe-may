@@ -23,6 +23,9 @@ namespace MotoStore.Helpers
         {
             if (value is null && IsNullable)
                 return new(false, "Không được để trống!");
+            // Tránh SQL Injection
+            if (value.ToString().Any(c => c == '\''))
+                return new(false, "Ký tự ' không được phép sử dụng!");
             return ValidationMode switch
             {
                 ValidationRules.None => new(true, default),
@@ -31,7 +34,6 @@ namespace MotoStore.Helpers
                 ValidationRules.DiaChiValidation => DiaChiValidation(value),
                 ValidationRules.EmailValidation => EmailValidation(value),
                 ValidationRules.GioiTinhValidation => GioiTinhValidation(value),
-                ValidationRules.HangSxValidation => HangSxValidation(value),
                 ValidationRules.HoTenValidation => HoTenValidation(value),
                 ValidationRules.LoaiKhValidation => LoaiKhValidation(value),
                 ValidationRules.MaKhValidation => MaKhValidation(value),
@@ -40,9 +42,10 @@ namespace MotoStore.Helpers
                 ValidationRules.MaNvValidation => MaNvValidation(value),
                 ValidationRules.MauValidation => MauValidation(value),
                 ValidationRules.MoTaValidation => MoTaValidation(value),
+                ValidationRules.PasswordValidation => PasswordValidation(value),
                 ValidationRules.SDTValidation => SDTValidation(value),
                 ValidationRules.TenValidation => TenValidation(value),
-                ValidationRules.XuatXuValidation => XuatXuValidation(value),
+                ValidationRules.UsernameValidation => UsernameValidation(value),
                 _ => throw new("Unknown ValidationRule"),
             };
         }
@@ -91,19 +94,6 @@ namespace MotoStore.Helpers
                 return new(true, default);
 
             return new(false, "Giới tính phải là Nam hoặc Nữ (có dấu)!");
-        }
-
-        private static ValidationResult HangSxValidation(object value)
-        {
-            if (!string.IsNullOrEmpty(value.ToString()))
-            {
-                if (value.ToString().Length > 15)
-                    return new(false, "Tên hãng sản xuất quá dài, tối đa 15 ký tự!");
-                if (!value.ToString().ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-                    return new(false, "Tên không được chứa số hoặc ký tự đặc biệt!");
-            }
-
-            return new(true, default);
         }
 
         private static ValidationResult HoTenValidation(object value)
@@ -199,14 +189,29 @@ namespace MotoStore.Helpers
             return new(true, default);
         }
 
+        private static ValidationResult PasswordValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+            {
+                if (value.ToString().Length < 8)
+                    return new(false, "Password quá ngắn, tối thiểu 8 ký tự!");
+                if (value.ToString().Length > 30)
+                    return new(false, "Password quá dài, tối đa 30 ký tự!");
+            }
+
+            return new(true, default);
+        }
+
         private static ValidationResult SDTValidation(object value)
         {
             if (!string.IsNullOrEmpty(value.ToString()))
             {
-                if (value.ToString().Length > 10)
-                    return new(false, "SĐT quá dài, tối đa 10 ký tự!");
-                if (!value.ToString().ToCharArray().All(char.IsDigit))
-                    return new(false, "SĐT chỉ được chứa các ký tự số!");
+                string sdt = value.ToString();
+                if (sdt.Length > 30)
+                    return new(false, "SĐT quá dài, tối đa 30 ký tự!");
+                Regex.Replace(sdt, @"[^0-9]+", string.Empty);
+                if (sdt.Length < 8 && sdt.Length > 15)
+                    return new(false, "SĐT chỉ được chứa từ 8 đến 15 ký tự số!");
             }
 
             return new(true, default);
@@ -221,14 +226,16 @@ namespace MotoStore.Helpers
             return new(true, default);
         }
 
-        private static ValidationResult XuatXuValidation(object value)
+        private static ValidationResult UsernameValidation(object value)
         {
             if (!string.IsNullOrEmpty(value.ToString()))
             {
-                if (value.ToString().Length > 15)
-                    return new(false, "Tên nước xuất xứ quá dài, tối đa 15 ký tự!");
-                if (!value.ToString().ToCharArray().All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-                    return new(false, "Tên không được chứa số hoặc ký tự đặc biệt!");
+                if (value.ToString().Length < 5)
+                    return new(false, "Username quá ngắn, tối thiểu 5 ký tự!");
+                if (value.ToString().Length > 20)
+                    return new(false, "Username quá dài, tối đa 20 ký tự!");
+                if (!value.ToString().ToCharArray().All(char.IsLetterOrDigit))
+                    return new(false, "Username chỉ bao gồm ký tự chữ cái hoặc số!");
             }
 
             return new(true, default);
@@ -242,7 +249,6 @@ namespace MotoStore.Helpers
             DiaChiValidation,
             EmailValidation,
             GioiTinhValidation,
-            HangSxValidation,
             HoTenValidation,
             LoaiKhValidation,
             MaKhValidation,
@@ -251,9 +257,10 @@ namespace MotoStore.Helpers
             MaNvValidation,
             MauValidation,
             MoTaValidation,
+            PasswordValidation,
             SDTValidation,
             TenValidation,
-            XuatXuValidation
+            UsernameValidation
         }
     }
 }

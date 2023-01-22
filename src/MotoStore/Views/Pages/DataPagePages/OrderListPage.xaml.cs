@@ -84,7 +84,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate DonDatHang Set MaMh = '{ddh.MaMh}', MaKh = '{ddh.MaKh}', MaNv = '{ddh.MaNv}', NgayDatHang = {ngayDatHang}, SoLuongHang = {soLuongHang} Where MaHd = '{ddh.MaDdh}';";
+                            cmd.CommandText += $"\nUpdate DonDatHang Set MaMh = '{ddh.MaMh}', MaKh = '{ddh.MaKh}', MaNv = '{ddh.MaNv}', Ngdh = {ngayDatHang}, SoLuongHang = {soLuongHang} Where MaDdh = '{ddh.MaDdh}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();

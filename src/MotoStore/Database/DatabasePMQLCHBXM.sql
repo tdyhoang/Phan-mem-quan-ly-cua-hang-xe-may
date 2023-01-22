@@ -13,8 +13,8 @@ Create table KhachHang
 	NgSinh smalldatetime,
 	GioiTinh NVARCHAR(3) not null,
 	DiaChi NVARCHAR(40),
-	SDT  VARCHAR(10),
-	Email NVARCHAR(30),
+	SDT VARCHAR(30),
+	Email NVARCHAR(254),
 	LoaiKH NVARCHAR(10) not null,
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaKH primary key(MAKH)
@@ -76,8 +76,8 @@ Create table NhanVien
 	NgSinh smalldatetime,
 	GioiTinh NVarChar(3) not null,
 	DiaChi   NVarchar(40),
-	SDT VARCHAR(10),
-	Email  NVarchar(30),
+	SDT VARCHAR(30),
+	Email  NVarchar(254),
 	ChucVu Nvarchar(10),
 	NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	Luong money,
@@ -99,8 +99,8 @@ create table NhaCungCap
 	ID int identity(1,1),
 	MaNCC as 'CC' + right('000' + cast(ID as varchar(3)), 3) persisted,
 	TenNCC Nvarchar(30) not null,
-	SDT  varchar(15),
-	Email Nvarchar(45),
+	SDT  varchar(30),
+	Email Nvarchar(254),
 	DiaChi NVarchar(40),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_NNCC primary key(MaNCC)
@@ -129,8 +129,8 @@ create table MatHang
 	GiaBanMH money,
 	SoLuongTonKho int not null,
 	MaNCC varchar(5) not null,
-	HangSX /*TenNSX*/ Nvarchar(15),
-	XuatXu /*NuocSX*/ Nvarchar(15),
+	HangSX /*TenNSX*/ Nvarchar(30),
+	XuatXu /*NuocSX*/ Nvarchar(30),
 	MoTa Nvarchar(75),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaMH primary key(MaMH)
@@ -242,9 +242,9 @@ Insert into ThongTinBaoHanh values('MH011','KH036','NV003','12/7/2021',N'Thay nh
 create table UserApp
 (
 	MaNV varchar(5),
-	UserName Nvarchar(15) unique not null,
-	Password Nvarchar(20) not null,
-	Email NVarchar(30) not null,   /*Email để khôi phục mật khẩu nếu cần*/
+	UserName Nvarchar(20) unique not null,
+	Password Nvarchar(30) not null,
+	Email NVarchar(254) not null,   /*Email để khôi phục mật khẩu nếu cần*/
 	constraint PK_UA_MaNV primary key(MaNV)
 )
 

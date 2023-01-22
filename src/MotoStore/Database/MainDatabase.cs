@@ -142,7 +142,7 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false)
                 .HasColumnName("MaKH");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email).HasMaxLength(30);
+            entity.Property(e => e.Email).HasMaxLength(254);
             entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenKh)
                 .HasMaxLength(30)
@@ -155,7 +155,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("LoaiKH");
             entity.Property(e => e.NgSinh).HasColumnType("smalldatetime");
             entity.Property(e => e.Sdt)
-                .HasMaxLength(10)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
         });
@@ -226,7 +226,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnType("money")
                 .HasColumnName("GiaNhapMH");
             entity.Property(e => e.HangSx)
-                .HasMaxLength(15)
+                .HasMaxLength(30)
                 .HasColumnName("HangSX");
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.TenMh)
                 .HasMaxLength(30)
                 .HasColumnName("TenMH");
-            entity.Property(e => e.XuatXu).HasMaxLength(15);
+            entity.Property(e => e.XuatXu).HasMaxLength(30);
 
             entity.HasOne(d => d.MaNccNavigation).WithMany(p => p.MatHangs)
                 .HasForeignKey(d => d.MaNcc)
@@ -259,12 +259,12 @@ public partial class MainDatabase : DbContext
                 .IsUnicode(false)
                 .HasColumnName("MaNCC");
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email).HasMaxLength(45);
+            entity.Property(e => e.Email).HasMaxLength(254);
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
             entity.Property(e => e.Sdt)
-                .HasMaxLength(15)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
             entity.Property(e => e.TenNcc)
@@ -284,7 +284,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnName("MaNV");
             entity.Property(e => e.ChucVu).HasMaxLength(10);
             entity.Property(e => e.DiaChi).HasMaxLength(40);
-            entity.Property(e => e.Email).HasMaxLength(30);
+            entity.Property(e => e.Email).HasMaxLength(254);
             entity.Property(e => e.GioiTinh).HasMaxLength(3);
             entity.Property(e => e.HoTenNv)
                 .HasMaxLength(30)
@@ -298,7 +298,7 @@ public partial class MainDatabase : DbContext
                 .HasColumnType("smalldatetime")
                 .HasColumnName("NgVL");
             entity.Property(e => e.Sdt)
-                .HasMaxLength(10)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("SDT");
         });
@@ -353,15 +353,15 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("UserApp");
 
-            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F28456F30E6CE8").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F284569466A522").IsUnique();
 
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)
                 .IsUnicode(false)
                 .HasColumnName("MaNV");
-            entity.Property(e => e.Email).HasMaxLength(30);
-            entity.Property(e => e.Password).HasMaxLength(20);
-            entity.Property(e => e.UserName).HasMaxLength(15);
+            entity.Property(e => e.Email).HasMaxLength(254);
+            entity.Property(e => e.Password).HasMaxLength(30);
+            entity.Property(e => e.UserName).HasMaxLength(20);
 
             entity.HasOne(d => d.MaNvNavigation).WithOne(p => p.UserApp)
                 .HasForeignKey<UserApp>(d => d.MaNv)

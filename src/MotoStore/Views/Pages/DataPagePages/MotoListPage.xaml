@@ -81,7 +81,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="TenMh">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="TenMhValidation" />
+                                    <helpers:CustomValidationRule ValidationMode="TenValidation" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>
@@ -128,7 +128,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="HangSx">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="HangSxValidation" IsNullable="True" />
+                                    <helpers:CustomValidationRule ValidationMode="TenValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>
@@ -137,7 +137,7 @@
                         <DataGridTextColumn.Binding>
                             <Binding Path="XuatXu">
                                 <Binding.ValidationRules>
-                                    <helpers:CustomValidationRule ValidationMode="XuatXuValidation" IsNullable="True" />
+                                    <helpers:CustomValidationRule ValidationMode="TenValidation" IsNullable="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </DataGridTextColumn.Binding>
