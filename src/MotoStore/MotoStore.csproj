@@ -79,6 +79,7 @@
 
   <ItemGroup>
     <PackageReference Include="DataGridExtensions" Version="2.5.14" />
+    <PackageReference Include="EPPlus" Version="6.1.2" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">

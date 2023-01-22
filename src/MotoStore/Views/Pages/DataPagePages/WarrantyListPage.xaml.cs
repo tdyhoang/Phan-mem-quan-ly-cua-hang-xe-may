@@ -19,7 +19,6 @@ namespace MotoStore.Views.Pages.DataPagePages
     public partial class WarrantyListPage
     {
         internal ObservableCollection<ThongTinBaoHanh> TableData;
-        bool isQuanLy = default;
 
         public WarrantyListPage()
         {
@@ -31,15 +30,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.ThongTinBaoHanhs);
-            if (isQuanLy)
-                grdWarranty.ItemsSource = TableData;
-            else
-            {
-                foreach (var bh in TableData.ToList())
-                    if (bh.MaNv != PageChinh.getMa)
-                        TableData.Remove(bh);
-                grdWarranty.ItemsSource = TableData;
-            }
+            grdWarranty.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
@@ -167,9 +158,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
                 grdWarranty.IsReadOnly = !isQuanLy;
-                grdWarranty.Columns[3].Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 if (sender is Button button)
                     button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;

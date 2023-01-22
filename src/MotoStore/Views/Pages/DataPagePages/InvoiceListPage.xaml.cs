@@ -19,7 +19,6 @@ namespace MotoStore.Views.Pages.DataPagePages
     public partial class InvoiceListPage
     {
         internal ObservableCollection<HoaDon> TableData;
-        bool isQuanLy = default;
 
         public InvoiceListPage()
         {
@@ -31,15 +30,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.HoaDons);
-            if (isQuanLy)
-                grdInvoice.ItemsSource = TableData;
-            else
-            {
-                foreach (var hd in TableData.ToList())
-                    if (hd.MaNv != PageChinh.getMa)
-                        TableData.Remove(hd);
-                grdInvoice.ItemsSource = TableData;
-            }
+            grdInvoice.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
@@ -167,9 +158,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
                 grdInvoice.IsReadOnly = !isQuanLy;
-                grdInvoice.Columns[3].Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 if (sender is Button button)
                     button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
