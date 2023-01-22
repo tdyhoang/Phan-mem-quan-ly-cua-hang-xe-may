@@ -111,12 +111,12 @@ Insert into NhaCungCap values(N'Yamaha','(84.24)38855080',N'YamahaMotorVietNamCN
 Insert into NhaCungCap values(N'Suzuki','(84.89)47435209',N'SuzukiMotorVietNam@gmail.com',N'Việt Nam',0)
 Insert into NhaCungCap values(N'Honda','(84.2)18943170',N'HondaMotorThaiLand@gmail.com',N'Thái Lan',0)
 Insert into NhaCungCap values(N'Honda','(30.2)18943170',N'HondaMotorJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values(N'Kawasaki','(0117)175',N'KawasakiJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values(N'Kawasaki','(084)175',N'KawasakiJapan@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Kawasaki','(0117)1757718',N'KawasakiJapan@gmail.com',N'Nhật Bản',0)
+Insert into NhaCungCap values(N'Kawasaki','(084)1756514',N'KawasakiJapan@gmail.com',N'Việt Nam',0)
 Insert into NhaCungCap values(N'Piaggio','(010)15432170',N'PiaggioItaly@gmail.com',N'Ý',0)
-Insert into NhaCungCap values(N'Sym','(123)170',N'SymTaiWan@gmail.com',N'Đài Loan',0)
+Insert into NhaCungCap values(N'Sym','(123)1706762',N'SymTaiWan@gmail.com',N'Đài Loan',0)
 Insert into NhaCungCap values(N'Vinfast','(0631)17433170',N'VinfastVietNam@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values(N'Sym','(084)170',N'SymVietNam@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Sym','(084)1702725',N'SymVietNam@gmail.com',N'Việt Nam',0)
 
 create table MatHang
 (

@@ -33,6 +33,7 @@ namespace MotoStore.Helpers
                 ValidationRules.DateValidation => DateValidation(value, cultureInfo),
                 ValidationRules.DiaChiValidation => DiaChiValidation(value),
                 ValidationRules.EmailValidation => EmailValidation(value),
+                ValidationRules.GhiChuValidation => GhiChuValidation(value),
                 ValidationRules.GioiTinhValidation => GioiTinhValidation(value),
                 ValidationRules.HoTenValidation => HoTenValidation(value),
                 ValidationRules.LoaiKhValidation => LoaiKhValidation(value),
@@ -84,6 +85,15 @@ namespace MotoStore.Helpers
                 return new(true, default);
 
             return new(false, "Email sai định dạng!");
+        }
+
+        private static ValidationResult GhiChuValidation(object value)
+        {
+            if (!string.IsNullOrEmpty(value.ToString()))
+                if (value.ToString().Length > 60)
+                    return new(false, "Ghi chú quá dài, tối đa 60 ký tự!");
+
+            return new(true, default);
         }
 
         private static ValidationResult GioiTinhValidation(object value)
@@ -206,11 +216,10 @@ namespace MotoStore.Helpers
         {
             if (!string.IsNullOrEmpty(value.ToString()))
             {
-                string sdt = value.ToString();
-                if (sdt.Length > 30)
+                if (value.ToString().Length > 30)
                     return new(false, "SĐT quá dài, tối đa 30 ký tự!");
-                Regex.Replace(sdt, @"[^0-9]+", string.Empty);
-                if (sdt.Length < 8 && sdt.Length > 15)
+                string sdt = Regex.Replace(value.ToString(), @"[^0-9]+", string.Empty);
+                if (sdt.Length < 8 || sdt.Length > 15)
                     return new(false, "SĐT chỉ được chứa từ 8 đến 15 ký tự số!");
             }
 
@@ -248,6 +257,7 @@ namespace MotoStore.Helpers
             DateValidation,
             DiaChiValidation,
             EmailValidation,
+            GhiChuValidation,
             GioiTinhValidation,
             HoTenValidation,
             LoaiKhValidation,

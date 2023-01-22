@@ -70,12 +70,19 @@ namespace MotoStore.ViewModels
                         Icon = SymbolRegular.PeopleTeamToolbox24,
                         PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
                     },
-                     new NavigationItem()
+                    new NavigationItem()
                     {
-                        Content = "Danh Sách Đơn Đặt Hàng",
-                        PageTag = "orderlist",
-                        Icon = SymbolRegular.DocumentBulletListClock24,
-                        PageType = typeof(Views.Pages.DataPagePages.OrderListPage)
+                    Content = "Danh Sách Đơn Đặt Hàng",
+                    PageTag = "orderlist",
+                    Icon = SymbolRegular.DocumentBulletListClock24,
+                    PageType = typeof(Views.Pages.DataPagePages.OrderListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Phiếu Bảo Hành",
+                        PageTag = "warrantylist",
+                        Icon = SymbolRegular.VideoPersonCall24,
+                        PageType = typeof(Views.Pages.DataPagePages.WarrantyListPage)
                     },
                     new NavigationItem()
                     {
@@ -118,12 +125,19 @@ namespace MotoStore.ViewModels
                         Icon = SymbolRegular.PeopleTeamToolbox24,
                         PageType = typeof(Views.Pages.DataPagePages.SupplierListPage)
                     },
-                     new NavigationItem()
+                    new NavigationItem()
                     {
                         Content = "Danh Sách Đơn Đặt Hàng",
                         PageTag = "orderlist",
                         Icon = SymbolRegular.DocumentBulletListClock24,
                         PageType = typeof(Views.Pages.DataPagePages.OrderListPage)
+                    },
+                    new NavigationItem()
+                    {
+                        Content = "Danh Sách Phiếu Bảo Hành",
+                        PageTag = "warrantylist",
+                        Icon = SymbolRegular.VideoPersonCall24,
+                        PageType = typeof(Views.Pages.DataPagePages.WarrantyListPage)
                     }
                 };
             }

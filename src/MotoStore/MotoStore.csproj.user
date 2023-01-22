@@ -37,6 +37,9 @@
     <Compile Update="Views\Pages\DataPagePages\UserListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\DataPagePages\WarrantyListPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\IOPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -85,6 +88,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\UserListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\DataPagePages\WarrantyListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\IOPage.xaml">

@@ -9,17 +9,19 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
+using MotoStore.Helpers;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
     /// <summary>
-    /// Interaction logic for DataView.xaml
+    /// Interaction logic for WarrantyListPage.xaml
     /// </summary>
-    public partial class SupplierListPage
+    public partial class WarrantyListPage
     {
-        internal ObservableCollection<NhaCungCap> TableData;
+        internal ObservableCollection<ThongTinBaoHanh> TableData;
+        bool isQuanLy = default;
 
-        public SupplierListPage()
+        public WarrantyListPage()
         {
             InitializeComponent();
             RefreshDataGrid();
@@ -28,16 +30,21 @@ namespace MotoStore.Views.Pages.DataPagePages
         private void RefreshDataGrid()
         {
             MainDatabase con = new();
-            TableData = new(con.NhaCungCaps);
-            foreach (var ncc in TableData.ToList())
-                if (ncc.DaXoa)
-                    TableData.Remove(ncc);
-            grdSupplier.ItemsSource = TableData;
+            TableData = new(con.ThongTinBaoHanhs);
+            if (isQuanLy)
+                grdWarranty.ItemsSource = TableData;
+            else
+            {
+                foreach (var bh in TableData.ToList())
+                    if (bh.MaNv != PageChinh.getMa)
+                        TableData.Remove(bh);
+                grdWarranty.ItemsSource = TableData;
+            }
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            if ((from c in from object i in grdSupplier.ItemsSource select grdSupplier.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            if ((from c in from object i in grdWarranty.ItemsSource select grdWarranty.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
             {
                 MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
                 return;
@@ -51,28 +58,30 @@ namespace MotoStore.Views.Pages.DataPagePages
                 try
                 {
                     cmd = new("set dateformat dmy", con, trans);
-
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
                     // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                    foreach (var obj in grdSupplier.Items)
+                    foreach (var obj in grdWarranty.Items)
                     {
-                        // Trường hợp gặp dòng trắng được người dùng thêm mà chưa chỉnh sửa
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
+                        // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, PageChinh.getMa)))
                             continue;
-                        if (obj is not NhaCungCap ncc)
+                        if (obj is not ThongTinBaoHanh bh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
-                        if (string.IsNullOrWhiteSpace(ncc.TenNcc))
-                            throw new("Tên nhà cung cấp không được để trống!");
+                        if (string.IsNullOrEmpty(bh.MaKh))
+                            throw new("Mã khách hàng không được để trống!");
+                        if (string.IsNullOrEmpty(bh.MaMh))
+                            throw new("Mã mặt hàng không được để trống!");
+                        string ngayHetHan = bh.ThoiGian.HasValue ? $"'{bh.ThoiGian.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
-                        if (string.IsNullOrEmpty(ncc.MaNcc))
-                            cmd.CommandText += $"\nInsert into NhaCungCap values(N'{ncc.TenNcc}', '{ncc.Sdt}', N'{ncc.Email}', N'{ncc.DiaChi}', 0)";
+                        if (string.IsNullOrEmpty(bh.MaBh))
+                            cmd.CommandText += $"\nInsert into ThongTinBaoHanh values('{bh.MaMh}', '{bh.MaKh}', '{bh.MaNv}', {ngayHetHan}, N'{bh.GhiChu}')";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate NhaCungCap Set TenNcc = N'{ncc.TenNcc}', DiaChi = N'{ncc.DiaChi}', Sdt = '{ncc.Sdt}', Email = N'{ncc.Email}' Where MaNcc = '{ncc.MaNcc}';";
+                            cmd.CommandText += $"\nUpdate ThongTinBaoHanh Set MaMh = '{bh.MaMh}', MaKh = '{bh.MaKh}', MaNv = '{bh.MaNv}', ThoiGian = {ngayHetHan}, GhiChu = N'{bh.GhiChu}' Where MaBh = '{bh.MaBh}';";
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -92,7 +101,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
         }
 
-        // Định nghĩa lại phím tắt Delete
+            // Định nghĩa lại phím tắt Delete
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (sender is not DataGrid dg)
@@ -121,14 +130,14 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         foreach (var obj in dg.SelectedItems)
                         {
-                            if (obj is not NhaCungCap ncc)
+                            if (obj is not ThongTinBaoHanh bh)
                                 continue;
-                            // Trường hợp chưa thêm mới nên chưa có mã KH
-                            if (string.IsNullOrEmpty(ncc.MaNcc))
+                            // Trường hợp chưa thêm mới nên chưa có mã bh
+                            if (string.IsNullOrEmpty(bh.MaBh))
                                 continue;
                             // Xóa hàng
                             else
-                                cmd.CommandText += $"Update NhaCungCap Set DaXoa = 1 Where MaNcc = '{ncc.MaNcc}';\n";
+                                cmd.CommandText += $"Delete From ThongTinBaoHanh Where MaBh = '{bh.MaBh}';\n";
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
@@ -158,9 +167,9 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
-
-                grdSupplier.IsReadOnly = !isQuanLy;
+                isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+                grdWarranty.IsReadOnly = !isQuanLy;
+                grdWarranty.Columns[3].Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 if (sender is Button button)
                     button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
@@ -170,10 +179,10 @@ namespace MotoStore.Views.Pages.DataPagePages
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-            => TableData.Add(new());
+            => TableData.Add(new() { MaNv = PageChinh.getMa });
 
         // Đẩy event mousewheel cho scrollviewer xử lý
-        private void grdCustomer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void grdWarranty_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
             var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
