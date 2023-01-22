@@ -111,7 +111,7 @@
                             <TextBox.Background>
                                 <ImageBrush ImageSource="../../../Assets/user_logo.png"
                                         Stretch="Uniform"
-                                       AlignmentX="Left" />
+                                        AlignmentX="Left"/>
                             </TextBox.Background>
                         </TextBox>
                         <TextBlock x:Name="txtMatKhau" 

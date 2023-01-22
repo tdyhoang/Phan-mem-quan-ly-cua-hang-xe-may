@@ -19,6 +19,8 @@
     <None Remove="Assets\logo2-removebg-preview.png" />
     <None Remove="Assets\motor_logo.png" />
     <None Remove="Assets\User_logo.png" />
+    <None Remove="Products Images\MH001.png" />
+    <None Remove="Products Images\MH003.png" />
     <None Remove="Products Images\MH011.png" />
     <None Remove="Products Images\MH016.png" />
     <None Remove="Views\Pages\bullet_triangle_blue-removebg-preview.png" />
@@ -42,9 +44,7 @@
     <None Remove="Views\Pages\Images\userNu.png" />
     <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
     <None Remove="Views\Pages\Images\VIP-removebg-preview.png" />
-    <None Remove="Products Images\MH001.png" />
     <None Remove="Products Images\MH002.png" />
-    <None Remove="Products Images\MH003.png" />
     <None Remove="Products Images\MH004.png" />
     <None Remove="Products Images\MH005.png" />
     <None Remove="Products Images\MH006.png" />
@@ -63,6 +63,8 @@
 
   <ItemGroup>
     <Content Include="applicationIcon.ico" />
+    <Resource Include="Products Images\MH001.png" />
+    <Resource Include="Products Images\MH003.png" />
     <Resource Include="Products Images\MH006.png" />
     <Resource Include="Products Images\MH011.png" />
     <Resource Include="Products Images\MH016.png" />
@@ -109,7 +111,6 @@
     <Resource Include="Avatars\userNam.png" />
     <Resource Include="Avatars\userNu.png" />
     <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
-    <Resource Include="Products Images\MH003.png" />
     <Resource Include="Products Images\MH008.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
@@ -122,7 +123,6 @@
     <Resource Include="Products Images\MH007.png" />
     <Resource Include="Products Images\MH005.png" />
     <Resource Include="Products Images\MH012.png" />
-    <Resource Include="Products Images\MH001.png" />
     <Resource Include="Products Images\MH013.png" />
   </ItemGroup>
 

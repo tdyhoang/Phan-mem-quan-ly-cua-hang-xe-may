@@ -6,7 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Azure.Core;
+using LiveCharts.Wpf;
 using MotoStore.Database;
 using MotoStore.Views.Windows;
 
@@ -34,13 +37,34 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 if (xe.DaXoa)
                     continue;
-                matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
+                //matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
+                matHangs.Add(new(xe, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png"));
+                BitmapImageFromFile("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png");
             }            
             ListViewProduct.ItemsSource = matHangs;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
             //biến view kiểu CollectionView dùng để gom nhóm, tìm kiếm, filter, điều hướng dữ liệu, gán nó bằng ItemsSource ở trên
+            
             view.Filter = Filter;
             GC.Collect();
+        }
+
+        public static BitmapSource BitmapImageFromFile(string filepath)
+        {
+            var bi = new BitmapImage();
+
+            using (var fs = new FileStream(filepath, FileMode.Open))
+            {
+                bi.BeginInit();
+                bi.StreamSource = fs;
+                bi.CacheOption = BitmapCacheOption.OnLoad;
+                bi.EndInit();
+            }
+
+            bi.Freeze(); //Important to freeze it, otherwise it will still have minor leaks
+
+            //Cop từ https://stackoverflow.com/questions/28364439/how-to-dispose-bitmapimage-cache
+            return bi;
         }
 
         private void btnAddNewPageSP_Click(object sender, RoutedEventArgs e)

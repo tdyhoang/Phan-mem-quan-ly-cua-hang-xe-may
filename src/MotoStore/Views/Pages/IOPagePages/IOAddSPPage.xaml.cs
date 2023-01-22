@@ -40,9 +40,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             foreach (var mat in nhaCungCaps.ToList())
             {
                 if (mat.DaXoa)
-                {
                     nhaCungCaps.Remove(mat);
-                }
             }
             cmbMaNCC.ItemsSource = nhaCungCaps;
             cmbMaNCC.Text = string.Empty;

@@ -32,7 +32,7 @@ namespace MotoStore.Views.Windows
         private IOSanPhamPage IOSPpg = new();
         private string destFile;
         private string newPathToFile;
-        private string OFDFileName;
+        private string? OFDFileName = null;
         private int loaiWD = 0;  //Phân Biệt loại WD
 
 
@@ -219,15 +219,56 @@ namespace MotoStore.Views.Windows
             txtTonKho.Text = (SLtonkho - SLdaban).ToString();
 
             if (mathang.Item1.GiaBanMh != null)
-                txtGiaBan.Text = string.Format("{0:C}", mathang.Item1.GiaBanMh);
+                txtGiaBan.Text = string.Format("{0:0.#####}", mathang.Item1.GiaBanMh);
             if (mathang.Item1.Mau != null)
                 txtMau.Text = mathang.Item1.Mau;
             else 
                 txtMau.Text=string.Empty;
             if (mathang.Item2 != null)
-                anhSP.Source = new BitmapImage(new Uri(mathang.Item2, UriKind.Relative));
+            {
+                /*BitmapImage image = new();
+                //var stream = File.OpenRead(OFDFileName);
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                //image.StreamSource = stream;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new(mathang.Item2);
+                image.EndInit();
+                //stream.Close();
+                //stream.Dispose();
+                anhSP.Source = image;*/
+                BitmapImage image = new();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new(mathang.Item2);
+                image.EndInit();
+                anhSP.Source = image;
+                image.Freeze(); //new
+
+            }
             //else cập nhật ảnh xe default
-            this.DataContext = this;
+            DataContext = this;
+        }
+
+        //Phải có hàm Depose Ảnh ở trong Trang này, gọi hàm này mỗi khi cần Depose Ảnh ở trang SanPham
+        public void DeposeImg(string imgPath)
+        {
+            //imgPath là file ảnh cần Depose
+
+            BitmapImage image = new();
+            //var stream = File.OpenRead(OFDFileName);
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            //image.StreamSource = stream;
+            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            image.UriSource = new(newPathToFile);
+            image.EndInit();
+            //stream.Close();
+            //stream.Dispose();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            File.Delete(imgPath); //Xoá file tạm đi
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -310,37 +351,54 @@ namespace MotoStore.Views.Windows
             }
             else
             {
-                MainDatabase mdb = new();
-                SqlCommand cmd;
-                con.Open();
-                cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'",con);
-                cmd.ExecuteNonQuery();
-                DateTime dt = DateTime.Now;
-                cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                string destFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";
-                string newPathToFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
-
-                if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
+                if (string.IsNullOrEmpty(txtGiaBan.Text) || string.IsNullOrWhiteSpace(txtMau.Text) || string.IsNullOrEmpty(txtTonKho.Text))
+                    MessageBox.Show("Có Trường Dữ Liệu Bị Thiếu, Vui Lòng Kiểm Tra Lại!");
+                else
                 {
-                    File.Move(newPathToFile, destFile); //Đổi tên File
-                }
-                File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
-                BitmapImage image = new();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new(newPathToFile);
-                image.EndInit();
-                anhSP.Source = image;
+                    try
+                    {
+                        MainDatabase mdb = new();
+                        SqlCommand cmd;
+                        con.Open();
+                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
+                        cmd.ExecuteNonQuery();
+                        DateTime dt = DateTime.Now;
+                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        string destFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";
+                        string newPathToFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
 
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                File.Delete(destFile); //Xoá file tạm đi
-                MessageBox.Show("Cập nhật ảnh thành công!");
-                IOSPpg.Refresh();
-                MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
+                        //Trước khi đổi ảnh phải kiểm tra có ảnh được chọn hay không
+                        if (OFDFileName != null)
+                        {
+                            if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
+                                File.Move(newPathToFile, destFile); //Đổi tên File
+                            File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
+                            BitmapImage image = new();
+                            //var stream = File.OpenRead(OFDFileName);
+                            image.BeginInit();
+                            image.CacheOption = BitmapCacheOption.OnLoad;
+                            //image.StreamSource = stream;
+                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                            image.UriSource = new(newPathToFile);
+                            image.EndInit();
+                            //stream.Close();
+                            //stream.Dispose();
+                            anhSP.Source = image;
+
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+                            File.Delete(destFile); //Xoá file tạm đi
+                        }
+                        IOSPpg.Refresh(); //Tự động làm mới sau khi cập nhật thành công
+                        MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Cập Nhật Dữ Liệu Thất Bại, Lỗi: " + ex.Message);
+                    }
+                }
             }
         }
 

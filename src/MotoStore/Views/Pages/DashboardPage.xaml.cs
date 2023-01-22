@@ -439,8 +439,8 @@ namespace MotoStore.Views.Pages
                 image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                 image.UriSource = new($@"pack://application:,,,/Avatars/{PageChinh.getMa}");
                 image.EndInit();
-
                 anhNhanVien.ImageSource = image;
+                image.Freeze();
             }
             else if (PageChinh.getSex == "Nữ")
                 anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
@@ -492,8 +492,10 @@ namespace MotoStore.Views.Pages
             //Nếu có xoá file ảnh hiện tại và đổi tên file Backup thành file ảnh hiệện tại
             //Nếu 0 có BaKUP thì quay lại hình Default
             //sau If sẽ hiện lỗi messagebox
-            string destFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}.BackUp";
-            string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}";
+            //string destFile = @$"/Avatars/{PageChinh.getMa}.BackUp";
+            //string newPathToFile = @$"/Avatars/{PageChinh.getMa}";
+            string destFile = "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + "BackUp";
+            string newPathToFile = "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + ".png";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
             try
@@ -512,6 +514,7 @@ namespace MotoStore.Views.Pages
                     image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
                     image.UriSource = new(newPathToFile);
                     image.EndInit();
+                    image.Freeze();
                     anhNhanVien.ImageSource = image;
 
                     GC.Collect();
@@ -543,7 +546,7 @@ namespace MotoStore.Views.Pages
                     else
                         anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
                 }
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Cập Nhật Ảnh Thất Bại, Lỗi: " + ex.Message);
             }
         }
 

@@ -273,8 +273,7 @@
                               Margin="620,0,0,30"
                               FontSize="15"
                               FontWeight="Medium"
-                              LostFocus="cmbMaNCC_LostFocus"
-                              Validation.ErrorTemplate="{StaticResource errormessHD}">
+                              LostFocus="cmbMaNCC_LostFocus">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ComboBoxItem}">
                                 <Setter Property="Template">
