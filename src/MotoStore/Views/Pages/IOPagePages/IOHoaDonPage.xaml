@@ -30,18 +30,19 @@
         </ControlTemplate>
     </Page.Resources>
     <Grid>
-        <Border Background="LightBlue" Height="580"/>
+        <Border Background="LightBlue" Height="580" VerticalAlignment="Center" />
         <Label x:Name="lbMaSPHD"
                Content="Mã Sản Phẩm: " 
-               Margin="45,50,602,367"
+               Margin="35,72,664,345"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
 
-        <StackPanel Margin="247,36,503,0" VerticalAlignment="Top" Height="60" PreviewKeyDown="StackPanel_PreviewKeyDown">
+        <StackPanel Margin="239,65,511,0" VerticalAlignment="Top" Height="35" PreviewKeyDown="StackPanel_PreviewKeyDown">
             <ComboBox x:Name="cmbMaSPHD"
-                      ItemsSource="{Binding Path=matHangs}"
+                      ItemsSource="{Binding matHangs}"
                       IsEditable="True"
+                      
                       Validation.ErrorTemplate="{StaticResource errormessHD}"
                       StaysOpenOnEdit="True"
                       DropDownClosed="cmbMaSPHD_DropDownClosed"
@@ -70,13 +71,13 @@
                                         <TextBlock Margin="5" Grid.Column="2" Text="{Binding SoPhanKhoi}"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
-                                        <Trigger Property="ComboBoxItem.IsSelected" Value="True">
-                                            <Setter TargetName="gd"  Property="Background" Value="Gray"></Setter>
-                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
+                                        <Trigger Property="ListBoxItem.IsSelected" Value="True">
+                                            <Setter TargetName="gd"  Property="Background" Value="Gray"/>
+                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"/>
                                         </Trigger>
                                         <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
-                                            <Setter TargetName="gd"  Property="Background" Value="Blue"></Setter>
-                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
+                                            <Setter TargetName="gd"  Property="Background" Value="Blue"/>
+                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -91,15 +92,15 @@
         <!--Mã Sản Phẩm trong Hóa Đơn-->
         <Label x:Name="lbMaKHHD"
                Content="Mã Khách Hàng: " 
-               Margin="45,105,597,317"
+               Margin="35,145,605,277"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
 
         <!--Mã Khách Hàng trong Hóa Đơn-->
-        <StackPanel  Margin="247,97,503,0" VerticalAlignment="Top" Height="34" PreviewKeyDown="StackPanel_PreviewKeyDown">
+        <StackPanel  Margin="239,137,511,0" VerticalAlignment="Top" Height="35" PreviewKeyDown="StackPanel_PreviewKeyDown">
             <ComboBox x:Name="cmbMaKHHD"
-                      ItemsSource="{Binding Path=KhachHangs}"
+                      ItemsSource="{Binding KhachHangs}"
                       Validation.ErrorTemplate="{StaticResource errormessHD}"
                       StaysOpenOnEdit="True"
                       LostFocus="InputField_LostFocus"
@@ -126,17 +127,17 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Margin="5" Grid.Column="0" Text="{Binding MaKh}"/>
                                         <TextBlock Margin="5" Grid.Column="1" Text="{Binding HoTenKh}"/>
-                                        <TextBlock Margin="5" Grid.Column="2" Text="{Binding NgSinh,Converter={StaticResource DateTimeConverter}}"/>
+                                        <TextBlock Margin="5" Grid.Column="2" Text="{Binding NgSinh, Converter={StaticResource DateTimeConverter}}"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
-                                        <Trigger Property="ComboBoxItem.IsSelected" Value="True">
-                                            <Setter TargetName="gd"  Property="Background" Value="Gray"></Setter>
-                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
+                                        <Trigger Property="ListBoxItem.IsSelected" Value="True">
+                                            <Setter TargetName="gd"  Property="Background" Value="Gray"/>
+                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"/>
                                         </Trigger>
 
                                         <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
-                                            <Setter TargetName="gd"  Property="Background" Value="Blue"></Setter>
-                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
+                                            <Setter TargetName="gd"  Property="Background" Value="Blue"/>
+                                            <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -152,28 +153,23 @@
         <!--Mã Nhân Viên trong Hóa Đơn-->
         <Label x:Name="lbNgayXuatHD"
                Content="Ngày Xuất HĐ: " 
-               Margin="47,162,595,256"
+               Margin="35,214,599,204"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
         <Label x:Name="lblDauSao" 
                Height="30"
                FontSize="15"
+               Width="10"
                Content="*"
                Foreground="Red"
                FontWeight="Medium"
-               Margin="159,0,0,450"/>
-
-        <Label x:Name="lblThongBao1" Height="20" FontSize="10" Width="150"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="630,74,33,360"
-                               />
-        <!--phần errormess trong Resource của App.xaml-->
+               Margin="0,0,700,415"/>
+        <!--phần errormess trong Resource-->
         <ui:TextBox x:Name="txtNgayXuatHD"
                     Validation.ErrorTemplate="{StaticResource errormessHD}"
                     LostFocus="InputField_LostFocus"
-                    Margin="248,157,502,0"
+                    Margin="239,209,506,0"
                     VerticalAlignment="Top"
                     Height="35">
             <i:Interaction.Behaviors>
@@ -192,14 +188,15 @@
 
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
-               Margin="591,42,53,384"
+               Margin="614,72,53,346"
                FontSize="15"
-               Foreground="Black"
+               Foreground="Black"             
                FontWeight="Medium"/>
         <!--Số Lượng SP Xuất ra trong Hóa Đơn-->
         <ui:TextBox x:Name="txtSoLuongHD"
-                    Margin="732,38,33,0"
+                    Margin="754,65,11,0"
                     VerticalAlignment="Top"
+                    Height="35"
                     Validation.ErrorTemplate="{StaticResource errormessHD}"
                     TextChanged="txtSoLuongHD_TextChanged"
                     LostFocus="InputField_LostFocus">
@@ -216,41 +213,44 @@
         </ui:TextBox>
         <Label x:Name="lbGiamGiaHD"
                Content="Giảm Giá: " 
-               Margin="591,97,120,316"
+               Margin="614,144,97,269"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ui:TextBox x:Name="txtGiamGiaHD" Margin="732,93,33,0" VerticalAlignment="Top" IsReadOnly="True" TextChanged="txtGiamGiaHD_TextChanged"/>
+        <ui:TextBox x:Name="txtGiamGiaHD" Margin="754,140,10,0" VerticalAlignment="Top" IsReadOnly="True" TextChanged="txtGiamGiaHD_TextChanged" Height="35"/>
         <Label x:Name="lbThanhTienHD"
                Content="Thành Tiền: " 
-               Margin="593,160,118,239"
+               Margin="614,216,97,183"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ui:TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
-        <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click" FontSize="15" Background="LightGreen"/>
-        <ui:Button x:Name="btnRefresh" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefresh_Click" Margin="528,36,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <ui:Button x:Name="btnRefreshKH" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefreshKH_Click" Margin="528,97,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <ui:TextBox x:Name="txtThanhTienHD" Margin="754,209,12,0" VerticalAlignment="Top" IsReadOnly="True" Height="35"/>
+        <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="434,346,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click" FontSize="15" Background="LightGreen"/>
+        <ui:Button x:Name="btnRefresh" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefresh_Click" Margin="526,71,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <ui:Button x:Name="btnRefreshKH" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefreshKH_Click" Margin="528,143,0,0" VerticalAlignment="Top" FontSize="15"/>
         <Label x:Name="lblDauSao_Copy" 
             Height="30"
             FontSize="15"
             Content="*"
+            Width="10"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="159,0,618,340"/>
+            Margin="0,80,700,350"/>
         <Label x:Name="lblDauSao_Copy1" 
             Height="30"
             FontSize="15"
             Content="*"
             Foreground="Red"
+            Width="10"
             FontWeight="Medium"
-            Margin="159,30,616,260"/>
+            Margin="0,150,700,285"/>
         <Label x:Name="lblDauSao_Copy2" 
             Height="30"
             FontSize="15"
             Content="*"
+            Width="10"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="670,0,0,470"/>
+            Margin="370,0,0,420"/>
     </Grid>
 </Page>

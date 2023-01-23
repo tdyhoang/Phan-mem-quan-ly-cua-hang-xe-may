@@ -50,24 +50,6 @@ namespace MotoStore.Views.Pages.IOPagePages
             RefreshKhachHang();
             txtNgayXuatHD.Text = DateTime.Today.ToString("dd/MM/yyyy");
         }
-
-        //private void Timer_Tick(object sender, EventArgs e)
-        //{
-        //    if (dem == 7)           //dem = 7 Thì Ngừng Nháy
-        //        timer.Stop();
-        //    if (Nhay)
-        //    {
-        //        lblThongBao.Foreground = Brushes.Red;
-        //        dem++;
-        //    }
-        //    else
-        //    {
-        //        lblThongBao.Foreground = Brushes.Black;
-        //        dem++;
-        //    }
-        //    Nhay = !Nhay;
-        //    //Hàm Này Để Nháy Thông Báo 
-        //}
         private void btnAddNewHoaDon_Click(object sender, RoutedEventArgs e)
         {
             foreach (var c in InputFields.Where(c => Validation.GetHasError(c)))
@@ -85,7 +67,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 MessageBox.Show("Các ô được đánh dấu * không được để trống!");
                 return;
             }
-            SqlCommand cmd;
+            
             using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
             try
             {
@@ -94,8 +76,9 @@ namespace MotoStore.Views.Pages.IOPagePages
                 try
                 {
                     string ngayXuatHD = string.IsNullOrEmpty(txtNgayXuatHD.Text) ? "null" : $"'{txtNgayXuatHD.Text}'";
-                    cmd = new($"Set Dateformat dmy\nInsert into HoaDon values('{cmbMaSPHD.Text}', '{cmbMaKHHD.Text}', '{PageChinh.getMa}', {ngayXuatHD}, {txtSoLuongHD.Text}, {txtThanhTienHD.Text})", con, trans);
+                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into HoaDon values('{cmbMaSPHD.Text}', '{cmbMaKHHD.Text}', '{PageChinh.getMa}', {ngayXuatHD}, {int.Parse(txtSoLuongHD.Text)}, {decimal.Parse(txtThanhTienHD.Text)})", con, trans);
                     cmd.ExecuteNonQuery();
+                    
                     trans.Commit();
                     PageRefresh();
                     MessageBox.Show("Thêm dữ liệu thành công");

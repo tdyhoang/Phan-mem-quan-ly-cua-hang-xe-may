@@ -11,7 +11,10 @@
       Title="IOKhachHangPage">
 
     <Grid>
-        <Border Background="LightBlue" Height="580"/>
+        <Border Height="580" 
+                VerticalAlignment="Center"
+                Background="LightBlue"
+                HorizontalAlignment="Stretch"/>
 
 
         <Label x:Name="lbTenKH"
@@ -124,12 +127,12 @@
         <Button x:Name="btnAddNewKhachHang" 
                 FontWeight="UltraBlack" 
                 Content="THÊM MỚI" 
-                Margin="324,328,0,0"  
+                Margin="349,331,0,0"  
                 Height="48" 
                 Width="117" 
                 Click="btnAddNewKhachHang_Click"
                 Background="LightGreen" 
-                BorderThickness="1" 
+                BorderThickness="1"            
                 VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
