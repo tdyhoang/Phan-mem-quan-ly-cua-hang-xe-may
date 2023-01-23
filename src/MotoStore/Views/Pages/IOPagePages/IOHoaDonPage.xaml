@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MotoStore.Views.Pages.IOPagePages"
+      d:DataContext="{d:DesignInstance Type=local:IOHoaDonPage}"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -18,9 +19,12 @@
             <!--errormessHD là thông báo lỗi của Ngày xuất Hóa Đơn-->
             <Grid>
                 <AdornedElementPlaceholder/>
-                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right"
-                               Margin="0 35 15 0">
-
+                <TextBlock Text="{Binding [0].ErrorContent}"
+                           Foreground="Red"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0 35 15 0">
                 </TextBlock>
             </Grid>
         </ControlTemplate>
@@ -35,7 +39,21 @@
                FontWeight="Medium"/>
 
         <StackPanel Margin="247,36,503,0" VerticalAlignment="Top" Height="60" PreviewKeyDown="StackPanel_PreviewKeyDown">
-            <ComboBox x:Name="cmbMaSPHD" ItemsSource="{Binding}" IsEditable="True"  DropDownClosed="cmbMaSPHD_DropDownClosed">
+            <ComboBox x:Name="cmbMaSPHD"
+                      ItemsSource="{Binding Path=matHangs}"
+                      IsEditable="True"
+                      Validation.ErrorTemplate="{StaticResource errormessHD}"
+                      StaysOpenOnEdit="True"
+                      DropDownClosed="cmbMaSPHD_DropDownClosed"
+                      LostFocus="InputField_LostFocus"
+                      KeyUp="ComboBox_KeyUp">
+                <ComboBox.Text>
+                    <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <helpers:CustomValidationRule ValidationMode="MaMhValidation" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ComboBoxItem}">
                         <Setter Property="Template">
@@ -56,7 +74,6 @@
                                             <Setter TargetName="gd"  Property="Background" Value="Gray"></Setter>
                                             <Setter TargetName="gd"  Property="TextElement.Foreground" Value="White"></Setter>
                                         </Trigger>
-
                                         <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
                                             <Setter TargetName="gd"  Property="Background" Value="Blue"></Setter>
                                             <Setter TargetName="gd"  Property="TextElement.Foreground" Value="Black"></Setter>
@@ -81,8 +98,21 @@
 
         <!--Mã Khách Hàng trong Hóa Đơn-->
         <StackPanel  Margin="247,97,503,0" VerticalAlignment="Top" Height="34" PreviewKeyDown="StackPanel_PreviewKeyDown">
-            <ComboBox x:Name="cmbMaKHHD" ItemsSource="{Binding}" DropDownClosed="cmbMaKHHD_DropDownClosed" IsEditable="True"  >
-
+            <ComboBox x:Name="cmbMaKHHD"
+                      ItemsSource="{Binding Path=KhachHangs}"
+                      Validation.ErrorTemplate="{StaticResource errormessHD}"
+                      StaysOpenOnEdit="True"
+                      LostFocus="InputField_LostFocus"
+                      DropDownClosed="cmbMaKHHD_DropDownClosed"
+                      IsEditable="True"
+                      KeyUp="ComboBox_KeyUp">
+                <ComboBox.Text>
+                    <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <helpers:CustomValidationRule ValidationMode="MaKhValidation" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ComboBoxItem}">
                         <Setter Property="Template">
@@ -140,18 +170,27 @@
                                Margin="630,74,33,360"
                                />
         <!--phần errormess trong Resource của App.xaml-->
-        <TextBox  x:Name="txtNgayXuatHD" Validation.ErrorTemplate="{StaticResource errormessHD}" Margin="248,157,502,0" VerticalAlignment="Top" Height="35"  >
+        <ui:TextBox x:Name="txtNgayXuatHD"
+                    Validation.ErrorTemplate="{StaticResource errormessHD}"
+                    LostFocus="InputField_LostFocus"
+                    Margin="248,157,502,0"
+                    VerticalAlignment="Top"
+                    Height="35">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="DateInput"/>
+                <helpers:TextBoxInputBehavior InputMode="DateInput" />
             </i:Interaction.Behaviors>
-            <TextBox.Text>
-                <Binding Path="DateHD" ElementName="HDPage" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" >
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         Converter="{StaticResource DateTimeConverter}"
+                         UpdateSourceTrigger="LostFocus"
+                         ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
-                        <helpers:CustomValidationRule ValidationMode="DateValidation"/>
+                        <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
                     </Binding.ValidationRules>
                 </Binding>
-            </TextBox.Text>
-        </TextBox>
+            </ui:TextBox.Text>
+        </ui:TextBox>
 
         <Label x:Name="lbsoLuongHD"
                Content="Số Lượng: " 
@@ -160,25 +199,37 @@
                Foreground="Black"
                FontWeight="Medium"/>
         <!--Số Lượng SP Xuất ra trong Hóa Đơn-->
-        <TextBox x:Name="txtSoLuongHD" Margin="732,38,33,0" VerticalAlignment="Top" TextChanged="txtSoLuongHD_TextChanged" LostFocus="txtSoLuongHD_LostFocus">
+        <ui:TextBox x:Name="txtSoLuongHD"
+                    Margin="732,38,33,0"
+                    VerticalAlignment="Top"
+                    Validation.ErrorTemplate="{StaticResource errormessHD}"
+                    TextChanged="txtSoLuongHD_TextChanged"
+                    LostFocus="InputField_LostFocus">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
+                <helpers:TextBoxInputBehavior InputMode="IntegerInput" />
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbGiamGiaHD"
                Content="Giảm Giá: " 
                Margin="591,97,120,316"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtGiamGiaHD" Margin="732,93,33,0" VerticalAlignment="Top" IsReadOnly="True" TextChanged="txtGiamGiaHD_TextChanged"/>
+        <ui:TextBox x:Name="txtGiamGiaHD" Margin="732,93,33,0" VerticalAlignment="Top" IsReadOnly="True" TextChanged="txtGiamGiaHD_TextChanged"/>
         <Label x:Name="lbThanhTienHD"
                Content="Thành Tiền: " 
                Margin="593,160,118,239"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
+        <ui:TextBox x:Name="txtThanhTienHD" Margin="732,148,33,0" VerticalAlignment="Top" IsReadOnly="True"/>
         <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="658,243,0,0" VerticalAlignment="Top" Height="48" Width="117" Click="btnAddNewHoaDon_Click" FontSize="15" Background="LightGreen"/>
         <ui:Button x:Name="btnRefresh" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefresh_Click" Margin="528,36,0,0" VerticalAlignment="Top" FontSize="15"/>
         <ui:Button x:Name="btnRefreshKH" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefreshKH_Click" Margin="528,97,0,0" VerticalAlignment="Top" FontSize="15"/>
@@ -203,7 +254,5 @@
             Foreground="Red"
             FontWeight="Medium"
             Margin="670,0,0,470"/>
-
-
     </Grid>
 </Page>

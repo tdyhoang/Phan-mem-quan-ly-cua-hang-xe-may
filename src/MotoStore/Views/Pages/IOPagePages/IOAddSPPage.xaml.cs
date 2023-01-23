@@ -88,7 +88,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
             else
             {
-                //File.Move("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png", "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + MaMH+".png");
+                //File.Move("D:\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png", "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + MaMH+".png");
                 con.Open();
                 cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
                 cmd.ExecuteNonQuery();
@@ -151,7 +151,6 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void cmbMaNCC_LostFocus(object sender, RoutedEventArgs e)
         {
-            bool checkMaNCC = true;
             if (string.IsNullOrWhiteSpace(cmbMaNCC.Text))
             {
                 timer.Interval = new(0, 0, 0, 0, 200);
