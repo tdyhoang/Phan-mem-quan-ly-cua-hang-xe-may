@@ -39,11 +39,20 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="5,0">
-            <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
-            <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" />
-        </StackPanel>
+        <DockPanel Margin="5,0">
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
+                    <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+                    <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" />
+                </StackPanel>
+                <ui:Button Content="Xuất file" Click="Export" Grid.Column="1" />
+            </Grid>
+        </DockPanel>
 
         <ui:DynamicScrollViewer Grid.Row="1"
                                 MaxHeight="568"

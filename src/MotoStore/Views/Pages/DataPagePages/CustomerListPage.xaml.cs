@@ -197,7 +197,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         private void Export(object sender, RoutedEventArgs e)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string filePath = "";
+            string filePath = string.Empty;
             // tạo SaveFileDialog để lưu file excel
             SaveFileDialog dialog = new()
             {
@@ -229,33 +229,24 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // lấy sheet vừa add ra để thao tác
                     ExcelWorksheet ws = p.Workbook.Worksheets["Customer"];
 
-                    // đặt tên cho sheet
-                    ws.Name = "Customer";
-
-                    // Tạo danh sách các column header
-                    string[] arrColumnHeader = { "Mã KH", "Họ tên", "Ngày sinh", "Giới tính", "Địa chỉ", "SĐT", "Email", "Loại KH" };
-
-                    // lấy ra số lượng cột cần dùng dựa vào số lượng header
-                    var countColHeader = arrColumnHeader.Length;
-
                     // merge các column lại từ column 1 đến số column header
                     // gán giá trị cho cell vừa merge là Danh sách khách hàng từ MotoStore
                     ws.Cells[1, 1].Value = "Danh sách khách hàng từ MotoStore";
-                    ws.Cells[1, 1, 1, countColHeader].Merge = true;
+                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Merge = true;
                     // in đậm
-                    ws.Cells[1, 1, 1, countColHeader].Style.Font.Bold = true;
+                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Style.Font.Bold = true;
                     // căn giữa
-                    ws.Cells[1, 1, 1, countColHeader].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                     int colIndex = 1;
                     int rowIndex = 2;
 
                     //tạo các header từ column header đã tạo từ bên trên
-                    foreach (var item in arrColumnHeader)
+                    foreach (var item in grdCustomer.Columns)
                     {
                         var cell = ws.Cells[rowIndex, colIndex];
 
-                        //set màu thành gray
+                        //set màu thành light blue
                         var fill = cell.Style.Fill;
                         fill.PatternType = ExcelFillStyle.Solid;
                         fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
@@ -265,10 +256,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                         border.Bottom.Style = border.Top.Style = border.Left.Style = border.Right.Style = ExcelBorderStyle.Thin;
 
                         //gán giá trị
-                        cell.Value = item;
+                        cell.Value = item.Header;
 
-                        if (string.Equals(item, "Ngày sinh"))
-                            // Format cho ngày sinh
+                        if (item.Header.ToString().Contains("Ngày", StringComparison.OrdinalIgnoreCase))
+                            // Format cho ngày
                             ws.Column(colIndex).Style.Numberformat.Format = "dd/MM/yyyy";
 
                         colIndex++;
@@ -299,6 +290,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             ws.Cells[rowIndex, colIndex++].Value = kh.Email;
                             ws.Cells[rowIndex, colIndex++].Value = kh.LoaiKh;
                         }
+                    ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
                     //Lưu file lại
                     byte[] bin = p.GetAsByteArray();
