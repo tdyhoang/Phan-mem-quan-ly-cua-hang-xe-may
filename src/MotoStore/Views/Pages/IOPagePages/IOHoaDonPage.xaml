@@ -182,9 +182,7 @@
             <ui:TextBox.Text>
                 <Binding Path="Text"
                          RelativeSource="{RelativeSource Self}"
-                         Converter="{StaticResource DateTimeConverter}"
-                         UpdateSourceTrigger="LostFocus"
-                         ValidatesOnDataErrors="True">
+                         UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
                         <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
                     </Binding.ValidationRules>
@@ -209,7 +207,7 @@
                 <helpers:TextBoxInputBehavior InputMode="IntegerInput" />
             </i:Interaction.Behaviors>
             <ui:TextBox.Text>
-                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus" ValidatesOnDataErrors="True">
+                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
                     <Binding.ValidationRules>
                         <helpers:CustomValidationRule IsNullable="False" />
                     </Binding.ValidationRules>
