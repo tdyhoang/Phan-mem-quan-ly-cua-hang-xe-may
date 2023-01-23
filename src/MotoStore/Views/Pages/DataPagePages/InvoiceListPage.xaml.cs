@@ -4,12 +4,10 @@ using System;
 using System.Windows;
 using System.Linq;
 using System.Data;
-using Wpf.Ui.Common.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
-using MotoStore.Helpers;
 using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
@@ -315,25 +313,23 @@ namespace MotoStore.Views.Pages.DataPagePages
                     ObservableCollection<HoaDon> invoiceList = new(TableData);
 
                     // với mỗi hd trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var hd in invoiceList)
-                        // Kiểm tra dữ liệu có thỏa điều kiện filter hay không
-                        if (grdInvoice.Items.PassesFilter(hd))
-                        {
-                            // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            colIndex = 1;
+                    foreach (var hd in invoiceList.Where(hd => grdInvoice.Items.PassesFilter(hd)))
+                    {
+                        // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                        colIndex = 1;
 
-                            // rowIndex tương ứng từng dòng dữ liệu
-                            rowIndex++;
+                        // rowIndex tương ứng từng dòng dữ liệu
+                        rowIndex++;
 
-                            //gán giá trị cho từng cell                      
-                            ws.Cells[rowIndex, colIndex++].Value = hd.MaHd;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.MaMh;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.MaKh;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.MaNv;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.NgayLapHd;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.SoLuong;
-                            ws.Cells[rowIndex, colIndex++].Value = hd.ThanhTien;
-                        }
+                        //gán giá trị cho từng cell                      
+                        ws.Cells[rowIndex, colIndex++].Value = hd.MaHd;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.MaMh;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.MaKh;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.MaNv;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.NgayLapHd;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.SoLuong;
+                        ws.Cells[rowIndex, colIndex++].Value = hd.ThanhTien;
+                    }
                     ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
                     //Lưu file lại

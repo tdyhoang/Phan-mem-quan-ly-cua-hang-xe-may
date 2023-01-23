@@ -1,10 +1,5 @@
-﻿using System;
-using System.Threading;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using Microsoft.Data.SqlClient;
-using MotoStore.Database;
-using MotoStore.Views.Pages.LoginPages;
 /*Trong Quá Trình Chạy Login Form, Nếu Gặp Lỗi 
  Unable to copy file "obj\Debug\Demo.exe" to "bin\Debug\Demo.exe".
  The process cannot access the file 'bin\Debug\Demo.exe' because it is being used by another process.Demo:

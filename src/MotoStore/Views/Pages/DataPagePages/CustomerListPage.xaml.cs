@@ -4,7 +4,6 @@ using System;
 using System.Windows;
 using System.Linq;
 using System.Data;
-using Wpf.Ui.Common.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -13,8 +12,6 @@ using OfficeOpenXml;
 using System.IO;
 using Microsoft.Win32;
 using OfficeOpenXml.Style;
-using System.Collections.Generic;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -35,9 +32,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.KhachHangs);
-            foreach (var khachHang in TableData.ToList())
-                if (khachHang.DaXoa)
-                    TableData.Remove(khachHang);
+            foreach (var khachHang in TableData.Where(kh => kh.DaXoa).ToList())
+                TableData.Remove(khachHang);
             grdCustomer.ItemsSource = TableData;
         }
 
@@ -270,26 +266,24 @@ namespace MotoStore.Views.Pages.DataPagePages
                     ObservableCollection<KhachHang> customerList = new(TableData);
 
                     // với mỗi kh trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var kh in customerList)
-                        // Kiểm tra dữ liệu có thỏa điều kiện filter hay không
-                        if (grdCustomer.Items.PassesFilter(kh))
-                        {
-                            // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            colIndex = 1;
+                    foreach (var kh in customerList.Where(kh => grdCustomer.Items.PassesFilter(kh)))
+                    {
+                        // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                        colIndex = 1;
 
-                            // rowIndex tương ứng từng dòng dữ liệu
-                            rowIndex++;
+                        // rowIndex tương ứng từng dòng dữ liệu
+                        rowIndex++;
 
-                            //gán giá trị cho từng cell                      
-                            ws.Cells[rowIndex, colIndex++].Value = kh.MaKh;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.HoTenKh;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.NgSinh;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.GioiTinh;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.DiaChi;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.Sdt;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.Email;
-                            ws.Cells[rowIndex, colIndex++].Value = kh.LoaiKh;
-                        }
+                        //gán giá trị cho từng cell                      
+                        ws.Cells[rowIndex, colIndex++].Value = kh.MaKh;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.HoTenKh;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.NgSinh;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.GioiTinh;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.DiaChi;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.Sdt;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.Email;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.LoaiKh;
+                    }
                     ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
                     //Lưu file lại

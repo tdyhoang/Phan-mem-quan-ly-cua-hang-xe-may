@@ -4,11 +4,9 @@ using System;
 using System.Windows;
 using System.Linq;
 using System.Data;
-using Wpf.Ui.Common.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
-using MotoStore.Views.Pages.LoginPages;
 using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
@@ -33,9 +31,8 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.NhanViens);
-            foreach (var nhanVien in TableData.ToList())
-                if (nhanVien.DaXoa)
-                    TableData.Remove(nhanVien);
+            foreach (var nhanVien in TableData.Where(nv => nv.DaXoa).ToList())
+                TableData.Remove(nhanVien);
             grdEmployee.ItemsSource = TableData;
         }
 
@@ -126,7 +123,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     {
                         cmd = new(" ", con, trans);
 
-                        foreach (object obj in dg.SelectedItems)
+                        foreach (var obj in dg.SelectedItems)
                         {
                             if (obj is not NhanVien nv)
                                 continue;
@@ -258,27 +255,25 @@ namespace MotoStore.Views.Pages.DataPagePages
                     ObservableCollection<NhanVien> employeeList = new(TableData);
 
                     // với mỗi nv trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var nv in employeeList)
-                        // Kiểm tra dữ liệu có thỏa điều kiện filter hay không
-                        if (grdEmployee.Items.PassesFilter(nv))
-                        {
-                            // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            colIndex = 1;
+                    foreach (var nv in employeeList.Where(nv => grdEmployee.Items.PassesFilter(nv)))
+                    {
+                        // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                        colIndex = 1;
 
-                            // rowIndex tương ứng từng dòng dữ liệu
-                            rowIndex++;
+                        // rowIndex tương ứng từng dòng dữ liệu
+                        rowIndex++;
 
-                            //gán giá trị cho từng cell                      
-                            ws.Cells[rowIndex, colIndex++].Value = nv.MaNv;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.HoTenNv;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.NgSinh;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.GioiTinh;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.DiaChi;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.Sdt;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.Email;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.ChucVu;
-                            ws.Cells[rowIndex, colIndex++].Value = nv.NgVl;
-                        }
+                        //gán giá trị cho từng cell                      
+                        ws.Cells[rowIndex, colIndex++].Value = nv.MaNv;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.HoTenNv;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.NgSinh;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.GioiTinh;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.DiaChi;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.Sdt;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.Email;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.ChucVu;
+                        ws.Cells[rowIndex, colIndex++].Value = nv.NgVl;
+                    }
                     ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
                     //Lưu file lại

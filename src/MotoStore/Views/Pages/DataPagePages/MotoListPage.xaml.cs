@@ -1,9 +1,7 @@
 ﻿using MotoStore.Database;
-using System.Collections.Generic;
 using System;
 using System.Windows;
 using System.Linq;
-using Wpf.Ui.Common.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -60,7 +58,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
                     // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                    foreach (object obj in grdMoto.Items)
+                    foreach (var obj in grdMoto.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                         if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value)))
@@ -269,29 +267,27 @@ namespace MotoStore.Views.Pages.DataPagePages
                     ObservableCollection<MatHang> motoList = new(TableData);
 
                     // với mỗi mh trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var mh in motoList)
-                        // Kiểm tra dữ liệu có thỏa điều kiện filter hay không
-                        if (grdMoto.Items.PassesFilter(mh))
-                        {
-                            // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            colIndex = 1;
+                    foreach (var mh in motoList.Where(mh => grdMoto.Items.PassesFilter(mh)))
+                    {
+                        // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                        colIndex = 1;
 
-                            // rowIndex tương ứng từng dòng dữ liệu
-                            rowIndex++;
+                        // rowIndex tương ứng từng dòng dữ liệu
+                        rowIndex++;
 
-                            //gán giá trị cho từng cell                      
-                            ws.Cells[rowIndex, colIndex++].Value = mh.MaMh;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.TenMh;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.SoPhanKhoi;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.Mau;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.GiaNhapMh;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.GiaBanMh;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.SoLuongTonKho;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.MaNcc;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.HangSx;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.XuatXu;
-                            ws.Cells[rowIndex, colIndex++].Value = mh.MoTa;
-                        }
+                        //gán giá trị cho từng cell                      
+                        ws.Cells[rowIndex, colIndex++].Value = mh.MaMh;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.TenMh;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.SoPhanKhoi;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.Mau;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.GiaNhapMh;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.GiaBanMh;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.SoLuongTonKho;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.MaNcc;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.HangSx;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.XuatXu;
+                        ws.Cells[rowIndex, colIndex++].Value = mh.MoTa;
+                    }
                     ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
                     //Lưu file lại

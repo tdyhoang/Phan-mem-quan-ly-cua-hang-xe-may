@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MotoStore.Database;
+﻿namespace MotoStore.Database;
 
 public partial class UserApp
 {

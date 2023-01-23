@@ -37,29 +37,38 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="5,0">
-            <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
-            <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
-            <ui:Button Content="Thêm dòng" Icon="Add24" helpers:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
-                <ui:Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem StaysOpenOnClick="True">
-                            <MenuItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Nhập mã NV:" Margin="5,0" VerticalAlignment="Center" />
-                                    <ui:TextBox Name="tbxMaNv">
-                                        <i:Interaction.Behaviors>
-                                            <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput" />
-                                        </i:Interaction.Behaviors>
-                                    </ui:TextBox>
-                                    <ui:Button Content="Thêm" Margin="5,0" Click="AddRow" />
-                                </StackPanel>
-                            </MenuItem.Header>
-                        </MenuItem>
-                    </ContextMenu>
-                </ui:Button.ContextMenu>
-            </ui:Button>
-        </StackPanel>
+        <DockPanel Margin="5,0">
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <ui:Button Content="Làm mới dữ liệu" Icon="ArrowClockwise24" Click="RefreshView" />
+                    <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" />
+                    <ui:Button Content="Thêm dòng" Icon="Add24" helpers:ContextMenuLeftClickBehavior.IsLeftClickEnabled="True">
+                        <ui:Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem StaysOpenOnClick="True">
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Nhập mã NV:" Margin="5,0" VerticalAlignment="Center" />
+                                            <ui:TextBox Name="tbxMaNv">
+                                                <i:Interaction.Behaviors>
+                                                    <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput" />
+                                                </i:Interaction.Behaviors>
+                                            </ui:TextBox>
+                                            <ui:Button Content="Thêm" Margin="5,0" Click="AddRow" />
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ui:Button.ContextMenu>
+                    </ui:Button>
+                </StackPanel>
+                <ui:Button Content="Xuất file" Click="Export" Grid.Column="1" />
+            </Grid>
+        </DockPanel>
 
         <ui:DynamicScrollViewer Grid.Row="1"
                                 MaxHeight="568"
