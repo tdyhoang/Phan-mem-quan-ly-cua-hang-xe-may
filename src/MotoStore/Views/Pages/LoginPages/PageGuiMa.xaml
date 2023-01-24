@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.LoginPages"
-      mc:Ignorable="d" 
+      xmlns:local="clr-namespace:MotoStore.Views.Pages.LoginPages" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helpers="clr-namespace:MotoStore.Helpers"
+           mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageGuiMa">
 
@@ -51,45 +51,47 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Grid>
-            <Label x:Name="lblThongBao" 
-                           Content="Chúng tôi đã gửi mã 6 số về địa chỉ Email bạn cung cấp, xin hãy điền nó xuống dưới:" 
-                           Height="35" Width="675"
-                           FontSize="17.5" 
-                           FontWeight="Medium"
-                           Foreground="White">
+        <Label x:Name="lblThongBao"
+               Content="Chúng tôi đã gửi mã 6 số về địa chỉ Email bạn cung cấp, xin hãy điền nó xuống dưới:"
+               Height="35"
+               Width="675"
+               FontSize="17.5"
+               FontWeight="Medium"
+               Foreground="White">
             </Label>
-            <TextBox x:Name="txtMa" 
-                             Height="40" 
-                             Width="150" 
-                             Margin="320,245,320,155"
-                             Foreground="Red"
-                             FontSize="15">
-                
-            </TextBox>
-            <Button x:Name="buttonXacNhanGuiMa" 
-                            Content="Xác Nhận" 
-                            FontWeight="Medium" 
-                            FontSize="19" 
-                            Height="40" 
-                            Width="120" 
-                            Margin="0,360,0,0" 
-                            Click="buttonXacNhanGuiMa_Click" 
-                            Background="#FF00BEFF" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <ui:TextBox x:Name="txtMa"
+                        Height="40"
+                        Width="150"
+                        Margin="320,245,320,155"
+                        Foreground="Red"
+                        FontSize="15">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="DigitInput" />
+            </i:Interaction.Behaviors>
+        </ui:TextBox>
+        <ui:Button x:Name="buttonXacNhanGuiMa"
+                   Content="Xác Nhận"
+                   FontWeight="Medium"
+                   FontSize="19"
+                   Height="40"
+                   Width="120"
+                   Margin="0,360,0,0"
+                   Click="buttonXacNhanGuiMa_Click"
+                   Background="#FF00BEFF"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="19"/>
                     </Style>
                 </Button.Resources>
-            </Button>
-            <Label x:Name="lbl" 
-                           Height="35" 
-                           Width="600" 
-                           FontSize="20" 
-                           FontWeight="Medium" 
-                           Foreground="Red" 
-                           Margin="100,340,100,27" ></Label>
-            
-        </Grid>
+            </ui:Button>
+            <Label x:Name="lbl"
+                   Height="35"
+                   Width="600"
+                   FontSize="20"
+                   FontWeight="Medium"
+                   Foreground="Red"
+                   Margin="100,340,100,27" />
     </Grid>
 </ui:UiPage>

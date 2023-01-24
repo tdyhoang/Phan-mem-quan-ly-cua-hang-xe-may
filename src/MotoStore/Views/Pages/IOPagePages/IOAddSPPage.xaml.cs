@@ -67,7 +67,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
             //string destFile = @$"pack://application:,,,/Avatars/{}.BackUp";
-            //string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getMa}";
+            //string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getNV.MaNv}";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
             if (openFileDialog.ShowDialog() == true)
@@ -92,7 +92,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
                 cmd.ExecuteNonQuery();
                 DateTime dt = DateTime.Now;
-                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mặt hàng mới')", con);
+                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mặt hàng mới')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 

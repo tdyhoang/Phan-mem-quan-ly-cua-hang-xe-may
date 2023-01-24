@@ -273,8 +273,8 @@ Create Table LenLich
 (
 	LenLichID uniqueidentifier DEFAULT newid(),
 	MaNV varchar(5) not null,          /*Mã Nhân Viên để biết ai đã lên lịch, tiện cho tính năng xem lịch sử hoạt động sau này*/
-	NgLenLichBD smalldatetime,      /*Ngày, giờ bắt đầu*/
-	NgLenLichKT smalldatetime,      /*Ngày, giờ kết thúc*/
+	NgLenLichBD smalldatetime not null,      /*Ngày, giờ bắt đầu*/
+	NgLenLichKT smalldatetime not null,      /*Ngày, giờ kết thúc*/
 	NoiDungLenLich nvarchar(200),   /*Nội dung lên lịch hôm đó*/
 	CONSTRAINT PK_LenLichID primary key(LenLichID)
 )
@@ -284,7 +284,7 @@ Create Table LichSuHoatDong
 (
 	LshdID uniqueidentifier DEFAULT newid(),
 	MaNV varchar(5) not null,
-	ThoiGian datetime,
+	ThoiGian datetime not null,
 	HoatDong nvarchar(200),
 	CONSTRAINT PK_LshdID primary key(LshdID)
 )

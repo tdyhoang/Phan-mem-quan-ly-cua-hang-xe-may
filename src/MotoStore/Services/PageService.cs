@@ -17,10 +17,7 @@ namespace MotoStore.Services
         /// <summary>
         /// Creates new instance and attaches the <see cref="IServiceProvider"/>.
         /// </summary>
-        public PageService(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+        public PageService(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
         /// <inheritdoc />
         public T? GetPage<T>() where T : class

@@ -8,7 +8,7 @@ public partial class LichSuHoatDong
 
     public string MaNv { get; set; } = null!;
 
-    public DateTime? ThoiGian { get; set; }
+    public DateTime ThoiGian { get; set; }
 
     public string? HoatDong { get; set; }
 

@@ -16,10 +16,7 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class LoginView
     {
-        public LoginView()
-        {
-            InitializeComponent();
-        }
+        public LoginView() => InitializeComponent();
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -35,13 +32,13 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            /* string maNV = PageChinh.getMa;
+            /* string maNV = PageChinh.getNV.MaNv;
              MainDatabase mdb = new();
              SqlConnection con = new(Properties.Settings.Default.ConnectionString);
              SqlCommand cmd;
              con.Open();
              DateTime DT = DateTime.Now;
-             cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '" + PageChinh.getMa+"', '" + DT.ToString("dd-MM-yyyy HH:mm:ss")+"', N'đăng xuất')", con);
+             cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '" + PageChinh.getNV.MaNv+"', '" + DT.ToString("dd-MM-yyyy HH:mm:ss")+"', N'đăng xuất')", con);
              cmd.ExecuteNonQuery();
              con.Close();
              Thread.Sleep(2000); */

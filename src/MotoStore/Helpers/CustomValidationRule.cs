@@ -23,6 +23,7 @@ namespace MotoStore.Helpers
         {
             if (value is null && IsNullable)
                 return new(false, "Không được để trống!");
+            value ??= string.Empty;
             return ValidationMode switch
             {
                 ValidationRules.None => new(true, default),
@@ -77,8 +78,6 @@ namespace MotoStore.Helpers
 
         private static ValidationResult EmailValidation(object value)
         {
-            if (!string.IsNullOrEmpty(value.ToString()) && value.ToString().Length > 30)
-                return new(false, "Email quá dài, tối đa 30 ký tự!");
             if (string.IsNullOrEmpty(value.ToString()) || MailAddress.TryCreate(value.ToString(), out _))
                 return new(true, default);
 

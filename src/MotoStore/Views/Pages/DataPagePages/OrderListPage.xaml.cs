@@ -39,7 +39,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             else
             {
                 foreach (var ddh in TableData.ToList())
-                    if (ddh.MaNv != PageChinh.getMa)
+                    if (ddh.MaNv != PageChinh.getNV.MaNv)
                         TableData.Remove(ddh);
                 grdOrder.ItemsSource = TableData;
             }
@@ -68,7 +68,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     foreach (var obj in grdOrder.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, PageChinh.getMa) || string.Equals(value, DateTime.Today.ToString("dd/MM/yyyy"))))
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => pi.GetValue(obj) as string).All(value => string.IsNullOrEmpty(value) || string.Equals(value, PageChinh.getNV.MaNv) || string.Equals(value, DateTime.Today.ToString("dd/MM/yyyy"))))
                             continue;
                         if (obj is not DonDatHang ddh)
                             continue;
@@ -102,7 +102,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
-                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
                     cmd.ExecuteNonQuery();
                     // Làm mới nội dung hiển thị cho khớp với database
                     RefreshDataGrid();
@@ -159,7 +159,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
-                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
+                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
                         cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
@@ -187,7 +187,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+                isQuanLy = string.Equals(PageChinh.getNV.ChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
                 grdOrder.Columns[3].Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
 
                 RefreshDataGrid();
@@ -195,7 +195,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-            => TableData.Add(new() { MaNv = PageChinh.getMa, Ngdh = DateTime.Today });
+            => TableData.Add(new() { MaNv = PageChinh.getNV.MaNv, Ngdh = DateTime.Today });
 
         // Đẩy event mousewheel cho scrollviewer xử lý
         private void grdOrder_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -216,8 +216,8 @@ namespace MotoStore.Views.Pages.DataPagePages
             string filePath = string.Empty;
             // tạo SaveFileDialog để lưu file excel
             CommonSaveFileDialog dialog = new();
-            dialog.Filters.Add(new("Excel", "*.xlsx"));
-            dialog.Filters.Add(new("Excel 2003", "*.xls"));
+            dialog.Filters.Add(new("Excel", "xlsx"));
+            dialog.Filters.Add(new("Excel 2003", "xls"));
 
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -305,7 +305,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 }
                 using SqlConnection con = new(Settings.Default.ConnectionString);
                 con.Open();
-                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel đơn đặt hàng')", con);
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel đơn đặt hàng')", con);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Xuất excel thành công!");
             }

@@ -9,10 +9,7 @@ namespace MotoStore.Controls
     /// </summary>
     public partial class DateFilter
     {
-        public DateFilter()
-        {
-            InitializeComponent();
-        }
+        public DateFilter() => InitializeComponent();
 
         public string Caption
         {

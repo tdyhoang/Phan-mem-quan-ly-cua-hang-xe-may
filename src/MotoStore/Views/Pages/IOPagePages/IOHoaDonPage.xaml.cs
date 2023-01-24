@@ -75,7 +75,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 try
                 {
                     string ngayXuatHD = string.IsNullOrEmpty(txtNgayXuatHD.Text) ? "null" : $"'{txtNgayXuatHD.Text}'";
-                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into HoaDon values('{cmbMaSPHD.Text}', '{cmbMaKHHD.Text}', '{PageChinh.getMa}', {ngayXuatHD}, {int.Parse(txtSoLuongHD.Text)}, {decimal.Parse(txtThanhTienHD.Text)})", con, trans);
+                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into HoaDon values('{cmbMaSPHD.Text}', '{cmbMaKHHD.Text}', '{PageChinh.getNV.MaNv}', {ngayXuatHD}, {int.Parse(txtSoLuongHD.Text)}, {decimal.Parse(txtThanhTienHD.Text)})", con, trans);
                     cmd.ExecuteNonQuery();
                     
                     trans.Commit();
@@ -99,7 +99,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             if (string.IsNullOrEmpty(cmbMaKHHD.Text) || Validation.GetHasError(cmbMaKHHD))
                 return;
 
-            string LoaiKH = default;
+            string LoaiKH = string.Empty;
             foreach (var cus in KhachHangs.Where(kh => string.Equals(cmbMaKHHD.Text, kh.MaKh)))
                 LoaiKH = cus.LoaiKh;
 

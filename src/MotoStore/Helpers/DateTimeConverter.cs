@@ -9,7 +9,7 @@ namespace MotoStore.Helpers
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not DateTime dt || dt == default)
-                return default(string);
+                return string.Empty;
             return dt.ToString("dd/MM/yyyy");
         }
 

@@ -9,10 +9,7 @@ namespace MotoStore.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public IOViewModel(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
+        public IOViewModel(INavigationService navigationService) => _navigationService = navigationService;
 
         [ObservableProperty]
         private int _counter = 0;

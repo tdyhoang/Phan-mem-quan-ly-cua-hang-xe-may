@@ -90,7 +90,7 @@ namespace MotoStore.Views.Windows
             try
             {
                 con.Open();
-                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)

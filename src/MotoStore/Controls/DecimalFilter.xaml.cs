@@ -8,10 +8,7 @@ namespace MotoStore.Controls
     /// </summary>
     public partial class DecimalFilter
     {
-        public DecimalFilter()
-        {
-            InitializeComponent();
-        }
+        public DecimalFilter() => InitializeComponent();
 
         public string Caption
         {

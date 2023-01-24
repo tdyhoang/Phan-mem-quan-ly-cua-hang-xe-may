@@ -58,7 +58,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     foreach (var obj in grdMaintenance.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, PageChinh.getMa)))
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => pi.GetValue(obj) as string).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, PageChinh.getNV.MaNv)))
                             continue;
                         if (obj is not ThongTinBaoHanh bh)
                             continue;
@@ -84,7 +84,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
-                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
                     cmd.ExecuteNonQuery();
                     // Làm mới nội dung hiển thị cho khớp với database
                     RefreshDataGrid();
@@ -142,7 +142,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
-                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
+                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
                         cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
@@ -170,7 +170,7 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             if ((bool)e.NewValue)
             {
-                bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
+                bool isQuanLy = string.Equals(PageChinh.getNV.ChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
                 grdMaintenance.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
@@ -202,8 +202,8 @@ namespace MotoStore.Views.Pages.DataPagePages
             string filePath = string.Empty;
             // tạo SaveFileDialog để lưu file excel
             CommonSaveFileDialog dialog = new();
-            dialog.Filters.Add(new("Excel", "*.xlsx"));
-            dialog.Filters.Add(new("Excel 2003", "*.xls"));
+            dialog.Filters.Add(new("Excel", "xlsx"));
+            dialog.Filters.Add(new("Excel 2003", "xls"));
 
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -288,7 +288,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 }
                 using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                 con.Open();
-                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel bảo hành')", con);
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel bảo hành')", con);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Xuất excel thành công!");
             }

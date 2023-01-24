@@ -19,7 +19,7 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
-        static string fileImg;
+        static string? fileImg;
         public ViewModels.SettingsViewModel ViewModel
         {
             get;
@@ -79,7 +79,7 @@ namespace MotoStore.Views.Pages
                 SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                 SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
                 cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
-                cmd.Parameters["@manv"].Value = PageChinh.getMa;
+                cmd.Parameters["@manv"].Value = PageChinh.getNV.MaNv;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())

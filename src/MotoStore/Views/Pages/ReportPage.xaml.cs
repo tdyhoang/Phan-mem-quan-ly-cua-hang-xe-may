@@ -159,13 +159,13 @@ namespace MotoStore.Views.Pages
              */
             var XeBanChay = mdb.HoaDons.GroupBy(u => u.MaMh).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdXe = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             tenXeBanChay = mdb.MatHangs.Where(i => i.MaMh == XeBanChay.IdXe).Select(i => i.TenMh).FirstOrDefault();
-            txtblThgTinMHBanChay.Text = tenXeBanChay + "\nMã Mặt Hàng:\n" + XeBanChay.IdXe;
+            txtblThgTinMHBanChay.Text = $"{tenXeBanChay}\nMã Nhân Viên: {XeBanChay.IdXe}";
             //3 Dòng trên để tìm ra mặt hàng bán chạy nhất
             SoLgXeBanChay = XeBanChay.Tong;
 
             var NVNgSuat = mdb.HoaDons.GroupBy(u => u.MaNv).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdNv = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             var tenNVNgSuat = mdb.NhanViens.Where(i => i.MaNv == NVNgSuat.IdNv).Select(i => i.HoTenNv).FirstOrDefault();
-            txtblThgTinNVNgSuat.Text = tenNVNgSuat + "\nMã Nhân Viên: " + NVNgSuat.IdNv;
+            txtblThgTinNVNgSuat.Text = $"{tenNVNgSuat}\nMã Nhân Viên: {NVNgSuat.IdNv}";
             //3 Dòng trên để tìm ra nhân viên năng suất nhất
 
             string StartDate = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
@@ -256,7 +256,7 @@ namespace MotoStore.Views.Pages
 
             var KhVIP = mdb.HoaDons.GroupBy(u => u.MaKh).Select(u => new { Tong = u.Sum(u => u.ThanhTien), IdKhach = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             var tenKhVIP = mdb.KhachHangs.Where(u => u.MaKh == KhVIP.IdKhach).Select(u => u.HoTenKh).FirstOrDefault();
-            txtblThgTinKHVIP.Text = tenKhVIP + "\nMã Khách Hàng:\n" + KhVIP.IdKhach;
+            txtblThgTinKHVIP.Text = $"{tenKhVIP}\nMã Nhân Viên: {KhVIP.IdKhach}";
             //đồ thị check if DBNULL nếu null thì cho = 0
         }
 

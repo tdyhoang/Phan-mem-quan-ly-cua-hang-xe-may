@@ -8,9 +8,9 @@ public partial class LenLich
 
     public string MaNv { get; set; } = null!;
 
-    public DateTime? NgLenLichBd { get; set; }
+    public DateTime NgLenLichBd { get; set; }
 
-    public DateTime? NgLenLichKt { get; set; }
+    public DateTime NgLenLichKt { get; set; }
 
     public string? NoiDungLenLich { get; set; }
 

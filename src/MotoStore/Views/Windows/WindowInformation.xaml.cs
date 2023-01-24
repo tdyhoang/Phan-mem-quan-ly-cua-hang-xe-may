@@ -355,7 +355,7 @@ namespace MotoStore.Views.Windows
                         cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
                         cmd.ExecuteNonQuery();
                         DateTime dt = DateTime.Now;
-                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
+                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
                         cmd.ExecuteNonQuery();
                         con.Close();
                         string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";

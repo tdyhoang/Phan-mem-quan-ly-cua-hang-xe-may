@@ -13,10 +13,7 @@ namespace MotoStore.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public DataViewModel(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
+        public DataViewModel(INavigationService navigationService) => _navigationService = navigationService;
 
         [ObservableProperty]
         private ObservableCollection<INavigationControl> _navigationItems = new();
@@ -31,7 +28,7 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
-            if (PageChinh.getChucVu.ToLower() == "quản lý")
+            if (string.Equals(PageChinh.getNV.ChucVu, "Quản lý", StringComparer.OrdinalIgnoreCase))
             {
                 NavigationItems = new()
                 {

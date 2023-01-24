@@ -12,8 +12,8 @@ using System.Windows.Threading;
 using MotoStore.Views.Pages.LoginPages;
 using Microsoft.Data.SqlClient;
 using System.Globalization;
-using Microsoft.Win32;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace MotoStore.Views.Pages
 {
@@ -53,10 +53,10 @@ namespace MotoStore.Views.Pages
 
         public class LichSuHoatDong
         {
-            public string MaNV { get; set; }
-            public string HoTenNV { get; set; }
-            public string ThoiGian { get; set; }
-            public string HoatDong { get; set; }
+            public string? MaNV { get; set; }
+            public string? HoTenNV { get; set; }
+            public string? ThoiGian { get; set; }
+            public string? HoatDong { get; set; }
         }
 
         private void DashboardPage_Loaded(object sender, RoutedEventArgs e)
@@ -77,7 +77,7 @@ namespace MotoStore.Views.Pages
                     //Nếu có nhiều hơn 1 sự kiện thì Tuần này có > 1 sự kiện đáng chú ý, xem chi tiết ở lịch
                     //Nếu chỉ có một: Nhắc Bạn: Còn n ngày, Hôm nay 
                     //Tuần này có 3 sự kiện đáng chú ý, xem chi tiết ở Lịch
-                    if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBd.Value))
+                    if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBd))
                     {
                         soSuKien++;   //Vì nó là biến toàn cục nên cứ thế mà tăng 
                         //Đánh dấu = 1 để hạn chế những lần load trang Dashboard sau nó tự động tăng số sự kiện 
@@ -126,7 +126,7 @@ namespace MotoStore.Views.Pages
             SqlCommand cmd;
             con.Open();
             DateTime DT = DateTime.Now;
-            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
+            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -138,7 +138,7 @@ namespace MotoStore.Views.Pages
         private void Lich_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             rtbNoiDung.Visibility = Visibility.Visible;
-            if (PageChinh.getChucVu.ToLower() == "quản lý")
+            if (string.Equals(PageChinh.getNV.ChucVu, "Quản lý", StringComparison.OrdinalIgnoreCase))
             {
                 enableLenLich = true;    //Cho phép lên lịch mỗi lần click chuột vào ngày bất kì trên Lịch
                 enableXoaLich = true;
@@ -176,7 +176,7 @@ namespace MotoStore.Views.Pages
 
             for (int i = 0; i < TabLength; i++) 
             {
-                if (Lich.SelectedDate.Value == DateTime.Parse(listNgBD[i]))
+                if (Lich.SelectedDate == DateTime.Parse(listNgBD[i]))
                 {
                     rtbNoiDung.AppendText($"Bắt Đầu: {listNgBD[i]} - Kết Thúc: {listNgKT[i]}\nNội Dung: {listNoiDung[i]}\n");
                     co = true;
@@ -223,7 +223,7 @@ namespace MotoStore.Views.Pages
 
             if (enableLenLich)
             {
-                string ngaylenlich = $"{Lich.SelectedDate.Value:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                string ngaylenlich = $"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
                 //if có ngày được select
                 if (Lich.SelectedDate.HasValue)
                 {
@@ -248,11 +248,11 @@ namespace MotoStore.Views.Pages
                             //Hoặc khoảng thời gian sự kiện mới lại chứa các sự kiện khác
                             foreach (var item in mdb.LenLichs.ToList())
                             {
-                                if (item.NgLenLichBd.Value.ToString("dd-MM-yyyy") == Lich.SelectedDate.Value.ToString("dd-MM-yyyy"))
+                                if (item.NgLenLichBd.ToString("dd-MM-yyyy") == Lich.SelectedDate.Value.ToString("dd-MM-yyyy"))
                                 {
                                     string gioBD = $"{cbGioBD.Text}:{cbPhutBD.Text}:00";
                                     string gioKT = $"{cbGioKT.Text}:{cbPhutKT.Text}:00";
-                                    if (DateTime.Parse(item.NgLenLichBd.Value.ToString("HH:mm:ss")) <= DateTime.Parse(gioBD) && DateTime.Parse(gioBD) <= DateTime.Parse(item.NgLenLichKt.Value.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.Value.ToString("HH:mm:ss")) <= DateTime.Parse(gioKT) && DateTime.Parse(gioKT) <= DateTime.Parse(item.NgLenLichKt.Value.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.Value.ToString("HH:mm:ss")) >= DateTime.Parse(gioBD) && DateTime.Parse(gioKT) >= DateTime.Parse(item.NgLenLichKt.Value.ToString("HH:mm:ss")))
+                                    if (DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) <= DateTime.Parse(gioBD) && DateTime.Parse(gioBD) <= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) <= DateTime.Parse(gioKT) && DateTime.Parse(gioKT) <= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) >= DateTime.Parse(gioBD) && DateTime.Parse(gioKT) >= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")))
                                     {
                                         valid = false;
                                         break;
@@ -266,10 +266,10 @@ namespace MotoStore.Views.Pages
                                 //Giải thích dòng trên:
                                 //Vì Lich.SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
 
-                                SqlCommand cmd = new($"set dateformat dmy\nInsert into LenLich values(NewID(),'{PageChinh.getMa}', '{lich} {cbGioBD.Text}:{cbPhutBD.Text}:00', '{lich} {cbGioKT.Text}:{cbPhutKT.Text}:00', N'{richText}')", con);
+                                SqlCommand cmd = new($"set dateformat dmy\nInsert into LenLich values(NewID(),'{PageChinh.getNV.MaNv}', '{lich} {cbGioBD.Text}:{cbPhutBD.Text}:00', '{lich} {cbGioKT.Text}:{cbPhutKT.Text}:00', N'{richText}')", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'lên lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'lên lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Lên lịch thành công!");
@@ -315,18 +315,18 @@ namespace MotoStore.Views.Pages
                     }
                     else
                     {
-                        string strGiomuonXoa = $"{Lich.SelectedDate.Value:dd-MM-yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                        string strGiomuonXoa = $"{Lich.SelectedDate:dd-MM-yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
                         bool Deleted = false;
                         foreach (var gio in mdb.LenLichs.ToList())
                         {
-                            if (gio.NgLenLichBd.Value.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
+                            if (gio.NgLenLichBd.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
                             {
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("d/M/yyyy");
                                 SqlCommand cmd = new($"set dateformat dmy\ndelete from LenLich where NgLenLichBD='{strGiomuonXoa}'", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getMa}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 con.Close();
                                 MessageBox.Show("Xoá Sự Kiện thành công");
@@ -420,7 +420,7 @@ namespace MotoStore.Views.Pages
                 SqlCommand cmd = new("Delete from LichSuHoatDong", con);
                 cmd.ExecuteNonQuery();
                 DateTime now = DateTime.Now;
-                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getMa}', '{now:dd-MM-yyyy HH:mm:ss}', N'xoá lịch sử')", con);
+                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{now:dd-MM-yyyy HH:mm:ss}', N'xoá lịch sử')", con);
                 cmd.ExecuteNonQuery();
                 dataGridLSHD.Items.Clear();
                 MessageBox.Show("Xoá Lịch Sử Hoạt Động Thành Công!");
@@ -431,25 +431,29 @@ namespace MotoStore.Views.Pages
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
-            if (File.Exists(@$"Avatars/{PageChinh.getMa}"))
+            var seperatedHoTenNV = PageChinh.getNV.HoTenNv.Split(' ');
+            var tenNV = seperatedHoTenNV[^1];
+            //2 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
+
+            if (File.Exists(@$"Avatars/{PageChinh.getNV.MaNv}"))
             {
                 BitmapImage image = new();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new($@"pack://application:,,,/Avatars/{PageChinh.getMa}");
+                image.UriSource = new($@"pack://application:,,,/Avatars/{PageChinh.getNV.MaNv}");
                 image.EndInit();
                 anhNhanVien.ImageSource = image;
                 image.Freeze();
             }
-            else if (PageChinh.getSex == "Nữ")
+            else if (PageChinh.getNV.GioiTinh == "Nữ")
                 anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
             else
                 anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
 
-            if (string.Equals(PageChinh.getChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(PageChinh.getNV.ChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
             {
-                lblXinChao.Content = $"  Xin Chào, {PageChinh.getTen}";
+                lblXinChao.Content = $"  Xin Chào, {tenNV}";
                 lblChucVu.Content = "Nhân Viên Quản Lý";
                 txtblSoNV.Text = $"   Số Nhân Viên\n   Bạn Quản Lý:\n{"",-12}{mdb.NhanViens.Select(d => d.MaNv).Count() - 1}";
                 int? solgxe = mdb.MatHangs.Sum(d => d.SoLuongTonKho) - mdb.HoaDons.Sum(d => d.SoLuong);
@@ -463,15 +467,15 @@ namespace MotoStore.Views.Pages
             }
             else  //Nhân viên thường
             {
-                lblXinChao.Content = $"  Xin Chào, {PageChinh.getTen}";
+                lblXinChao.Content = $"  Xin Chào, {tenNV}";
                 lblChucVu.Content = "Nhân Viên Văn Phòng";
 
                 //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
-                var dx = mdb.NhanViens.Where(u => u.MaNv == PageChinh.getMa).Select(u => u.NgVl).FirstOrDefault();
+                var dx = mdb.NhanViens.Where(u => u.MaNv == PageChinh.getNV.MaNv).Select(u => u.NgVl).FirstOrDefault();
                 int d3 = (int)(dt - dx).Value.TotalDays;
                 txtblSoNV.Text = $" Bạn Đã Gắn Bó\n Với Chúng Tôi:\n{"",-6}{d3} Ngày";
 
-                var slg = mdb.HoaDons.Where(u => u.MaNv == PageChinh.getMa).Select(u => u.SoLuong).Sum();
+                var slg = mdb.HoaDons.Where(u => u.MaNv == PageChinh.getNV.MaNv).Select(u => u.SoLuong).Sum();
                 txtblSoXe.Text = $"{"",-15}{slg}{"\n",-10}Là Số Xe\n{"",-1}Bạn Bán Được";
                 txtblSoNV.FontSize = 19;
                 txtblSoXe.FontSize = 18.9;
@@ -484,23 +488,23 @@ namespace MotoStore.Views.Pages
             }
         }
 
-        private async void btnCapNhatAvatar_Click(object sender, RoutedEventArgs e)
+        private void btnCapNhatAvatar_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog OFD = new();
-            OFD.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
+            CommonOpenFileDialog OFD = new();
+            OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
             //Cho IF vào TRY, Catch đc lỗi thì check xem có file Backup hay kh,
             //Nếu có xoá file ảnh hiện tại và đổi tên file Backup thành file ảnh hiệện tại
             //Nếu 0 có BaKUP thì quay lại hình Default
             //sau If sẽ hiện lỗi messagebox
-            //string destFile = @$"/Avatars/{PageChinh.getMa}.BackUp";
-            //string newPathToFile = @$"/Avatars/{PageChinh.getMa}";
-            string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + "BackUp";
-            string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + ".png";
+            //string destFile = @$"/Avatars/{PageChinh.getNV.MaNv}.BackUp";
+            //string newPathToFile = @$"/Avatars/{PageChinh.getNV.MaNv}";
+            string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getNV.MaNv + "BackUp";
+            string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getNV.MaNv + ".png";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
             try
             {
-                if (OFD.ShowDialog() == true)
+                if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
                     {
@@ -524,14 +528,14 @@ namespace MotoStore.Views.Pages
                     isFirstClicked = true;
                     con.Open();
                     DateTime now = DateTime.Now;
-                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getMa}', '{now:dd-MM-yyyy HH:mm:ss}', N'cập nhật ảnh')", con);
+                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{now:dd-MM-yyyy HH:mm:ss}', N'cập nhật ảnh')", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if(File.Exists(destFile))
+                if (File.Exists(destFile))
                 {
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
@@ -541,7 +545,7 @@ namespace MotoStore.Views.Pages
                 }
                 else
                 {
-                    if (PageChinh.getSex == "Nữ")
+                    if (PageChinh.getNV.GioiTinh == "Nữ")
                         anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
                     else
                         anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));

@@ -333,7 +333,7 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("UserApp");
 
-            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F284566911C078").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F284569B38C4B2").IsUnique();
 
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)

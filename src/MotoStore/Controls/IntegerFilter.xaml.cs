@@ -8,10 +8,7 @@ namespace MotoStore.Controls
     /// </summary>
     public partial class IntegerFilter
     {
-        public IntegerFilter()
-        {
-            InitializeComponent();
-        }
+        public IntegerFilter() => InitializeComponent();
 
         public string Caption
         {
