@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -207,19 +208,13 @@ namespace MotoStore.Views.Pages.DataPagePages
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             string filePath = string.Empty;
             // tạo SaveFileDialog để lưu file excel
-            SaveFileDialog dialog = new()
-            {
-                // chỉ lọc ra các file có định dạng Excel
-                Filter = "Excel | *.xlsx | Excel 2003 | *.xls"
-            };
+            CommonSaveFileDialog dialog = new();
+            dialog.Filters.Add(new("Excel", "*.xlsx"));
+            dialog.Filters.Add(new("Excel 2003", "*.xls"));
 
             // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
-            if (dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 filePath = dialog.FileName;
-
-            // nếu đường dẫn null hoặc rỗng thì return hàm
-            if (string.IsNullOrEmpty(filePath))
-                return;
 
             try
             {

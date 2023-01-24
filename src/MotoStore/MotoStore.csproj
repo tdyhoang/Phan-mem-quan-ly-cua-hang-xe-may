@@ -86,6 +86,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="WindowsAPICodePack" Version="7.0.1" />
+    <PackageReference Include="WindowsAPICodePackCore" Version="7.0.1" />
+    <PackageReference Include="WindowsAPICodePackShell" Version="7.0.1" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
