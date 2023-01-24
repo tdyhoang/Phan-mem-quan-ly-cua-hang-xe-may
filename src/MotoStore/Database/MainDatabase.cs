@@ -34,7 +34,7 @@ public partial class MainDatabase : DbContext
     public virtual DbSet<UserApp> UserApps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        => optionsBuilder.UseSqlServer(Properties.Settings.Default.ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

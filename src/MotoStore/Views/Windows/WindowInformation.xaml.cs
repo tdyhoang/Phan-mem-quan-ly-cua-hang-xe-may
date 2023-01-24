@@ -26,7 +26,7 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class WindowInformation : Window
     {
-        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         private Tuple<MatHang, string> mathang;
         private List<string> ListAnhSP = new();
         private IOSanPhamPage IOSPpg = new();
@@ -69,7 +69,7 @@ namespace MotoStore.Views.Windows
             lblHangSanXuat.Content = "Nhân Viên Bán Hàng:";
             lblXX.Content = "Tên Nhân Viên:";
             MainDatabase mdb = new();
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
 
             con.Open();
             SqlCommand cmdSoSP = new("Select Count(*) from HoaDon where NgayLapHD = @Today", con);
@@ -190,7 +190,7 @@ namespace MotoStore.Views.Windows
                 lblXuatXu.Content = listTenNV[0];
 
                 con.Close();
-                anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[0] + ".png"));
+                anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[0] + ".png"));
                 index = 0; //Cứ mỗi lần khởi tạo WI biểu đồ thì sẽ gán index = 0 để tránh lỗi index was out of range
             }
             else
@@ -334,8 +334,8 @@ namespace MotoStore.Views.Windows
             //string newPathToFile = $"/Products Images/{mathang.Item1.MaMh}.png";
             //dùng 2 dòng trên bị lỗi Could not find a part of the path 'C:\Products Images\ ... 
 
-            destFile ="C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\"+ mathang.Item1.MaMh + ".BKup";
-            newPathToFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
+            destFile ="D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\"+ mathang.Item1.MaMh + ".BKup";
+            newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
             if (OFD.ShowDialog() == true)
             {
                 //File.Move(newPathToFile, destFile); //Đổi tên File
@@ -366,8 +366,8 @@ namespace MotoStore.Views.Windows
                         cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getMa + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
                         cmd.ExecuteNonQuery();
                         con.Close();
-                        string destFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";
-                        string newPathToFile = "C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
+                        string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";
+                        string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
 
                         //Trước khi đổi ảnh phải kiểm tra có ảnh được chọn hay không
                         if (OFDFileName != null)
@@ -423,7 +423,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
+                    anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
                 }
             }
         }
@@ -450,7 +450,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
+                    anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
                 }
             }
         }

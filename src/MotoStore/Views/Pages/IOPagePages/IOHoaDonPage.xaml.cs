@@ -68,7 +68,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 return;
             }
             
-            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             try
             {
                 con.Open();

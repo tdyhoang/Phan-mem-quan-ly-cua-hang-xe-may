@@ -28,7 +28,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         }
         private readonly DispatcherTimer timer = new();
         private readonly MainDatabase mdb = new();
-        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         static private int dem = 0;   //Biến đếm số lần nháy
         private bool Nhay = false;
         internal ObservableCollection<NhaCungCap> nhaCungCaps;

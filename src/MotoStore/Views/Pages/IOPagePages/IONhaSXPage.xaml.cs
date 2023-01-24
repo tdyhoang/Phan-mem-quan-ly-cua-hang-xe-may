@@ -52,7 +52,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnAddNewNSX_Click(object sender, RoutedEventArgs e)
         {
             
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             SqlCommand cmd;
             if (!(checkTenNSX && checkSDT && checkEmail && checkGia)) {
                 MessageBox.Show("Vui lòng nhập đúng thông tin! ");

@@ -19,7 +19,7 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class ReportPage : Page
     {
-        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         private readonly MainDatabase mdb = new();
         static public string tenXeBanChay;
         static public int SoLgXeBanChay;
@@ -251,7 +251,7 @@ namespace MotoStore.Views.Pages
             {
                 txtblThgTinMHBanE.Text = "Tăng\n" + Math.Abs(Diff).ToString() + "$";
                 //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/highSaleIcon.png"));
-                AnhMHBanE.ImageSource = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\highSaleIcon.png"));
+                AnhMHBanE.ImageSource = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\highSaleIcon.png"));
             }
 
             var KhVIP = mdb.HoaDons.GroupBy(u => u.MaKh).Select(u => new { Tong = u.Sum(u => u.ThanhTien), IdKhach = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();

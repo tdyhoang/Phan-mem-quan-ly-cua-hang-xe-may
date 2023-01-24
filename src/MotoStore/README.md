@@ -79,7 +79,7 @@
     + Tiết kiệm thời gian code
 	+ Code sẽ được đồng bộ, khi test tránh trường hợp connection string khác nhau dẫn đến chỗ có bug chỗ không
 	+ Code gọn và dễ nhìn, dễ hiểu hơn
-- `System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString`
+- `Properties.Settings.Default.ConnectionString`
 
 ## Yêu cầu chung
 - Giải thích rõ ràng đối tượng người dùng mà ứng dụng nhắm đến, lợi ích của ứng dụng, ứng dụng có thân thiện với người dùng không là 1 điểm cộng

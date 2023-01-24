@@ -52,7 +52,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 return;
             }
             SqlCommand cmd;
-            using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             try
             {
                 con.Open();
@@ -123,7 +123,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             {
                 // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
                 SqlCommand cmd;
-                using SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                 try
                 {
                     con.Open();

@@ -123,7 +123,7 @@ namespace MotoStore.Views.Pages.LoginPages
                         getTen = tenNV;
                         //4 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
 
-                        SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                        SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                         SqlCommand cmd;
                         con.Open();
                         DateTime DT = DateTime.Now;

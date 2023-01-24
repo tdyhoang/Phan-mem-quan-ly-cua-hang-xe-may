@@ -321,7 +321,8 @@
                   AutoGenerateColumns="False"
                   Background="#151f2d"
                   Foreground="White"
-                  Visibility="Collapsed">
+                  Visibility="Collapsed"
+                      IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Mã NV" Width="60" Binding="{Binding MaNV}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Tên Nhân Viên" Width="140" Binding="{Binding HoTenNV}"></DataGridTextColumn>

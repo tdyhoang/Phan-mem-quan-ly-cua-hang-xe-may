@@ -53,7 +53,7 @@ namespace MotoStore.Views.Pages.LoginPages
         {
             dem = 0;
             MainDatabase mdb = new();
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             SqlCommand cmd;
             con.Open();
             if (string.IsNullOrEmpty(txtMa.Text))

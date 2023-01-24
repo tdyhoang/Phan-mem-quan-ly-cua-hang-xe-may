@@ -33,7 +33,7 @@ namespace MotoStore.Views.Pages
         private bool enableXoaLich;
         //Biến cho phép xoá lịch, công dụng tương tự như trên
         private bool isFirstClicked = true;
-        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
 
         List<string> listMaNV { get; set; } = new();
         List<string> listTenNV { get; set; } = new();
@@ -494,8 +494,8 @@ namespace MotoStore.Views.Pages
             //sau If sẽ hiện lỗi messagebox
             //string destFile = @$"/Avatars/{PageChinh.getMa}.BackUp";
             //string newPathToFile = @$"/Avatars/{PageChinh.getMa}";
-            string destFile = "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + "BackUp";
-            string newPathToFile = "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + ".png";
+            string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + "BackUp";
+            string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getMa + ".png";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
             try

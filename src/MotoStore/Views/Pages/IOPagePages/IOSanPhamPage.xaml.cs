@@ -22,6 +22,7 @@ namespace MotoStore.Views.Pages.IOPagePages
     {
         internal ObservableCollection<Tuple<MatHang, string>> matHangs;
         static string luachon = "0";
+        static Tuple<MatHang, string> mh;
         public IOSanPhamPage()
         {
             InitializeComponent();
@@ -38,8 +39,8 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (xe.DaXoa)
                     continue;
                 //matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
-                matHangs.Add(new(xe, "C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png"));
-                BitmapImageFromFile("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png");
+                matHangs.Add(new(xe, "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png"));
+                BitmapImageFromFile("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png");
             }            
             ListViewProduct.ItemsSource = matHangs;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);

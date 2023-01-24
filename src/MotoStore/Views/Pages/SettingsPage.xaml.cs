@@ -38,12 +38,12 @@ namespace MotoStore.Views.Pages
         {
             if(solanbam == 0)
             {
-                brdBaoLoi.Visibility = System.Windows.Visibility.Visible;
+                brdBaoLoi.Visibility = Visibility.Visible;
                 solanbam = 1;
             }
             else
             {
-                brdBaoLoi.Visibility = System.Windows.Visibility.Collapsed;
+                brdBaoLoi.Visibility = Visibility.Collapsed;
                 solanbam = 0;
             }
         }
@@ -77,7 +77,7 @@ namespace MotoStore.Views.Pages
                 MailMessage mess = new();
                 string getMail = "123";
                 MainDatabase mdb = new();
-                SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+                SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                 SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
                 cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
                 cmd.Parameters["@manv"].Value = PageChinh.getMa;

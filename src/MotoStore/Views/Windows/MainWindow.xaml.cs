@@ -1,5 +1,8 @@
-﻿using MotoStore.ViewModels;
+﻿using Microsoft.Data.SqlClient;
+using MotoStore.ViewModels;
+using MotoStore.Views.Pages.LoginPages;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -84,6 +87,17 @@ namespace MotoStore.Views.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             Close();
         }
     }

@@ -20,7 +20,7 @@ namespace MotoStore.Views.Pages
     public partial class PageBieuDo : Page
     {
         private readonly MainDatabase mdb = new();
-        private readonly SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         private int luachon;
         private static bool CanClick = true;
         public PageBieuDo()

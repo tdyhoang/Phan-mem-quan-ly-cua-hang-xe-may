@@ -23,9 +23,6 @@ namespace MotoStore.Helpers
         {
             if (value is null && IsNullable)
                 return new(false, "Không được để trống!");
-            // Tránh SQL Injection
-            if (value.ToString().Any(c => c == '\''))
-                return new(false, "Ký tự ' không được phép sử dụng!");
             return ValidationMode switch
             {
                 ValidationRules.None => new(true, default),

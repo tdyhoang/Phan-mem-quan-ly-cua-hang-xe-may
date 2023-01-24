@@ -52,7 +52,7 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void btnAddNewKhachHang_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection con = new(System.Configuration.ConfigurationManager.ConnectionStrings["Data"].ConnectionString);
+            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             SqlCommand cmd;
             if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT ))
             {
