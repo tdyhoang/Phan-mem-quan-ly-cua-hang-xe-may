@@ -222,20 +222,16 @@ Create table ThongTinBaoHanh
 (
 	ID int identity(1,1),
 	MaBH as 'BH' + right('000' + cast(ID as varchar(3)), 3) persisted,
-	MaMH  varchar(5) not null,
-	MaKH  varchar(5) not null,
-	MaNV  varchar(5) not null,
+	MaHD  varchar(5) not null,
 	ThoiGian smalldatetime,
 	GhiChu nvarchar(60),
 	constraint PK_MaBH  primary key(MaBH)
 )
 
-alter table ThongTinBaoHanh add constraint FK_TTBH_MaMH foreign key(MaMH) references MatHang(MaMH)
-alter table ThongTinBaoHanh add constraint FK_TTBH_MaKH foreign key(MaKH) references KhachHang(MaKH)
-alter table ThongTinBaoHanh add constraint FK_TTBH_MaNV foreign key(MaNV) references NhanVien(MaNV)
+alter table ThongTinBaoHanh add constraint FK_TTBH_MaHD foreign key(MaHD) references HoaDon(MaHD)
 
-Insert into ThongTinBaoHanh values('MH006','KH025','NV006','10/7/2021',N'Lỗi từ NSX, hư tay côn')
-Insert into ThongTinBaoHanh values('MH011','KH036','NV003','12/7/2021',N'Thay nhớt định kỳ')
+Insert into ThongTinBaoHanh values('HD006','22/11/2022',N'Lỗi từ NSX, hư tay côn')
+Insert into ThongTinBaoHanh values('HD011','12/7/2022',N'Thay nhớt định kỳ')
 
 
 /*Tài khoản mà Mật khẩu đăng nhập dành cho NV Quản Lý và NV Văn Phòng*/

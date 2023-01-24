@@ -8,8 +8,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using Azure.Core;
-using LiveCharts.Wpf;
 using MotoStore.Database;
 using MotoStore.Views.Windows;
 
@@ -22,7 +20,7 @@ namespace MotoStore.Views.Pages.IOPagePages
     {
         internal ObservableCollection<Tuple<MatHang, string>> matHangs;
         static string luachon = "0";
-        static Tuple<MatHang, string> mh;
+
         public IOSanPhamPage()
         {
             InitializeComponent();
@@ -161,7 +159,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             }
         }
 
-        private void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private new void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
             var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)

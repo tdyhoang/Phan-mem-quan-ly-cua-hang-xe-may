@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MotoStore.Database;
 
@@ -25,4 +26,6 @@ public partial class HoaDon
     public virtual MatHang MaMhNavigation { get; set; } = null!;
 
     public virtual NhanVien MaNvNavigation { get; set; } = null!;
+
+    public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 }

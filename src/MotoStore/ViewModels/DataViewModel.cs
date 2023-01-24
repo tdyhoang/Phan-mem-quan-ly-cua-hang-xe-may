@@ -80,9 +80,9 @@ namespace MotoStore.ViewModels
                     new NavigationItem()
                     {
                         Content = "Danh Sách Phiếu Bảo Hành",
-                        PageTag = "warrantylist",
+                        PageTag = "maintenancelist",
                         Icon = SymbolRegular.VideoPersonCall24,
-                        PageType = typeof(Views.Pages.DataPagePages.WarrantyListPage)
+                        PageType = typeof(Views.Pages.DataPagePages.MaintenanceListPage)
                     },
                     new NavigationItem()
                     {
@@ -135,9 +135,9 @@ namespace MotoStore.ViewModels
                     new NavigationItem()
                     {
                         Content = "Danh Sách Phiếu Bảo Hành",
-                        PageTag = "warrantylist",
+                        PageTag = "maintenancelist",
                         Icon = SymbolRegular.VideoPersonCall24,
-                        PageType = typeof(Views.Pages.DataPagePages.WarrantyListPage)
+                        PageType = typeof(Views.Pages.DataPagePages.MaintenanceListPage)
                     }
                 };
             }

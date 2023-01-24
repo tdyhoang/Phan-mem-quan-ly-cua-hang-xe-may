@@ -7,11 +7,11 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
 using System.Collections.ObjectModel;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Data;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -54,6 +54,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
+                    int loopcount = 1;
                     cmd = new("set dateformat dmy", con, trans);
 
                     // Lý do cứ mỗi lần có cell sai là break:
@@ -66,23 +67,45 @@ namespace MotoStore.Views.Pages.DataPagePages
                             continue;
                         if (obj is not MatHang mh)
                             continue;
-                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        // Kiểm tra dữ liệu null
                         if (string.IsNullOrWhiteSpace(mh.TenMh))
                             throw new("Tên mặt hàng không được để trống!");
                         if (string.IsNullOrEmpty(mh.MaNcc))
                             throw new("Mã nhà cung cấp không được để trống!");
-                        string giaNhapMh = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value.ToString() : "null";
-                        string giaBanMh = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value.ToString() : "null";
                         // Thêm mới
                         if (string.IsNullOrEmpty(mh.MaMh))
-                            cmd.CommandText += $"\nInsert into MatHang values(N'{mh.TenMh}', {mh.SoPhanKhoi}, N'{mh.Mau}', {giaNhapMh}, {giaBanMh}, {mh.SoLuongTonKho}, '{mh.MaNcc}', N'{mh.HangSx}', N'{mh.XuatXu}', N'{mh.MoTa}', 0)";
+                            cmd.CommandText += $"\nInsert into MatHang values(@TenMH{loopcount}, @SoPhanKhoi{loopcount}, @Mau{loopcount}, @GiaNhapMH{loopcount}, @GiaBanMH{loopcount}, @TonKho{loopcount}, @MaNCC{loopcount}, @HangSX{loopcount}, @XuatXu{loopcount}, @MoTa{loopcount}', 0)";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate MatHang Set TenMh = N'{mh.TenMh}', SoPhanKhoi = {mh.SoPhanKhoi}, Mau = N'{mh.Mau}', GiaNhapMh = {giaNhapMh}, GiaBanMh = {giaNhapMh}, SoLuongTonKho = {mh.SoLuongTonKho}, MaNCC = '{mh.MaNcc}', HangSx = N'{mh.HangSx}', XuatXu = N'{mh.XuatXu}', MoTa = N'{mh.MoTa}' Where MaMh = '{mh.MaMh}';";
+                            cmd.CommandText += $"\nUpdate MatHang Set TenMh = @TenMH{loopcount}, SoPhanKhoi = @SoPhanKhoi{loopcount}, Mau = @Mau{loopcount}, GiaNhapMh = @GiaNhapMH{loopcount}, GiaBanMh = @GiaBanMH{loopcount}, SoLuongTonKho = @TonKho{loopcount}, MaNCC = @MaNCC{loopcount}, HangSx = @HangSX{loopcount}, XuatXu = @XuatXu{loopcount}, MoTa = @MoTa{loopcount} Where MaMh = '{mh.MaMh}';";
+
+                        cmd.Parameters.Add($"@TenMH{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@TenMH{loopcount}"].Value = mh.TenMh;
+                        cmd.Parameters.Add($"@SoPhanKhoi{loopcount}", SqlDbType.Int);
+                        cmd.Parameters[$"@SoPhanKhoi{loopcount}"].Value = mh.SoPhanKhoi;
+                        cmd.Parameters.Add($"@Mau{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@Mau{loopcount}"].Value = string.IsNullOrEmpty(mh.Mau) ? DBNull.Value : mh.Mau;
+                        cmd.Parameters.Add($"@GiaNhapMH{loopcount}", SqlDbType.Decimal);
+                        cmd.Parameters[$"@GiaNhapMH{loopcount}"].Value = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@GiaBanMH{loopcount}", SqlDbType.Decimal);
+                        cmd.Parameters[$"@GiaBanMH{loopcount}"].Value = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@TonKho{loopcount}", SqlDbType.Int);
+                        cmd.Parameters[$"@TonKho{loopcount}"].Value = mh.SoLuongTonKho;
+                        cmd.Parameters.Add($"@MaNCC{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@MaNXX{loopcount}"].Value = mh.MaNcc;
+                        cmd.Parameters.Add($"@HangSX{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@HangSX{loopcount}"].Value = string.IsNullOrEmpty(mh.HangSx) ? DBNull.Value : mh.HangSx;
+                        cmd.Parameters.Add($"@XuatXu{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@XuatXu{loopcount}"].Value = string.IsNullOrEmpty(mh.XuatXu) ? DBNull.Value : mh.XuatXu;
+                        cmd.Parameters.Add($"@MoTa{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@MoTa{loopcount}"].Value = string.IsNullOrEmpty(mh.MoTa) ? DBNull.Value : mh.MoTa;
+                        loopcount++;
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database hóa đơn')", con);
+                    cmd.ExecuteNonQuery();
                     // Làm mới nội dung hiển thị cho khớp với database
                     RefreshDataGrid();
                     MessageBox.Show("Lưu chỉnh sửa thành công!");
@@ -139,6 +162,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
+                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database hóa đơn')", con);
+                        cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -289,6 +314,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                     byte[] bin = p.GetAsByteArray();
                     File.WriteAllBytes(filePath, bin);
                 }
+                using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+                con.Open();
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel mặt hàng')", con);
+                cmd.ExecuteNonQuery();
                 MessageBox.Show("Xuất excel thành công!");
             }
             catch (Exception ex)

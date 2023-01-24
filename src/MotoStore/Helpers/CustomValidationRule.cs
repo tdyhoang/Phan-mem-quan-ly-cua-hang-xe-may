@@ -34,6 +34,7 @@ namespace MotoStore.Helpers
                 ValidationRules.GioiTinhValidation => GioiTinhValidation(value),
                 ValidationRules.HoTenValidation => HoTenValidation(value),
                 ValidationRules.LoaiKhValidation => LoaiKhValidation(value),
+                ValidationRules.MaHdValidation => MaHdValidation(value),
                 ValidationRules.MaKhValidation => MaKhValidation(value),
                 ValidationRules.MaMhValidation => MaMhValidation(value),
                 ValidationRules.MaNccValidation => MaNccValidation(value),
@@ -124,6 +125,19 @@ namespace MotoStore.Helpers
                 return new(true, default);
 
             return new(false, "Loại khách hàng phải là Vip, Thân quen hoặc Thường (có dấu)!");
+        }
+
+        private static ValidationResult MaHdValidation(object value)
+        {
+            if (string.IsNullOrEmpty(value.ToString()))
+                return new(false, "Mã hóa đơn không được để trống!");
+            if (!Regex.IsMatch(value.ToString(), @"^HD\d{3}$"))
+                return new(false, "Mã hóa đơn phải theo cú pháp HD***, trong đó * là các chữ số");
+            MainDatabase mdb = new();
+            if (mdb.HoaDons.Any(hd => hd.MaHd == value.ToString()))
+                return new(true, default);
+
+            return new(false, "Mã hóa đơn không tồn tại hoặc đã xóa");
         }
 
         private static ValidationResult MaKhValidation(object value)
@@ -258,6 +272,7 @@ namespace MotoStore.Helpers
             GioiTinhValidation,
             HoTenValidation,
             LoaiKhValidation,
+            MaHdValidation,
             MaKhValidation,
             MaMhValidation,
             MaNccValidation,

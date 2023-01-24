@@ -315,34 +315,16 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
-            entity.Property(e => e.MaKh)
+            entity.Property(e => e.MaHd)
                 .HasMaxLength(5)
                 .IsUnicode(false)
-                .HasColumnName("MaKH");
-            entity.Property(e => e.MaMh)
-                .HasMaxLength(5)
-                .IsUnicode(false)
-                .HasColumnName("MaMH");
-            entity.Property(e => e.MaNv)
-                .HasMaxLength(5)
-                .IsUnicode(false)
-                .HasColumnName("MaNV");
+                .HasColumnName("MaHD");
             entity.Property(e => e.ThoiGian).HasColumnType("smalldatetime");
 
-            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.ThongTinBaoHanhs)
-                .HasForeignKey(d => d.MaKh)
+            entity.HasOne(d => d.MaHdNavigation).WithMany(p => p.ThongTinBaoHanhs)
+                .HasForeignKey(d => d.MaHd)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TTBH_MaKH");
-
-            entity.HasOne(d => d.MaMhNavigation).WithMany(p => p.ThongTinBaoHanhs)
-                .HasForeignKey(d => d.MaMh)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TTBH_MaMH");
-
-            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.ThongTinBaoHanhs)
-                .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_TTBH_MaNV");
+                .HasConstraintName("FK_TTBH_MaHD");
         });
 
         modelBuilder.Entity<UserApp>(entity =>
@@ -351,7 +333,7 @@ public partial class MainDatabase : DbContext
 
             entity.ToTable("UserApp");
 
-            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F284569466A522").IsUnique();
+            entity.HasIndex(e => e.UserName, "UQ__UserApp__C9F284566911C078").IsUnique();
 
             entity.Property(e => e.MaNv)
                 .HasMaxLength(5)

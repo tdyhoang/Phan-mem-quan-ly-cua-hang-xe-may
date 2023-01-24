@@ -8,7 +8,6 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
@@ -63,7 +62,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             continue;
                         if (obj is not HoaDon hd)
                             continue;
-                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        // Kiểm tra dữ liệu null
                         if (string.IsNullOrEmpty(hd.MaKh))
                             throw new("Mã khách hàng không được để trống!");
                         if (string.IsNullOrEmpty(hd.MaMh))
@@ -72,11 +71,11 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(hd.MaHd))
-                            cmd.CommandText += $"\nInsert into HoaDon values(@MaMH{loopcount}, @MaKH{loopcount}, @MaNV{loopcount}, {ngayLapHd}, {hd.SoLuong}, {hd.ThanhTien})";
+                            cmd.CommandText += $"\nInsert into HoaDon values(@MaMH{loopcount}, @MaKH{loopcount}, @MaNV{loopcount}, @NgayLapHD{loopcount}, @SoLuong{loopcount}, @ThanhTien{loopcount})";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate HoaDon Set MaMh = @MaMH{loopcount}, MaKh = @MaKH{loopcount}, MaNv = @MaNV{loopcount}, NgayLapHd = {ngayLapHd}, SoLuong = {hd.SoLuong}, ThanhTien = {hd.ThanhTien} Where MaHd = '{hd.MaHd}';";
+                            cmd.CommandText += $"\nUpdate HoaDon Set MaMh = @MaMH{loopcount}, MaKh = @MaKH{loopcount}, MaNv = @MaNV{loopcount}, NgayLapHd = @NgayLapHD{loopcount}, SoLuong = @SoLuong{loopcount}, ThanhTien = @ThanhTien{loopcount} Where MaHd = '{hd.MaHd}';";
 
                         cmd.Parameters.Add($"@MaMH{loopcount}", SqlDbType.VarChar);
                         cmd.Parameters[$"@MaMH{loopcount}"].Value = hd.MaMh;
@@ -84,14 +83,12 @@ namespace MotoStore.Views.Pages.DataPagePages
                         cmd.Parameters[$"@MaKH{loopcount}"].Value = hd.MaKh;
                         cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar);
                         cmd.Parameters[$"@MaNV{loopcount}"].Value = hd.MaNv;
-                        cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@DiaChi{loopcount}"].Value = string.IsNullOrEmpty(hd.DiaChi) ? DBNull.Value : hd.DiaChi;
-                        cmd.Parameters.Add($"@SDT{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@SDT{loopcount}"].Value = string.IsNullOrEmpty(hd.Sdt) ? DBNull.Value : hd.Sdt;
-                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Email{loopcount}"].Value = string.IsNullOrEmpty(hd.Email) ? DBNull.Value : hd.Email;
-                        cmd.Parameters.Add($"@LoaiKH{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@LoaiKH{loopcount}"].Value = hd.LoaiKh;
+                        cmd.Parameters.Add($"@NgayLapHD{loopcount}", SqlDbType.SmallDateTime);
+                        cmd.Parameters[$"@NgayLapHD{loopcount}"].Value = hd.NgayLapHd.HasValue ? hd.NgayLapHd.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@SoLuong{loopcount}", SqlDbType.Int);
+                        cmd.Parameters[$"@SoLuong{loopcount}"].Value = hd.SoLuong;
+                        cmd.Parameters.Add($"@ThanhTien{loopcount}", SqlDbType.Decimal);
+                        cmd.Parameters[$"@ThanhTien{loopcount}"].Value = hd.ThanhTien;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

@@ -7,7 +7,6 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
@@ -66,7 +65,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             continue;
                         if (obj is not NhanVien nv)
                             continue;
-                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        // Kiểm tra dữ liệu null
                         if (string.IsNullOrEmpty(nv.GioiTinh))
                             throw new("Giới tính không được để trống!");
 

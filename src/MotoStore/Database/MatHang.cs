@@ -35,6 +35,4 @@ public partial class MatHang
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
 
     public virtual NhaCungCap MaNccNavigation { get; set; } = null!;
-
-    public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 }

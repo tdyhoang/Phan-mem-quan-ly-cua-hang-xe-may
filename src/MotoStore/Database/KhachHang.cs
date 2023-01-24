@@ -28,6 +28,4 @@ public partial class KhachHang
     public virtual ICollection<DonDatHang> DonDatHangs { get; } = new List<DonDatHang>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
-
-    public virtual ICollection<ThongTinBaoHanh> ThongTinBaoHanhs { get; } = new List<ThongTinBaoHanh>();
 }

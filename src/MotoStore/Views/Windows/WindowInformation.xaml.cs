@@ -1,23 +1,15 @@
 ﻿using MotoStore.Database;
 using System.Windows;
 using System.Windows.Input;
-using MotoStore.Views.Pages;
 using MotoStore.Views.Pages.IOPagePages;
-using System.Xml.Linq;
 using System.Linq;
 using System.Windows.Media.Imaging;
-using System.Drawing;
-using System.Windows.Media;
 using Microsoft.Data.SqlClient;
 using System;
-using System.Windows.Documents;
 using System.Collections.Generic;
-using Microsoft.Xaml.Behaviors.Layout;
 using Microsoft.Win32;
 using MotoStore.Views.Pages.LoginPages;
 using System.IO;
-using System.Collections.ObjectModel;
-using System.Security.Cryptography;
 
 namespace MotoStore.Views.Windows
 {

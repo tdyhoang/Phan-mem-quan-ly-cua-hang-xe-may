@@ -25,6 +25,9 @@
     <Compile Update="Views\Pages\DataPagePages\InvoiceListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\DataPagePages\MaintenanceListPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\DataPagePages\MotoListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -35,9 +38,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\DataPagePages\UserListPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\Pages\DataPagePages\WarrantyListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\IOPage.xaml.cs">
@@ -78,6 +78,9 @@
     <Page Update="Views\Pages\DataPagePages\InvoiceListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Pages\DataPagePages\MaintenanceListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Pages\DataPagePages\MotoListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -88,9 +91,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\DataPagePages\UserListPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\DataPagePages\WarrantyListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Pages\IOPage.xaml">

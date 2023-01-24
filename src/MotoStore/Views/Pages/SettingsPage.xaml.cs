@@ -8,7 +8,6 @@ using Wpf.Ui.Common.Interfaces;
 using MotoStore.Database;
 using Microsoft.Data.SqlClient;
 using MotoStore.Views.Pages.LoginPages;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Net.Mime;
 using System.IO;

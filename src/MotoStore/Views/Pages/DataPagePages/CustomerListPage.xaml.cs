@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
 using OfficeOpenXml;
 using System.IO;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using MotoStore.Properties;
@@ -68,7 +67,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             continue;
                         if (obj is not KhachHang kh)
                             continue;
-                        // Kiểm tra dữ liệu null & gán giá trị mặc định
+                        // Kiểm tra dữ liệu null
                         if (string.IsNullOrWhiteSpace(kh.HoTenKh))
                             throw new("Họ tên không được để trống!");
                         if (string.IsNullOrEmpty(kh.GioiTinh))

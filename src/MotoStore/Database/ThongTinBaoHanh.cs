@@ -8,19 +8,11 @@ public partial class ThongTinBaoHanh
 
     public string MaBh { get; set; } = null!;
 
-    public string MaMh { get; set; } = null!;
-
-    public string MaKh { get; set; } = null!;
-
-    public string MaNv { get; set; } = null!;
+    public string MaHd { get; set; } = null!;
 
     public DateTime? ThoiGian { get; set; }
 
     public string? GhiChu { get; set; }
 
-    public virtual KhachHang MaKhNavigation { get; set; } = null!;
-
-    public virtual MatHang MaMhNavigation { get; set; } = null!;
-
-    public virtual NhanVien MaNvNavigation { get; set; } = null!;
+    public virtual HoaDon MaHdNavigation { get; set; } = null!;
 }

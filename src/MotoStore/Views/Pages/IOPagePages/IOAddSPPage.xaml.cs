@@ -10,7 +10,6 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MotoStore.Views.Pages.LoginPages;
-using System.Security.Cryptography;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {

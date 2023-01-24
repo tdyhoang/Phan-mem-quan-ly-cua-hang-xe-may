@@ -8,7 +8,6 @@ using Microsoft.Data.SqlClient;
 using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
 using System.Windows.Data;
 
 namespace MotoStore.Views.Pages.IOPagePages

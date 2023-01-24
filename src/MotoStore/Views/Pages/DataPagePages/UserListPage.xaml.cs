@@ -8,11 +8,12 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using MotoStore.Properties;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -52,6 +53,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
+                    int loopcount = 1;
                     cmd = new("set dateformat dmy", con, trans);
 
                     // Lý do cứ mỗi lần có cell sai là break:
@@ -75,15 +77,27 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         // Cập nhật
                         if (mdb.UserApps.Any(nv => nv.MaNv == user.MaNv))
-                            cmd.CommandText += $"\nUpdate UserApp Set Username = N'{user.UserName}', Password = N'{user.Password}', Email = N'{user.Email}' Where MaNv = '{user.MaNv}';";
+                            cmd.CommandText += $"\nUpdate UserApp Set Username = @Username{loopcount}, Password = @Password{loopcount}, Email = @Email{loopcount} Where MaNv = @MaNV{loopcount};";
 
                         // Thêm mới
                         else
-                            cmd.CommandText += $"\nInsert into UserApp values(N'{user.MaNv}', N'{user.UserName}', N'{user.Password}', N'{user.Email}')";
-                        
+                            cmd.CommandText += $"\nInsert into UserApp values(@MaNV{loopcount}, @Username{loopcount}, @Password{loopcount}, @Email{loopcount})";
+
+                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar);
+                        cmd.Parameters[$"@MaNV{loopcount}"].Value = user.MaNv;
+                        cmd.Parameters.Add($"@Username{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@Username{loopcount}"].Value = user.UserName;
+                        cmd.Parameters.Add($"@Password{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@Password{loopcount}"].Value = user.Password;
+                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@Email{loopcount}"].Value = user.Email;
+                        loopcount++;
+
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database tài khoản')", con);
+                    cmd.ExecuteNonQuery();
                     // Làm mới nội dung hiển thị cho khớp với database
                     RefreshDataGrid();
                     MessageBox.Show("Lưu chỉnh sửa thành công!");
@@ -141,6 +155,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
+                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database tài khoản')", con);
+                        cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -178,7 +194,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                 if (!Regex.IsMatch(tbxMaNv.Text, @"^NV\d{3}$"))
                     throw new("Mã nhân viên phải theo cú pháp NV***, trong đó * là các chữ số");
                 MainDatabase mdb = new();
-                if (!mdb.NhanViens.Any(nv => string.Equals(nv.MaNv, tbxMaNv.Text)))
+                if (!mdb.NhanViens.Any(nv => !nv.DaXoa && string.Equals(nv.MaNv, tbxMaNv.Text)))
                     throw new("Mã nhân viên không tồn tại hoặc đã xóa");
                 if (TableData.Any(ua => string.Equals(ua.MaNv, tbxMaNv.Text)))
                     throw new("Nhân viên đã hoặc đang được tạo tài khoản!");
@@ -293,6 +309,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                     byte[] bin = p.GetAsByteArray();
                     File.WriteAllBytes(filePath, bin);
                 }
+                using SqlConnection con = new(Settings.Default.ConnectionString);
+                con.Open();
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel tài khoản')", con);
+                cmd.ExecuteNonQuery();
                 MessageBox.Show("Xuất excel thành công!");
             }
             catch (Exception ex)

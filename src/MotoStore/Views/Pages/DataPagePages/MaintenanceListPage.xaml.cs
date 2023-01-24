@@ -8,7 +8,6 @@ using Microsoft.Data.SqlClient;
 using System.Windows.Input;
 using System.Windows.Controls;
 using MotoStore.Views.Pages.LoginPages;
-using Microsoft.Win32;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.IO;
@@ -17,13 +16,13 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 namespace MotoStore.Views.Pages.DataPagePages
 {
     /// <summary>
-    /// Interaction logic for WarrantyListPage.xaml
+    /// Interaction logic for MaintenanceListPage.xaml
     /// </summary>
-    public partial class WarrantyListPage
+    public partial class MaintenanceListPage
     {
         internal ObservableCollection<ThongTinBaoHanh> TableData;
 
-        public WarrantyListPage()
+        public MaintenanceListPage()
         {
             InitializeComponent();
             RefreshDataGrid();
@@ -33,12 +32,12 @@ namespace MotoStore.Views.Pages.DataPagePages
         {
             MainDatabase con = new();
             TableData = new(con.ThongTinBaoHanhs);
-            grdWarranty.ItemsSource = TableData;
+            grdMaintenance.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            if ((from c in from object i in grdWarranty.ItemsSource select grdWarranty.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            if ((from c in from object i in grdMaintenance.ItemsSource select grdMaintenance.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
             {
                 MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
                 return;
@@ -51,11 +50,12 @@ namespace MotoStore.Views.Pages.DataPagePages
                 using var trans = con.BeginTransaction();
                 try
                 {
+                    int loopcount = 1;
                     cmd = new("set dateformat dmy", con, trans);
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
                     // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                    foreach (var obj in grdWarranty.Items)
+                    foreach (var obj in grdMaintenance.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
                         if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => (string)pi.GetValue(obj)).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, PageChinh.getMa)))
@@ -63,22 +63,29 @@ namespace MotoStore.Views.Pages.DataPagePages
                         if (obj is not ThongTinBaoHanh bh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
-                        if (string.IsNullOrEmpty(bh.MaKh))
+                        if (string.IsNullOrEmpty(bh.MaHd))
                             throw new("Mã khách hàng không được để trống!");
-                        if (string.IsNullOrEmpty(bh.MaMh))
-                            throw new("Mã mặt hàng không được để trống!");
-                        string ngayHetHan = bh.ThoiGian.HasValue ? $"'{bh.ThoiGian.Value:dd/MM/yyyy}'" : "null";
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(bh.MaBh))
-                            cmd.CommandText += $"\nInsert into ThongTinBaoHanh values('{bh.MaMh}', '{bh.MaKh}', '{bh.MaNv}', {ngayHetHan}, N'{bh.GhiChu}')";
+                            cmd.CommandText += $"\nInsert into ThongTinBaoHanh values(@MaHD{loopcount}, @ThoiGian{loopcount}, @GhiChu{loopcount})";
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate ThongTinBaoHanh Set MaMh = '{bh.MaMh}', MaKh = '{bh.MaKh}', MaNv = '{bh.MaNv}', ThoiGian = {ngayHetHan}, GhiChu = N'{bh.GhiChu}' Where MaBh = '{bh.MaBh}';";
+                            cmd.CommandText += $"\nUpdate ThongTinBaoHanh Set MaHd = @MaHD{loopcount}, ThoiGian = @ThoiGian{loopcount}, GhiChu = @GhiChu{loopcount} Where MaBh = '{bh.MaBh}';";
+
+                        cmd.Parameters.Add($"@MaHD{loopcount}", SqlDbType.VarChar);
+                        cmd.Parameters[$"@MaHD{loopcount}"].Value = bh.MaHd;
+                        cmd.Parameters.Add($"@ThoiGian{loopcount}", SqlDbType.SmallDateTime);
+                        cmd.Parameters[$"@ThoiGian{loopcount}"].Value = bh.ThoiGian.HasValue ? bh.ThoiGian.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@GhiChu{loopcount}", SqlDbType.NVarChar);
+                        cmd.Parameters[$"@GhiChu{loopcount}"].Value = string.IsNullOrEmpty(bh.GhiChu) ? DBNull.Value : bh.GhiChu;
+                        loopcount++;
                     }
                     cmd.ExecuteNonQuery();
                     trans.Commit();
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
+                    cmd.ExecuteNonQuery();
                     // Làm mới nội dung hiển thị cho khớp với database
                     RefreshDataGrid();
                     MessageBox.Show("Lưu chỉnh sửa thành công!");
@@ -95,7 +102,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             }
         }
 
-            // Định nghĩa lại phím tắt Delete
+        // Định nghĩa lại phím tắt Delete
         private new void PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (sender is not DataGrid dg)
@@ -135,6 +142,8 @@ namespace MotoStore.Views.Pages.DataPagePages
                         }
                         cmd.ExecuteNonQuery();
                         trans.Commit();
+                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database bảo hành')", con);
+                        cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -162,7 +171,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             if ((bool)e.NewValue)
             {
                 bool isQuanLy = string.Equals(PageChinh.getChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
-                grdWarranty.IsReadOnly = !isQuanLy;
+                grdMaintenance.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
                     button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
@@ -172,10 +181,10 @@ namespace MotoStore.Views.Pages.DataPagePages
         }
 
         private void AddRow(object sender, RoutedEventArgs e)
-            => TableData.Add(new() { MaNv = PageChinh.getMa });
+            => TableData.Add(new());
 
         // Đẩy event mousewheel cho scrollviewer xử lý
-        private void grdWarranty_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void grdMaintenance_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
             var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
@@ -211,25 +220,25 @@ namespace MotoStore.Views.Pages.DataPagePages
                     p.Workbook.Properties.Title = "Danh sách phiếu bảo hành";
 
                     //Tạo một sheet để làm việc trên đó
-                    p.Workbook.Worksheets.Add("Warranty");
+                    p.Workbook.Worksheets.Add("Maintenance");
 
                     // lấy sheet vừa add ra để thao tác
-                    ExcelWorksheet ws = p.Workbook.Worksheets["Warranty"];
+                    ExcelWorksheet ws = p.Workbook.Worksheets["Maintenance"];
 
                     // merge các column lại từ column 1 đến số column header
                     // gán giá trị cho cell vừa merge là Danh sách phiếu bảo hành từ MotoStore
                     ws.Cells[1, 1].Value = "Danh sách phiếu bảo hành từ MotoStore";
-                    ws.Cells[1, 1, 1, grdWarranty.Columns.Count].Merge = true;
+                    ws.Cells[1, 1, 1, grdMaintenance.Columns.Count].Merge = true;
                     // in đậm
-                    ws.Cells[1, 1, 1, grdWarranty.Columns.Count].Style.Font.Bold = true;
+                    ws.Cells[1, 1, 1, grdMaintenance.Columns.Count].Style.Font.Bold = true;
                     // căn giữa
-                    ws.Cells[1, 1, 1, grdWarranty.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[1, 1, 1, grdMaintenance.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                     int colIndex = 1;
                     int rowIndex = 2;
 
                     //tạo các header từ column header đã tạo từ bên trên
-                    foreach (var item in grdWarranty.Columns)
+                    foreach (var item in grdMaintenance.Columns)
                     {
                         var cell = ws.Cells[rowIndex, colIndex];
 
@@ -245,7 +254,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         //gán giá trị
                         cell.Value = item.Header;
 
-                        if (item.Header.ToString().Contains("Ngày", StringComparison.OrdinalIgnoreCase))
+                        if (item.Header.ToString().Equals("Thời gian", StringComparison.OrdinalIgnoreCase))
                             // Format cho ngày
                             ws.Column(colIndex).Style.Numberformat.Format = "dd/MM/yyyy";
 
@@ -254,10 +263,10 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                     // lấy ra danh sách KH từ TableData
 
-                    ObservableCollection<ThongTinBaoHanh> WarrantyList = new(TableData);
+                    ObservableCollection<ThongTinBaoHanh> MaintenanceList = new(TableData);
 
                     // với mỗi kh trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var kh in WarrantyList.Where(kh => grdWarranty.Items.PassesFilter(kh)))
+                    foreach (var kh in MaintenanceList.Where(kh => grdMaintenance.Items.PassesFilter(kh)))
                     {
                         // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
                         colIndex = 1;
@@ -267,9 +276,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         //gán giá trị cho từng cell                      
                         ws.Cells[rowIndex, colIndex++].Value = kh.MaBh;
-                        ws.Cells[rowIndex, colIndex++].Value = kh.MaMh;
-                        ws.Cells[rowIndex, colIndex++].Value = kh.MaKh;
-                        ws.Cells[rowIndex, colIndex++].Value = kh.MaNv;
+                        ws.Cells[rowIndex, colIndex++].Value = kh.MaHd;
                         ws.Cells[rowIndex, colIndex++].Value = kh.ThoiGian;
                         ws.Cells[rowIndex, colIndex++].Value = kh.GhiChu;
                     }
@@ -279,6 +286,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                     byte[] bin = p.GetAsByteArray();
                     File.WriteAllBytes(filePath, bin);
                 }
+                using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+                con.Open();
+                SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getMa}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'xuất excel bảo hành')", con);
+                cmd.ExecuteNonQuery();
                 MessageBox.Show("Xuất excel thành công!");
             }
             catch (Exception ex)
