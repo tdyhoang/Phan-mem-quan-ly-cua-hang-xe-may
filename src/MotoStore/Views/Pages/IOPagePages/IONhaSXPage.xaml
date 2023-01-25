@@ -19,25 +19,19 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <Label x:Name="lblThongBao" Height="20" FontSize="10" Width="150"
+        <Label x:Name="lblThongBao" Height="20" FontSize="10" Width="195"
                                Foreground="red" 
                                FontWeight="Medium" 
-                               Margin="113,79,537,351"
+                               Margin="0,0,380,400"
+                               Content="Tên Nhà Cung Cấp Không Được Để Trống"
+                               Visibility="Collapsed"
                                />
-        <Label x:Name="lblThongBaoSDT" Height="20" FontSize="10"  Width="150"
+        <Label x:Name="lblThongBaoEmail" Height="20" FontSize="10"  Width="135"
                                Foreground="red" 
                                FontWeight="Medium" 
-                               Margin="85,131,508,299"
-                               />
-        <Label x:Name="lblThongBaoEmail" Height="20" FontSize="10"  Width="150"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="85,180,508,237"
-                               />
-        <Label x:Name="lblThongBaoQG" Height="20" FontSize="10"  Width="150"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="111,246,539,184"
+                               Margin="0,0,440,175"
+                               Visibility="Collapsed"
+                               Content="Email Không Hợp Lệ"
                                />
         <Label x:Name="lblDauSao" 
                Height="30"
@@ -47,7 +41,7 @@
                Foreground="Red"
                FontWeight="Medium"
                Margin="0,0,700,450"/>
-        <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNSX_LostFocus">
+        <TextBox x:Name="txtTenNCC" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNCC_LostFocus">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
@@ -58,7 +52,7 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top" LostFocus="txtSDTNSX_LostFocus">
+        <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
             </i:Interaction.Behaviors>
@@ -69,28 +63,24 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top" LostFocus="txtEmailNSX_LostFocus"/>
-        <Label x:Name="lbNuocSX"
-               Content="Quốc Gia: " 
+        <TextBox x:Name="txtEmailNSX"
+                 Height="35"
+                 Width="275"
+                 FontSize="15"
+                 Margin="0,0,305,230" 
+                 VerticalAlignment="Center" 
+                 LostFocus="txtEmailNSX_LostFocus"/>
+        <Label x:Name="lbDiaChi"
+               Content="Địa Chỉ: " 
                Margin="24,215,679,203"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtNuocSX" Margin="222,206,528,0" VerticalAlignment="Top" LostFocus="txtNuocSX_LostFocus">
+        <TextBox x:Name="txtDiaChi" Margin="222,206,528,0" VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
         </TextBox>
         <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="380,336,0,0" VerticalAlignment="Top" Height="48" Width="109" Click="btnAddNewNSX_Click" Background="LightGreen"/>
-        <Label x:Name="lblDauSao_Copy" 
-            Height="30"
-            FontSize="15"
-            Content="*"
-               Width="10"
-            Foreground="Red"
-            FontWeight="Medium"
-            Margin="0,140,800,262"/>
-
-
     </Grid>
 </Page>
