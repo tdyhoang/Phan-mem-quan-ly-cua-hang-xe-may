@@ -147,6 +147,60 @@
                     </Button>
                 </Grid>
             </Border>
+            <Button x:Name="btnChonFileAvatar"
+                    Content="Chọn Đường Dẫn"
+                    FontSize="15"
+                    FontWeight="Medium"
+                    Height="30"
+                    Width="130"
+                    HorizontalAlignment="Right"
+                    Margin="0,140,30,0"
+                    Click="btnChonFileAvatar_Click"></Button>
+            <TextBox x:Name="txtDgDanAvatar"
+                     Height="40"
+                     Width="650"
+                     IsReadOnly="True"
+                     Margin="30,140,0,0"
+                     FontSize="13.5"
+                     FontWeight="Medium">
+            </TextBox>
+            <Label Content="Đường Dẫn Ảnh Người Dùng:"
+                   Foreground="White"
+                   FontSize="15"
+                   FontWeight="Medium"
+                   Height="30"
+                   Width="210"
+                   HorizontalAlignment="Left"
+                   VerticalContentAlignment="Center"
+                   Margin="0,150,0,0"></Label>
+            <TextBox x:Name="txtDgDanMH"
+                     Height="40"
+                     Width="650"
+                     IsReadOnly="True"
+                     Margin="30,255,0,0"
+                     FontSize="15"
+                     FontWeight="Medium">
+            </TextBox>
+           
+            <Button x:Name="btnChonFileMH"
+                    Content="Chọn Đường Dẫn"
+                    FontSize="15"
+                    FontWeight="Medium"
+                    Height="30"
+                    Width="130"
+                    HorizontalAlignment="Right"
+                    Margin="0,255,30,0"
+                    Click="btnChonFileMH_Click"></Button>
+            <Label Content="Đường Dẫn Ảnh Sản Phẩm:"
+                   Foreground="White"
+                   FontSize="15"
+                   FontWeight="Medium"
+                   Height="30"
+                   Width="210"
+                   HorizontalAlignment="Left"
+                   VerticalContentAlignment="Center"
+                   Margin="0,270,0,0"></Label>
+            
         </Grid>
     </Border>
 </ui:UiPage>

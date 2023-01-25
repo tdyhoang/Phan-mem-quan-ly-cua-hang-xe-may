@@ -40,6 +40,7 @@
     <None Remove="Views\Pages\Images\motorworkshop.jpg" />
     <None Remove="Views\Pages\Images\NhvienNgSuat.png" />
     <None Remove="Views\Pages\Images\SoXe-removebg-preview.png" />
+    <None Remove="Views\Pages\Images\stb-removebg-preview.png" />
     <None Remove="Views\Pages\Images\userNam.png" />
     <None Remove="Views\Pages\Images\userNu.png" />
     <None Remove="Views\Pages\CalendaRicon-removebg-preview.png" />
@@ -67,7 +68,6 @@
     <Resource Include="Products Images\MH003.png" />
     <Resource Include="Products Images\MH006.png" />
     <Resource Include="Products Images\MH011.png" />
-    <Resource Include="Products Images\MH016.png" />
     <Resource Include="Views\Pages\Images\hdsd.png" />
     <Resource Include="Views\Pages\Images\highSaleIcon.png" />
     <Resource Include="Views\Pages\Images\huongdanLich.png" />
@@ -114,6 +114,7 @@
     <Resource Include="Views\Pages\Images\SoXe-removebg-preview.png" />
     <Resource Include="Avatars\userNam.png" />
     <Resource Include="Avatars\userNu.png" />
+    <Resource Include="Views\Pages\Images\stb-removebg-preview.png" />
     <Resource Include="Views\Pages\Images\VIP-removebg-preview.png" />
     <Resource Include="Products Images\MH008.png">
       <CopyToOutputDirectory></CopyToOutputDirectory>

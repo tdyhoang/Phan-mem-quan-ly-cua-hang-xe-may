@@ -1,9 +1,9 @@
 ﻿/*Cơ sở dữ liệu cho Ứng dụng Quản Lý Cửa Hàng Bán Xe Máy*/
 CREATE DATABASE QLYCHBANXEMAY
 GO
+
 use QLYCHBANXEMAY
 set dateformat dmy
-
 
 Create table KhachHang
 (
@@ -13,8 +13,8 @@ Create table KhachHang
 	NgSinh smalldatetime,
 	GioiTinh NVARCHAR(3) not null,
 	DiaChi NVARCHAR(40),
-	SDT VARCHAR(30),
-	Email NVARCHAR(254),
+	SDT  VARCHAR(10),
+	Email NVARCHAR(30),
 	LoaiKH NVARCHAR(10) not null,
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaKH primary key(MAKH)
@@ -76,8 +76,8 @@ Create table NhanVien
 	NgSinh smalldatetime,
 	GioiTinh NVarChar(3) not null,
 	DiaChi   NVarchar(40),
-	SDT VARCHAR(30),
-	Email  NVarchar(254),
+	SDT VARCHAR(10),
+	Email  NVarchar(30),
 	ChucVu Nvarchar(10),
 	NgVL smalldatetime,     /*Ngày vào làm để hiện thêm vài thông tin ở trang chính*/
 	Luong money,
@@ -99,8 +99,8 @@ create table NhaCungCap
 	ID int identity(1,1),
 	MaNCC as 'CC' + right('000' + cast(ID as varchar(3)), 3) persisted,
 	TenNCC Nvarchar(30) not null,
-	SDT  varchar(30),
-	Email Nvarchar(254),
+	SDT  varchar(15),
+	Email Nvarchar(45),
 	DiaChi NVarchar(40),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_NNCC primary key(MaNCC)
@@ -125,35 +125,38 @@ create table MatHang
 	TenMH Nvarchar(30) not null,
 	SoPhanKhoi int not null,
 	Mau Nvarchar(15),
+	LoaiXe Nvarchar(30),
 	GiaNhapMH money,
 	GiaBanMH money,
 	SoLuongTonKho int not null,
 	MaNCC varchar(5) not null,
-	HangSX /*TenNSX*/ Nvarchar(30),
-	XuatXu /*NuocSX*/ Nvarchar(30),
+	HangSX /*TenNSX*/ Nvarchar(15),
+	XuatXu /*NuocSX*/ Nvarchar(15),
 	MoTa Nvarchar(75),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_MaMH primary key(MaMH)
 )
 alter table MatHang add constraint FK_MH foreign key(MaNCC) references NhaCungCap(MaNCC)
 
-Insert into MatHang values(N'Sirius', 50, N'đen xám',10000000,13500000,15,'CC010',N'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Sirius', 110, N'đỏ đen',21500000,26500000,13,'CC010',N'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Honda Air Blade',150, N'vàng đen',33500000,40500000,7,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
-Insert into MatHang values(N'Exciter', 150, N'xanh biển', 38500000,45000000,5,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Raider F150', 150, N'đỏ đen', 21500000,27500000,10,'CC006',N'Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Sirius', 50, N'đen xám',N'số nhỏ',10000000,13500000,15,'CC010',N'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Sirius', 110, N'đỏ đen',N'số lớn',21500000,26500000,13,'CC010',N'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Honda Air Blade',150, N'vàng đen',N'tay ga',33500000,40500000,7,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
+Insert into MatHang values(N'Exciter', 150, N'xanh biển',N'côn', 38500000,45000000,5,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Raider F150', 150, N'đỏ đen',N'côn', 21500000,27500000,10,'CC006',N'Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
 
-Insert into MatHang values(N'Vision', 150, N'đỏ đen',22500000,29500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'Lead', 110, N'trắng khói',24500000,31500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'Kawasaki Z1000',1043, N'xanh đen',410000000,435500000,10,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values(N'Kawasaki Ninja ZX-10R', 150, N'xanh lục đen', 699000000,729000000,5,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values(N'Attila 50', 110, N'đỏ', 20500000,25700000,10,'CC007',N'Sym',N'Đài Loan',N'Còn mới',0)
+Insert into MatHang values(N'Vision', 150, N'đỏ đen',N'tay ga',22500000,29500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Lead', 110, N'trắng khói',N'tay ga',24500000,31500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Kawasaki Z1000',1043, N'xanh đen',N'phân khối lớn',410000000,435500000,10,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Kawasaki Ninja ZX-10R', 150, N'xanh lục đen',N'phân khối lớn', 699000000,729000000,5,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Attila 50', 110, N'đỏ',N'tay ga', 20500000,25700000,10,'CC007',N'Sym',N'Đài Loan',N'Còn mới',0)
 
-Insert into MatHang values(N'Vespa Print 2020', 110, N'đỏ đen',23500000,30500000,10,'CC005',N'Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
-Insert into MatHang values(N'SH 150', 150, N'xanh lam',115000000,129250000,9,'CC001',N'Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
-Insert into MatHang values(N'Wave Alpha',110, N'trắng',20500000,24500000,15,'CC001',N'Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
-Insert into MatHang values(N'Sirius FI', 110, N'đen khói', 22500000,27500000,10,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'EVO200', 100, N'vàng', 23500000,22500000,15,'CC009',N'Vinfast',N'Việt Nam',N'Còn mới',0)
+Insert into MatHang values(N'Vespa Print 2020', 110, N'đỏ đen',N'tay ga',23500000,30500000,10,'CC005',N'Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
+Insert into MatHang values(N'SH 150', 150, N'xanh lam',N'tay ga',115000000,129250000,9,'CC001',N'Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
+Insert into MatHang values(N'Wave Alpha',110, N'trắng',N'số lớn',20500000,24500000,15,'CC001',N'Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
+Insert into MatHang values(N'Sirius FI', 110, N'đen khói',N'số lớn', 22500000,27500000,10,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'EVO200', 100, N'vàng',N'điện', 23500000,22500000,15,'CC009',N'Vinfast',N'Việt Nam',N'Còn mới',0)
+
+delete from MatHang where MaMH='MH019'
 
 Create table HoaDon
 (
@@ -238,9 +241,9 @@ Insert into ThongTinBaoHanh values('HD011','12/7/2022',N'Thay nhớt định k�
 create table UserApp
 (
 	MaNV varchar(5),
-	UserName Nvarchar(20) unique not null,
-	Password Nvarchar(30) not null,
-	Email NVarchar(254) not null,   /*Email để khôi phục mật khẩu nếu cần*/
+	UserName Nvarchar(15) unique not null,
+	Password Nvarchar(20) not null,
+	Email NVarchar(30) not null,   /*Email để khôi phục mật khẩu nếu cần*/
 	constraint PK_UA_MaNV primary key(MaNV)
 )
 

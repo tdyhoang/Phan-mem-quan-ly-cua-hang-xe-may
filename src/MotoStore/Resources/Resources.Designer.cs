@@ -59,5 +59,23 @@ namespace MotoStore.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Avatars\.
+        /// </summary>
+        public static string FilePathAvatar {
+            get {
+                return ResourceManager.GetString("FilePathAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Products Images\.
+        /// </summary>
+        public static string FilePathMatHang {
+            get {
+                return ResourceManager.GetString("FilePathMatHang", resourceCulture);
+            }
+        }
     }
 }

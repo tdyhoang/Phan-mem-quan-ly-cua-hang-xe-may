@@ -28,7 +28,7 @@ namespace MotoStore.ViewModels
 
         private void InitializeViewModel()
         {
-            if (string.Equals(PageChinh.getNV.ChucVu, "Quản lý", StringComparer.OrdinalIgnoreCase))
+            if (string.Equals(PageChinh.getNV.ChucVu, "Quản lý",  System.StringComparison.OrdinalIgnoreCase))
             {
                 NavigationItems = new()
                 {

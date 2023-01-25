@@ -10,6 +10,10 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using MotoStore.Views.Pages.LoginPages;
 using System.IO;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
+using MotoStore.Helpers;
+using MotoStore.Properties;
 
 namespace MotoStore.Views.Windows
 {
@@ -19,7 +23,8 @@ namespace MotoStore.Views.Windows
     public partial class WindowInformation : Window
     {
         private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
-        private Tuple<MatHang, string> mathang;
+        static internal Tuple<MatHang, BitmapImage?> mathang;
+
         private List<string> ListAnhSP = new();
         private IOSanPhamPage IOSPpg = new();
         private string destFile;
@@ -192,14 +197,14 @@ namespace MotoStore.Views.Windows
             }
         }
 
-        public WindowInformation(Tuple<MatHang,string> thamso,IOSanPhamPage thamsoPage)
+        public WindowInformation(Tuple<MatHang,BitmapImage?> thamso)
         {
             //WindowInfor của Trang Sản Phẩm
             InitializeComponent();
             loaiWD = 1;
             MainDatabase mdb = new();
-            IOSPpg = thamsoPage;
-            mathang = new(thamso.Item1, thamso.Item2);
+            //IOSPpg = thamsoPage;
+            mathang = thamso;
             lblMaMH.Content = mathang.Item1.MaMh;
             lblTenMH.Content = mathang.Item1.TenMh;
             lblSoPK.Content = mathang.Item1.SoPhanKhoi;
@@ -216,6 +221,10 @@ namespace MotoStore.Views.Windows
                 txtMau.Text = mathang.Item1.Mau;
             else 
                 txtMau.Text=string.Empty;
+            if (mathang.Item1.LoaiXe != null)
+                txtLX.Text = mathang.Item1.LoaiXe;
+            else
+                txtLX.Text = string.Empty;
             if (mathang.Item2 != null)
             {
                 /*BitmapImage image = new();
@@ -229,38 +238,9 @@ namespace MotoStore.Views.Windows
                 //stream.Close();
                 //stream.Dispose();
                 anhSP.Source = image;*/
-                BitmapImage image = new();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new(mathang.Item2);
-                image.EndInit();
-                anhSP.Source = image;
-                image.Freeze(); //new
-
+                anhSP.Source = mathang.Item2;
             }
-            //else cập nhật ảnh xe default
             DataContext = this;
-        }
-
-        //Phải có hàm Depose Ảnh ở trong Trang này, gọi hàm này mỗi khi cần Depose Ảnh ở trang SanPham
-        public void DeposeImg(string imgPath)
-        {
-            //imgPath là file ảnh cần Depose
-
-            BitmapImage image = new();
-            //var stream = File.OpenRead(OFDFileName);
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            //image.StreamSource = stream;
-            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new(newPathToFile);
-            image.EndInit();
-            //stream.Close();
-            //stream.Dispose();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            File.Delete(imgPath); //Xoá file tạm đi
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -318,6 +298,16 @@ namespace MotoStore.Views.Windows
             txtTonKho.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.White);
         }
 
+        private void txtLX_GotFocus(object sender, RoutedEventArgs e)
+        {
+            txtLX.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.Black);
+        }
+
+        private void txtLX_LostFocus(object sender, RoutedEventArgs e)
+        {
+            txtLX.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.White);
+        }
+
         private void btnCapNhatAnh_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OFD = new();
@@ -326,11 +316,8 @@ namespace MotoStore.Views.Windows
             //string newPathToFile = $"/Products Images/{mathang.Item1.MaMh}.png";
             //dùng 2 dòng trên bị lỗi Could not find a part of the path 'C:\Products Images\ ... 
 
-            destFile ="D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\"+ mathang.Item1.MaMh + ".BKup";
-            newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
             if (OFD.ShowDialog() == true)
             {
-                //File.Move(newPathToFile, destFile); //Đổi tên File
                 OFDFileName = OFD.FileName;
                 anhSP.Source = new BitmapImage(new Uri(OFDFileName));
             }
@@ -343,7 +330,7 @@ namespace MotoStore.Views.Windows
             }
             else
             {
-                if (string.IsNullOrEmpty(txtGiaBan.Text) || string.IsNullOrWhiteSpace(txtMau.Text) || string.IsNullOrEmpty(txtTonKho.Text))
+                if (string.IsNullOrEmpty(txtGiaBan.Text) || string.IsNullOrWhiteSpace(txtMau.Text) || string.IsNullOrEmpty(txtTonKho.Text) || string.IsNullOrWhiteSpace(txtLX.Text))
                     MessageBox.Show("Có Trường Dữ Liệu Bị Thiếu, Vui Lòng Kiểm Tra Lại!");
                 else
                 {
@@ -352,14 +339,19 @@ namespace MotoStore.Views.Windows
                         MainDatabase mdb = new();
                         SqlCommand cmd;
                         con.Open();
-                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
+                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',LoaiXe=N'"+txtLX.Text+"', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
                         cmd.ExecuteNonQuery();
                         DateTime dt = DateTime.Now;
                         cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
                         cmd.ExecuteNonQuery();
                         con.Close();
-                        string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".BKup";
-                        string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + mathang.Item1.MaMh + ".png";
+
+                        string destFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".BKup");
+                        string newPathToFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".png");
+                        //anhSP.Source = null;                       
+
+                        if(mathang.Item2 is not null)
+                            mathang.Item2.StreamSource.Dispose();
 
                         //Trước khi đổi ảnh phải kiểm tra có ảnh được chọn hay không
                         if (OFDFileName != null)
@@ -367,24 +359,18 @@ namespace MotoStore.Views.Windows
                             if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
                                 File.Move(newPathToFile, destFile); //Đổi tên File
                             File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
-                            BitmapImage image = new();
-                            //var stream = File.OpenRead(OFDFileName);
-                            image.BeginInit();
-                            image.CacheOption = BitmapCacheOption.OnLoad;
-                            //image.StreamSource = stream;
-                            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                            image.UriSource = new(newPathToFile);
-                            image.EndInit();
-                            //stream.Close();
-                            //stream.Dispose();
-                            anhSP.Source = image;
+
+                            MatHang var = mathang.Item1;
+                            mathang = Tuple.Create(var, BitmapImageFromFile.BitmapImageFromString(OFDFileName));
 
                             GC.Collect();
                             GC.WaitForPendingFinalizers();
                             File.Delete(destFile); //Xoá file tạm đi
                         }
-                        IOSPpg.Refresh(); //Tự động làm mới sau khi cập nhật thành công
+                        //IOSPpg.Refresh(); //Tự động làm mới sau khi cập nhật thành công
                         MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
+                        //gọi refresh
+                        this.Close();
                     }
                     catch (Exception ex)
                     {
@@ -446,5 +432,6 @@ namespace MotoStore.Views.Windows
                 }
             }
         }
+
     }
 }

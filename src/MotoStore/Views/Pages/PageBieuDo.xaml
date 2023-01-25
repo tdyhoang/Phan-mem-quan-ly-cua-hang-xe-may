@@ -70,9 +70,9 @@
                                   DataClick="dothi_DataClick">
 
                 <livechart:CartesianChart.AxisX>
-                    <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="9.25" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
+                    <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="10" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
                         <livechart:Axis.Separator>
-                            <livechart:Separator Step="1" />
+                            <livechart:Separator Step="2" />
                         </livechart:Axis.Separator>
                     </livechart:Axis>
                 </livechart:CartesianChart.AxisX>

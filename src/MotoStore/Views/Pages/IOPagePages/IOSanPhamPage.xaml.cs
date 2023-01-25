@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using MotoStore.Database;
 using MotoStore.Views.Windows;
+using MotoStore.Helpers;
+using MotoStore.Properties;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -18,9 +23,9 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// </summary>
     public partial class IOSanPhamPage : Page
     {
-        internal ObservableCollection<Tuple<MatHang, string>> matHangs;
+        static public ObservableCollection<Tuple<MatHang, BitmapImage?>> matHangs;
         static string luachon = "0";
-
+        static MainDatabase mdb = new();
         public IOSanPhamPage()
         {
             InitializeComponent();
@@ -30,40 +35,26 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         public void Refresh()
         {
-            MainDatabase mdb = new();
+            if (matHangs is not null)
+                foreach (var xe in matHangs.Where(u => u.Item2 is not null).ToList())
+                {
+                    xe.Item2.StreamSource.Close();
+                    GC.Collect();
+                } 
             matHangs = new();
             foreach (var xe in mdb.MatHangs.ToList())
             {
                 if (xe.DaXoa)
                     continue;
                 //matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
-                matHangs.Add(new(xe, "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png"));
-                BitmapImageFromFile("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + xe.MaMh + ".png");
+                BitmapImage? BmI = BitmapImageFromFile.BitmapImageFromString(Path.Combine(Settings.Default.ProductFilePath,xe.MaMh));
+                matHangs.Add(new(xe, BmI));
             }            
             ListViewProduct.ItemsSource = matHangs;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource);
-            //biến view kiểu CollectionView dùng để gom nhóm, tìm kiếm, filter, điều hướng dữ liệu, gán nó bằng ItemsSource ở trên
-            
+            //biến View kiểu CollectionView dùng để gom nhóm, tìm kiếm, filter, điều hướng dữ liệu, gán nó bằng ItemsSource ở trên            
             view.Filter = Filter;
             GC.Collect();
-        }
-
-        public static BitmapSource BitmapImageFromFile(string filepath)
-        {
-            var bi = new BitmapImage();
-
-            using (var fs = new FileStream(filepath, FileMode.Open))
-            {
-                bi.BeginInit();
-                bi.StreamSource = fs;
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.EndInit();
-            }
-
-            bi.Freeze(); //Important to freeze it, otherwise it will still have minor leaks
-
-            //Cop từ https://stackoverflow.com/questions/28364439/how-to-dispose-bitmapimage-cache
-            return bi;
         }
 
         private void btnAddNewPageSP_Click(object sender, RoutedEventArgs e)
@@ -74,9 +65,9 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(ListViewProduct.SelectedItem is Tuple<MatHang, string> mathang)
+            if(ListViewProduct.SelectedItem is Tuple<MatHang, BitmapImage?> mathang)
             {
-                WindowInformation WI = new WindowInformation(mathang,this);
+                WindowInformation WI = new WindowInformation(mathang);
                 WI.ShowDialog();
             }
         }
@@ -85,14 +76,21 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             if(string.IsNullOrWhiteSpace(txtTimKiem.Text))
                 return true; //Text rỗng hoặc chứa khoảng trắng thì hiện toàn bộ item(Sản Phẩm)
-            if(item is Tuple< MatHang,string> mh)
+            if(item is Tuple< MatHang,BitmapImage?> mh)
             {
-                if (mh.Item1.MaMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
-                    return true;
-                if (mh.Item1.TenMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
-                    return true;
-                if (mh.Item1.Mau.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
-                    return true;
+                try
+                {
+                    if (mh.Item1.MaMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                    if (mh.Item1.TenMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                    if (mh.Item1.Mau.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
+                }
             }
             return false;
         }
@@ -105,8 +103,11 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void subItemQuayLai_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
+            GC.Collect();
             subItemLocTheo.Header = "Lọc Theo:";
             luachon = "0";
+            subItemPK.IsChecked = false;
+            subItemGia.IsChecked = false;
         }
 
         private void txtTu_LostFocus(object sender, RoutedEventArgs e)
@@ -123,7 +124,7 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         private void btnTim_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Tuple<MatHang, string>> ListItems = new();
+            ObservableCollection<Tuple<MatHang, BitmapImage>> ListItems = new();
             if (string.IsNullOrWhiteSpace(txtTu.Text) || string.IsNullOrWhiteSpace(txtDen.Text))
                 MessageBox.Show("Vui lòng điền đầy đủ khoảng trống", "Nhắc Nhở", MessageBoxButton.OK, MessageBoxImage.Information);
             else if (long.Parse(txtTu.Text) >= long.Parse(txtDen.Text))
@@ -184,11 +185,14 @@ namespace MotoStore.Views.Pages.IOPagePages
                 {
                     e.Handled = true;
                 }
-                else if (lv.SelectedItem is Tuple<MatHang, string> mathang)
+                else if (lv.SelectedItem is Tuple<MatHang, BitmapImage?> mathang)
                 {
-                    WindowInformation WI = new WindowInformation(mathang,this);
-                    WI.ShowDialog();
-                    lv.SelectedItem = null;
+                    foreach (var item in matHangs.Where(mh => mh.Item1.MaMh == mathang.Item1.MaMh)) 
+                    {
+                        WindowInformation WI = new WindowInformation(item);
+                        WI.ShowDialog();
+                    }
+                    Refresh();
                 }
             }
         }
@@ -196,19 +200,27 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void btnLamMoi_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
+            GC.Collect();
+            subItemLocTheo.Header = "Lọc Theo";
+            txtTu.Text = string.Empty;
+            txtDen.Text = string.Empty;
+            subItemGia.IsChecked = false;
+            subItemPK.IsChecked = false;
         }
 
         private void subItemGia_Click(object sender, RoutedEventArgs e)
         {
             luachon = "Gia";
-            subItemGia.IsChecked = false;
+            subItemGia.IsChecked = true;
+            subItemPK.IsChecked = false;
             subItemLocTheo.Header = "Giá";
         }
 
         private void subItemPK_Click(object sender, RoutedEventArgs e)
         {
             luachon = "PK";
-            subItemPK.IsChecked = false;
+            subItemPK.IsChecked = true;
+            subItemGia.IsChecked = false;
             subItemLocTheo.Header = "Phân Khối";
         }
 
@@ -227,7 +239,8 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 if (!string.IsNullOrWhiteSpace(txtDen.Text))
                     txtDen.Text = string.Format("{0:#.00}", Convert.ToDecimal(txtDen.Text) / 100);
-            } */
+            }*/
         }
+
     }
 }

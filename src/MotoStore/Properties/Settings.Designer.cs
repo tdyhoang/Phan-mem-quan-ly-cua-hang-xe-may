@@ -12,7 +12,7 @@ namespace MotoStore.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,8 @@ namespace MotoStore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Av" +
+            "atars\\")]
         public string AvatarFilePath {
             get {
                 return ((string)(this["AvatarFilePath"]));
@@ -37,7 +38,8 @@ namespace MotoStore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Pr" +
+            "oducts Images\\")]
         public string ProductFilePath {
             get {
                 return ((string)(this["ProductFilePath"]));

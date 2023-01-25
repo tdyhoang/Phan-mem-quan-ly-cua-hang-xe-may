@@ -291,6 +291,32 @@
                        Margin="130,295,0,0"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"></Label>
+
+                <Label x:Name="lblLX"
+                       Height="35"
+                       Width="70"
+                       Content="Dòng Xe: "
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="150,0,0,20"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"></Label>
+                <TextBox Height="35"
+                       Width="130"
+                       x:Name="txtLX"
+                       Foreground="white"
+                       FontSize="15"
+                       FontWeight="Medium"
+                       Margin="325,0,0,30"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"
+                       GotFocus="txtLX_GotFocus"
+                       LostFocus="txtLX_LostFocus">
+                    <i:Interaction.Behaviors>
+                        <helpers:TextBoxInputBehavior InputMode="WordsInput" />
+                    </i:Interaction.Behaviors>
+                </TextBox>
                 <Button x:Name="btnLuu"
                 Height="25"
                 Width="120"

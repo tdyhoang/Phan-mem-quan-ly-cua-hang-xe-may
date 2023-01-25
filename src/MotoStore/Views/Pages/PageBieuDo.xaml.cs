@@ -580,33 +580,30 @@ namespace MotoStore.Views.Pages
 
         private void dothi_DataClick(object sender, ChartPoint chartPoint)
         {
-            if (CanClick)
-            {
-                string getNgay = TrucHoanhX.Labels[(int)chartPoint.X];
-                //Xử Lý công đoạn lấy ngày ở đây
-                /* int getDayLB0 = DateTime.Parse(Labels[0]).Day;
-                 int getMonthLB0 = DateTime.Parse(Labels[0]).Month;
-                 int getYearLB0 = DateTime.Parse(Labels[0]).Year;
-                 string Ngay = TrucHoanhX.Labels[(int)chartPoint.X];
-                 int GetNgay = int.Parse(Ngay.Substring(0, 2)); //Lấy cái ngày của dataPoint vừa bấm
-                 if (getDayLB0 < GetNgay) 
-                 {
-                     //Tức là getNgay cùng tháng của Labels[0] và nó lớn hơn ngày Labels[0]
-                     Ngay = GetNgay.ToString() + "-" + getMonthLB0 + "-" + getYearLB0; //Ghép lại thành ngày hoàn chỉnh
-                 }
-                 else
-                 {
-                  //Có quá nhiều công đoạn ở đây, ... zzzz
-                 }
+            string getNgay = TrucHoanhX.Labels[(int)chartPoint.X];
+            //Xử Lý công đoạn lấy ngày ở đây
+            /* int getDayLB0 = DateTime.Parse(Labels[0]).Day;
+             int getMonthLB0 = DateTime.Parse(Labels[0]).Month;
+             int getYearLB0 = DateTime.Parse(Labels[0]).Year;
+             string Ngay = TrucHoanhX.Labels[(int)chartPoint.X];
+             int GetNgay = int.Parse(Ngay.Substring(0, 2)); //Lấy cái ngày của dataPoint vừa bấm
+             if (getDayLB0 < GetNgay) 
+             {
+                 //Tức là getNgay cùng tháng của Labels[0] và nó lớn hơn ngày Labels[0]
+                 Ngay = GetNgay.ToString() + "-" + getMonthLB0 + "-" + getYearLB0; //Ghép lại thành ngày hoàn chỉnh
+             }
+             else
+             {
+              //Có quá nhiều công đoạn ở đây, ... zzzz
+             }
 
 
-                 //if (getDayLB0 > )
+             //if (getDayLB0 > )
 
-                 //if (getNgay>=Labels[0])
-                 //if getNgay nam trong nam nao thi them nam va thang do dang sau */
-                WindowInformation wd = new WindowInformation(getNgay);
-                wd.ShowDialog();
-            }
+             //if (getNgay>=Labels[0])
+             //if getNgay nam trong nam nao thi them nam va thang do dang sau */
+            WindowInformation wd = new WindowInformation(getNgay);
+            wd.ShowDialog();
         }
 
     }

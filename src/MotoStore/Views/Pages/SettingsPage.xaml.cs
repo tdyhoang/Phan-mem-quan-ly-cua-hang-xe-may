@@ -11,6 +11,12 @@ using MotoStore.Views.Pages.LoginPages;
 using System.Windows.Documents;
 using System.Net.Mime;
 using System.IO;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Windows.Shapes;
+using MotoStore.Properties;
+using Path = System.IO.Path;
 
 namespace MotoStore.Views.Pages
 {
@@ -19,7 +25,7 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
-        static string? fileImg;
+        static string? fileImg = null;
         public ViewModels.SettingsViewModel ViewModel
         {
             get;
@@ -28,14 +34,15 @@ namespace MotoStore.Views.Pages
         public SettingsPage(ViewModels.SettingsViewModel viewModel)
         {
             ViewModel = viewModel;
-
             InitializeComponent();
+            txtDgDanAvatar.Text = Settings.Default.AvatarFilePath;
+            txtDgDanMH.Text = Settings.Default.ProductFilePath;
         }
 
         static int solanbam = 0;
         private void btnBaoLoi_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if(solanbam == 0)
+            if (solanbam == 0)
             {
                 brdBaoLoi.Visibility = Visibility.Visible;
                 solanbam = 1;
@@ -53,8 +60,8 @@ namespace MotoStore.Views.Pages
             OFD.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
             if (OFD.ShowDialog() == true)
             {
-                anhDinhKem.ImageSource=new BitmapImage(new System.Uri(OFD.FileName));
-                fileImg=OFD.FileName;
+                anhDinhKem.ImageSource = new BitmapImage(new System.Uri(OFD.FileName));
+                fileImg = OFD.FileName;
             }
         }
 
@@ -64,9 +71,7 @@ namespace MotoStore.Views.Pages
             {
             }
             else
-            {
                 GuiMail(fileImg);
-            }    
         }
 
         private void GuiMail(string fileanh)
@@ -110,13 +115,54 @@ namespace MotoStore.Views.Pages
                 smtpClient1.Send(mess);
                 MessageBox.Show("Chúng tôi đã ghi nhận về lỗi, đóng góp của bạn, xin cảm ơn!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Gửi mail thất bại, có thể do dung lượng file ảnh hoặc một vài lý do khác, hãy thử tệp ảnh nhẹ hơn và gửi lại!");
+                MessageBox.Show("Gửi mail thất bại, có thể do dung lượng file ảnh hoặc một vài lý do khác, hãy thử tệp ảnh nhẹ hơn và gửi lại! Lỗi: " + ex.Message);
             }
-            /* Hàm này để ứng dụng gửi mã 6 số ngẫu nhiên
-              về Email người Quản Lý để xác nhận thay đổi mật khẩu */
+            /*Hàm này để ứng dụng gửi mã 6 số ngẫu nhiên
+            về Email*/
+        }
+                        
+        private void btnChonFileAvatar_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog COFD = new();
+            COFD.IsFolderPicker = true;
+            COFD.InitialDirectory = Settings.Default.AvatarFilePath;
+            if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                try
+                {
+                    txtDgDanAvatar.Text = COFD.FileName;
+                    Settings.Default.ProductFilePath = COFD.FileName;
+                    Settings.Default.Save();
+                    MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Nhân Viên Thành Công!");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                }
+            }
         }
 
+        private void btnChonFileMH_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog COFD = new();
+            COFD.IsFolderPicker = true;
+            COFD.InitialDirectory = Settings.Default.ProductFilePath;
+            if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                try
+                {
+                    txtDgDanMH.Text = COFD.FileName;
+                    Settings.Default.ProductFilePath = COFD.FileName;
+                    Settings.Default.Save();
+                    MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Mặt Hàng Thành Công!");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                }
+            }
+        }
     }
 }
