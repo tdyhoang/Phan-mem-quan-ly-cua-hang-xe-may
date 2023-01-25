@@ -75,9 +75,20 @@ namespace MotoStore.Views.Pages.IOPagePages
                 try
                 {
                     string ngayXuatHD = string.IsNullOrEmpty(txtNgayXuatHD.Text) ? "null" : $"'{txtNgayXuatHD.Text}'";
-                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into HoaDon values('{cmbMaSPHD.Text}', '{cmbMaKHHD.Text}', '{PageChinh.getNV.MaNv}', {ngayXuatHD}, {int.Parse(txtSoLuongHD.Text)}, {decimal.Parse(txtThanhTienHD.Text)})", con, trans);
-                    cmd.ExecuteNonQuery();
-                    
+                    SqlCommand cmd = new ("Set Dateformat dmy\n Insert into HoaDon values(@MaSP,@MaKH,@MaNV,@NgayHD,@SoLuongHD,@ThanhTien)", con,trans );                 
+                    cmd.Parameters.Add("@MaSP", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@MaSP"].Value = cmbMaSPHD.Text;
+                    cmd.Parameters.Add("@MaKH", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@MaKH"].Value = cmbMaKHHD.Text;
+                    cmd.Parameters.Add("@MaNV", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@MaNV"].Value = PageChinh.getNV.MaNv;
+                    cmd.Parameters.Add("@NgayHD", System.Data.SqlDbType.SmallDateTime);
+                    cmd.Parameters["@NgayHD"].Value = txtNgayXuatHD.Text;
+                    cmd.Parameters.Add("@SoLuongHD", System.Data.SqlDbType.Int);
+                    cmd.Parameters["@SoLuongHD"].Value = txtSoLuongHD.Text;
+                    cmd.Parameters.Add("@ThanhTien", System.Data.SqlDbType.Money);
+                    cmd.Parameters["@ThanhTien"].Value = txtThanhTienHD.Text;                
+                    cmd.ExecuteNonQuery();               
                     trans.Commit();
                     PageRefresh();
                     MessageBox.Show("Thêm dữ liệu thành công");
