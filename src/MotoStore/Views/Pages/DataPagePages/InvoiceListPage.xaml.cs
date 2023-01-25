@@ -77,18 +77,12 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate HoaDon Set MaMh = @MaMH{loopcount}, MaKh = @MaKH{loopcount}, MaNv = @MaNV{loopcount}, NgayLapHd = @NgayLapHD{loopcount}, SoLuong = @SoLuong{loopcount}, ThanhTien = @ThanhTien{loopcount} Where MaHd = '{hd.MaHd}';";
 
-                        cmd.Parameters.Add($"@MaMH{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaMH{loopcount}"].Value = hd.MaMh;
-                        cmd.Parameters.Add($"@MaKH{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaKH{loopcount}"].Value = hd.MaKh;
-                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaNV{loopcount}"].Value = hd.MaNv;
-                        cmd.Parameters.Add($"@NgayLapHD{loopcount}", SqlDbType.SmallDateTime);
-                        cmd.Parameters[$"@NgayLapHD{loopcount}"].Value = hd.NgayLapHd.HasValue ? hd.NgayLapHd.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@SoLuong{loopcount}", SqlDbType.Int);
-                        cmd.Parameters[$"@SoLuong{loopcount}"].Value = hd.SoLuong;
-                        cmd.Parameters.Add($"@ThanhTien{loopcount}", SqlDbType.Decimal);
-                        cmd.Parameters[$"@ThanhTien{loopcount}"].Value = hd.ThanhTien;
+                        cmd.Parameters.Add($"@MaMH{loopcount}", SqlDbType.VarChar).Value = hd.MaMh;
+                        cmd.Parameters.Add($"@MaKH{loopcount}", SqlDbType.VarChar).Value = hd.MaKh;
+                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar).Value = hd.MaNv;
+                        cmd.Parameters.Add($"@NgayLapHD{loopcount}", SqlDbType.SmallDateTime).Value = hd.NgayLapHd.HasValue ? hd.NgayLapHd.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@SoLuong{loopcount}", SqlDbType.Int).Value = hd.SoLuong;
+                        cmd.Parameters.Add($"@ThanhTien{loopcount}", SqlDbType.Decimal).Value = hd.ThanhTien;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

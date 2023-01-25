@@ -50,13 +50,11 @@ namespace MotoStore.Views.Pages.LoginPages
         static public long ma;  //Đặt biến tĩnh để các PageGuiMa có thể truy cập*/
         public PageGuiMa pgGM = new(pgC);
         static public string? strEmail;
-        private int flag = 0;
         private readonly DispatcherTimer timer = new();
 
         private void buttonXacNhan_Click(object sender, RoutedEventArgs e)
         {
             dem = 0;
-            flag = 1;  //Báo hiệu nút Xác Nhận đã được click
             var pageGuiMa = new PageGuiMa(pgC);
             if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtDoiPass.Password) || string.IsNullOrEmpty(txtXacNhanDoiPass.Password))
             {
@@ -103,7 +101,7 @@ namespace MotoStore.Views.Pages.LoginPages
             }
         }
 
-        private void GuiMail()
+        private static void GuiMail()
         {
             try
             {
@@ -137,6 +135,12 @@ namespace MotoStore.Views.Pages.LoginPages
         { 
             NavigationService.Navigate(pgC);
             //Hàm này để Quay lại Trang Chính(pgC)
+        }
+
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)
+                buttonXacNhan_Click(sender, e);
         }
     }
 }

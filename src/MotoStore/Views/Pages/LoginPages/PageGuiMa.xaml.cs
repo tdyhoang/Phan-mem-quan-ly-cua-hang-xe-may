@@ -88,5 +88,11 @@ namespace MotoStore.Views.Pages.LoginPages
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void txtMa_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)
+                buttonXacNhanGuiMa_Click(sender, e);
+        }
     }
 }

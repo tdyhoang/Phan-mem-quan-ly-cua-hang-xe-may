@@ -37,9 +37,8 @@ namespace MotoStore.Views.Pages
             con.Open();
             //Nên đổi doanh thu Tháng Này thành doanh thu 30 ngày gần nhất
             //để lúc nào nó cũng luôn có dữ liệu
-            string now = DateTime.Now.ToString("dd/MM/yyyy");
-            string lastdate = DateTime.Now.AddDays(-30.0).ToString("dd/MM/yyyy");
-            for (DateTime date = DateTime.Parse(now).AddDays(-29.0); date < DateTime.Now; date = date.AddDays(1.0))
+            string lastdate = DateTime.Today.AddDays(-30.0).ToString("dd/MM/yyyy");
+            for (DateTime date = DateTime.Today.AddDays(-29.0); date < DateTime.Now; date = date.AddDays(1.0))
             {
                 SqlCommand cmd = new("Set dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                 //Bình Thường trên SQL sẽ là NgayLapHD = '@Today' nhưng ở Linq này kh được chứa ''
@@ -139,22 +138,7 @@ namespace MotoStore.Views.Pages
             gridchonNam.Visibility = Visibility.Collapsed;
             //Hiện mục chọn ngày mỗi khi click vào menu Chọn Ngày Xem
         }
-
-        private void txtTuNgay_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            for(int i=0;i<txtTuNgay.Text.Length;i++)
-            {
-                if (!(txtTuNgay.Text[i] >= 47 && txtTuNgay.Text[i] <= 57))
-                {
-                    MessageBox.Show("Ô Từ Ngày chứa kí tự không hợp lệ!");
-                    txtTuNgay.Text = txtTuNgay.Text.Substring(0, txtTuNgay.Text.Length - 1);
-                    txtTuNgay.SelectionStart = txtTuNgay.Text.Length;
-                    break;
-                }
-            }
-            //Hàm này kiểm tra ô Textbox Từ Ngày có phải ngày hợp lệ
-        }
-        public bool IsValidDateTimeTest(string dateTime)
+        public static bool IsValidDateTimeTest(string dateTime)
         {
             string[] formats = { "d/M/yyyy" };
             return DateTime.TryParseExact(dateTime, formats, new CultureInfo("vi-VN"),
@@ -164,50 +148,36 @@ namespace MotoStore.Views.Pages
 
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
-            string minDate = ngaynhonhat.ToString("d-MM-yyyy");
+            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
+            string minDate = ngaynhonhat.ToString("dd/MM/yyyy");
             if (!IsValidDateTimeTest(txtTuNgay.Text))
             {
-                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(ngày/tháng/năm)!");
+                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(dd/MM/yyyy)!");
                 txtTuNgay.Clear();
             }
-            else if (DateTime.Parse(txtTuNgay.Text) > DateTime.Now)
+            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) > DateTime.Today)
                 MessageBox.Show("Ô Từ Ngày CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định từ ngày " + txtTuNgay.Text + " trở đi sẽ = 0");
-            else if (DateTime.Parse(txtTuNgay.Text) < DateTime.Parse(minDate))
+            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
                 MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
-        }
-
-        private void txtDenNgay_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            for (int i = 0; i < txtDenNgay.Text.Length; i++)
-                if (!(txtDenNgay.Text[i] >= 47 && txtDenNgay.Text[i] <= 57))
-                {
-                    MessageBox.Show("Ô Đến Ngày chứa kí tự không hợp lệ!");
-                    txtDenNgay.Text = txtDenNgay.Text.Substring(0, txtDenNgay.Text.Length - 1);
-                    txtDenNgay.SelectionStart = txtDenNgay.Text.Length;
-                    break;
-                }
-            /*Hàm này sẽ kiểm tra ô Textbox Đến Ngày có phải ngày hợp lệ
-              trước khi bấm Xem. Kí tự '-' kh đc coi là 1 phần của ngày hợp lệ*/
         }
 
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault().Value;
-            string minDate = ngaynhonhat.ToString("d-MM-yyyy");
+            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
+            string minDate = ngaynhonhat.ToString("dd/MM/yyyy");
             if (!IsValidDateTimeTest(txtDenNgay.Text))
             {
-                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(Ngày/Tháng/Năm)!");
+                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(dd/MM/yyyy)!");
                 txtDenNgay.Clear();
             }
-            else if (DateTime.Parse(txtTuNgay.Text) >= DateTime.Parse(txtDenNgay.Text))
+            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture))
             {
                 MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
                 txtDenNgay.Clear();
             }
-            else if (DateTime.Parse(txtDenNgay.Text) > DateTime.Now)
-                MessageBox.Show("Chưa có dữ liệu ở Ô Đến Ngày, Doanh Thu mặc định từ ngày " + DateTime.Now.ToString("d-MM-yyyy") + " đến " + txtDenNgay.Text + " sẽ = 0");
-            else if (DateTime.Parse(txtDenNgay.Text) < DateTime.Parse(minDate))
+            else if (DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) > DateTime.Today)
+                MessageBox.Show("Chưa có dữ liệu ở Ô Đến Ngày, Doanh Thu mặc định từ ngày " + DateTime.Today.ToString("dd/MM/yyyy") + " đến " + txtDenNgay.Text + " sẽ = 0");
+            else if (DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
                 MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
             /*Khi ô Đến Ngày LostFocus, ta sẽ check nó có phải ngày hợp lệ hay kh,
               và check xem nó có bé hơn hoặc = Từ Ngày hay kh
@@ -241,7 +211,7 @@ namespace MotoStore.Views.Pages
                 TrucHoanhX.FontSize = 12;
                 con.Open();
 
-                for (DateTime date = DateTime.Parse(txtTuNgay.Text); date <= DateTime.Parse(txtDenNgay.Text); date = date.AddDays(1.0))
+                for (DateTime date = DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture); date <= DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture); date = date.AddDays(1.0))
                 {
                     SqlCommand cmd = new("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                     cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);

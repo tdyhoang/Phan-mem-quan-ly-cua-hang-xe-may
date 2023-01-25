@@ -221,10 +221,6 @@ namespace MotoStore.Views.Windows
                 txtMau.Text = mathang.Item1.Mau;
             else 
                 txtMau.Text=string.Empty;
-            if (mathang.Item1.LoaiXe != null)
-                txtLX.Text = mathang.Item1.LoaiXe;
-            else
-                txtLX.Text = string.Empty;
             if (mathang.Item2 != null)
             {
                 /*BitmapImage image = new();
@@ -339,7 +335,7 @@ namespace MotoStore.Views.Windows
                         MainDatabase mdb = new();
                         SqlCommand cmd;
                         con.Open();
-                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "',LoaiXe=N'"+txtLX.Text+"', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
+                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
                         cmd.ExecuteNonQuery();
                         DateTime dt = DateTime.Now;
                         cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);

@@ -81,20 +81,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate KhachHang Set HotenKh = @HoTen{loopcount}, NgSinh = @NgaySinh{loopcount}, GioiTinh = @GioiTinh{loopcount}, DiaChi = @DiaChi{loopcount}, Sdt = @SDT{loopcount}, Email = @Email{loopcount}, LoaiKh = @LoaiKH{loopcount} Where MaKh = '{kh.MaKh}';";
 
-                        cmd.Parameters.Add($"@HoTen{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@HoTen{loopcount}"].Value = kh.HoTenKh;
-                        cmd.Parameters.Add($"@NgaySinh{loopcount}", SqlDbType.SmallDateTime);
-                        cmd.Parameters[$"@NgaySinh{loopcount}"].Value = kh.NgSinh.HasValue ? kh.NgSinh.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@GioiTinh{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@GioiTinh{loopcount}"].Value = kh.GioiTinh;
-                        cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@DiaChi{loopcount}"].Value = string.IsNullOrEmpty(kh.DiaChi) ? DBNull.Value : kh.DiaChi;
-                        cmd.Parameters.Add($"@SDT{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@SDT{loopcount}"].Value = string.IsNullOrEmpty(kh.Sdt) ? DBNull.Value : kh.Sdt;
-                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Email{loopcount}"].Value = string.IsNullOrEmpty(kh.Email) ? DBNull.Value : kh.Email;
-                        cmd.Parameters.Add($"@LoaiKH{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@LoaiKH{loopcount}"].Value = kh.LoaiKh;
+                        cmd.Parameters.Add($"@HoTen{loopcount}", SqlDbType.NVarChar).Value = kh.HoTenKh;
+                        cmd.Parameters.Add($"@NgaySinh{loopcount}", SqlDbType.SmallDateTime).Value = kh.NgSinh.HasValue ? kh.NgSinh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@GioiTinh{loopcount}", SqlDbType.NVarChar).Value = kh.GioiTinh;
+                        cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(kh.DiaChi) ? DBNull.Value : kh.DiaChi;
+                        cmd.Parameters.Add($"@SDT{loopcount}", SqlDbType.VarChar).Value = string.IsNullOrEmpty(kh.Sdt) ? DBNull.Value : kh.Sdt;
+                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(kh.Email) ? DBNull.Value : kh.Email;
+                        cmd.Parameters.Add($"@LoaiKH{loopcount}", SqlDbType.NVarChar).Value = kh.LoaiKh;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

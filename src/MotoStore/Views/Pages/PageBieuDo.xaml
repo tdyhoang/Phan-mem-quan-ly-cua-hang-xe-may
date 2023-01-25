@@ -163,14 +163,22 @@
                      VerticalContentAlignment="Center"
                      Margin="0,0,255,0"
                      TextChanged="txtTuNgay_TextChanged"
-                     LostFocus="txtTuNgay_LostFocus"></TextBox>
+                     LostFocus="txtTuNgay_LostFocus">
+                <i:Interaction.Behaviors>
+                    <helpers:TextBoxInputBehavior InputMode="DateInput" />
+                </i:Interaction.Behaviors>
+            </TextBox>
             <TextBox x:Name="txtDenNgay"
                      Height="35"
                      Width="100"
                      VerticalContentAlignment="Center"
                      Margin="175,0,0,0"
                      TextChanged="txtDenNgay_TextChanged"
-                     LostFocus="txtDenNgay_LostFocus"></TextBox>
+                     LostFocus="txtDenNgay_LostFocus">
+                <i:Interaction.Behaviors>
+                    <helpers:TextBoxInputBehavior InputMode="DateInput" />
+                </i:Interaction.Behaviors>
+            </TextBox>
             <Button x:Name="btnXem"
                     Height="20"
                     Width="60"

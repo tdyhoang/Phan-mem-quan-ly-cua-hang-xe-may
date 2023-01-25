@@ -125,7 +125,6 @@ create table MatHang
 	TenMH Nvarchar(30) not null,
 	SoPhanKhoi int not null,
 	Mau Nvarchar(15),
-	LoaiXe Nvarchar(30),
 	GiaNhapMH money,
 	GiaBanMH money,
 	SoLuongTonKho int not null,

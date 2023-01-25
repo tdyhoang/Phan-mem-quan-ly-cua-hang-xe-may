@@ -20,7 +20,7 @@ namespace MotoStore.Views.Pages
     /// <summary>
     /// Interaction logic for DashboardPage.xaml
     /// </summary>
-    public partial class DashboardPage : Page
+    public partial class DashboardPage
     {
         private MainDatabase mdb = new();
         private PageChinh pgChinh;
@@ -176,7 +176,7 @@ namespace MotoStore.Views.Pages
 
             for (int i = 0; i < TabLength; i++) 
             {
-                if (Lich.SelectedDate == DateTime.Parse(listNgBD[i]))
+                if (Lich.SelectedDate == DateTime.ParseExact(listNgBD[i], "dd/MM/yyyy", CultureInfo.InvariantCulture))
                 {
                     rtbNoiDung.AppendText($"Bắt Đầu: {listNgBD[i]} - Kết Thúc: {listNgKT[i]}\nNội Dung: {listNoiDung[i]}\n");
                     co = true;
@@ -223,14 +223,14 @@ namespace MotoStore.Views.Pages
 
             if (enableLenLich)
             {
-                string ngaylenlich = $"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                DateTime ngaylenlich = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 //if có ngày được select
                 if (Lich.SelectedDate.HasValue)
                 {
                     string richText = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd).Text;
                     if (string.IsNullOrEmpty(cbGioBD.Text) || string.IsNullOrEmpty(cbPhutBD.Text) || string.IsNullOrEmpty(cbGioKT.Text) || string.IsNullOrEmpty(cbPhutKT.Text))
                         MessageBox.Show("Vui lòng chọn giờ cụ thể");
-                    else if (DateTime.Parse(ngaylenlich) < DateTime.Now)
+                    else if (ngaylenlich < DateTime.Now)
                     {
                         MessageBox.Show("Ngày hoặc giờ bắt đầu lên lịch không hợp lệ");
                     }
@@ -248,11 +248,11 @@ namespace MotoStore.Views.Pages
                             //Hoặc khoảng thời gian sự kiện mới lại chứa các sự kiện khác
                             foreach (var item in mdb.LenLichs.ToList())
                             {
-                                if (item.NgLenLichBd.ToString("dd-MM-yyyy") == Lich.SelectedDate.Value.ToString("dd-MM-yyyy"))
+                                if (item.NgLenLichBd == Lich.SelectedDate.Value)
                                 {
-                                    string gioBD = $"{cbGioBD.Text}:{cbPhutBD.Text}:00";
-                                    string gioKT = $"{cbGioKT.Text}:{cbPhutKT.Text}:00";
-                                    if (DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) <= DateTime.Parse(gioBD) && DateTime.Parse(gioBD) <= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) <= DateTime.Parse(gioKT) && DateTime.Parse(gioKT) <= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")) || DateTime.Parse(item.NgLenLichBd.ToString("HH:mm:ss")) >= DateTime.Parse(gioBD) && DateTime.Parse(gioKT) >= DateTime.Parse(item.NgLenLichKt.ToString("HH:mm:ss")))
+                                    DateTime gioBD = DateTime.ParseExact($"{cbGioBD.Text}:{cbPhutBD.Text}:00", "HH:mm:ss", CultureInfo.InvariantCulture);
+                                    DateTime gioKT = DateTime.ParseExact($"{cbGioKT.Text}:{cbPhutKT.Text}:00", "HH:mm:ss", CultureInfo.InvariantCulture);
+                                    if (item.NgLenLichBd <= gioBD && gioBD <= item.NgLenLichKt || item.NgLenLichBd <= gioKT && gioKT <= item.NgLenLichKt || item.NgLenLichBd >= gioBD && gioKT >= item.NgLenLichKt)
                                     {
                                         valid = false;
                                         break;
@@ -262,7 +262,7 @@ namespace MotoStore.Views.Pages
                             if (valid)
                             {
                                 con.Open();
-                                string lich = Lich.SelectedDate.Value.ToString("d/M/yyyy");
+                                string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
                                 //Giải thích dòng trên:
                                 //Vì Lich.SelectedDate.Value sẽ cho ra ngày/tháng/năm + giờ/phút/giây nên ta lược bớt phần sau (chỉ giữ lại ngày tháng năm)
 
@@ -315,15 +315,16 @@ namespace MotoStore.Views.Pages
                     }
                     else
                     {
-                        string strGiomuonXoa = $"{Lich.SelectedDate:dd-MM-yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00";
+                        DateTime giomuonxoa = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         bool Deleted = false;
                         foreach (var gio in mdb.LenLichs.ToList())
                         {
-                            if (gio.NgLenLichBd.ToString("dd-MM-yyyy HH:mm:ss") == strGiomuonXoa)
+                            if (gio.NgLenLichBd == giomuonxoa)
                             {
                                 con.Open();
-                                string lich = Lich.SelectedDate.Value.ToString("d/M/yyyy");
-                                SqlCommand cmd = new($"set dateformat dmy\ndelete from LenLich where NgLenLichBD='{strGiomuonXoa}'", con);
+                                string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
+                                SqlCommand cmd = new($"set dateformat dmy\ndelete from LenLich where NgLenLichBD=@NgayLenLichBD", con);
+                                cmd.Parameters.Add("@NgayLenLichBD", System.Data.SqlDbType.SmallDateTime).Value = giomuonxoa;
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
                                 cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
@@ -638,6 +639,11 @@ namespace MotoStore.Views.Pages
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;
+        }
+
+        private void btnLichSu_Unchecked(object sender, RoutedEventArgs e)
+        {
+            dataGridLSHD.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -80,26 +80,16 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate MatHang Set TenMh = @TenMH{loopcount}, SoPhanKhoi = @SoPhanKhoi{loopcount}, Mau = @Mau{loopcount}, GiaNhapMh = @GiaNhapMH{loopcount}, GiaBanMh = @GiaBanMH{loopcount}, SoLuongTonKho = @TonKho{loopcount}, MaNCC = @MaNCC{loopcount}, HangSx = @HangSX{loopcount}, XuatXu = @XuatXu{loopcount}, MoTa = @MoTa{loopcount} Where MaMh = '{mh.MaMh}';";
 
-                        cmd.Parameters.Add($"@TenMH{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@TenMH{loopcount}"].Value = mh.TenMh;
-                        cmd.Parameters.Add($"@SoPhanKhoi{loopcount}", SqlDbType.Int);
-                        cmd.Parameters[$"@SoPhanKhoi{loopcount}"].Value = mh.SoPhanKhoi;
-                        cmd.Parameters.Add($"@Mau{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Mau{loopcount}"].Value = string.IsNullOrEmpty(mh.Mau) ? DBNull.Value : mh.Mau;
-                        cmd.Parameters.Add($"@GiaNhapMH{loopcount}", SqlDbType.Decimal);
-                        cmd.Parameters[$"@GiaNhapMH{loopcount}"].Value = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@GiaBanMH{loopcount}", SqlDbType.Decimal);
-                        cmd.Parameters[$"@GiaBanMH{loopcount}"].Value = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@TonKho{loopcount}", SqlDbType.Int);
-                        cmd.Parameters[$"@TonKho{loopcount}"].Value = mh.SoLuongTonKho;
-                        cmd.Parameters.Add($"@MaNCC{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@MaNXX{loopcount}"].Value = mh.MaNcc;
-                        cmd.Parameters.Add($"@HangSX{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@HangSX{loopcount}"].Value = string.IsNullOrEmpty(mh.HangSx) ? DBNull.Value : mh.HangSx;
-                        cmd.Parameters.Add($"@XuatXu{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@XuatXu{loopcount}"].Value = string.IsNullOrEmpty(mh.XuatXu) ? DBNull.Value : mh.XuatXu;
-                        cmd.Parameters.Add($"@MoTa{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@MoTa{loopcount}"].Value = string.IsNullOrEmpty(mh.MoTa) ? DBNull.Value : mh.MoTa;
+                        cmd.Parameters.Add($"@TenMH{loopcount}", SqlDbType.NVarChar).Value = mh.TenMh;
+                        cmd.Parameters.Add($"@SoPhanKhoi{loopcount}", SqlDbType.Int).Value = mh.SoPhanKhoi;
+                        cmd.Parameters.Add($"@Mau{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(mh.Mau) ? DBNull.Value : mh.Mau;
+                        cmd.Parameters.Add($"@GiaNhapMH{loopcount}", SqlDbType.Decimal).Value = mh.GiaNhapMh.HasValue ? mh.GiaNhapMh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@GiaBanMH{loopcount}", SqlDbType.Decimal).Value = mh.GiaBanMh.HasValue ? mh.GiaBanMh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@TonKho{loopcount}", SqlDbType.Int).Value = mh.SoLuongTonKho;
+                        cmd.Parameters.Add($"@MaNCC{loopcount}", SqlDbType.NVarChar).Value = mh.MaNcc;
+                        cmd.Parameters.Add($"@HangSX{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(mh.HangSx) ? DBNull.Value : mh.HangSx;
+                        cmd.Parameters.Add($"@XuatXu{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(mh.XuatXu) ? DBNull.Value : mh.XuatXu;
+                        cmd.Parameters.Add($"@MoTa{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(mh.MoTa) ? DBNull.Value : mh.MoTa;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

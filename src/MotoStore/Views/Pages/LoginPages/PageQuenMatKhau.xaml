@@ -1,14 +1,15 @@
 ﻿<ui:UiPage x:Class="MotoStore.Views.Pages.LoginPages.PageQuenMatKhau"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:local="clr-namespace:MotoStore.Views.Pages.LoginPages" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:helpers="clr-namespace:MotoStore.Helpers"
-           mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="800">
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+           xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+           xmlns:helpers="clr-namespace:MotoStore.Helpers"
+           mc:Ignorable="d"
+           d:DesignHeight="550" d:DesignWidth="800">
 
-    <Page.Resources>
+    <ui:UiPage.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -37,7 +38,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Page.Resources>
+    </ui:UiPage.Resources>
 
     <Grid >
         <Border>
@@ -64,7 +65,8 @@
                     FontSize="16"
                     Margin="280,130,195,385"
                     Foreground="Black"
-                    CaretBrush="Red">
+                    CaretBrush="Red"
+                    KeyDown="TextBox_KeyDown">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="LetterOrDigitInput" />
             </i:Interaction.Behaviors>
@@ -83,7 +85,8 @@
                         FontSize="16"
                         Margin="280,205,195,304"
                         Foreground="Black"
-                        CaretBrush="Red" />
+                        CaretBrush="Red"
+                        KeyDown="TextBox_KeyDown" />
         <Label x:Name="lblXacNhandoiPass"
                Content="Xác Nhận Mật Khẩu:"
                FontSize="20"
@@ -98,7 +101,8 @@
                         FontSize="16"
                         Margin="280,293,195,216"
                         Foreground="Black"
-                        CaretBrush="Red" />
+                        CaretBrush="Red"
+                        KeyDown="TextBox_KeyDown" />
 
         <ui:Button x:Name="buttonXacNhan"
                    Content="Xác Nhận"

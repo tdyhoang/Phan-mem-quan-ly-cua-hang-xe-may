@@ -32,7 +32,7 @@ namespace MotoStore.ViewModels
             _isInitialized = true;
         }
 
-        private string GetAssemblyVersion()
+        private static string GetAssemblyVersion()
         {
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
         }

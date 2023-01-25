@@ -96,7 +96,7 @@ namespace MotoStore.Controls
             if (value == null)
                 return false;
 
-            if (!DateTime.TryParse(value.ToString(), out var number))
+            if (!DateTime.TryParseExact(value.ToString(), "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AllowWhiteSpaces, out var number))
                 return false;
 
             if (Max == default)

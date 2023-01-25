@@ -12,8 +12,6 @@ public partial class MatHang
 
     public int SoPhanKhoi { get; set; }
 
-    public string? LoaiXe { get; set; }
-
     public string? Mau { get; set; }
 
     public decimal? GiaNhapMh { get; set; }

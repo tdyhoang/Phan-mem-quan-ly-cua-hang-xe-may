@@ -1,34 +1,33 @@
 ﻿<ui:UiWindow x:Class="MotoStore.Views.Windows.LoginView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MotoStore.Views.Windows"
-        mc:Ignorable="d"
-        Title="LoginView" Height="550" Width="800"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"  
-        MouseDown="Window_MouseDown"
-        
-        >
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="LoginView"
+             Height="550"
+             Width="800"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             WindowStyle="None"
+             ResizeMode="NoResize"
+             WindowStartupLocation="CenterScreen"
+             MouseDown="Window_MouseDown">
     <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Views/Pages/LoginPages/PageChinh.xaml"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="/Views/Pages/LoginPages/PageChinh.xaml" />
         <ui:Button x:Name="btnMinimize"
-                            BorderThickness="0"
-                            Height="25"
-                            Width="40"
-                            Content="-"
-                            FontSize="20"
-                            FontWeight="Bold"
-                            Background="Blue"
-                            Foreground="Black"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"    
-                            Grid.Column="1" 
-                            Click="btnMinimize_Click"
-                            Margin="705,0,5,500">
+                   BorderThickness="0"
+                   Height="25"
+                   Width="40"
+                   Content="-"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Background="Blue"
+                   Foreground="Black"
+                   FontFamily="Montserrat"
+                   Cursor="Hand"
+                   Grid.Column="1"
+                   Click="btnMinimize_Click"
+                   Margin="705,0,5,500">
             <ui:Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -36,19 +35,19 @@
             </ui:Button.Resources>
         </ui:Button>
         <ui:Button x:Name="btnClose"
-                            BorderThickness="0"
-                            Height="25"
-                            Width="40"
-                            Content="X"
-                            Background="Red"
-                            FontSize="15"
-                            FontWeight="Bold"
-                            Foreground="Black"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"    
-                            Grid.Column="2"    
-                            Click="btnClose_Click"
-                            Margin="750,0,0,500">
+                   BorderThickness="0"
+                   Height="25"
+                   Width="40"
+                   Content="X"
+                   Background="Red"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   Foreground="Black"
+                   FontFamily="Montserrat"
+                   Cursor="Hand"
+                   Grid.Column="2"
+                   Click="btnClose_Click"
+                   Margin="750,0,0,500">
             <ui:Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

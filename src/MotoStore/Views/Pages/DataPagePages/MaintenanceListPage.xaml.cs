@@ -74,12 +74,9 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate ThongTinBaoHanh Set MaHd = @MaHD{loopcount}, ThoiGian = @ThoiGian{loopcount}, GhiChu = @GhiChu{loopcount} Where MaBh = '{bh.MaBh}';";
 
-                        cmd.Parameters.Add($"@MaHD{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaHD{loopcount}"].Value = bh.MaHd;
-                        cmd.Parameters.Add($"@ThoiGian{loopcount}", SqlDbType.SmallDateTime);
-                        cmd.Parameters[$"@ThoiGian{loopcount}"].Value = bh.ThoiGian.HasValue ? bh.ThoiGian.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@GhiChu{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@GhiChu{loopcount}"].Value = string.IsNullOrEmpty(bh.GhiChu) ? DBNull.Value : bh.GhiChu;
+                        cmd.Parameters.Add($"@MaHD{loopcount}", SqlDbType.VarChar).Value = bh.MaHd;
+                        cmd.Parameters.Add($"@ThoiGian{loopcount}", SqlDbType.SmallDateTime).Value = bh.ThoiGian.HasValue ? bh.ThoiGian.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@GhiChu{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(bh.GhiChu) ? DBNull.Value : bh.GhiChu;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

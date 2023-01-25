@@ -79,14 +79,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate NhaCungCap Set TenNcc = @TenNCC{ncc.TenNcc}, DiaChi = @DiaChi{loopcount}, Sdt = @SDT{loopcount}, Email = @Email{loopcount} Where MaNcc = '{ncc.MaNcc}';";
 
-                        cmd.Parameters.Add($"@TenNCC{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@TenNCC{loopcount}"].Value = ncc.TenNcc;
-                        cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@DiaChi{loopcount}"].Value = string.IsNullOrEmpty(ncc.DiaChi) ? DBNull.Value : ncc.DiaChi;
-                        cmd.Parameters.Add($"@SDT{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@SDT{loopcount}"].Value = string.IsNullOrEmpty(ncc.Sdt) ? DBNull.Value : ncc.Sdt;
-                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Email{loopcount}"].Value = string.IsNullOrEmpty(ncc.Email) ? DBNull.Value : ncc.Email;
+                        cmd.Parameters.Add($"@TenNCC{loopcount}", SqlDbType.NVarChar).Value = ncc.TenNcc;
+                        cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(ncc.DiaChi) ? DBNull.Value : ncc.DiaChi;
+                        cmd.Parameters.Add($"@SDT{loopcount}", SqlDbType.VarChar).Value = string.IsNullOrEmpty(ncc.Sdt) ? DBNull.Value : ncc.Sdt;
+                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(ncc.Email) ? DBNull.Value : ncc.Email;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

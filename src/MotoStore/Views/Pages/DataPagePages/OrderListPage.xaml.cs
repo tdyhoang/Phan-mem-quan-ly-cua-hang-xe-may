@@ -88,16 +88,11 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nUpdate DonDatHang Set MaMh = @MaMH{loopcount}, MaKh = @MaKH{loopcount}, MaNv = @MaNV{loopcount}, Ngdh = @NgayDatHang{loopcount}, SoLuongHang = @SoLuong{loopcount} Where MaDdh = '{ddh.MaDdh}';";
 
-                        cmd.Parameters.Add($"@MaMH{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaMH{loopcount}"].Value = ddh.MaMh;
-                        cmd.Parameters.Add($"@MaKH{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaKH{loopcount}"].Value = ddh.MaKh;
-                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaNV{loopcount}"].Value = ddh.MaNv;
-                        cmd.Parameters.Add($"@NgayDatHang{loopcount}", SqlDbType.SmallDateTime);
-                        cmd.Parameters[$"@NgayDatHang{loopcount}"].Value = ddh.Ngdh.HasValue ? ddh.Ngdh.Value : DBNull.Value;
-                        cmd.Parameters.Add($"@SoLuong{loopcount}", SqlDbType.Int);
-                        cmd.Parameters[$"@SoLuong{loopcount}"].Value = ddh.SoLuongHang.HasValue ? ddh.SoLuongHang.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@MaMH{loopcount}", SqlDbType.VarChar).Value = ddh.MaMh;
+                        cmd.Parameters.Add($"@MaKH{loopcount}", SqlDbType.VarChar).Value = ddh.MaKh;
+                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar).Value = ddh.MaNv;
+                        cmd.Parameters.Add($"@NgayDatHang{loopcount}", SqlDbType.SmallDateTime).Value = ddh.Ngdh.HasValue ? ddh.Ngdh.Value : DBNull.Value;
+                        cmd.Parameters.Add($"@SoLuong{loopcount}", SqlDbType.Int).Value = ddh.SoLuongHang.HasValue ? ddh.SoLuongHang.Value : DBNull.Value;
                         loopcount++;
                     }
                     cmd.ExecuteNonQuery();

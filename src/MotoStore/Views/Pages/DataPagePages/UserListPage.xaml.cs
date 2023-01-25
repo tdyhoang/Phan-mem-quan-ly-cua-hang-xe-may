@@ -83,14 +83,10 @@ namespace MotoStore.Views.Pages.DataPagePages
                         else
                             cmd.CommandText += $"\nInsert into UserApp values(@MaNV{loopcount}, @Username{loopcount}, @Password{loopcount}, @Email{loopcount})";
 
-                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar);
-                        cmd.Parameters[$"@MaNV{loopcount}"].Value = user.MaNv;
-                        cmd.Parameters.Add($"@Username{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Username{loopcount}"].Value = user.UserName;
-                        cmd.Parameters.Add($"@Password{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Password{loopcount}"].Value = user.Password;
-                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar);
-                        cmd.Parameters[$"@Email{loopcount}"].Value = user.Email;
+                        cmd.Parameters.Add($"@MaNV{loopcount}", SqlDbType.VarChar).Value = user.MaNv;
+                        cmd.Parameters.Add($"@Username{loopcount}", SqlDbType.NVarChar).Value = user.UserName;
+                        cmd.Parameters.Add($"@Password{loopcount}", SqlDbType.NVarChar).Value = user.Password;
+                        cmd.Parameters.Add($"@Email{loopcount}", SqlDbType.NVarChar).Value = user.Email;
                         loopcount++;
 
                     }

@@ -223,9 +223,6 @@ public partial class MainDatabase : DbContext
             entity.Property(e => e.GiaNhapMh)
                 .HasColumnType("money")
                 .HasColumnName("GiaNhapMH");
-            entity.Property(e => e.LoaiXe)
-                .HasMaxLength(30)
-                .HasColumnName("LoaiXe");
             entity.Property(e => e.HangSx)
                 .HasMaxLength(30)
                 .HasColumnName("HangSX");

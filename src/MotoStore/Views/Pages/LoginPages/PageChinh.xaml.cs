@@ -117,5 +117,10 @@ namespace MotoStore.Views.Pages.LoginPages
             //Hàm này dùng để chuyển Trang từ Trang Chính sang Trang Quên Mật Khẩu
         }
 
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)
+                buttonDangNhap_Click(sender, e);
+        }
     }
 }
