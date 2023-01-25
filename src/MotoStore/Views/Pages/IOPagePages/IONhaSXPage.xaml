@@ -42,10 +42,11 @@
         <Label x:Name="lblDauSao" 
                Height="30"
                FontSize="15"
+               Width="10"
                Content="*"
                Foreground="Red"
                FontWeight="Medium"
-               Margin="160,0,6,450"/>
+               Margin="0,0,700,450"/>
         <TextBox x:Name="txtTenNSX" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNSX_LostFocus">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
@@ -53,7 +54,7 @@
         </TextBox>
         <Label x:Name="lbSDTNSX"
                Content="Số Điện Thoại: " 
-               Margin="24,105,625,310"
+               Margin="24,105,635,310"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
@@ -64,14 +65,14 @@
         </TextBox>
         <Label x:Name="lbEmail"
                Content="Email: " 
-               Margin="24,160,620,260"
+               Margin="24,160,653,260"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
         <TextBox x:Name="txtEmailNSX" Margin="224,148,526,0" VerticalAlignment="Top" LostFocus="txtEmailNSX_LostFocus"/>
         <Label x:Name="lbNuocSX"
                Content="Quốc Gia: " 
-               Margin="24,215,620,203"
+               Margin="24,215,679,203"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
@@ -85,9 +86,10 @@
             Height="30"
             FontSize="15"
             Content="*"
+               Width="10"
             Foreground="Red"
             FontWeight="Medium"
-            Margin="106,100,660,205"/>
+            Margin="0,140,800,262"/>
 
 
     </Grid>
