@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Threading;
+using MotoStore.Views.Pages.LoginPages;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -16,151 +17,113 @@ namespace MotoStore.Views.Pages.IOPagePages
         public IOKhachHangPage()
         {
             InitializeComponent();
-            timer.Tick += Timer_Tick;
         }
 
-        static public bool isValid = false;
-        private readonly DispatcherTimer timer = new();
-        private readonly DateTime dt = DateTime.Now;
         bool checkTenKH = false;
         bool checkNgaySinh= false;
-        bool checkSDT = true;
-        bool checkEmail = false;     
-      
-
-    static private int dem = 0;   //Biến đếm số lần nháy
-        private bool Nhay = false;
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (dem == 7)           //dem = 7 Thì Ngừng Nháy
-                timer.Stop();
-            if (Nhay)
-            {
-                lblThongBao.Foreground = Brushes.Red;
-                dem++;
-            }
-            else
-            {
-                lblThongBao.Foreground = Brushes.Black;
-                dem++;
-            }
-            Nhay = !Nhay;
-            //Hàm Này Để Nháy Thông Báo 
-        }
-
+        bool checkLoaiKH = true;
+        bool checkGT = false;
+        bool checkEmail = false;
 
         private void btnAddNewKhachHang_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             SqlCommand cmd;
-            if (!(checkTenKH && checkNgaySinh && checkEmail && checkSDT ))
-            {
-                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
-            }     
-            if(string.IsNullOrWhiteSpace(cmbGioiTinhKH.Text) || string.IsNullOrWhiteSpace(cmbLoaiKH.Text))
-            {
-                MessageBox.Show("Vui lòng nhập đúng thông tin! ");
-            }    
+            if (!(checkTenKH && checkNgaySinh && checkEmail && checkGT && checkLoaiKH))
+                MessageBox.Show("Có Những Trường Dữ Liệu Bị Thiếu Hoặc Sai, Vui Lòng Kiểm Tra Lại!");
             else
-            {                      
+            {
+                try
+                {
                     con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into KhachHang values(N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "',N'"  + cmbGioiTinhKH.Text + "', N'" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "',N'" + cmbLoaiKH.Text + " ',0 )", con);
+                    cmd = new("Set Dateformat dmy\nInsert into KhachHang values(N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "',N'" + cmbGioiTinhKH.Text + "', N'" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "',N'" + cmbLoaiKH.Text + " ',0 )", con);
+                    cmd.ExecuteNonQuery();
+                    cmd = new SqlCommand("Select top(1) MaKH from KhachHang order by ID desc", con);
+                    SqlDataReader sda = cmd.ExecuteReader();
+                    string KHMoi = "KH@";
+                    if (sda.Read())
+                        KHMoi = (string)sda[0];
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Khách Hàng " + KHMoi + "')", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    MessageBox.Show("Thêm dữ liệu thành công");
-                
+                    MessageBox.Show("Thêm Dữ Liệu Thành Công");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Thêm Mới Thất Bại! Lỗi: " + ex.Message);
+                }
             }
         }
 
         private void txtTenKH_LostFocus(object sender, RoutedEventArgs e) // Check Tên Khách Hang
         {
-             checkTenKH = true;
-            for (int i = 0; i < txtTenKH.Text.Length; i++)
-            {
-                if (txtTenKH.Text[i] >= 48 && txtTenKH.Text[i] <= 57)
-                {
-
-                    lblThongBao.Content = "Tên Khách Hàng không hợp lệ!";
-                    timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBao.Visibility = Visibility.Visible;
-                    timer.Start();
-                    checkTenKH = false;
-                    break;
-                }
-
-            }
             if (string.IsNullOrEmpty(txtTenKH.Text))
             {
-                checkTenKH = false;
+                checkTenKH = false; 
+                lblThongBao.Visibility = Visibility.Visible;
             }
-            if (checkTenKH)
+            else
             {
+                checkTenKH = true;
                 lblThongBao.Visibility = Visibility.Collapsed;
             }
-
         }
 
         private void txtNgaySinhKH_LostFocus(object sender, RoutedEventArgs e) //Check Ngày Sinh Khách Hàng
         {
-             checkNgaySinh = true;
             DateTime date;
             if (!DateTime.TryParseExact(txtNgaySinhKH.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
-                lblThongBaoNS.Content = "Ngày Sinh không hợp lệ!";
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBaoNS.Visibility = Visibility.Visible;
-                timer.Start();
                 checkNgaySinh = false;              
             }
-            if (checkNgaySinh)
+            else
             {
                 lblThongBaoNS.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void txtSDTKH_LostFocus(object sender, RoutedEventArgs e) //Check SĐT khách hàng
-        {
-             checkSDT = true;
-            for (int i = 0; i < txtSDTKH.Text.Length; i++)
-            {
-                if (!(txtSDTKH.Text[i] >= 48 && txtSDTKH.Text[i] <= 57))
-                {
-
-                    lblThongBaoSDT.Content = "SĐT Khách Hàng không hợp lệ!";
-                    timer.Interval = new(0, 0, 0, 0, 200);
-                    lblThongBaoSDT.Visibility = Visibility.Visible;
-                    timer.Start();
-                    checkSDT = false;
-                    break;
-                }
-
-            }
-            if (checkSDT)
-            {
-                lblThongBaoSDT.Visibility = Visibility.Collapsed;
+                checkNgaySinh = true;
             }
         }
 
         private void txtEmailKH_LostFocus(object sender, RoutedEventArgs e)
         {
-             checkEmail = true;
             if (!txtEmailKH.Text.Contains("@gmail.com")) //Check Email Khách hàng
             {
-                lblThongBaoEmail.Content = "Email Khách Hàng không hợp lệ!";
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBaoEmail.Visibility = Visibility.Visible;
-                timer.Start();
                 checkEmail = false;
-                
             }
-            if (checkEmail)
+            else
             {
                 lblThongBaoEmail.Visibility = Visibility.Collapsed;
+                checkEmail = true;
             }
         }
 
-     
-      
+        private void cmbLoaiKH_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(cmbLoaiKH.Text))
+            {
+                lblTBLoaiKH.Visibility = Visibility.Visible;
+                checkLoaiKH = false;
+            }
+            else
+            {
+                lblTBLoaiKH.Visibility = Visibility.Collapsed;
+                checkLoaiKH = true;
+            }
+        }
+
+        private void cmbGioiTinhKH_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(cmbGioiTinhKH.Text))
+            {
+                lblTBGT.Visibility = Visibility.Visible;
+                checkGT = false;
+            }
+            else
+            {
+                lblTBGT.Visibility = Visibility.Collapsed;
+                checkGT = true;
+            }
+        }
     }
 }

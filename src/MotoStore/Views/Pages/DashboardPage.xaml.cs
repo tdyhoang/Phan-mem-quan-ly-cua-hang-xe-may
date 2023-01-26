@@ -356,60 +356,74 @@ namespace MotoStore.Views.Pages
                 MessageBox.Show("Vui lòng chọn lại ngày xoá lịch");
         }
 
+        static int solanbam = 0;
         private void btnLichSu_Click(object sender, RoutedEventArgs e)
         {
-            borderLichvaButton.Visibility = Visibility.Collapsed;
-            dataGridLSHD.Visibility = Visibility.Visible;
-            if (isFirstClicked)
+            if(solanbam == 0)
             {
-                listMaNV.Clear();
-                listTenNV.Clear();
-                listThoiGian.Clear();
-                listHoatDong.Clear();
-                dataGridLSHD.Items.Clear();
-                //Mỗi lần First Click phải Clear hết 4 trường dữ liệu trên
-                //Nếu kh thì hành động mới sẽ bị đẩy vào cuối Danh Sách
-                con.Open();
-                SqlCommand cmd = new("SET Dateformat dmy\nSelect MaNV From LichSuHoatDong Order by ThoiGian DESC", con);
-                SqlDataReader sda = cmd.ExecuteReader();
-
-                while (sda.Read())
-                    listMaNV.Add((string)sda[0]);
-
-                SqlCommand cmd1 = new("SET Dateformat dmy\nSelect Nhanvien.HoTenNV\r\nfrom NhanVien join LichSuHoatDong\r\non NhanVien.MaNV=LichSuHoatDong.MaNV\r\norder by ThoiGian DESC", con);
-                SqlDataReader sda1 = cmd1.ExecuteReader();
-
-                while (sda1.Read())
-                    listTenNV.Add((string)sda1[0]);
-
-                SqlCommand cmd2 = new("SELECT FORMAT(ThoiGian,'dd/MM/yyyy hh:mm:ss tt') FROM LichSuHoatDong Order by ThoiGian DESC", con);
-                SqlDataReader sda2 = cmd2.ExecuteReader();
-
-                while (sda2.Read())
-                    listThoiGian.Add((string)sda2[0]);
-
-                SqlCommand cmd3 = new("SET Dateformat dmy\nSelect HoatDong from LichSuHoatDong order by ThoiGian DESC", con);
-                SqlDataReader sda3 = cmd3.ExecuteReader();
-                while (sda3.Read())
-                    listHoatDong.Add((string)sda3[0]);
-                int TableLength = 0;
-                SqlCommand cmd4 = new("SELECT COUNT(*) FROM LichSuHoatDong", con);
-                SqlDataReader sda4 = cmd4.ExecuteReader();
-                if (sda4.Read())
-                    TableLength = (int)sda4[0];
-                for (int i = 0; i < TableLength; i++)
+                borderLichvaButton.Visibility = Visibility.Collapsed;
+                dataGridLSHD.Visibility = Visibility.Visible;
+                solanbam = 1;
+                if (isFirstClicked)
                 {
-                    dataGridLSHD.Items.Add(new LichSuHoatDong()
+                    listMaNV.Clear();
+                    listTenNV.Clear();
+                    listThoiGian.Clear();
+                    listHoatDong.Clear();
+                    dataGridLSHD.Items.Clear();
+                    //Mỗi lần First Click phải Clear hết 4 trường dữ liệu trên
+                    //Nếu kh thì hành động mới sẽ bị đẩy vào cuối Danh Sách
+                    con.Open();
+                    SqlCommand cmd = new("SET Dateformat dmy\nSelect MaNV From LichSuHoatDong Order by ThoiGian DESC", con);
+                    SqlDataReader sda = cmd.ExecuteReader();
+
+                    while (sda.Read())
+                        listMaNV.Add((string)sda[0]);
+
+                    SqlCommand cmd1 = new("SET Dateformat dmy\nSelect Nhanvien.HoTenNV\r\nfrom NhanVien join LichSuHoatDong\r\non NhanVien.MaNV=LichSuHoatDong.MaNV\r\norder by ThoiGian DESC", con);
+                    SqlDataReader sda1 = cmd1.ExecuteReader();
+
+                    while (sda1.Read())
+                        listTenNV.Add((string)sda1[0]);
+
+                    SqlCommand cmd2 = new("SELECT FORMAT(ThoiGian,'dd/MM/yyyy hh:mm:ss tt') FROM LichSuHoatDong Order by ThoiGian DESC", con);
+                    SqlDataReader sda2 = cmd2.ExecuteReader();
+
+                    while (sda2.Read())
+                        listThoiGian.Add((string)sda2[0]);
+
+                    SqlCommand cmd3 = new("SET Dateformat dmy\nSelect HoatDong from LichSuHoatDong order by ThoiGian DESC", con);
+                    SqlDataReader sda3 = cmd3.ExecuteReader();
+                    while (sda3.Read())
+                        listHoatDong.Add((string)sda3[0]);
+
+                    int TableLength = 0;
+                    SqlCommand cmd4 = new("SELECT COUNT(*) FROM LichSuHoatDong", con);
+                    SqlDataReader sda4 = cmd4.ExecuteReader();
+                    if (sda4.Read())
+                        TableLength = (int)sda4[0];
+                    for (int i = 0; i < TableLength; i++)
                     {
-                        MaNV = listMaNV[i],
-                        HoTenNV = listTenNV[i],
-                        ThoiGian = listThoiGian[i],
-                        HoatDong = listHoatDong[i],
-                    });
+                        dataGridLSHD.Items.Add(new LichSuHoatDong()
+                        {
+                            MaNV = listMaNV[i],
+                            HoTenNV = listTenNV[i],
+                            ThoiGian = listThoiGian[i],
+                            HoatDong = listHoatDong[i],
+                        });
+                    }
+                    isFirstClicked = false;
+                    con.Close();
                 }
-                isFirstClicked = false;
-                con.Close();
             }
+            else
+            {
+                dataGridLSHD.Visibility = Visibility.Collapsed;
+                borderLichvaButton.Visibility = Visibility.Visible;
+                solanbam = 0;
+                isFirstClicked = true;
+            }
+
         }
 
         private void btnXoaLichSu_Click(object sender, RoutedEventArgs e)
@@ -641,9 +655,5 @@ namespace MotoStore.Views.Pages
             anhHuongDan.Source = bi3;
         }
 
-        private void btnLichSu_Unchecked(object sender, RoutedEventArgs e)
-        {
-            dataGridLSHD.Visibility = Visibility.Collapsed;
-        }
     }
 }
