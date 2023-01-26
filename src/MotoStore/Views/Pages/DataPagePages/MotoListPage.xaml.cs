@@ -74,7 +74,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                             throw new("Mã nhà cung cấp không được để trống!");
                         // Thêm mới
                         if (string.IsNullOrEmpty(mh.MaMh))
-                            cmd.CommandText += $"\nInsert into MatHang values(@TenMH{loopcount}, @SoPhanKhoi{loopcount}, @Mau{loopcount}, @GiaNhapMH{loopcount}, @GiaBanMH{loopcount}, @TonKho{loopcount}, @MaNCC{loopcount}, @HangSX{loopcount}, @XuatXu{loopcount}, @MoTa{loopcount}', 0)";
+                            cmd.CommandText += $"\nInsert into MatHang values(@TenMH{loopcount}, @SoPhanKhoi{loopcount}, @Mau{loopcount}, @GiaNhapMH{loopcount}, @GiaBanMH{loopcount}, @TonKho{loopcount}, @MaNCC{loopcount}, @HangSX{loopcount}, @XuatXu{loopcount}, @MoTa{loopcount}, 0)";
 
                         // Cập nhật
                         else

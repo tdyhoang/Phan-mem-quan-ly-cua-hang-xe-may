@@ -58,13 +58,13 @@ namespace MotoStore.Views.Pages.DataPagePages
                     foreach (var obj in grdMaintenance.Items)
                     {
                         // Trường hợp gặp dòng trắng dưới cùng của bảng (để người dùng có thể thêm dòng)
-                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => pi.GetValue(obj) as string).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "0") || string.Equals(value, PageChinh.getNV.MaNv)))
+                        if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => pi.GetValue(obj) as string).All(value => string.IsNullOrEmpty(value)))
                             continue;
                         if (obj is not ThongTinBaoHanh bh)
                             continue;
                         // Kiểm tra dữ liệu null & gán giá trị mặc định
                         if (string.IsNullOrEmpty(bh.MaHd))
-                            throw new("Mã khách hàng không được để trống!");
+                            throw new("Mã hóa đơn không được để trống!");
 
                         // Thêm mới
                         if (string.IsNullOrEmpty(bh.MaBh))
@@ -251,7 +251,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                         //gán giá trị
                         cell.Value = item.Header;
 
-                        if (item.Header.ToString().Equals("Thời gian", StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(item.Header.ToString(), "Thời gian", StringComparison.OrdinalIgnoreCase))
                             // Format cho ngày
                             ws.Column(colIndex).Style.Numberformat.Format = "dd/MM/yyyy";
 

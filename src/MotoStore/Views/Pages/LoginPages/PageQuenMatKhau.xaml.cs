@@ -73,7 +73,7 @@ namespace MotoStore.Views.Pages.LoginPages
             else
             {
                 MainDatabase mdb = new();
-                if(!mdb.UserApps.Any(user => user.UserName == txtUsername.Text))
+                if (!mdb.UserApps.Any(user => string.Compare(txtUsername.Text, user.UserName, StringComparison.OrdinalIgnoreCase) == 0))
                 {
                     lblThongBao.Content = "Tên tài khoản không tồn tại, hãy xem lại!";
                     timer.Interval = new(0, 0, 0, 0, 200);
@@ -84,7 +84,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     bool chuyentrang = false;
                     foreach(var user in mdb.UserApps)
                     {
-                        if (txtUsername.Text == user.UserName)
+                        if (string.Equals(txtUsername.Text, user.UserName, StringComparison.OrdinalIgnoreCase))
                         {
                             getUser = user;
                             GuiMail();
@@ -132,10 +132,8 @@ namespace MotoStore.Views.Pages.LoginPages
         }
 
         private void buttonQuayLai_Click(object sender, RoutedEventArgs e)
-        { 
-            NavigationService.Navigate(pgC);
+            => NavigationService.Navigate(pgC);
             //Hàm này để Quay lại Trang Chính(pgC)
-        }
 
         private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {

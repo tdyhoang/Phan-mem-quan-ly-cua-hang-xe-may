@@ -13,6 +13,7 @@ using OfficeOpenXml;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using MotoStore.Properties;
+using System.Printing;
 
 namespace MotoStore.Views.Pages.DataPagePages
 {
@@ -77,7 +78,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                         // Cập nhật
                         else
-                            cmd.CommandText += $"\nUpdate NhaCungCap Set TenNcc = @TenNCC{ncc.TenNcc}, DiaChi = @DiaChi{loopcount}, Sdt = @SDT{loopcount}, Email = @Email{loopcount} Where MaNcc = '{ncc.MaNcc}';";
+                            cmd.CommandText += $"\nUpdate NhaCungCap Set TenNcc = @TenNCC{loopcount}, DiaChi = @DiaChi{loopcount}, Sdt = @SDT{loopcount}, Email = @Email{loopcount} Where MaNcc = '{ncc.MaNcc}';";
 
                         cmd.Parameters.Add($"@TenNCC{loopcount}", SqlDbType.NVarChar).Value = ncc.TenNcc;
                         cmd.Parameters.Add($"@DiaChi{loopcount}", SqlDbType.NVarChar).Value = string.IsNullOrEmpty(ncc.DiaChi) ? DBNull.Value : ncc.DiaChi;
