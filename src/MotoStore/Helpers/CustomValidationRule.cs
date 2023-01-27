@@ -1,4 +1,5 @@
-﻿using MotoStore.Database;
+﻿using Azure.Core;
+using MotoStore.Database;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -61,9 +62,14 @@ namespace MotoStore.Helpers
 
         private static ValidationResult DateValidation(object value, CultureInfo cultureInfo)
         {
-            if (string.IsNullOrEmpty(value.ToString()) || DateTime.TryParseExact(value.ToString(), "d/M/yyyy", cultureInfo, DateTimeStyles.AllowWhiteSpaces, out _))
+            if (string.IsNullOrEmpty(value.ToString()))
                 return new(true, default);
-
+            if (DateTime.TryParseExact(value.ToString(), "d/M/yyyy", cultureInfo, DateTimeStyles.AllowWhiteSpaces, out var date))
+            {
+                if (date < new DateTime(1900, 1, 1) || date > new DateTime(2079, 6, 6))
+                    return new(false, "Ngày chỉ được nằm trong khoảng từ 01/01/1900 đến 06/06/2079");
+                return new(true, default);
+            }
             return new(false, "Nhập ngày hợp lệ, có trên theo định dạng dd/MM/yyyy");
         }
 

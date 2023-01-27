@@ -211,7 +211,8 @@
                  FontWeight="Medium"
                  Width="60"
                  VerticalAlignment="Top"
-                 Margin="430,50,0,0">
+                 Margin="430,50,0,0"
+                     LostFocus="TextBoxNam_LostFocus">
                 <i:Interaction.Behaviors>
                     <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False" />
                 </i:Interaction.Behaviors>
@@ -220,7 +221,8 @@
                  FontWeight="Medium"
                  Width="60"
                  VerticalAlignment="Top"
-                 Margin="580,50,0,0">
+                 Margin="580,50,0,0"
+                     LostFocus="TextBoxNam_LostFocus">
                 <i:Interaction.Behaviors>
                     <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False" />
                 </i:Interaction.Behaviors>

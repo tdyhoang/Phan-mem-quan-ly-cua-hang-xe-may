@@ -141,24 +141,39 @@ namespace MotoStore.Views.Pages
         public static bool IsValidDateTimeTest(string dateTime)
         {
             string[] formats = { "d/M/yyyy" };
-            return DateTime.TryParseExact(dateTime, formats, new CultureInfo("vi-VN"),
-                                           DateTimeStyles.None, out _);
+            if (DateTime.TryParseExact(dateTime, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+            {
+                if (date < new DateTime(1900, 1, 1) || date > new DateTime(2079, 6, 6))
+                    return false;
+                return true;
+            }
+            return false;
             //Hàm kiểm tra ngày có hợp lệ hay không
         }
 
         private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
         {
-            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
-            string minDate = ngaynhonhat.ToString("dd/MM/yyyy");
+            DateTime ngaylonnhat = mdb.HoaDons.OrderByDescending(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
+            string maxDate = ngaylonnhat.ToString("dd/MM/yyyy");
             if (!IsValidDateTimeTest(txtTuNgay.Text))
             {
-                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ, hãy nhập ngày theo format(dd/MM/yyyy)!");
-                txtTuNgay.Clear();
+                MessageBox.Show("Ngày Không Hợp Lệ, hãy nhập ngày theo format(dd/MM/yyyy)!\nGiới hạn nằm trong khoảng từ 01/01/1900 đến 06/06/2079");
+                e.Handled = true;
+                txtTuNgay.Focus();
+                return;
             }
-            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) > DateTime.Today)
-                MessageBox.Show("Ô Từ Ngày CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định từ ngày " + txtTuNgay.Text + " trở đi sẽ = 0");
-            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
-                MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
+            if (IsValidDateTimeTest(txtDenNgay.Text))
+            {
+                if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
+                    txtTuNgay.Focus();
+                    return;
+                }
+            }
+            if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) > ngaylonnhat)
+                MessageBox.Show("Các ngày sau ngày " + maxDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
         }
 
         private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
@@ -167,17 +182,22 @@ namespace MotoStore.Views.Pages
             string minDate = ngaynhonhat.ToString("dd/MM/yyyy");
             if (!IsValidDateTimeTest(txtDenNgay.Text))
             {
-                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ, Hãy Nhập Ngày Theo Format(dd/MM/yyyy)!");
-                txtDenNgay.Clear();
+                MessageBox.Show("Ngày Không Hợp Lệ, hãy nhập ngày theo format(dd/MM/yyyy)!\nGiới hạn nằm trong khoảng từ 01/01/1900 đến 06/06/2079");
+                e.Handled = true;
+                txtDenNgay.Focus();
+                return;
             }
-            else if (DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture))
+            if (IsValidDateTimeTest(txtTuNgay.Text))
             {
-                MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
-                txtDenNgay.Clear();
+                if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
+                    txtTuNgay.Focus();
+                    return;
+                }
             }
-            else if (DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) > DateTime.Today)
-                MessageBox.Show("Chưa có dữ liệu ở Ô Đến Ngày, Doanh Thu mặc định từ ngày " + DateTime.Today.ToString("dd/MM/yyyy") + " đến " + txtDenNgay.Text + " sẽ = 0");
-            else if (DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
+            if (DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
                 MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU, Doanh Thu mặc định của các ngày đó sẽ = 0");
             /*Khi ô Đến Ngày LostFocus, ta sẽ check nó có phải ngày hợp lệ hay kh,
               và check xem nó có bé hơn hoặc = Từ Ngày hay kh
@@ -211,7 +231,7 @@ namespace MotoStore.Views.Pages
                 TrucHoanhX.FontSize = 12;
                 con.Open();
 
-                for (DateTime date = DateTime.ParseExact(txtTuNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture); date <= DateTime.ParseExact(txtDenNgay.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture); date = date.AddDays(1.0))
+                for (DateTime date = DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture); date <= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture); date = date.AddDays(1.0))
                 {
                     SqlCommand cmd = new("Select Sum(ThanhTien) from HoaDon where NgayLapHD = @Today", con);
                     cmd.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
@@ -300,13 +320,13 @@ namespace MotoStore.Views.Pages
                     dothi.Pan = PanningOptions.None;  //Không cho Pan(Lia đồ thị)
                     TrucHoanhX.Separator.Step = 1; //Set step Trục hoành = 1 để nhìn rõ 12 Tháng
 
-                    decimal[] arrVal2022 = new decimal[12];
-                    decimal[] arrVal2021 = new decimal[12];
+                    decimal[] arrVal2 = new decimal[12];
+                    decimal[] arrVal1 = new decimal[12];
                     decimal maxVal = 0;
-                    string StartDate2022;
-                    string EndDate2022;
-                    string StartDate2021;
-                    string EndDate2021;
+                    string StartDate2;
+                    string EndDate2;
+                    string StartDate1;
+                    string EndDate1;
                     /*Mảng doanh thu từng tháng của 2 năm 22 và 21,
                       cùng với đó là các tham số để truyền vào câu 
                       lệnh Query trên C#
@@ -315,69 +335,69 @@ namespace MotoStore.Views.Pages
                     con.Open(); //<Mở kết nối để đọc dữ liệu vào 2 mảng
                     for (int i = 1; i <= 12; i++)
                     {
-                        StartDate2022 = "1/" + i + "/" + namNhat.Text;
-                        int thangsau2022 = i + 1;
+                        StartDate2 = "1/" + i + "/" + namNhat.Text;
+                        int thangsau2 = i + 1;
                         if (i == 12)
-                            EndDate2022 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
+                            EndDate2 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
                         else
-                            EndDate2022 = "1/" + thangsau2022 + "/" + namNhat.Text;
+                            EndDate2 = "1/" + thangsau2 + "/" + namNhat.Text;
 
-                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD < @EndDate2022", con);
-                        cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
-                        cmd.Parameters["@StartDate2022"].Value = StartDate2022;
-                        cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
-                        cmd.Parameters["@EndDate2022"].Value = EndDate2022;
+                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2 and NgayLapHD < @EndDate2", con);
+                        cmd.Parameters.Add("@StartDate2", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@StartDate2"].Value = StartDate2;
+                        cmd.Parameters.Add("@EndDate2", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@EndDate2"].Value = EndDate2;
 
                         SqlDataReader sda = cmd.ExecuteReader();
                         if (sda.Read())
                         {
                             if (sda[0] != DBNull.Value)
-                                arrVal2022[i - 1] = (decimal)sda[0];
+                                arrVal2[i - 1] = (decimal)sda[0];
                             else
-                                arrVal2022[i - 1] = 0;
+                                arrVal2[i - 1] = 0;
                         }
 
-                        StartDate2021 = "1/" + i + "/" + namHai.Text;
-                        int thangsau2021 = i + 1;
+                        StartDate1 = "1/" + i + "/" + namHai.Text;
+                        int thangsau1 = i + 1;
                         if (i == 12)
-                            EndDate2021 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
+                            EndDate1 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
                         else
-                            EndDate2021 = "1/" + thangsau2021 + "/" + namHai.Text;
-                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
-                        cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
-                        cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
-                        cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
-                        cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
+                            EndDate1 = "1/" + thangsau1 + "/" + namHai.Text;
+                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate1 and NgayLapHD < @EndDate1", con);
+                        cmd2.Parameters.Add("@StartDate1", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@StartDate1"].Value = StartDate1;
+                        cmd2.Parameters.Add("@EndDate1", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@EndDate1"].Value = EndDate1;
                         SqlDataReader sda2 = cmd2.ExecuteReader();
                         if (sda2.Read())
                         {
                             if (sda2[0] != DBNull.Value)
-                                arrVal2021[i - 1] = (decimal)sda2[0];
+                                arrVal1[i - 1] = (decimal)sda2[0];
                             else
-                                arrVal2021[i - 1] = 0;
+                                arrVal1[i - 1] = 0;
                         }
                     }
                     con.Close();
 
-                    maxVal = arrVal2022[0];
-                    for (int j = 1; j < arrVal2022.Length; j++)
-                        if (arrVal2022[j] > maxVal)
-                            maxVal = arrVal2022[j];
-                    for (int j = 0; j < arrVal2021.Length; j++)
-                        if (arrVal2021[j] > maxVal)
-                            maxVal = arrVal2021[j];
+                    maxVal = arrVal2[0];
+                    for (int j = 1; j < arrVal2.Length; j++)
+                        if (arrVal2[j] > maxVal)
+                            maxVal = arrVal2[j];
+                    for (int j = 0; j < arrVal1.Length; j++)
+                        if (arrVal1[j] > maxVal)
+                            maxVal = arrVal1[j];
 
                     //Hàng dưới thêm dữ liệu vào đồ thị
                     SrC.Add(new ColumnSeries
                     {
                         Title = namNhat.Text,
-                        Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
+                        Values = new ChartValues<decimal> { arrVal2[0], arrVal2[1], arrVal2[2], arrVal2[3], arrVal2[4], arrVal2[5], arrVal2[6], arrVal2[7], arrVal2[8], arrVal2[9], arrVal2[10], arrVal2[11] },
                         Fill = Brushes.Red
                     });
                     SrC.Add(new ColumnSeries
                     {
                         Title = namHai.Text,
-                        Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
+                        Values = new ChartValues<decimal> { arrVal1[0], arrVal1[1], arrVal1[2], arrVal1[3], arrVal1[4], arrVal1[5], arrVal1[6], arrVal1[7], arrVal1[8], arrVal1[9], arrVal1[10], arrVal1[11] },
                         Fill = Brushes.DeepSkyBlue
                     });
 
@@ -405,61 +425,61 @@ namespace MotoStore.Views.Pages
                     dothi.Pan = PanningOptions.None;
                     TrucHoanhX.Separator.Step = 1;
 
-                    decimal[] arrVal2022 = new decimal[12];
-                    decimal[] arrVal2021 = new decimal[12];
+                    decimal[] arrVal2 = new decimal[12];
+                    decimal[] arrVal1 = new decimal[12];
                     decimal[] arrVal2020 = new decimal[12];
                     decimal maxVal = 0;
-                    string StartDate2022;
-                    string EndDate2022;
-                    string StartDate2021;
-                    string EndDate2021;
+                    string StartDate2;
+                    string EndDate2;
+                    string StartDate1;
+                    string EndDate1;
                     string StartDate2020;
                     string EndDate2020;
 
                     con.Open();
                     for (int i = 1; i <= 12; i++)
                     {
-                        StartDate2022 = "1/" + i + "/" + namNhat.Text;
-                        int thangsau2022 = i + 1;
+                        StartDate2 = "1/" + i + "/" + namNhat.Text;
+                        int thangsau2 = i + 1;
                         if (i == 12)
-                            EndDate2022 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
+                            EndDate2 = "1/1/" + (int.Parse(namNhat.Text) + 1).ToString();
                         else
-                            EndDate2022 = "1/" + thangsau2022 + "/" + namNhat.Text;
+                            EndDate2 = "1/" + thangsau2 + "/" + namNhat.Text;
 
-                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2022 and NgayLapHD <= @EndDate2022", con);
-                        cmd.Parameters.Add("@StartDate2022", System.Data.SqlDbType.SmallDateTime);
-                        cmd.Parameters["@StartDate2022"].Value = StartDate2022;
-                        cmd.Parameters.Add("@EndDate2022", System.Data.SqlDbType.SmallDateTime);
-                        cmd.Parameters["@EndDate2022"].Value = EndDate2022;
+                        SqlCommand cmd = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2 and NgayLapHD <= @EndDate2", con);
+                        cmd.Parameters.Add("@StartDate2", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@StartDate2"].Value = StartDate2;
+                        cmd.Parameters.Add("@EndDate2", System.Data.SqlDbType.SmallDateTime);
+                        cmd.Parameters["@EndDate2"].Value = EndDate2;
 
                         SqlDataReader sda = cmd.ExecuteReader();
                         if (sda.Read())
                         {
                             if (sda[0] != DBNull.Value)
-                                arrVal2022[i - 1] = (decimal)sda[0];
+                                arrVal2[i - 1] = (decimal)sda[0];
                             else
-                                arrVal2022[i - 1] = 0;
+                                arrVal2[i - 1] = 0;
                         }
 
-                        StartDate2021 = "1/" + i + "/" + namHai.Text;
-                        int thangsau2021 = i + 1;
+                        StartDate1 = "1/" + i + "/" + namHai.Text;
+                        int thangsau1 = i + 1;
                         if (i == 12)
-                            EndDate2021 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
+                            EndDate1 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
                         else
-                            EndDate2021 = "1/" + thangsau2021 + "/" + namHai.Text;
+                            EndDate1 = "1/" + thangsau1 + "/" + namHai.Text;
 
-                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate2021 and NgayLapHD < @EndDate2021", con);
-                        cmd2.Parameters.Add("@StartDate2021", System.Data.SqlDbType.SmallDateTime);
-                        cmd2.Parameters["@StartDate2021"].Value = StartDate2021;
-                        cmd2.Parameters.Add("@EndDate2021", System.Data.SqlDbType.SmallDateTime);
-                        cmd2.Parameters["@EndDate2021"].Value = EndDate2021;
+                        SqlCommand cmd2 = new("SET Dateformat dmy\nSelect Sum(ThanhTien) from HoaDon where NgayLapHD >= @StartDate1 and NgayLapHD < @EndDate1", con);
+                        cmd2.Parameters.Add("@StartDate1", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@StartDate1"].Value = StartDate1;
+                        cmd2.Parameters.Add("@EndDate1", System.Data.SqlDbType.SmallDateTime);
+                        cmd2.Parameters["@EndDate1"].Value = EndDate1;
                         SqlDataReader sda2 = cmd2.ExecuteReader();
                         if (sda2.Read())
                         {
                             if (sda2[0] != DBNull.Value)
-                                arrVal2021[i - 1] = (decimal)sda2[0];
+                                arrVal1[i - 1] = (decimal)sda2[0];
                             else
-                                arrVal2021[i - 1] = 0;
+                                arrVal1[i - 1] = 0;
                         }
 
                         StartDate2020 = "1/" + i + "/" + namBa.Text;
@@ -485,13 +505,13 @@ namespace MotoStore.Views.Pages
                     }
                     con.Close();
 
-                    maxVal = arrVal2022[0];
-                    for (int j = 1; j < arrVal2022.Length; j++)
-                        if (arrVal2022[j] > maxVal)
-                            maxVal = arrVal2022[j];
-                    for (int j = 0; j < arrVal2021.Length; j++)
-                        if (arrVal2021[j] > maxVal)
-                            maxVal = arrVal2021[j];
+                    maxVal = arrVal2[0];
+                    for (int j = 1; j < arrVal2.Length; j++)
+                        if (arrVal2[j] > maxVal)
+                            maxVal = arrVal2[j];
+                    for (int j = 0; j < arrVal1.Length; j++)
+                        if (arrVal1[j] > maxVal)
+                            maxVal = arrVal1[j];
                     for (int j = 0; j < arrVal2020.Length; j++)
                         if (arrVal2020[j] > maxVal)
                             maxVal = arrVal2020[j];
@@ -499,13 +519,13 @@ namespace MotoStore.Views.Pages
                     SrC.Add(new ColumnSeries
                     {
                         Title = namNhat.Text,
-                        Values = new ChartValues<decimal> { arrVal2022[0], arrVal2022[1], arrVal2022[2], arrVal2022[3], arrVal2022[4], arrVal2022[5], arrVal2022[6], arrVal2022[7], arrVal2022[8], arrVal2022[9], arrVal2022[10], arrVal2022[11] },
+                        Values = new ChartValues<decimal> { arrVal2[0], arrVal2[1], arrVal2[2], arrVal2[3], arrVal2[4], arrVal2[5], arrVal2[6], arrVal2[7], arrVal2[8], arrVal2[9], arrVal2[10], arrVal2[11] },
                         Fill = Brushes.Red
                     });
                     SrC.Add(new ColumnSeries
                     {
                         Title = namHai.Text,
-                        Values = new ChartValues<decimal> { arrVal2021[0], arrVal2021[1], arrVal2021[2], arrVal2021[3], arrVal2021[4], arrVal2021[5], arrVal2021[6], arrVal2021[7], arrVal2021[8], arrVal2021[9], arrVal2021[10], arrVal2021[11] },
+                        Values = new ChartValues<decimal> { arrVal1[0], arrVal1[1], arrVal1[2], arrVal1[3], arrVal1[4], arrVal1[5], arrVal1[6], arrVal1[7], arrVal1[8], arrVal1[9], arrVal1[10], arrVal1[11] },
                         Fill = Brushes.DeepSkyBlue
                     });
                     SrC.Add(new ColumnSeries
@@ -555,5 +575,36 @@ namespace MotoStore.Views.Pages
             wd.ShowDialog();
         }
 
+        // Dùng cho 2 textbox namNhat và namHai để giới hạn số năm nhập đc
+        private void TextBoxNam_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tbx)
+            {
+                if (int.TryParse(tbx.Text, NumberStyles.None, CultureInfo.InvariantCulture, out var i))
+                {
+                    if (i < 1900)
+                    {
+                        MessageBox.Show("Năm nhỏ nhất là 1900!");
+                        e.Handled = true;
+                        tbx.Focus();
+                        return;
+                    }
+                    if (i > 2078)
+                    {
+                        MessageBox.Show("Năm lớn nhất là 2078!");
+                        e.Handled = true;
+                        tbx.Focus();
+                        return;
+                    }    
+                }
+                else
+                {
+                    MessageBox.Show("Năm lớn nhất là 2078!");
+                    e.Handled = true;
+                    tbx.Focus();
+                    return;
+                }
+            }
+        }
     }
 }
