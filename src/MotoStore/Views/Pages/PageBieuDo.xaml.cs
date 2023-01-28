@@ -571,7 +571,7 @@ namespace MotoStore.Views.Pages
         private void dothi_DataClick(object sender, ChartPoint chartPoint)
         {
             string getNgay = TrucHoanhX.Labels[(int)chartPoint.X];
-            WindowInformation wd = new WindowInformation(getNgay);
+            WindowInformation wd = new(getNgay);
             wd.ShowDialog();
         }
 

@@ -14,6 +14,8 @@ using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using MotoStore.Properties;
+using MotoStore.Helpers;
 
 namespace MotoStore.Views.Pages
 {
@@ -22,9 +24,7 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class DashboardPage
     {
-        private MainDatabase mdb = new();
-        private PageChinh pgChinh;
-        private DateTime dt = DateTime.Now;
+        // Nên đặt tên biến thể hiện rõ chức năng của nó. Tên biến hiện tại quá chung chung
         private int soSuKien = 0;  //Biến đếm số sự kiện trong tuần
         private int danhdau = 0;   //Biến đánh dấu lời nhắc số sự kiện
         private bool enableLenLich;
@@ -33,7 +33,7 @@ namespace MotoStore.Views.Pages
         private bool enableXoaLich;
         //Biến cho phép xoá lịch, công dụng tương tự như trên
         private bool isFirstClicked = true;
-        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+        static int solanbam = 0;
 
         List<string> listMaNV { get; set; } = new();
         List<string> listTenNV { get; set; } = new();
@@ -43,11 +43,12 @@ namespace MotoStore.Views.Pages
         public DashboardPage(PageChinh pgC)
         {
             InitializeComponent();
-            DispatcherTimer timer = new();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            DispatcherTimer timer = new()
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             timer.Tick += timer_Tick;
             timer.Start();
-            pgChinh = pgC;
             //this.DataContext = this;
         }
 
@@ -61,6 +62,7 @@ namespace MotoStore.Views.Pages
 
         private void DashboardPage_Loaded(object sender, RoutedEventArgs e)
         {
+            MainDatabase mdb = new();
             if (danhdau == 0)  //danhdau=0 có nghĩa là DashboardPage lần đầu được khởi tạo
             {
                 for (int i = 0; i <= 23; i++)
@@ -77,7 +79,7 @@ namespace MotoStore.Views.Pages
                     //Nếu có nhiều hơn 1 sự kiện thì Tuần này có > 1 sự kiện đáng chú ý, xem chi tiết ở lịch
                     //Nếu chỉ có một: Nhắc Bạn: Còn n ngày, Hôm nay 
                     //Tuần này có 3 sự kiện đáng chú ý, xem chi tiết ở Lịch
-                    if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(demngay.NgLenLichBd))
+                    if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(demngay.NgLenLichBd))
                     {
                         soSuKien++;   //Vì nó là biến toàn cục nên cứ thế mà tăng 
                         //Đánh dấu = 1 để hạn chế những lần load trang Dashboard sau nó tự động tăng số sự kiện 
@@ -124,11 +126,11 @@ namespace MotoStore.Views.Pages
             isFirstClicked = true;
 
             SqlCommand cmd;
+            using SqlConnection con = new(Settings.Default.ConnectionString);
             con.Open();
             DateTime DT = DateTime.Now;
             cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
             cmd.ExecuteNonQuery();
-            con.Close();
 
             Application.Current.MainWindow.Visibility = Visibility.Collapsed;  //Ẩn Màn hình chính đi
             Windows.LoginView loginView = new();
@@ -145,13 +147,13 @@ namespace MotoStore.Views.Pages
                 borderLichvaButton.Visibility = Visibility.Visible;
                 dataGridLSHD.Visibility = Visibility.Collapsed;
             }
-            MainDatabase mainDatabase = new();
             bool co = false;   //biến này để check xem có sự kiện nổi bật hay không
             rtbNoiDung.Document.Blocks.Clear(); //Clear hết nội dung mỗi lần bấm, sau đó đổ lại nội dung vào
             //Sắp xếp sự kiện
             List<string> listNgBD = new();
             List<string> listNgKT = new();
             List<string> listNoiDung = new();
+            using SqlConnection con = new(Settings.Default.ConnectionString);
             con.Open();
             SqlCommand cmd = new("SELECT CONVERT(VARCHAR(8),NgLenLichBD,108) from LenLich order by NgLenLichBD ASC", con);
             SqlDataReader sda = cmd.ExecuteReader();
@@ -182,7 +184,6 @@ namespace MotoStore.Views.Pages
                     co = true;
                 }
             }
-            con.Close();
             if (co == false)
                 rtbNoiDung.AppendText("Không có sự kiện nổi bật");
             /*Hàm này để khi ng quản lý bấm vào ngày
@@ -190,10 +191,8 @@ namespace MotoStore.Views.Pages
         }
 
         private void btnHuy_Click(object sender, RoutedEventArgs e)
-        {
-            borderLichvaButton.Visibility = Visibility.Collapsed;
+            => borderLichvaButton.Visibility = Visibility.Collapsed;
             //Button Hủy tương tác với Lịch
-        }
 
         // Event Handler cho VisibleChanged
         private void DashboardPage_VisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -244,6 +243,7 @@ namespace MotoStore.Views.Pages
                             MessageBox.Show("Giờ kết thúc không thể nhỏ hơn hoặc bằng giờ bắt đầu");
                         else
                         {
+                            MainDatabase mdb = new();
                             //Không cho phép một sự kiện mới đc chen vào giữa giờ 1 sự kiện khác
                             //Hoặc khoảng thời gian sự kiện mới lại chứa các sự kiện khác
                             foreach (var item in mdb.LenLichs.ToList())
@@ -261,6 +261,7 @@ namespace MotoStore.Views.Pages
                             }
                             if (valid)
                             {
+                                using SqlConnection con = new(Settings.Default.ConnectionString);
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
                                 //Giải thích dòng trên:
@@ -271,9 +272,8 @@ namespace MotoStore.Views.Pages
                                 DateTime DT = DateTime.Now;
                                 cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'lên lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
-                                con.Close();
                                 MessageBox.Show("Lên lịch thành công!");
-                                if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
+                                if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
                                 {
                                     soSuKien++;
                                     txtblLoiNhac.Text = $"{"",-5}Tuần Này Có:\n {soSuKien} Sự Kiện Đáng\n Chú Ý, Xem Chi\n Tiết Ở Lịch!";
@@ -304,6 +304,7 @@ namespace MotoStore.Views.Pages
 
         private void btnXoaLich_Click(object sender, RoutedEventArgs e)
         {
+            MainDatabase mdb = new();
             isFirstClicked = true;
             if (enableXoaLich)
             {
@@ -321,6 +322,7 @@ namespace MotoStore.Views.Pages
                         {
                             if (gio.NgLenLichBd == giomuonxoa)
                             {
+                                using SqlConnection con = new(Settings.Default.ConnectionString);
                                 con.Open();
                                 string lich = Lich.SelectedDate.Value.ToString("dd/MM/yyyy");
                                 SqlCommand cmd = new($"set dateformat dmy\ndelete from LenLich where NgLenLichBD=@NgayLenLichBD", con);
@@ -329,9 +331,8 @@ namespace MotoStore.Views.Pages
                                 DateTime DT = DateTime.Now;
                                 cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
-                                con.Close();
                                 MessageBox.Show("Xoá Sự Kiện thành công");
-                                if (GetIso8601WeekOfYear(dt) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
+                                if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
                                 {
                                     soSuKien--;
                                     if (soSuKien != 0)
@@ -356,7 +357,6 @@ namespace MotoStore.Views.Pages
                 MessageBox.Show("Vui lòng chọn lại ngày xoá lịch");
         }
 
-        static int solanbam = 0;
         private void btnLichSu_Click(object sender, RoutedEventArgs e)
         {
             if(solanbam == 0)
@@ -373,6 +373,7 @@ namespace MotoStore.Views.Pages
                     dataGridLSHD.Items.Clear();
                     //Mỗi lần First Click phải Clear hết 4 trường dữ liệu trên
                     //Nếu kh thì hành động mới sẽ bị đẩy vào cuối Danh Sách
+                    using SqlConnection con = new(Settings.Default.ConnectionString);
                     con.Open();
                     SqlCommand cmd = new("SET Dateformat dmy\nSelect MaNV From LichSuHoatDong Order by ThoiGian DESC", con);
                     SqlDataReader sda = cmd.ExecuteReader();
@@ -413,7 +414,6 @@ namespace MotoStore.Views.Pages
                         });
                     }
                     isFirstClicked = false;
-                    con.Close();
                 }
             }
             else
@@ -423,7 +423,6 @@ namespace MotoStore.Views.Pages
                 solanbam = 0;
                 isFirstClicked = true;
             }
-
         }
 
         private void btnXoaLichSu_Click(object sender, RoutedEventArgs e)
@@ -431,6 +430,7 @@ namespace MotoStore.Views.Pages
             var Result = MessageBox.Show("Bạn Có Chắc Muốn Xoá Lịch Sử Hoạt Động?", " ", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (Result == MessageBoxResult.Yes)
             {
+                using SqlConnection con = new(Settings.Default.ConnectionString);
                 con.Open();
                 SqlCommand cmd = new("Delete from LichSuHoatDong", con);
                 cmd.ExecuteNonQuery();
@@ -439,32 +439,29 @@ namespace MotoStore.Views.Pages
                 cmd.ExecuteNonQuery();
                 dataGridLSHD.Items.Clear();
                 MessageBox.Show("Xoá Lịch Sử Hoạt Động Thành Công!");
-                con.Close();
             }
         }
 
         // Hàm khởi tạo DashboardPage, nên đặt tên khác cho dễ hiểu hơn
         private void DashboardPage_Initialize()
         {
+            MainDatabase mdb = new();
             var seperatedHoTenNV = PageChinh.getNV.HoTenNv.Split(' ');
             var tenNV = seperatedHoTenNV[^1];
+            var filename = Settings.Default.AvatarFilePath + PageChinh.getNV.MaNv;
+            List<string> filepaths = new() { $"{filename}.png", $"{filename}.jpg", $"{filename}.jpeg" };
             //2 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
 
-            if (File.Exists(@$"Avatars/{PageChinh.getNV.MaNv}"))
-            {
-                BitmapImage image = new();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new($@"pack://application:,,,/Avatars/{PageChinh.getNV.MaNv}");
-                image.EndInit();
-                anhNhanVien.ImageSource = image;
-                image.Freeze();
-            }
-            else if (PageChinh.getNV.GioiTinh == "Nữ")
-                anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
+            if (PageChinh.getNV.GioiTinh == "Nữ")
+                anhNhanVien.ImageSource = new BitmapImage(new("pack://application:,,,/Avatars/userNu.png"));
             else
-                anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
+                anhNhanVien.ImageSource = new BitmapImage(new("pack://application:,,,/Avatars/userNam.png"));
+            foreach (var path in filepaths)
+                if (File.Exists(path))
+                {
+                    anhNhanVien.ImageSource = BitmapConverter.FilePathToBitmapImage(path);
+                    break;
+                }
 
             if (string.Equals(PageChinh.getNV.ChucVu, "quản lý", StringComparison.OrdinalIgnoreCase))
             {
@@ -486,8 +483,8 @@ namespace MotoStore.Views.Pages
                 lblChucVu.Content = "Nhân Viên Văn Phòng";
 
                 //3 dòng dưới để lấy ngày vào làm của nhân viên, tính số ngày từ đó đến nay và hiển thị nó
-                var dx = mdb.NhanViens.Where(u => u.MaNv == PageChinh.getNV.MaNv).Select(u => u.NgVl).FirstOrDefault();
-                int d3 = (int)(dt - dx).Value.TotalDays;
+                DateTime dx = mdb.NhanViens.Where(u => u.MaNv == PageChinh.getNV.MaNv).Select(u => u.NgVl).FirstOrDefault() ?? DateTime.Today;
+                var d3 = (int)(DateTime.Today - dx).TotalDays;
                 txtblSoNV.Text = $" Bạn Đã Gắn Bó\n Với Chúng Tôi:\n{"",-6}{d3} Ngày";
 
                 var slg = mdb.HoaDons.Where(u => u.MaNv == PageChinh.getNV.MaNv).Select(u => u.SoLuong).Sum();
@@ -511,149 +508,122 @@ namespace MotoStore.Views.Pages
             //Nếu có xoá file ảnh hiện tại và đổi tên file Backup thành file ảnh hiệện tại
             //Nếu 0 có BaKUP thì quay lại hình Default
             //sau If sẽ hiện lỗi messagebox
-            //string destFile = @$"/Avatars/{PageChinh.getNV.MaNv}.BackUp";
-            //string newPathToFile = @$"/Avatars/{PageChinh.getNV.MaNv}";
-            string destFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getNV.MaNv + "BackUp";
-            string newPathToFile = "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\" + PageChinh.getNV.MaNv + ".png";
-            //destFile: file dự phòng
-            //newPathToFile: file ảnh mới
+            //string backupFile = @$"/Avatars/{PageChinh.getNV.MaNv}.BackUp";
+            //string genericFilePath = @$"/Avatars/{PageChinh.getNV.MaNv}";
+            string genericFilePath = Settings.Default.AvatarFilePath + PageChinh.getNV.MaNv;
+            // Tên của ảnh cũ có thể thuộc 1 trong 3 đuôi file này
+            List<string> possiblePathsToOldFile = new() { $"{genericFilePath}.png", $"{genericFilePath}.jpg", $"{genericFilePath}.jpeg" };
+            // Lấy tên của ảnh cũ (nhằm backup lại khi copy file thất bại)
+            string pathToOldFile = string.Empty;
+            //backupFile: file dự phòng
+            //genericFilePath: file ảnh mới
             try
             {
                 if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
-                    {
-                        File.Move(newPathToFile, destFile); //Đổi tên File
-                    }
-                    File.Copy(OFD.FileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
+                    foreach(var path in possiblePathsToOldFile)
+                        if (File.Exists(path)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
+                        {
+                            pathToOldFile = path;
+                            File.Delete(path + ".bak"); // Xóa trước phòng trường hợp có sẵn file trùng tên
+                            File.Move(path, path + ".bak"); // Backup file
+                            break;
+                        }
+                    // File đích là tên file + đuôi file của ảnh được chọn
+                    File.Copy(OFD.FileName, genericFilePath + Path.GetExtension(OFD.FileName));
 
-                    BitmapImage image = new();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                    image.UriSource = new(newPathToFile);
-                    image.EndInit();
-                    image.Freeze();
-                    anhNhanVien.ImageSource = image;
+                    anhNhanVien.ImageSource = BitmapConverter.FilePathToBitmapImage(genericFilePath + Path.GetExtension(OFD.FileName));
 
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
-                    File.Delete(destFile); //Xoá file tạm đi
+                    File.Delete(pathToOldFile + ".bak"); //Xoá file tạm đi
                     MessageBox.Show("Cập nhật ảnh thành công!");
                     isFirstClicked = true;
+                    using SqlConnection con = new(Settings.Default.ConnectionString);
                     con.Open();
-                    DateTime now = DateTime.Now;
-                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{now:dd-MM-yyyy HH:mm:ss}', N'cập nhật ảnh')", con);
+                    SqlCommand cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'cập nhật ảnh')", con);
                     cmd.ExecuteNonQuery();
-                    con.Close();
                 }
             }
             catch (Exception ex)
             {
-                if (File.Exists(destFile))
+                // Trường hợp gặp lỗi thì sẽ phục hồi file backup (nếu có)
+                if (File.Exists(pathToOldFile + ".bak"))
                 {
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
-                    File.Delete(newPathToFile);
-
-                    File.Move(destFile, newPathToFile);
+                    File.Delete(pathToOldFile);
+                    File.Move(pathToOldFile + ".bak", pathToOldFile);
                 }
                 else
                 {
                     if (PageChinh.getNV.GioiTinh == "Nữ")
-                        anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNu.png"));
+                        anhNhanVien.ImageSource = new BitmapImage(new("pack://application:,,,/Avatars/userNu.png"));
                     else
-                        anhNhanVien.ImageSource = new BitmapImage(new(@"pack://application:,,,/Avatars/userNam.png"));
+                        anhNhanVien.ImageSource = new BitmapImage(new("pack://application:,,,/Avatars/userNam.png"));
                 }
-                MessageBox.Show("Cập Nhật Ảnh Thất Bại, Lỗi: " + ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void brdSoNV_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdSoNV.Margin = new(15, 15, 0, 0);
-        }
+            => brdSoNV.Margin = new(15, 15, 0, 0);
 
         private void brdSoNV_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdSoNV.Margin = new(15, 30, 0, 0);
-        }
+            => brdSoNV.Margin = new(15, 30, 0, 0);
 
         private void brdSoXe_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdSoXe.Margin = new(15, 0, 0, 45);
-        }
+            => brdSoXe.Margin = new(15, 0, 0, 45);
 
         private void brdSoXe_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdSoXe.Margin = new(15, 0, 0, 30);
-        }
+            => brdSoXe.Margin = new(15, 0, 0, 30);
 
         private void brdLoiNhac_MouseMove(object sender, MouseEventArgs e)
-        {
-            brdLoiNhac.Margin = new(0, 0, 20, 15);
-        }
+            => brdLoiNhac.Margin = new(0, 0, 20, 15);
 
         private void brdLoiNhac_MouseLeave(object sender, MouseEventArgs e)
-        {
-            brdLoiNhac.Margin = new(0, 0, 20, 0);
-        }
+            => brdLoiNhac.Margin = new(0, 0, 20, 0);
 
         private void border3thgtin_MouseMove(object sender, MouseEventArgs e)
-        {
-            border3thgtin.Opacity = 1;
-        }
+            => border3thgtin.Opacity = 1;
 
         private void border3thgtin_MouseLeave(object sender, MouseEventArgs e)
-        {
-            border3thgtin.Opacity = 0.8;
-        }
+            => border3thgtin.Opacity = 0.8;
 
         private void borderThgTinUser_MouseMove(object sender, MouseEventArgs e)
-        {
-            borderThgTinUser.Opacity = 1;
-        }
+            => borderThgTinUser.Opacity = 1;
 
         private void borderThgTinUser_MouseLeave(object sender, MouseEventArgs e)
-        {
-            borderThgTinUser.Opacity = 0.8;
-        }
+            => borderThgTinUser.Opacity = 0.8;
 
         private void borderLichvaButton_MouseMove(object sender, MouseEventArgs e)
-        {
-            borderLichvaButton.Opacity = 1;
-        }
+            => borderLichvaButton.Opacity = 1;
 
         private void borderLichvaButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            borderLichvaButton.Opacity = 0.8;
-        }
+            => borderLichvaButton.Opacity = 0.8;
 
         private void btnChamHoi_Click(object sender, RoutedEventArgs e)
         {
             borderHuongDan.Visibility = Visibility.Visible;
             BitmapImage bi3 = new();
             bi3.BeginInit();
-            bi3.UriSource = new("/Views/Pages/Images/huongdanLich.png", UriKind.Relative);
+            bi3.UriSource = new("pack://application:,,,/Views/Pages/Images/huongdanLich.png");
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;
         }
 
         private void btnDaHieu_Click(object sender, RoutedEventArgs e)
-        {
-            borderHuongDan.Visibility = Visibility.Collapsed;
-        }
+            => borderHuongDan.Visibility = Visibility.Collapsed;
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             BitmapImage bi3 = new();
             bi3.BeginInit();
-            bi3.UriSource = new("/Views/Pages/Images/huongdanLich2.png", UriKind.Relative);
+            bi3.UriSource = new("pack://application:,,,/Views/Pages/Images/huongdanLich2.png");
             bi3.EndInit();
             anhHuongDan.Stretch = Stretch.Fill;
             anhHuongDan.Source = bi3;
         }
-
     }
 }

@@ -210,15 +210,14 @@ namespace MotoStore.Views.Pages.DataPagePages
         private void Export(object sender, RoutedEventArgs e)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string filePath = string.Empty;
             // tạo SaveFileDialog để lưu file excel
             CommonSaveFileDialog dialog = new();
             dialog.Filters.Add(new("Excel", "xlsx"));
             dialog.Filters.Add(new("Excel 2003", "xls"));
 
-            // Nếu mở file và chọn nơi lưu file thành công sẽ lưu đường dẫn lại dùng
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                filePath = dialog.FileName;
+            // Nếu mở file và chọn nơi lưu file không thành công sẽ kết thúc hàm
+            if (dialog.ShowDialog() != CommonFileDialogResult.Ok)
+                return;
 
             try
             {
@@ -302,7 +301,7 @@ namespace MotoStore.Views.Pages.DataPagePages
 
                     //Lưu file lại
                     byte[] bin = p.GetAsByteArray();
-                    File.WriteAllBytes(filePath, bin);
+                    File.WriteAllBytes(dialog.FileName, bin);
                 }
                 using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
                 con.Open();

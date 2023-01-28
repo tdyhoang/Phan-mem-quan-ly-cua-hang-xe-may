@@ -47,7 +47,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 if (xe.DaXoa)
                     continue;
                 //matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
-                BitmapImage? BmI = BitmapImageFromFile.BitmapImageFromString(Path.Combine(Settings.Default.ProductFilePath,xe.MaMh));
+                BitmapImage? BmI = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath,xe.MaMh));
                 matHangs.Add(new(xe, BmI));
             }            
             ListViewProduct.ItemsSource = matHangs;
@@ -67,7 +67,7 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             if(ListViewProduct.SelectedItem is Tuple<MatHang, BitmapImage?> mathang)
             {
-                WindowInformation WI = new WindowInformation(mathang);
+                WindowInformation WI = new(mathang);
                 WI.ShowDialog();
             }
         }
@@ -189,7 +189,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 {
                     foreach (var item in matHangs.Where(mh => mh.Item1.MaMh == mathang.Item1.MaMh)) 
                     {
-                        WindowInformation WI = new WindowInformation(item);
+                        WindowInformation WI = new(item);
                         WI.ShowDialog();
                     }
                     Refresh();

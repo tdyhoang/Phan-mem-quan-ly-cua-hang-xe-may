@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using MotoStore.Helpers;
 using MotoStore.Properties;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace MotoStore.Views.Windows
 {
@@ -22,7 +23,7 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class WindowInformation : Window
     {
-        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+        private readonly SqlConnection con = new(Settings.Default.ConnectionString);
         static internal Tuple<MatHang, BitmapImage?> mathang;
 
         private List<string> ListAnhSP = new();
@@ -66,7 +67,7 @@ namespace MotoStore.Views.Windows
             lblHangSanXuat.Content = "Nhân Viên Bán Hàng:";
             lblXX.Content = "Tên Nhân Viên:";
             MainDatabase mdb = new();
-            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+            SqlConnection con = new(Settings.Default.ConnectionString);
 
             con.Open();
             SqlCommand cmdSoSP = new("Select Count(*) from HoaDon where NgayLapHD = @Today", con);
@@ -187,7 +188,7 @@ namespace MotoStore.Views.Windows
                 lblXuatXu.Content = listTenNV[0];
 
                 con.Close();
-                anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[0] + ".png"));
+                anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[0]);
                 index = 0; //Cứ mỗi lần khởi tạo WI biểu đồ thì sẽ gán index = 0 để tránh lỗi index was out of range
             }
             else
@@ -306,13 +307,13 @@ namespace MotoStore.Views.Windows
 
         private void btnCapNhatAnh_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog OFD = new();
-            OFD.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
+            CommonOpenFileDialog OFD = new();
+            OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
             //string destFile = $"/Products Images/{mathang.Item1.MaMh}.png.BKup";
             //string newPathToFile = $"/Products Images/{mathang.Item1.MaMh}.png";
             //dùng 2 dòng trên bị lỗi Could not find a part of the path 'C:\Products Images\ ... 
 
-            if (OFD.ShowDialog() == true)
+            if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 OFDFileName = OFD.FileName;
                 anhSP.Source = new BitmapImage(new Uri(OFDFileName));
@@ -357,7 +358,7 @@ namespace MotoStore.Views.Windows
                             File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
 
                             MatHang var = mathang.Item1;
-                            mathang = Tuple.Create(var, BitmapImageFromFile.BitmapImageFromString(OFDFileName));
+                            mathang = Tuple.Create(var, BitmapConverter.FilePathToBitmapImage(OFDFileName));
 
                             GC.Collect();
                             GC.WaitForPendingFinalizers();
@@ -397,7 +398,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
+                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[index]);
                 }
             }
         }
@@ -424,7 +425,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = new BitmapImage(new Uri("D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + listMaMH[index] + ".png"));
+                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[index]);
                 }
             }
         }

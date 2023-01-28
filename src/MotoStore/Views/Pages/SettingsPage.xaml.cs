@@ -40,7 +40,7 @@ namespace MotoStore.Views.Pages
         }
 
         static int solanbam = 0;
-        private void btnBaoLoi_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnBaoLoi_Click(object sender, RoutedEventArgs e)
         {
             if (solanbam == 0)
             {
@@ -54,23 +54,20 @@ namespace MotoStore.Views.Pages
             }
         }
 
-        private void btnDinhKemAnh_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnDinhKemAnh_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog OFD = new();
-            OFD.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
-            if (OFD.ShowDialog() == true)
+            CommonOpenFileDialog OFD = new();
+            OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
+            if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                anhDinhKem.ImageSource = new BitmapImage(new System.Uri(OFD.FileName));
+                anhDinhKem.ImageSource = new BitmapImage(new Uri(OFD.FileName));
                 fileImg = OFD.FileName;
             }
         }
 
-        private void btnGui_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void btnGui_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Bạn Có Chắc Muốn Gửi ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-            {
-            }
-            else
+            if (MessageBox.Show("Bạn Có Chắc Muốn Gửi ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 GuiMail(fileImg);
         }
 
@@ -81,7 +78,7 @@ namespace MotoStore.Views.Pages
                 MailMessage mess = new();
                 string getMail = "123";
                 MainDatabase mdb = new();
-                SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+                SqlConnection con = new(Settings.Default.ConnectionString);
                 SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
                 cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
                 cmd.Parameters["@manv"].Value = PageChinh.getNV.MaNv;
@@ -105,7 +102,7 @@ namespace MotoStore.Views.Pages
                 };
 
                 string attachmentPath = fileanh;
-                Attachment inline = new Attachment(attachmentPath);
+                Attachment inline = new(attachmentPath);
                 inline.ContentDisposition.Inline = true;
                 inline.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
                 //inline.ContentId = contentID;
@@ -125,16 +122,18 @@ namespace MotoStore.Views.Pages
                         
         private void btnChonFileAvatar_Click(object sender, RoutedEventArgs e)
         {
-            CommonOpenFileDialog COFD = new();
-            COFD.IsFolderPicker = true;
-            COFD.InitialDirectory = Settings.Default.AvatarFilePath;
+            CommonOpenFileDialog COFD = new()
+            {
+                IsFolderPicker = true,
+                InitialDirectory = Settings.Default.AvatarFilePath
+            };
             if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 try
                 {
-                    txtDgDanAvatar.Text = COFD.FileName;
-                    Settings.Default.ProductFilePath = COFD.FileName;
+                    Settings.Default.AvatarFilePath = COFD.FileName;
                     Settings.Default.Save();
+                    txtDgDanAvatar.Text = Settings.Default.AvatarFilePath;
                     MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Nhân Viên Thành Công!");
                 }
                 catch(Exception ex)
@@ -146,16 +145,18 @@ namespace MotoStore.Views.Pages
 
         private void btnChonFileMH_Click(object sender, RoutedEventArgs e)
         {
-            CommonOpenFileDialog COFD = new();
-            COFD.IsFolderPicker = true;
-            COFD.InitialDirectory = Settings.Default.ProductFilePath;
+            CommonOpenFileDialog COFD = new()
+            {
+                IsFolderPicker = true,
+                InitialDirectory = Settings.Default.ProductFilePath
+            };
             if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 try
                 {
-                    txtDgDanMH.Text = COFD.FileName;
                     Settings.Default.ProductFilePath = COFD.FileName;
                     Settings.Default.Save();
+                    txtDgDanMH.Text = Settings.Default.ProductFilePath;
                     MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Mặt Hàng Thành Công!");
                 }
                 catch(Exception ex)

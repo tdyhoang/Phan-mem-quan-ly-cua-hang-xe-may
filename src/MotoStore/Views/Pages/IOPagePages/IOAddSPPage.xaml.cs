@@ -10,6 +10,8 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MotoStore.Views.Pages.LoginPages;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Security.Cryptography;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -64,15 +66,15 @@ namespace MotoStore.Views.Pages.IOPagePages
         }
         private void btnLoadImageSP_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new();
-            openFileDialog.Filter = "JPG File (*.jpg)|*.jpg|JPEG File (*.jpeg)|*.jpeg|PNG File (*.png)|*.png";
+            CommonOpenFileDialog OFD = new();
+            OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
             //string destFile = @$"pack://application:,,,/Avatars/{}.BackUp";
             //string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getNV.MaNv}";
             //destFile: file dự phòng
             //newPathToFile: file ảnh mới
-            if (openFileDialog.ShowDialog() == true)
+            if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                Uri fileUri = new(openFileDialog.FileName);
+                Uri fileUri = new(OFD.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
             }
         }

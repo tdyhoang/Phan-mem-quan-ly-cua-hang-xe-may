@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
-using MotoStore.Resources;
-using MotoStore.Properties;
-using System.Windows;
-
 namespace MotoStore.Helpers
 {
-    public class BitmapImageFromFile
+    public class BitmapConverter
     {
-        public static BitmapImage? BitmapImageFromString(string filepath) //string mamh
+        public static BitmapImage? FilePathToBitmapImage(string filepath) //string mamh
         {
             string file;
             if (File.Exists(filepath))
                 file = filepath;
-            if (File.Exists(filepath + ".png"))
+            else if (File.Exists(filepath + ".png"))
                 file = filepath + ".png";
             else if (File.Exists(filepath + ".jpg"))
                 file = filepath + ".jpg";
@@ -31,7 +20,7 @@ namespace MotoStore.Helpers
 
             using Stream imageStreamSource = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             
-            BitmapImage bi = new BitmapImage();
+            BitmapImage bi = new();
             Stream stream = new MemoryStream();
             imageStreamSource.CopyTo(stream);
             stream.Seek(0, SeekOrigin.Begin);
