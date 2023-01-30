@@ -25,7 +25,6 @@ namespace MotoStore.Views.Pages.IOPagePages
     {
         static public ObservableCollection<Tuple<MatHang, BitmapImage?>> matHangs;
         static string luachon = "0";
-        static MainDatabase mdb = new();
         public IOSanPhamPage()
         {
             InitializeComponent();
@@ -35,19 +34,20 @@ namespace MotoStore.Views.Pages.IOPagePages
 
         public void Refresh()
         {
+            MainDatabase mdb = new();
             if (matHangs is not null)
                 foreach (var xe in matHangs.Where(u => u.Item2 is not null).ToList())
                 {
                     xe.Item2.StreamSource.Close();
                     GC.Collect();
-                } 
+                }
             matHangs = new();
             foreach (var xe in mdb.MatHangs.ToList())
             {
                 if (xe.DaXoa)
                     continue;
                 //matHangs.Add(new(xe, $"/Products Images/{xe.MaMh}.png"));
-                BitmapImage? BmI = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath,xe.MaMh));
+                BitmapImage? BmI = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, xe.MaMh));
                 matHangs.Add(new(xe, BmI));
             }            
             ListViewProduct.ItemsSource = matHangs;

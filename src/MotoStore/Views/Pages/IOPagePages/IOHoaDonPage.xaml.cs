@@ -9,6 +9,7 @@ using MotoStore.Views.Pages.LoginPages;
 using MotoStore.Database;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
+using System.Globalization;
 
 namespace MotoStore.Views.Pages.IOPagePages
 
@@ -47,6 +48,8 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             RefreshMatHang();
             RefreshKhachHang();
+            foreach (var tbx in InputFields.Where(c => c is TextBox).Cast<TextBox>())
+                tbx.Clear();
             txtNgayXuatHD.Text = DateTime.Today.ToString("dd/MM/yyyy");
         }
         private void btnAddNewHoaDon_Click(object sender, RoutedEventArgs e)
@@ -98,6 +101,14 @@ namespace MotoStore.Views.Pages.IOPagePages
                         HDMoi = (string)sda[0];
                         sda.Close();
                     }
+                    SqlCommand cmd = new ("Set Dateformat dmy\n Insert into HoaDon values(@MaSP,@MaKH,@MaNV,@NgayHD,@SoLuongHD,@ThanhTien)", con,trans );
+                    cmd.Parameters.Add("@MaSP", System.Data.SqlDbType.VarChar).Value = cmbMaSPHD.Text;
+                    cmd.Parameters.Add("@MaKH", System.Data.SqlDbType.VarChar).Value = cmbMaKHHD.Text;
+                    cmd.Parameters.Add("@MaNV", System.Data.SqlDbType.VarChar).Value = PageChinh.getNV.MaNv;
+                    cmd.Parameters.Add("@NgayHD", System.Data.SqlDbType.SmallDateTime).Value = DateTime.TryParseExact(txtNgayXuatHD.Text, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var ngayxuathd) ? ngayxuathd : DBNull.Value;
+                    cmd.Parameters.Add("@SoLuongHD", System.Data.SqlDbType.Int).Value = int.Parse(txtSoLuongHD.Text);
+                    cmd.Parameters.Add("@ThanhTien", System.Data.SqlDbType.Money).Value = decimal.Parse(txtThanhTienHD.Text);
+                    cmd.ExecuteNonQuery();      
                     cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Hoá Đơn " + HDMoi + "')", con, trans);
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -268,6 +279,13 @@ namespace MotoStore.Views.Pages.IOPagePages
                     return false;
                 };
             }
+        }
+
+        private void txtThanhTienHD_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tbx)
+                if (tbx.Text.EndsWith('.'))
+                    tbx.Text = tbx.Text.Remove(tbx.Text.Length - 1);
         }
     }
 }
