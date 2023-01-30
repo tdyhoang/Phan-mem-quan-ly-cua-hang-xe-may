@@ -84,6 +84,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                         return true;
                     if (mh.Item1.TenMh.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
                         return true;
+                    if(mh.Item1.Mau is not null)
                     if (mh.Item1.Mau.Contains(txtTimKiem.Text, StringComparison.OrdinalIgnoreCase))
                         return true;
                 }
@@ -98,16 +99,6 @@ namespace MotoStore.Views.Pages.IOPagePages
         private void txtTimKiem_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(ListViewProduct.ItemsSource).Refresh();
-        }
-
-        private void subItemQuayLai_Click(object sender, RoutedEventArgs e)
-        {
-            Refresh();
-            GC.Collect();
-            subItemLocTheo.Header = "Lọc Theo:";
-            luachon = "0";
-            subItemPK.IsChecked = false;
-            subItemGia.IsChecked = false;
         }
 
         private void txtTu_LostFocus(object sender, RoutedEventArgs e)
@@ -202,6 +193,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             Refresh();
             GC.Collect();
             subItemLocTheo.Header = "Lọc Theo";
+            luachon = "0";
             txtTu.Text = string.Empty;
             txtDen.Text = string.Empty;
             subItemGia.IsChecked = false;

@@ -101,22 +101,22 @@ create table NhaCungCap
 	TenNCC Nvarchar(30) not null,
 	SDT  varchar(15),
 	Email Nvarchar(45),
-	DiaChi NVarchar(40),
+	DiaChi NVarchar(75),
 	DaXoa bit DEFAULT 0 not null,
 	constraint PK_NNCC primary key(MaNCC)
 )
 
-Insert into NhaCungCap values(N'Yamaha','(30.24)38855080',N'YamahaMotorJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values(N'Yamaha','(84.24)38855080',N'YamahaMotorVietNamCNVP@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values(N'Suzuki','(84.89)47435209',N'SuzukiMotorVietNam@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values(N'Honda','(84.2)18943170',N'HondaMotorThaiLand@gmail.com',N'Thái Lan',0)
-Insert into NhaCungCap values(N'Honda','(30.2)18943170',N'HondaMotorJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values(N'Kawasaki','(0117)1757718',N'KawasakiJapan@gmail.com',N'Nhật Bản',0)
-Insert into NhaCungCap values(N'Kawasaki','(084)1756514',N'KawasakiJapan@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values(N'Piaggio','(010)15432170',N'PiaggioItaly@gmail.com',N'Ý',0)
+Insert into NhaCungCap values(N'Yamaha','(30.24)38855080',N'YamahaMotorJapan@gmail.com',N'Fukuoka, Nhật Bản',0)
+Insert into NhaCungCap values(N'Lai Hương','(84.24)38855080',N'YamahaMotorVietNamCNVP@gmail.com',N'Vĩnh Phúc, Việt Nam',0)
+Insert into NhaCungCap values(N'Suzuki','(84.89)47435209',N'SuzukiMotorVietNam@gmail.com',N'Hà Nội, Việt Nam',0)
+Insert into NhaCungCap values(N'Honda','(84.2)18943170',N'HondaMotorThaiLand@gmail.com',N'Bangkok, Thái Lan',0)
+Insert into NhaCungCap values(N'Honda','(30.2)18943170',N'HondaMotorJapan@gmail.com',N'Chiba, Nhật Bản',0)
+Insert into NhaCungCap values(N'Kawasaki','(0117)1757718',N'KawasakiJapan@gmail.com',N'Frontale, Nhật Bản',0)
+Insert into NhaCungCap values(N'Lai Hương','(084)1756514',N'KawasakiJapan@gmail.com',N'Hải Phòng, Việt Nam',0)
+Insert into NhaCungCap values(N'Piaggio','(010)15432170',N'PiaggioItaly@gmail.com',N'Roma, Ý',0)
 Insert into NhaCungCap values(N'Sym','(123)1706762',N'SymTaiWan@gmail.com',N'Đài Loan',0)
-Insert into NhaCungCap values(N'Vinfast','(0631)17433170',N'VinfastVietNam@gmail.com',N'Việt Nam',0)
-Insert into NhaCungCap values(N'Sym','(084)1702725',N'SymVietNam@gmail.com',N'Việt Nam',0)
+Insert into NhaCungCap values(N'Vinfast','(0631)17433170',N'VinfastVietNam@gmail.com',N'Hà Nội, Việt Nam',0)
+Insert into NhaCungCap values(N'Sym','(084)1702725',N'SymVietNam@gmail.com',N'TP. Hồ Chí Minh, Việt Nam',0)
 
 create table MatHang
 (
@@ -137,25 +137,23 @@ create table MatHang
 )
 alter table MatHang add constraint FK_MH foreign key(MaNCC) references NhaCungCap(MaNCC)
 
-Insert into MatHang values(N'Sirius', 50, N'đen xám',N'số nhỏ',10000000,13500000,15,'CC010',N'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Sirius', 110, N'đỏ đen',N'số lớn',21500000,26500000,13,'CC010',N'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Honda Air Blade',150, N'vàng đen',N'tay ga',33500000,40500000,7,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
-Insert into MatHang values(N'Exciter', 150, N'xanh biển',N'côn', 38500000,45000000,5,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
-Insert into MatHang values(N'Raider F150', 150, N'đỏ đen',N'côn', 21500000,27500000,10,'CC006',N'Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Sirius', 50, N'đen xám',10000000,13500000,15,'CC010',N'Yamaha',N'Nhật Bản',N'Vành nan hoa, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Sirius', 110, N'đỏ đen',21500000,26500000,13,'CC010',N'Yamaha',N'Nhật Bản',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Honda Air Blade',150, N'vàng đen',33500000,40500000,7,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, phanh đĩa, Còn mới',0)
+Insert into MatHang values(N'Exciter', 150, N'xanh biển',38500000,45000000,5,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, phanh cơ, Còn mới',0)
+Insert into MatHang values(N'Raider F150', 150, N'đỏ đen', 21500000,27500000,10,'CC006',N'Suzuki',N'Việt Nam',N'Vành đúc, Còn mới',0)
 
-Insert into MatHang values(N'Vision', 150, N'đỏ đen',N'tay ga',22500000,29500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'Lead', 110, N'trắng khói',N'tay ga',24500000,31500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'Kawasaki Z1000',1043, N'xanh đen',N'phân khối lớn',410000000,435500000,10,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values(N'Kawasaki Ninja ZX-10R', 150, N'xanh lục đen',N'phân khối lớn', 699000000,729000000,5,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
-Insert into MatHang values(N'Attila 50', 110, N'đỏ',N'tay ga', 20500000,25700000,10,'CC007',N'Sym',N'Đài Loan',N'Còn mới',0)
+Insert into MatHang values(N'Vision', 150, N'đỏ đen',22500000,29500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Lead', 110, N'trắng khói',24500000,31500000,10,'CC001',N'Honda',N'Nhật Bản',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'Kawasaki Z1000',1043, N'xanh đen',410000000,435500000,10,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Kawasaki Ninja ZX-10R', 150, N'xanh lục đen', 699000000,729000000,5,'CC003',N'Kawasaki',N'Nhật Bản',N'Còn mới',0)
+Insert into MatHang values(N'Attila 50', 110, N'đỏ', 20500000,25700000,10,'CC007',N'Sym',N'Đài Loan',N'Còn mới',0)
 
-Insert into MatHang values(N'Vespa Print 2020', 110, N'đỏ đen',N'tay ga',23500000,30500000,10,'CC005',N'Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
-Insert into MatHang values(N'SH 150', 150, N'xanh lam',N'tay ga',115000000,129250000,9,'CC001',N'Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
-Insert into MatHang values(N'Wave Alpha',110, N'trắng',N'số lớn',20500000,24500000,15,'CC001',N'Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
-Insert into MatHang values(N'Sirius FI', 110, N'đen khói',N'số lớn', 22500000,27500000,10,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
-Insert into MatHang values(N'EVO200', 100, N'vàng',N'điện', 23500000,22500000,15,'CC009',N'Vinfast',N'Việt Nam',N'Còn mới',0)
-
-delete from MatHang where MaMH='MH019'
+Insert into MatHang values(N'Vespa Print 2020', 110, N'đỏ đen',23500000,30500000,10,'CC005',N'Piaggio',N'Ý',N'Phanh Abs, Còn mới',0)
+Insert into MatHang values(N'SH 150', 150, N'xanh lam',115000000,129250000,9,'CC001',N'Honda',N'Nhật Bản',N'Phanh Abs, còn mới',0)
+Insert into MatHang values(N'Wave Alpha',110, N'trắng',20500000,24500000,15,'CC001',N'Honda',N'Nhật Bản',N'Vành nan hoa, Còn mới',0)
+Insert into MatHang values(N'Sirius FI', 110, N'đen khói', 22500000,27500000,10,'CC011',N'Yamaha',N'Việt Nam',N'Vành đúc, Còn mới',0)
+Insert into MatHang values(N'EVO200', 100, N'vàng', 23500000,22500000,15,'CC009',N'Vinfast',N'Việt Nam',N'Còn mới',0)
 
 Create table HoaDon
 (
@@ -291,3 +289,5 @@ Create Table LichSuHoatDong
 	CONSTRAINT PK_LshdID primary key(LshdID)
 )
 alter table LichSuHoatDong add constraint FKLSHD_MaNV foreign key(MaNV) references NhanVien(MaNV)
+
+Select top(1) MaMH from MatHang order by ID desc

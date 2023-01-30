@@ -88,14 +88,26 @@ namespace MotoStore.Views.Pages.IOPagePages
                     cmd.Parameters["@SoLuongHD"].Value = txtSoLuongHD.Text;
                     cmd.Parameters.Add("@ThanhTien", System.Data.SqlDbType.Money);
                     cmd.Parameters["@ThanhTien"].Value = txtThanhTienHD.Text;                
-                    cmd.ExecuteNonQuery();               
+                    cmd.ExecuteNonQuery();
+
+                    cmd = new ("Select top(1) MaHD from HoaDon order by ID desc", con, trans );
+                    SqlDataReader sda = cmd.ExecuteReader();
+                    string HDMoi = "HD@";
+                    if (sda.Read())
+                    {
+                        HDMoi = (string)sda[0];
+                        sda.Close();
+                    }
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Hoá Đơn " + HDMoi + "')", con, trans);
+                    cmd.ExecuteNonQuery();
                     trans.Commit();
+
                     PageRefresh();
                     MessageBox.Show("Thêm dữ liệu thành công");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Thêm mới thất bại, Lỗi: " + ex.Message);
                     trans.Rollback();
                 }
             }

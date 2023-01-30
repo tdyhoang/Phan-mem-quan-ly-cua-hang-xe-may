@@ -30,8 +30,13 @@ namespace MotoStore.Views.Pages.IOPagePages
                 con.Open();
                 cmd = new("Set Dateformat dmy\nInsert into NhaCungCap values('" + txtTenNCC.Text + "','" + txtSDTNSX.Text + "','" + txtEmailNSX.Text + "',N'" + txtDiaChi.Text + " ' ,0)", con);
                 cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("Select top(1) MaNCC from NhaCungCap order by ID desc", con);
+                SqlDataReader sda = cmd.ExecuteReader();
+                string NCCMoi = "NCC@";
+                if (sda.Read())
+                    NCCMoi = (string)sda[0];
                 DateTime now = DateTime.Now;
-                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Nhà Cung Cấp')", con);
+                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Nhà Cung Cấp " + NCCMoi + "')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
                 MessageBox.Show("Thêm dữ liệu thành công");

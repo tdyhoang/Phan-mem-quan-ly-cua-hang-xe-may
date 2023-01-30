@@ -72,7 +72,7 @@
                 <livechart:CartesianChart.AxisX>
                     <livechart:Axis x:Name="TrucHoanhX" Labels="{Binding Labels}" FontSize="10" FontWeight="Bold" Foreground="White" PreviewRangeChanged="TrucHoanhX_PreviewRangeChanged">
                         <livechart:Axis.Separator>
-                            <livechart:Separator Step="2" />
+                            <livechart:Separator Step="2"/>
                         </livechart:Axis.Separator>
                     </livechart:Axis>
                 </livechart:CartesianChart.AxisX>
@@ -162,7 +162,9 @@
                      Width="100"
                      VerticalContentAlignment="Center"
                      Margin="0,0,255,0"
-                     LostFocus="txtTuNgay_LostFocus">
+                     LostFocus="txtTuNgay_LostFocus"
+                     FontSize="15"
+                     FontWeight="Medium">
                 <i:Interaction.Behaviors>
                     <helpers:TextBoxInputBehavior InputMode="DateInput" />
                 </i:Interaction.Behaviors>
@@ -172,7 +174,9 @@
                      Width="100"
                      VerticalContentAlignment="Center"
                      Margin="175,0,0,0"
-                     LostFocus="txtDenNgay_LostFocus">
+                     LostFocus="txtDenNgay_LostFocus"
+                     FontSize="15"
+                     FontWeight="Medium">
                 <i:Interaction.Behaviors>
                     <helpers:TextBoxInputBehavior InputMode="DateInput" />
                 </i:Interaction.Behaviors>

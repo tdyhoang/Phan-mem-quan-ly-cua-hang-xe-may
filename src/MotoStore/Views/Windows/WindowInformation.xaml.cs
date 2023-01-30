@@ -84,11 +84,8 @@ namespace MotoStore.Views.Windows
                 cmdMaMH.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaMaMH = cmdMaMH.ExecuteReader();
                 while (sdaMaMH.Read())
-                {
                     if (sdaMaMH[0] != DBNull.Value)
                         listMaMH.Add((string)sdaMaMH[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblMaMH.Content = listMaMH[0];
 
                 SqlCommand cmdTenMH = new("Set dateformat dmy\nSelect TenMH from HoaDon join MatHang on HoaDon.MaMH=MatHang.MaMH where NgayLapHD = @Today", con);
@@ -96,11 +93,8 @@ namespace MotoStore.Views.Windows
                 cmdTenMH.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaTenMH = cmdTenMH.ExecuteReader();
                 while (sdaTenMH.Read())
-                {
                     if (sdaTenMH[0] != DBNull.Value)
                         listTenMH.Add((string)sdaTenMH[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblTenMH.Content = listTenMH[0];
 
                 SqlCommand cmdMaHD = new("Set dateformat dmy\nSelect MaHD from HoaDon where NgayLapHD = @Today", con);
@@ -108,11 +102,8 @@ namespace MotoStore.Views.Windows
                 cmdMaHD.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaMaHD = cmdMaHD.ExecuteReader();
                 while (sdaMaHD.Read())
-                {
                     if (sdaMaHD[0] != DBNull.Value)
                         listMaHD.Add((string)sdaMaHD[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblSoPK.Content = listMaHD[0];
 
                 SqlCommand cmdMaKH = new("Set dateformat dmy\nSelect MaKH from HoaDon where NgayLapHD = @Today", con);
@@ -120,11 +111,8 @@ namespace MotoStore.Views.Windows
                 cmdMaKH.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaMaKH = cmdMaKH.ExecuteReader();
                 while (sdaMaKH.Read())
-                {
                     if (sdaMaKH[0] != DBNull.Value)
                         listMaKH.Add((string)sdaMaKH[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 txtGiaBan.Text = listMaKH[0];
 
                 SqlCommand cmdTenKH = new("Set dateformat dmy\nSelect HoTenKH from HoaDon join KhachHang on HoaDon.MaKH=KhachHang.MaKH where NgayLapHD = @Today", con);
@@ -132,11 +120,8 @@ namespace MotoStore.Views.Windows
                 cmdTenKH.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaTenKH = cmdTenKH.ExecuteReader();
                 while (sdaTenKH.Read())
-                {
                     if (sdaTenKH[0] != DBNull.Value)
                         listTenKH.Add((string)sdaTenKH[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 txtMau.Text = listTenKH[0];
 
                 SqlCommand cmdSoLG = new("Set dateformat dmy\nSelect SoLuong from HoaDon where NgayLapHD = @Today", con);
@@ -144,11 +129,8 @@ namespace MotoStore.Views.Windows
                 cmdSoLG.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaSoLG = cmdSoLG.ExecuteReader();
                 while (sdaSoLG.Read())
-                {
                     if (sdaSoLG[0] != DBNull.Value)
                         listSoLg.Add((int)sdaSoLG[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblDaBan.Content = listSoLg[0];
 
                 SqlCommand cmdThanhTien = new("Set dateformat dmy\nSelect ThanhTien from HoaDon where NgayLapHD = @Today", con);
@@ -156,11 +138,8 @@ namespace MotoStore.Views.Windows
                 cmdThanhTien.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaThanhTien = cmdThanhTien.ExecuteReader();
                 while (sdaThanhTien.Read())
-                {
                     if (sdaThanhTien[0] != DBNull.Value)
                         listThanhTien.Add((decimal)sdaThanhTien[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 txtTonKho.Text = string.Format("{0:C}", listThanhTien[0]);
 
                 SqlCommand cmdMaNV = new("Set dateformat dmy\nSelect NhanVien.MaNV from HoaDon join NhanVien on HoaDon.MaNV=NhanVien.MaNV where NgayLapHD = @Today", con);
@@ -168,11 +147,8 @@ namespace MotoStore.Views.Windows
                 cmdMaNV.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaMaNV = cmdMaNV.ExecuteReader();
                 while (sdaMaNV.Read())
-                {
                     if (sdaMaNV[0] != DBNull.Value)
                         listMaNV.Add((string)sdaMaNV[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblHangSX.Content = listMaNV[0];
 
                 SqlCommand cmdTenNV = new("Set dateformat dmy\nSelect NhanVien.HoTenNV from HoaDon join NhanVien on HoaDon.MaNV=NhanVien.MaNV where NgayLapHD = @Today", con);
@@ -180,22 +156,16 @@ namespace MotoStore.Views.Windows
                 cmdTenNV.Parameters["@Today"].Value = ngay;
                 SqlDataReader sdaTenNV = cmdTenNV.ExecuteReader();
                 while (sdaTenNV.Read())
-                {
                     if (sdaTenNV[0] != DBNull.Value)
                         listTenNV.Add((string)sdaTenNV[0]);
-                    // else ListDoanhThu.Add(0); Ngày không có hàng đc mua
-                }
                 lblXuatXu.Content = listTenNV[0];
 
                 con.Close();
-                anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[0]);
+                anhSP.Source = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, listMaMH[0]));
                 index = 0; //Cứ mỗi lần khởi tạo WI biểu đồ thì sẽ gán index = 0 để tránh lỗi index was out of range
             }
             else
-            {
                 con.Close();
-                //MessageBox.Show("Không có sản phẩm nào được bán ra trong ngày này");
-            }
         }
 
         public WindowInformation(Tuple<MatHang,BitmapImage?> thamso)
@@ -224,17 +194,6 @@ namespace MotoStore.Views.Windows
                 txtMau.Text=string.Empty;
             if (mathang.Item2 != null)
             {
-                /*BitmapImage image = new();
-                //var stream = File.OpenRead(OFDFileName);
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                //image.StreamSource = stream;
-                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                image.UriSource = new(mathang.Item2);
-                image.EndInit();
-                //stream.Close();
-                //stream.Dispose();
-                anhSP.Source = image;*/
                 anhSP.Source = mathang.Item2;
             }
             DataContext = this;
@@ -309,9 +268,6 @@ namespace MotoStore.Views.Windows
         {
             CommonOpenFileDialog OFD = new();
             OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
-            //string destFile = $"/Products Images/{mathang.Item1.MaMh}.png.BKup";
-            //string newPathToFile = $"/Products Images/{mathang.Item1.MaMh}.png";
-            //dùng 2 dòng trên bị lỗi Could not find a part of the path 'C:\Products Images\ ... 
 
             if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -398,7 +354,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[index]);
+                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, listMaMH[index]));
                 }
             }
         }
@@ -425,7 +381,7 @@ namespace MotoStore.Views.Windows
                     txtTonKho.Text = string.Format("{0:C}", listThanhTien[index]);
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
-                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Settings.Default.ProductFilePath + listMaMH[index]);
+                    anhSP.Source = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, listMaMH[index]));
                 }
             }
         }

@@ -161,7 +161,7 @@
                      Width="650"
                      IsReadOnly="True"
                      Margin="30,140,0,0"
-                     FontSize="13.5"
+                     FontSize="12.5"
                      FontWeight="Medium">
             </TextBox>
             <Label Content="Đường Dẫn Ảnh Người Dùng:"
@@ -178,7 +178,7 @@
                      Width="650"
                      IsReadOnly="True"
                      Margin="30,255,0,0"
-                     FontSize="15"
+                     FontSize="12.5"
                      FontWeight="Medium">
             </TextBox>
            

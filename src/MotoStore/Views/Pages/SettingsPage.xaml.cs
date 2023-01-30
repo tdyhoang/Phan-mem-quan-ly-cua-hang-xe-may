@@ -105,7 +105,6 @@ namespace MotoStore.Views.Pages
                 Attachment inline = new(attachmentPath);
                 inline.ContentDisposition.Inline = true;
                 inline.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
-                //inline.ContentId = contentID;
                 inline.ContentType.MediaType = "image/png";
                 inline.ContentType.Name = Path.GetFileName(attachmentPath);
                 mess.Attachments.Add(inline);
@@ -116,8 +115,6 @@ namespace MotoStore.Views.Pages
             {
                 MessageBox.Show("Gửi mail thất bại, có thể do dung lượng file ảnh hoặc một vài lý do khác, hãy thử tệp ảnh nhẹ hơn và gửi lại! Lỗi: " + ex.Message);
             }
-            /*Hàm này để ứng dụng gửi mã 6 số ngẫu nhiên
-            về Email*/
         }
                         
         private void btnChonFileAvatar_Click(object sender, RoutedEventArgs e)

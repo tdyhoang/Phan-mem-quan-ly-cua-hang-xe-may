@@ -114,7 +114,8 @@
                 Grid.Row="0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="250,9,0,0"></Button>
+                Margin="250,9,0,0"
+                ToolTip="Làm Mới Dữ Liệu Hiển Thị"></Button>
         <Button x:Name="btnsiu"
                 Height="25"
                 Width="35"
@@ -175,13 +176,6 @@
                       IsCheckable="True"
                       Click="subItemPK_Click">
                 </MenuItem>
-                <MenuItem x:Name="subItemQuayLai"
-                      Header="Quay Lại"
-                      Height="35"
-                      FontSize="17"
-                      FontWeight="Medium"
-                      Width="130"
-                      Click="subItemQuayLai_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <Label x:Name="lblTu"

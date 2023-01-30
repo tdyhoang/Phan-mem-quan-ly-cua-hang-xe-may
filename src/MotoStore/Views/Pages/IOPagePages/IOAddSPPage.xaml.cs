@@ -23,15 +23,11 @@ namespace MotoStore.Views.Pages.IOPagePages
         public IOAddSPPage()
         {
             InitializeComponent();
-            timer.Tick += Timer_Tick;
             RefreshMatHang();
             DataContext = this;
         }
-        private readonly DispatcherTimer timer = new();
         private readonly MainDatabase mdb = new();
         private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
-        static private int dem = 0;   //Biến đếm số lần nháy
-        private bool Nhay = false;
         internal ObservableCollection<NhaCungCap> nhaCungCaps;
 
         public void RefreshMatHang()
@@ -47,31 +43,10 @@ namespace MotoStore.Views.Pages.IOPagePages
             cmbMaNCC.Text = string.Empty;
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (dem == 7)           //dem = 7 Thì Ngừng Nháy
-                timer.Stop();
-            if (Nhay)
-            {
-                lblThongBao.Foreground = Brushes.Red;
-                dem++;
-            }
-            else
-            {
-                lblThongBao.Foreground = Brushes.Black;
-                dem++;
-            }
-            Nhay = !Nhay;
-            //Hàm Này Để Nháy Thông Báo 
-        }
         private void btnLoadImageSP_Click(object sender, RoutedEventArgs e)
         {
             CommonOpenFileDialog OFD = new();
             OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
-            //string destFile = @$"pack://application:,,,/Avatars/{}.BackUp";
-            //string newPathToFile = @$"pack://application:,,,/Avatars/{PageChinh.getNV.MaNv}";
-            //destFile: file dự phòng
-            //newPathToFile: file ảnh mới
             if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 Uri fileUri = new(OFD.FileName);
@@ -84,80 +59,59 @@ namespace MotoStore.Views.Pages.IOPagePages
         {
             SqlCommand cmd;
             if (string.IsNullOrWhiteSpace(txtTenSP.Text)|| string.IsNullOrEmpty(txtGiaNhapSP.Text)|| string.IsNullOrWhiteSpace(txtXuatXuSP.Text)|| string.IsNullOrEmpty(txtPhanKhoiSP.Text)|| string.IsNullOrWhiteSpace(cmbMaNCC.Text))
-            {
-                MessageBox.Show("Các trường dữ liệu quan trọng (Có dấu(*)) bị thiếu, vui lòng xem lại!");
-            }
+                MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
             else
             {
-                //File.Move("D:\\Phan-mem-quan-ly-cua-hang-xe-may-main\\src\\MotoStore\\Products Images\\Temp.png", "D:\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\" + MaMH+".png");
                 con.Open();
                 cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
                 cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("Select top(1) MaMH from MatHang order by ID desc", con);
+                SqlDataReader sda = cmd.ExecuteReader();
+                string MHMoi = "MH@";
+                if (sda.Read())
+                    MHMoi = (string)sda[0];
                 DateTime dt = DateTime.Now;
-                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mặt hàng mới')", con);
+                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mới Mặt Hàng " + MHMoi + " ')", con);
                 cmd.ExecuteNonQuery();
                 con.Close();
-
-                MessageBox.Show("Thêm dữ liệu thành công");
+                MessageBox.Show("Thêm mới dữ liệu thành công");
             }
         }
 
         private void txtTenSP_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTenSP.Text))
-            {
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBao.Visibility = Visibility.Visible;
-                timer.Start();
-            }
         }
 
         private void txtGiaNhapSP_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(txtGiaNhapSP.Text))
-            {
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBao.Visibility = Visibility.Visible;
-                timer.Start();
-            }
         }
 
         private void txtXuatXuSP_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtXuatXuSP.Text))
-            {
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBao.Visibility = Visibility.Visible;
-                timer.Start();
-            }
         }
 
         private void txtPhanKhoiSP_LostFocus(object sender, RoutedEventArgs e) //Check Phân Phối của Xe
         {
             if (string.IsNullOrEmpty(txtPhanKhoiSP.Text))
-            {
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBao.Visibility = Visibility.Visible;
-                timer.Start();
-            }
         }
 
         private void cmbMaNCC_DropDownClosed(object sender, EventArgs e)
         {
             if (cmbMaNCC.SelectedItem is NhaCungCap ncc)
-            {
                 cmbMaNCC.Text = ncc.MaNcc;
-            }
         }
 
         private void cmbMaNCC_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cmbMaNCC.Text))
-            {
-                timer.Interval = new(0, 0, 0, 0, 200);
                 lblThongBao.Visibility = Visibility.Visible;
-                timer.Start();
-            }
         }
     }
 }
