@@ -6,6 +6,8 @@ using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Windows.Threading;
 using MotoStore.Views.Pages.LoginPages;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -14,116 +16,107 @@ namespace MotoStore.Views.Pages.IOPagePages
     /// </summary>
     public partial class IOKhachHangPage : Page
     {
+        internal List<Control> InputFields;
         public IOKhachHangPage()
         {
             InitializeComponent();
+            PageInitialization();
         }
-
-        bool checkTenKH = false;
-        bool checkNgaySinh= false;
-        bool checkLoaiKH = true;
-        bool checkGT = false;
-        bool checkEmail = false;
+        private void PageInitialization()
+        {
+            InputFields = new()
+            {
+                txtTenKH,
+                txtNgaySinhKH,
+                txtDiaChiKH,
+                txtSDTKH,
+                txtEmailKH,        
+                cmbLoaiKH,
+                cmbGioiTinhKH
+            };
+        }
+     
 
         private void btnAddNewKhachHang_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection con = new(Properties.Settings.Default.ConnectionString);
-            SqlCommand cmd;
-            if (!(checkTenKH && checkNgaySinh && checkEmail && checkGT && checkLoaiKH))
-                MessageBox.Show("Có Những Trường Dữ Liệu Bị Thiếu Hoặc Sai, Vui Lòng Kiểm Tra Lại!");
-            else
+
+            foreach (var c in InputFields.Where(c => Validation.GetHasError(c)))
             {
+                MessageBox.Show("Dữ liệu đang có lỗi, không thể thêm!");
+                return;
+            }
+            foreach (var tbx in InputFields.Where(c => c is TextBox).Cast<TextBox>().Where(tbx => !string.Equals(tbx.Name, "txtDiaChiKH") && !string.Equals(tbx.Name, "txtNgaySinhKH") && string.IsNullOrEmpty(tbx.Text)))
+            {
+                MessageBox.Show("Các ô được đánh dấu * không được để trống!");
+                return;
+            }
+            foreach (var cmb in InputFields.Where(c => c is ComboBox).Cast<ComboBox>().Where(cmb => string.IsNullOrEmpty(cmb.Text)))
+            {
+                MessageBox.Show("Các ô được đánh dấu * không được để trống!");
+                return;
+            }
+
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+            try
+            {
+                con.Open();
+                using var trans = con.BeginTransaction();
                 try
                 {
-                    con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into KhachHang values(N'" + txtTenKH.Text + "','" + txtNgaySinhKH.Text + "',N'" + cmbGioiTinhKH.Text + "', N'" + txtDiaChiKH.Text + "','" + txtSDTKH.Text + "','" + txtEmailKH.Text + "',N'" + cmbLoaiKH.Text + " ',0 )", con);
+                    SqlCommand cmd = new("Set Dateformat dmy\nInsert into KhachHang values(@TenKH,@NgaySinhKH,@GioiTinh,@DiaChi,@SDT,@Email,@LoaiKH,0)", con,trans);
+                    //txtTenKH.Text + txtNgaySinhKH.Text cmbGioiTinhKH.Text ++txtDiaChiKH.Text + txtSDTKH.Tex+, + txtEmailKH.Text+ cmbLoaiKH.Text + 0
+                    cmd.Parameters.Add("@TenKH", System.Data.SqlDbType.NVarChar);
+                    cmd.Parameters["@TenKh"].Value = txtTenKH.Text;
+                    cmd.Parameters.Add("@NgaySinhKH", System.Data.SqlDbType.SmallDateTime).Value = DateTime.TryParseExact(txtNgaySinhKH.Text, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var NgaySinh) ? NgaySinh : DBNull.Value;
+                    cmd.Parameters.Add("@GioiTinh", System.Data.SqlDbType.NVarChar);
+                    cmd.Parameters["@GioiTinh"].Value = cmbGioiTinhKH.Text;
+                    cmd.Parameters.Add("@DiaChi", System.Data.SqlDbType.NVarChar);
+                    cmd.Parameters["@DiaChi"].Value = txtDiaChiKH.Text;
+                    cmd.Parameters.Add("@SDT", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@SDT"].Value = txtSDTKH.Text;
+                    cmd.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar);
+                    cmd.Parameters["@Email"].Value = txtEmailKH.Text;
+                    cmd.Parameters.Add("@LoaiKH", System.Data.SqlDbType.NVarChar);
+                    cmd.Parameters["@LoaiKH"].Value = cmbLoaiKH.Text;
                     cmd.ExecuteNonQuery();
-                    cmd = new SqlCommand("Select top(1) MaKH from KhachHang order by ID desc", con);
+                    cmd = new SqlCommand("Select top(1) MaKH from KhachHang order by ID desc", con,trans);
                     SqlDataReader sda = cmd.ExecuteReader();
                     string KHMoi = "KH@";
                     if (sda.Read())
+                    {
                         KHMoi = (string)sda[0];
-                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Khách Hàng " + KHMoi + "')", con);
+                        sda.Close();    
+                    }                      
+                    cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Khách Hàng " + KHMoi + "')", con,trans);
                     cmd.ExecuteNonQuery();
-                    con.Close();
+                    trans.Commit();
+                 
                     MessageBox.Show("Thêm Dữ Liệu Thành Công");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Thêm Mới Thất Bại! Lỗi: " + ex.Message);
+                    MessageBox.Show("Thêm mới thất bại, Lỗi: " + ex.Message);
+                    trans.Rollback();
                 }
             }
-        }
-
-        private void txtTenKH_LostFocus(object sender, RoutedEventArgs e) // Check Tên Khách Hang
-        {
-            if (string.IsNullOrEmpty(txtTenKH.Text))
+            catch (Exception ex)
             {
-                checkTenKH = false; 
-                lblThongBao.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                checkTenKH = true;
-                lblThongBao.Visibility = Visibility.Collapsed;
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void txtNgaySinhKH_LostFocus(object sender, RoutedEventArgs e) //Check Ngày Sinh Khách Hàng
+        private void InputField_LostFocus(object sender, RoutedEventArgs e)
         {
-            DateTime date;
-            if (!DateTime.TryParseExact(txtNgaySinhKH.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
-            {
-                lblThongBaoNS.Visibility = Visibility.Visible;
-                checkNgaySinh = false;              
-            }
-            else
-            {
-                lblThongBaoNS.Visibility = Visibility.Collapsed;
-                checkNgaySinh = true;
-            }
+            if (sender is TextBox tb)
+                tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            if (sender is ComboBox cmb)
+                cmb.GetBindingExpression(ComboBox.TextProperty).UpdateSource();
         }
 
-        private void txtEmailKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (!txtEmailKH.Text.Contains("@gmail.com")) //Check Email Khách hàng
-            {
-                lblThongBaoEmail.Visibility = Visibility.Visible;
-                checkEmail = false;
-            }
-            else
-            {
-                lblThongBaoEmail.Visibility = Visibility.Collapsed;
-                checkEmail = true;
-            }
-        }
 
-        private void cmbLoaiKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(cmbLoaiKH.Text))
-            {
-                lblTBLoaiKH.Visibility = Visibility.Visible;
-                checkLoaiKH = false;
-            }
-            else
-            {
-                lblTBLoaiKH.Visibility = Visibility.Collapsed;
-                checkLoaiKH = true;
-            }
-        }
 
-        private void cmbGioiTinhKH_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(cmbGioiTinhKH.Text))
-            {
-                lblTBGT.Visibility = Visibility.Visible;
-                checkGT = false;
-            }
-            else
-            {
-                lblTBGT.Visibility = Visibility.Collapsed;
-                checkGT = true;
-            }
-        }
+
+
+
     }
 }

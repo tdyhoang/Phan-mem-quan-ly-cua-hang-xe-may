@@ -1,4 +1,5 @@
 ﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IOKhachHangPage"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
       xmlns:helpers="clr-namespace:MotoStore.Helpers"  
@@ -11,6 +12,19 @@
       Title="IOKhachHangPage">
 
     <Page.Resources>
+        <ControlTemplate x:Key="errormessKH">
+            <!--errormessKH là thông báo lỗi của trang Khách Hàng -->
+            <Grid>
+                <AdornedElementPlaceholder/>
+                <TextBlock Text="{Binding [0].ErrorContent}"
+                           Foreground="Red"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0 35 15 0">
+                </TextBlock>
+            </Grid>
+        </ControlTemplate>
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -75,59 +89,130 @@
                                Visibility="Collapsed"
                                />
 
-        <TextBox x:Name="txtTenKH" FontSize="15" FontWeight="Medium" Margin="207,47,543,0" VerticalAlignment="Top" LostFocus="txtTenKH_LostFocus">
+        <ui:TextBox x:Name="txtTenKH"
+                 FontSize="15" 
+                 FontWeight="Medium" 
+                 Margin="207,47,543,0" 
+                 VerticalAlignment="Top" 
+                 LostFocus="InputField_LostFocus"
+                 Validation.ErrorTemplate="{StaticResource errormessKH}"
+                 >
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="HoTenValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbNgaySinhKH"
                Content="Ngày Sinh: " 
                Margin="24,120,613,287"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtNgaySinhKH" Margin="205,107,540,0" FontSize="15" FontWeight="Medium" VerticalAlignment="Top" LostFocus="txtNgaySinhKH_LostFocus">
+        <ui:TextBox x:Name="txtNgaySinhKH" 
+                 Margin="205,107,540,0"
+                 FontSize="15" 
+                 FontWeight="Medium" 
+                 VerticalAlignment="Top" 
+                 LostFocus="InputField_LostFocus"
+                 Validation.ErrorTemplate="{StaticResource errormessKH}"
+                 >
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DateInput"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbDiaChiKH"
                Content="Địa Chỉ: " 
                Margin="24,180,620,243"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtDiaChiKH" Margin="205,169,538,0" VerticalAlignment="Top" FontSize="15" FontWeight="Medium" RenderTransformOrigin="0.238,-0.075" >
+        <ui:TextBox x:Name="txtDiaChiKH"
+                 Margin="205,169,538,0" 
+                 VerticalAlignment="Top" 
+                 FontSize="15" FontWeight="Medium"
+                 LostFocus="InputField_LostFocus"
+                 Validation.ErrorTemplate="{StaticResource errormessKH}"
+                 RenderTransformOrigin="0.238,-0.075" >
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="None"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="DiaChiValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbSDTKhachHang"
                Content=" SĐT: " 
                Margin="536,50,167,367"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTKH" Margin="669,42,81,0" VerticalAlignment="Top" FontSize="15" FontWeight="Medium">
+        <ui:TextBox x:Name="txtSDTKH" 
+                 Margin="669,42,81,0" 
+                 VerticalAlignment="Top"
+                 FontSize="15" FontWeight="Medium"
+                 LostFocus="InputField_LostFocus"
+                 Validation.ErrorTemplate="{StaticResource errormessKH}">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="SDTValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbEmailKH"
                Content="Email: " 
                Margin="536,118,203,300"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailKH" 
+        <ui:TextBox x:Name="txtEmailKH" 
                  Margin="669,109,81,0"
                  VerticalAlignment="Top" 
-                 LostFocus="txtEmailKH_LostFocus"
+                 LostFocus="InputField_LostFocus"
+                 Validation.ErrorTemplate="{StaticResource errormessKH}"
                  FontSize="15" FontWeight="Medium">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="None"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="EmailValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbGioiTinh"
                Content="Giới Tính: " 
                Margin="536,243,172,179"
@@ -141,38 +226,41 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <ComboBox x:Name="cmbLoaiKH" Margin="670,170,75,0" VerticalAlignment="Top" LostFocus="cmbLoaiKH_LostFocus" FontSize="15" FontWeight="Medium">
+        <ComboBox x:Name="cmbLoaiKH"
+                  Margin="670,170,75,0" 
+                  VerticalAlignment="Top" 
+                  LostFocus="InputField_LostFocus"
+                  Validation.ErrorTemplate="{StaticResource errormessKH}"
+                  FontSize="15" FontWeight="Medium" >
             <ComboBoxItem FontSize="15" FontWeight="Medium">Thường</ComboBoxItem>
             <ComboBoxItem FontSize="15" FontWeight="Medium">Thân quen</ComboBoxItem>
             <ComboBoxItem FontSize="15" FontWeight="Medium">Vip</ComboBoxItem>
+            <ComboBox.Text>
+                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="LoaiKhValidation" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
         </ComboBox>
-        <Label x:Name="lblTBLoaiKH"
-               Content="Loại Khách Hàng không được để trống!"
-               Height="25"
-               Width="215"
-               Foreground="Red"
-               FontSize="12"
-               FontWeight="Medium"
-               Margin="0,0,140,125"
-               HorizontalAlignment="Right"
-               Visibility="Collapsed">
-        </Label>
-
-        <ComboBox x:Name="cmbGioiTinhKH" Margin="670,233,75,0" VerticalAlignment="Top" LostFocus="cmbGioiTinhKH_LostFocus" FontSize="15" FontWeight="Medium">
+    
+        <ComboBox x:Name="cmbGioiTinhKH" 
+                  Margin="670,233,75,0" 
+                  VerticalAlignment="Top" 
+                  LostFocus="InputField_LostFocus"
+                  Validation.ErrorTemplate="{StaticResource errormessKH}"
+                  FontSize="15" FontWeight="Medium">
             <ComboBoxItem FontSize="15" FontWeight="Medium">Nam</ComboBoxItem>
             <ComboBoxItem FontSize="15" FontWeight="Medium">Nữ</ComboBoxItem>
+            <ComboBox.Text>
+                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="GioiTinhValidation" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.Text>
         </ComboBox>
-        <Label x:Name="lblTBGT"
-               Content="Giới Tính không được để trống!"
-               Height="25"
-               Width="215"
-               Foreground="Red"
-               FontSize="12"
-               FontWeight="Medium"
-               Margin="0,0,140,0"
-               HorizontalAlignment="Right"
-               Visibility="Collapsed">
-        </Label>
+      
         <Button x:Name="btnAddNewKhachHang" 
                 FontWeight="UltraBlack" 
                 Content="THÊM MỚI" 
@@ -218,6 +306,22 @@
             Foreground="Red"
             FontWeight="Medium"
             Margin="450,110,165,299"/>
+        <Label x:Name="lblDauSaoSDT" 
+            Height="30"
+            FontSize="15"
+            Width="10"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="150,0,0,450"/>
+        <Label x:Name="lblDauSaoEmail" 
+            Height="30"
+            FontSize="15"
+            Width="10"
+            Content="*"
+            Foreground="Red"
+            FontWeight="Medium"
+            Margin="150,0,0,320"/>
 
     </Grid>
 </Page>
