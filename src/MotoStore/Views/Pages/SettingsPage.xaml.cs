@@ -68,52 +68,93 @@ namespace MotoStore.Views.Pages
         private void btnGui_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Bạn Có Chắc Muốn Gửi ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                GuiMail(fileImg);
+                    GuiMail(fileImg);
         }
 
         private void GuiMail(string fileanh)
         {
-            try
+            if (fileImg != null)
             {
-                MailMessage mess = new();
-                string getMail = "123";
-                MainDatabase mdb = new();
-                SqlConnection con = new(Settings.Default.ConnectionString);
-                SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
-                cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
-                cmd.Parameters["@manv"].Value = PageChinh.getNV.MaNv;
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                    getMail = (string)reader[0];
-                con.Close();
-
-                mess.From = new(getMail);     //Đây là Email gửi từ ứng dụng
-                string richText = new TextRange(rtbLoiGopY.Document.ContentStart, rtbLoiGopY.Document.ContentEnd).Text;
-                mess.Subject = "Về Việc Báo Lỗi, Góp Ý Phần Mềm:";
-                mess.Body = richText;
-
-                mess.To.Add(new("datrua3152003@gmail.com"));  //Email của ứng dụng
-                SmtpClient smtpClient1 = new("smtp.gmail.com")
+                try
                 {
-                    Port = 587,
-                    Credentials = new NetworkCredential(getMail, "vxiwantwodhltrnb"),
-                    EnableSsl = true,
-                };
+                    MailMessage mess = new();
+                    string getMail = "123";
+                    MainDatabase mdb = new();
+                    SqlConnection con = new(Settings.Default.ConnectionString);
+                    SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
+                    cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@manv"].Value = PageChinh.getNV.MaNv;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        getMail = (string)reader[0];
+                    con.Close();
 
-                string attachmentPath = fileanh;
-                Attachment inline = new(attachmentPath);
-                inline.ContentDisposition.Inline = true;
-                inline.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
-                inline.ContentType.MediaType = "image/png";
-                inline.ContentType.Name = Path.GetFileName(attachmentPath);
-                mess.Attachments.Add(inline);
-                smtpClient1.Send(mess);
-                MessageBox.Show("Chúng tôi đã ghi nhận về lỗi, đóng góp của bạn, xin cảm ơn!");
+                    mess.From = new(getMail);     //Đây là Email gửi từ ứng dụng
+                    string richText = new TextRange(rtbLoiGopY.Document.ContentStart, rtbLoiGopY.Document.ContentEnd).Text;
+                    mess.Subject = "Về Việc Báo Lỗi, Góp Ý Phần Mềm MotoStore:";
+                    mess.Body = richText;
+
+                    mess.To.Add(new("datrua3152003@gmail.com"));  //Email của ứng dụng
+                    SmtpClient smtpClient1 = new("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential(getMail, "vxiwantwodhltrnb"),
+                        EnableSsl = true,
+                    };
+
+                    string attachmentPath = fileanh;
+                    Attachment inline = new(attachmentPath);
+                    inline.ContentDisposition.Inline = true;
+                    inline.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
+                    inline.ContentType.MediaType = "image/png";
+                    inline.ContentType.Name = Path.GetFileName(attachmentPath);
+                    mess.Attachments.Add(inline);
+                    smtpClient1.Send(mess);
+                    MessageBox.Show("Chúng tôi đã ghi nhận về lỗi, đóng góp của bạn, xin cảm ơn!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gửi mail thất bại, có thể do dung lượng file ảnh hoặc một vài lý do khác, hãy thử tệp ảnh nhẹ hơn và gửi lại! Lỗi: " + ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Gửi mail thất bại, có thể do dung lượng file ảnh hoặc một vài lý do khác, hãy thử tệp ảnh nhẹ hơn và gửi lại! Lỗi: " + ex.Message);
+                try
+                {
+                    MailMessage mess = new();
+                    string getMail = "123";
+                    MainDatabase mdb = new();
+                    SqlConnection con = new(Settings.Default.ConnectionString);
+                    SqlCommand cmd = new("Select Email from UserApp where MaNV=@manv", con);
+                    cmd.Parameters.Add("@manv", System.Data.SqlDbType.VarChar);
+                    cmd.Parameters["@manv"].Value = PageChinh.getNV.MaNv;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        getMail = (string)reader[0];
+                    con.Close();
+
+                    mess.From = new(getMail);     //Đây là Email gửi từ ứng dụng
+                    string richText = new TextRange(rtbLoiGopY.Document.ContentStart, rtbLoiGopY.Document.ContentEnd).Text;
+                    mess.Subject = "Về Việc Báo Lỗi, Góp Ý Phần Mềm MotoStore:";
+                    mess.Body = richText;
+
+                    mess.To.Add(new("datrua3152003@gmail.com"));  //Email của ứng dụng
+                    SmtpClient smtpClient1 = new("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        Credentials = new NetworkCredential(getMail, "vxiwantwodhltrnb"),
+                        EnableSsl = true,
+                    };
+                    smtpClient1.Send(mess);
+                    MessageBox.Show("Chúng tôi đã ghi nhận về lỗi, đóng góp của bạn, xin cảm ơn!");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gửi mail thất bại\nLỗi: " + ex.Message);
+                }
             }
         }
                         
@@ -126,16 +167,19 @@ namespace MotoStore.Views.Pages
             };
             if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                try
+                if (MessageBox.Show("Bạn Có Chắc Muốn Chọn Đây Là Đường Dẫn Ảnh Nhân Viên ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    Settings.Default.AvatarFilePath = COFD.FileName;
-                    Settings.Default.Save();
-                    txtDgDanAvatar.Text = Settings.Default.AvatarFilePath;
-                    MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Nhân Viên Thành Công!");
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                    try
+                    {
+                        Settings.Default.AvatarFilePath = COFD.FileName;
+                        Settings.Default.Save();
+                        txtDgDanAvatar.Text = Settings.Default.AvatarFilePath;
+                        MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Nhân Viên Thành Công!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                    }
                 }
             }
         }
@@ -149,16 +193,19 @@ namespace MotoStore.Views.Pages
             };
             if (COFD.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                try
+                if (MessageBox.Show("Bạn Có Chắc Muốn Chọn Đây Là Đường Dẫn Ảnh Mặt Hàng ?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
-                    Settings.Default.ProductFilePath = COFD.FileName;
-                    Settings.Default.Save();
-                    txtDgDanMH.Text = Settings.Default.ProductFilePath;
-                    MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Mặt Hàng Thành Công!");
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                    try
+                    {
+                        Settings.Default.ProductFilePath = COFD.FileName;
+                        Settings.Default.Save();
+                        txtDgDanMH.Text = Settings.Default.ProductFilePath;
+                        MessageBox.Show("Thay Đổi Đường Dẫn Ảnh Mặt Hàng Thành Công!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Thay Đổi Đường Dẫn Thất Bại, Lỗi: " + ex.Message);
+                    }
                 }
             }
         }

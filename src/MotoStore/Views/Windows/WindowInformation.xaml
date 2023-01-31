@@ -172,7 +172,8 @@
                            HorizontalAlignment="Center"
                            Margin="0,112,185,0"
                            GotFocus="txtGiaBan_GotFocus"
-                           LostFocus="txtGiaBan_LostFocus">
+                           LostFocus="txtGiaBan_LostFocus"
+                           TextChanged="txtGiaBan_TextChanged">
                     <i:Interaction.Behaviors>
                         <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="False" />
                     </i:Interaction.Behaviors>
@@ -199,7 +200,8 @@
                          Background="#0fff"
                          Foreground="White"
                          GotFocus="txtMau_GotFocus"
-                         LostFocus="txtMau_LostFocus">
+                         LostFocus="txtMau_LostFocus"
+                         TextChanged="txtMau_TextChanged">
                     <i:Interaction.Behaviors>
                         <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
                     </i:Interaction.Behaviors>
@@ -246,7 +248,8 @@
                          Background="#0fff"
                          Foreground="White"
                          GotFocus="txtTonKho_GotFocus"
-                         LostFocus="txtTonKho_LostFocus">
+                         LostFocus="txtTonKho_LostFocus"
+                         TextChanged="txtTonKho_TextChanged">
                     <i:Interaction.Behaviors>
                         <helpers:TextBoxInputBehavior InputMode="DigitInput" JustPositiveDecimalInput="False"/>
                     </i:Interaction.Behaviors>
@@ -295,7 +298,7 @@
                 <Label x:Name="lblLX"
                        Height="35"
                        Width="70"
-                       Content="Dòng Xe: "
+                       Content="Mô Tả: "
                        Foreground="white"
                        FontSize="15"
                        FontWeight="Medium"
@@ -304,15 +307,16 @@
                        HorizontalAlignment="Center"></Label>
                 <TextBox Height="35"
                        Width="130"
-                       x:Name="txtLX"
+                       x:Name="txtMoTa"
                        Foreground="white"
                        FontSize="15"
                        FontWeight="Medium"
                        Margin="325,0,0,30"
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Center"
-                       GotFocus="txtLX_GotFocus"
-                       LostFocus="txtLX_LostFocus">
+                       GotFocus="txtMoTa_GotFocus"
+                       LostFocus="txtMoTa_LostFocus"
+                       TextChanged="txtMoTa_TextChanged">
                     <i:Interaction.Behaviors>
                         <helpers:TextBoxInputBehavior InputMode="WordsInput" />
                     </i:Interaction.Behaviors>

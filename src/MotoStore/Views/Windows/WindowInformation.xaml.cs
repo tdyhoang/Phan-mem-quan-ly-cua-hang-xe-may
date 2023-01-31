@@ -25,6 +25,7 @@ namespace MotoStore.Views.Windows
     {
         private readonly SqlConnection con = new(Settings.Default.ConnectionString);
         static internal Tuple<MatHang, BitmapImage?> mathang;
+        static bool isEdited = false;
 
         private List<string> ListAnhSP = new();
         private IOSanPhamPage IOSPpg = new();
@@ -197,6 +198,7 @@ namespace MotoStore.Views.Windows
                 anhSP.Source = mathang.Item2;
             }
             DataContext = this;
+            isEdited = false;
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -208,8 +210,13 @@ namespace MotoStore.Views.Windows
         {
             if (loaiWD == 1)
             {
-                if (MessageBox.Show("Bạn Có Chắc Muốn Thoát? Mọi Chỉnh Sửa Sẽ Không Được Lưu Nếu Bạn Chưa Bấm Nút Lưu!", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (isEdited)
                 {
+                    if (MessageBox.Show("Bạn Có Chắc Muốn Thoát? Mọi Chỉnh Sửa Sẽ Không Được Lưu Nếu Bạn Chưa Bấm Nút Lưu!", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    {
+                    }
+                    else
+                        Close();
                 }
                 else
                     Close();
@@ -254,14 +261,14 @@ namespace MotoStore.Views.Windows
             txtTonKho.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.White);
         }
 
-        private void txtLX_GotFocus(object sender, RoutedEventArgs e)
+        private void txtMoTa_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtLX.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.Black);
+            txtMoTa.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.Black);
         }
 
-        private void txtLX_LostFocus(object sender, RoutedEventArgs e)
+        private void txtMoTa_LostFocus(object sender, RoutedEventArgs e)
         {
-            txtLX.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.White);
+            txtMoTa.SetCurrentValue(ForegroundProperty, System.Windows.Media.Brushes.White);
         }
 
         private void btnCapNhatAnh_Click(object sender, RoutedEventArgs e)
@@ -273,6 +280,7 @@ namespace MotoStore.Views.Windows
             {
                 OFDFileName = OFD.FileName;
                 anhSP.Source = new BitmapImage(new Uri(OFDFileName));
+                isEdited = true;
             }
         }
 
@@ -283,52 +291,53 @@ namespace MotoStore.Views.Windows
             }
             else
             {
-                if (string.IsNullOrEmpty(txtGiaBan.Text) || string.IsNullOrWhiteSpace(txtMau.Text) || string.IsNullOrEmpty(txtTonKho.Text) || string.IsNullOrWhiteSpace(txtLX.Text))
+                if (string.IsNullOrEmpty(txtGiaBan.Text) || string.IsNullOrWhiteSpace(txtMau.Text) || string.IsNullOrEmpty(txtTonKho.Text) || string.IsNullOrWhiteSpace(txtMoTa.Text))
                     MessageBox.Show("Có Trường Dữ Liệu Bị Thiếu, Vui Lòng Kiểm Tra Lại!");
                 else
                 {
-                    try
+                    if(isEdited)
                     {
-                        MainDatabase mdb = new();
-                        SqlCommand cmd;
-                        con.Open();
-                        cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
-                        cmd.ExecuteNonQuery();
-                        DateTime dt = DateTime.Now;
-                        cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-
-                        string destFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".BKup");
-                        string newPathToFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".png");
-                        //anhSP.Source = null;                       
-
-                        if(mathang.Item2 is not null)
-                            mathang.Item2.StreamSource.Dispose();
-
-                        //Trước khi đổi ảnh phải kiểm tra có ảnh được chọn hay không
-                        if (OFDFileName != null)
+                        try
                         {
-                            if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
-                                File.Move(newPathToFile, destFile); //Đổi tên File
-                            File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
+                            MainDatabase mdb = new();
+                            SqlCommand cmd;
+                            con.Open();
+                            cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
+                            cmd.ExecuteNonQuery();
+                            DateTime dt = DateTime.Now;
+                            cmd = new SqlCommand("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'chỉnh sửa mặt hàng " + mathang.Item1.MaMh + "')", con);
+                            cmd.ExecuteNonQuery();
+                            con.Close();
 
-                            MatHang var = mathang.Item1;
-                            mathang = Tuple.Create(var, BitmapConverter.FilePathToBitmapImage(OFDFileName));
+                            string destFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".BKup");
+                            string newPathToFile = Path.Combine(Settings.Default.ProductFilePath, mathang.Item1.MaMh + ".png");
+                            //anhSP.Source = null;                       
 
-                            GC.Collect();
-                            GC.WaitForPendingFinalizers();
-                            File.Delete(destFile); //Xoá file tạm đi
+                            if (mathang.Item2 is not null)
+                                mathang.Item2.StreamSource.Dispose();
+
+                            //Trước khi đổi ảnh phải kiểm tra có ảnh được chọn hay không
+                            if (OFDFileName != null)
+                            {
+                                if (File.Exists(newPathToFile)) //Nếu có 1 file ảnh khác tồn tại thì xoá nó đi và cập nhật file ảnh mới
+                                    File.Move(newPathToFile, destFile); //Đổi tên File
+                                File.Copy(OFDFileName, newPathToFile); //Chỉnh tên File ảnh đc chọn
+
+                                MatHang var = mathang.Item1;
+                                mathang = Tuple.Create(var, BitmapConverter.FilePathToBitmapImage(OFDFileName));
+
+                                GC.Collect();
+                                GC.WaitForPendingFinalizers();
+                                File.Delete(destFile); //Xoá file tạm đi
+                            }
+                            MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
+                            this.Close();
                         }
-                        //IOSPpg.Refresh(); //Tự động làm mới sau khi cập nhật thành công
-                        MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
-                        //gọi refresh
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Cập Nhật Dữ Liệu Thất Bại, Lỗi: " + ex.Message);
-                    }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Cập Nhật Dữ Liệu Thất Bại, Lỗi: " + ex.Message);
+                        }
+                    }                        
                 }
             }
         }
@@ -382,9 +391,28 @@ namespace MotoStore.Views.Windows
                     lblHangSX.Content = listMaNV[index];
                     lblXuatXu.Content = listTenNV[index];
                     anhSP.Source = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, listMaMH[index]));
-                }
+                } 
             }
         }
 
+        private void txtGiaBan_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+                isEdited = true;
+        }
+
+        private void txtMau_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+                isEdited = true;
+        }
+
+        private void txtTonKho_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+                isEdited = true;
+        }
+
+        private void txtMoTa_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+                isEdited = true;
+        }
     }
 }

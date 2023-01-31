@@ -25,8 +25,7 @@ namespace MotoStore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Av" +
-            "atars\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Avatars\\")]
         public string AvatarFilePath {
             get {
                 return ((string)(this["AvatarFilePath"]));
@@ -38,8 +37,7 @@ namespace MotoStore.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\ADMIN\\Documents\\GitHub\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Pr" +
-            "oducts Images\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Products Images\\")]
         public string ProductFilePath {
             get {
                 return ((string)(this["ProductFilePath"]));

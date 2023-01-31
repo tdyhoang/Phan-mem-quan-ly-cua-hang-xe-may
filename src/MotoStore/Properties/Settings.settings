@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="AvatarFilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Avatars\</Value>
+      <Value Profile="(Default)">Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Avatars\</Value>
     </Setting>
     <Setting Name="ProductFilePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\ADMIN\Documents\GitHub\Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Products Images\</Value>
+      <Value Profile="(Default)">Phan-mem-quan-ly-cua-hang-xe-may\src\MotoStore\Products Images\</Value>
     </Setting>
     <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

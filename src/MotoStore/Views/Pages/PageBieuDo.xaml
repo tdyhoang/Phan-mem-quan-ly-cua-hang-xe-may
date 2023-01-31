@@ -96,20 +96,21 @@
         
         <Menu     x:Name="MenuTuChon"
                   Height="40"
-                  Width="140"
+                  Width="170"
                   FontSize="20"
                   FontWeight="Medium"
-                  VerticalAlignment="Top" 
-                  Margin="0,0,650,0">
+                  VerticalAlignment="Top"
+                  HorizontalAlignment="Left"
+                  Margin="0,0,0,0">
 
-            <MenuItem Header="Các Lựa Chọn"
+            <MenuItem Header="Lựa Chọn Biểu Đồ"
                           Foreground="Blue"
                           FontSize="15"
                           FontWeight="Bold"
                           Width="200"
                           Height="50">
 
-                <MenuItem Header="So Sánh Theo Năm" 
+                <MenuItem Header="Biểu Đồ Cột(So sánh theo Năm)" 
                               Foreground="black"
                               FontSize="15"
                               FontWeight="Medium">
@@ -131,7 +132,7 @@
                 </MenuItem>
 
                 <MenuItem     x:Name="subitemChonNgayXem"
-                              Header="Chọn Ngày Xem" 
+                              Header="Biểu Đồ Đường(Xem theo Ngày)" 
                               Foreground="black"
                               FontSize="15"
                               FontWeight="Medium"
@@ -162,19 +163,28 @@
                      Width="100"
                      VerticalContentAlignment="Center"
                      Margin="0,0,255,0"
-                     LostFocus="txtTuNgay_LostFocus"
+                     LostFocus="TextboxNgay_LostFocus"
                      FontSize="15"
                      FontWeight="Medium">
                 <i:Interaction.Behaviors>
                     <helpers:TextBoxInputBehavior InputMode="DateInput" />
                 </i:Interaction.Behaviors>
+                <TextBox.Text>
+                    <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <helpers:CustomValidationRule ValidationMode="DateValidation" IsNullable="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
             </TextBox>
             <TextBox x:Name="txtDenNgay"
                      Height="35"
                      Width="100"
                      VerticalContentAlignment="Center"
                      Margin="175,0,0,0"
-                     LostFocus="txtDenNgay_LostFocus"
+                     LostFocus="TextboxNgay_LostFocus"
                      FontSize="15"
                      FontWeight="Medium">
                 <i:Interaction.Behaviors>
@@ -254,15 +264,6 @@
             </Button>
         </Grid>
 
-        <Button x:Name="btnTuChon"
-                Content="Tự Chọn"
-                FontSize="20"
-                FontWeight="Medium"
-                Height="40"
-                Width="115"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Click="btnTuChon_Click"></Button>
         <Label Content="Biểu Đồ Doanh Thu"
                FontSize="30"
                FontWeight="Medium"

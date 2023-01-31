@@ -30,7 +30,6 @@ namespace MotoStore.Views.Pages
             dothi.ChartLegend.Visibility = Visibility.Collapsed;
             gridChonNgay.Visibility = Visibility.Collapsed;
             MenuTuChon.Visibility = Visibility.Collapsed;
-            CanClick = true;
 
             decimal[] arrDoanhThu = new decimal[1000];
             ChartValues<decimal> ListDoanhThu = new();
@@ -57,7 +56,8 @@ namespace MotoStore.Views.Pages
             con.Close();  
             Values = value => value.ToString("N");
             dothi.AxisY[0].MinValue = 0;
-            DataContext = this;            
+            DataContext = this;
+            CanClick = true;
         }
         
         public SeriesCollection SrC { get; set; }   
@@ -70,22 +70,12 @@ namespace MotoStore.Views.Pages
             NavigationService.Navigate(new ReportPage());
         }
 
-        static int solanbam = 0; //biến dùng để ẩn và hiện menu Tự Chọn
-        private void btnTuChon_Click(object sender, RoutedEventArgs e)
-        {
-            if (solanbam % 2 == 0)
-                MenuTuChon.Visibility = Visibility.Visible;
-            else
-                MenuTuChon.Visibility = Visibility.Collapsed;
-            solanbam++;
-            gridChonNgay.Visibility = Visibility.Collapsed;
-        }
-
         private void subitemNamTrc_Click(object sender, RoutedEventArgs e) //ss 2 năm
         {
             /*Mỗi lần nhấn menu Năm Trước này, ta sẽ clear hết các trường
               dữ liệu cũ, clear luôn thanh chọn ngày xem(Nếu có)
-              sau đó đổ lại dữ liệu vào.*/
+              sau đó đổ lại dữ liệu vào.
+             */
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
             lblNhapNam.Content = "Nhập 2 năm muốn so sánh:";
@@ -95,7 +85,6 @@ namespace MotoStore.Views.Pages
             namBa.Visibility = Visibility.Collapsed;
             luachon = 1;
             subitem2NamTrc.IsChecked = false;
-            CanClick = false;
         }
 
         private void subitem2NamTrc_Click(object sender, RoutedEventArgs e)  //ss 3 năm
@@ -109,7 +98,6 @@ namespace MotoStore.Views.Pages
             namBa.Visibility = Visibility.Visible;
             luachon = 2;
             subitemNamTrc.IsChecked = false;
-            CanClick = false;
         }
 
         private void subitemChonNgayXem_Click(object sender, RoutedEventArgs e)
@@ -118,84 +106,25 @@ namespace MotoStore.Views.Pages
             gridchonNam.Visibility = Visibility.Collapsed;
             //Hiện mục chọn ngày mỗi khi click vào menu Chọn Ngày Xem
         }
-        public static bool IsValidDateTimeTest(string dateTime)
-        {
-            string[] formats = { "d/M/yyyy" };
-            if (DateTime.TryParseExact(dateTime, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
-            {
-                if (date < new DateTime(1900, 1, 1) || date > new DateTime(2079, 6, 6))
-                    return false;
-                return true;
-            }
-            return false;
-            //Hàm kiểm tra ngày có hợp lệ hay không
-        }
-
-        private void txtTuNgay_LostFocus(object sender, RoutedEventArgs e)
-        {
-            DateTime ngaylonnhat = mdb.HoaDons.OrderByDescending(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
-            string maxDate = ngaylonnhat.ToString("d/M/yyyy"); //dd/MM/yyyy
-            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
-            string minDate = ngaynhonhat.ToString("d/M/yyyy");
-            if (!IsValidDateTimeTest(txtTuNgay.Text))
-            {
-                MessageBox.Show("Ô Từ Ngày Chứa Ngày Không Hợp Lệ!\nGiới hạn ngày nằm trong khoảng từ 01/01/1900 đến 06/06/2079");
-                txtTuNgay.Foreground = Brushes.Red;
-            }
-            else  //txt Từ Ngày chứa NGÀY HỢP LỆ
-            {
-                txtTuNgay.Foreground = Brushes.Black;
-                if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) > ngaylonnhat)
-                    MessageBox.Show("Các ngày sau ngày " + maxDate + " CHƯA CÓ DỮ LIỆU\nDoanh Thu mặc định của các ngày đó sẽ = 0");
-                if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
-                    MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU\nDoanh Thu mặc định của các ngày đó sẽ = 0");
-            }
-        }
-
-        private void txtDenNgay_LostFocus(object sender, RoutedEventArgs e)
-        {
-            DateTime ngaylonnhat = mdb.HoaDons.OrderByDescending(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
-            string maxDate = ngaylonnhat.ToString("d/M/yyyy"); //dd/MM/yyyy
-            DateTime ngaynhonhat = mdb.HoaDons.OrderBy(u => u.NgayLapHd).Select(u => u.NgayLapHd).FirstOrDefault() ?? DateTime.Today;
-            string minDate = ngaynhonhat.ToString("d/M/yyyy");
-            if (!IsValidDateTimeTest(txtDenNgay.Text))
-            {
-                MessageBox.Show("Ô Đến Ngày Chứa Ngày Không Hợp Lệ!\nGiới hạn ngày nằm trong khoảng từ 01/01/1900 đến 06/06/2079");
-                txtDenNgay.Foreground = Brushes.Red;
-            }
-            if (IsValidDateTimeTest(txtDenNgay.Text))
-            {
-                txtDenNgay.Foreground = Brushes.Black;
-                if (DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) > ngaylonnhat)
-                    MessageBox.Show("Các ngày sau ngày " + maxDate + " CHƯA CÓ DỮ LIỆU\nDoanh Thu mặc định của các ngày đó sẽ = 0");
-                if (DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) < ngaynhonhat)
-                    MessageBox.Show("Các ngày trước ngày " + minDate + " CHƯA CÓ DỮ LIỆU\nDoanh Thu mặc định của các ngày đó sẽ = 0");
-            }
-            /*Khi ô Đến Ngày LostFocus, ta sẽ check nó có phải ngày hợp lệ hay kh,
-              và check xem nó có bé hơn hoặc = Từ Ngày hay kh*/
-        }
 
         private void btnXem_Click(object sender, RoutedEventArgs e)
         {
             /*Chỉ có duy nhất Lựa chọn hàm này là người dùng đc 
               phép Zoom, nên sẽ tìm MaxValue ở đây để tránh tình trạng
               Zoom quá mức nó sẽ ra giá trị Rác*/
-
+            if (e.Handled)
+                return;
             ChartValues<decimal> ChartVal = new();
             if (string.IsNullOrEmpty(txtTuNgay.Text) || string.IsNullOrEmpty(txtDenNgay.Text))
                 MessageBox.Show("Vui Lòng Nhập Đầy Đủ 2 Ngày");
-            else if (!IsValidDateTimeTest(txtTuNgay.Text) || !IsValidDateTimeTest(txtDenNgay.Text))
-                MessageBox.Show("Không Thể Xem Vì Có Chứa Ngày Không Hợp Lệ\nHãy Kiểm Tra Lại!");
-            else if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
-            {
-                MessageBox.Show("Từ Ngày Không Được Phép Lớn Hơn Hoặc Bằng Đến Ngày!\nHãy Nhập Lại!");
-                txtTuNgay.Foreground = Brushes.Red;
-                txtDenNgay.Foreground = Brushes.Red;
-            }
+            else if (isValidDate(txtTuNgay.Text) == false || isValidDate(txtDenNgay.Text) == false)
+                MessageBox.Show("Dữ liệu đầu vào có chứa ngày Không Hợp Lệ\nVui lòng kiểm tra lại!");
+            else if(DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
+                MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
             else //Thoả mãn hết các điều kiện => được phép xem 
             {
                 lblSeries.Content = "         Ngày";
-                lblDTThgNay.Content = "So Sánh Doanh Thu(Đơn Vị: VNĐ)";
+                lblDTThgNay.Content = "Doanh Thu Theo Giai Đoạn(Đơn Vị: VNĐ)";
                 CanClick = true; //Cho phép bấm vào DataPoint
                 while (dothi.Series.Count > 0)
                     dothi.Series.RemoveAt(0);
@@ -203,6 +132,7 @@ namespace MotoStore.Views.Pages
                 /*3 dòng trên để Clear hết các dữ liệu cũ,
                   Dọn chỗ cho dữ liệu mới*/
 
+                lblSeries.Content = "         Ngày";
                 dothi.Zoom = ZoomingOptions.X; //Cho phép Zoom trục hoành
                 dothi.Pan = PanningOptions.X;  //Cho phép Lia trục hoành
                 dothi.FontSize = 15;
@@ -239,7 +169,7 @@ namespace MotoStore.Views.Pages
                 else if ((double)ChartVal.Count / 15 - ChartVal.Count / 15 == 0)
                     TrucHoanhX.Separator.Step = ChartVal.Count / 15;
                 //ĐK if else ở trên để tăng bước trục hoành dựa vào khoảng ngày
-                //0<NGÀY<30: step = 2, 30<NGÀY<60: step = 2 , ...  
+                //0<NGÀY<15: step = 1, 30<NGÀY<60: step = 2 , ...  
 
                 dothi.AxisY[0].MaxValue = (double)maxVal * 1.2;
                 /*1 dòng trên để set max value trục tung cho đồ thị,
@@ -249,17 +179,54 @@ namespace MotoStore.Views.Pages
             }
         }
 
+        //Dùng chung cho 2 textbox ngày
+        public void TextboxNgay_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(sender is TextBox tbx)
+            {
+                if (!isValidDate(tbx.Text))
+                {
+                    if (string.IsNullOrWhiteSpace(tbx.Text))
+                        MessageBox.Show("Vui lòng nhập ngày!");
+                    else
+                    {
+                        tbx.Foreground = Brushes.Red;
+                        MessageBox.Show("Ngày Không Hợp Lệ\n Ngày Hợp Lệ nằm trong khoảng từ 01/01/1900 - 06/06/2079");
+                    }
+
+                }
+                else
+                    tbx.Foreground = Brushes.Black;
+
+            }
+        }
+
+        private bool isValidDate(string thamso)
+        {
+            string[] formats = { "d/M/yyyy" };
+            if (DateTime.TryParseExact(thamso, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
+            {
+                if (date < new DateTime(1900, 1, 1) || date > new DateTime(2079, 6, 6))
+                    return false;
+                return true; //ngày hợp lệ
+            }
+            return false;
+            //Hàm kiểm tra ngày có hợp lệ hay không
+        }
+
         private void btnXemNam_Click(object sender, RoutedEventArgs e)
         {
-            CanClick = false;
             if (luachon == 1)
             {
                 if (string.IsNullOrEmpty(namNhat.Text) || string.IsNullOrEmpty(namHai.Text))
-                    MessageBox.Show("Có trường dữ liệu rỗng, vui lòng kiểm tra lại!");
+                    MessageBox.Show("Có trường dữ liệu rỗng\nVui lòng kiểm tra lại!");
+                else if (isValidYear(namNhat.Text) == false && isValidYear(namHai.Text) == false)
+                    MessageBox.Show("Có trường dữ liệu chứa năm KHÔNG HỢP LỆ\nVui lòng kiểm tra lại!");
                 else
                 {
                     lblSeries.Content = "         Tháng";
                     lblDTThgNay.Content = "     So Sánh Doanh Thu 2 Năm";
+                    CanClick = false;
                     while (dothi.Series.Count > 0)
                         dothi.Series.RemoveAt(0);  //Clear dữ liệu cũ
                     Labels.Clear();  //Clear Nhãn cũ
@@ -292,7 +259,7 @@ namespace MotoStore.Views.Pages
                         else
                             EndDate2 = "1/" + thangsau2 + "/" + namNhat.Text;
 
-                        decimal money2 = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDate2,"d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd <= DateTime.ParseExact(EndDate2, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.ThanhTien).Sum();
+                        decimal money2 = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDate2, "d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd <= DateTime.ParseExact(EndDate2, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.ThanhTien).Sum();
                         arrVal2[i - 1] = money2;
 
                         StartDate1 = "1/" + i + "/" + namHai.Text;
@@ -301,9 +268,9 @@ namespace MotoStore.Views.Pages
                             EndDate1 = "1/1/" + (int.Parse(namHai.Text) + 1).ToString();
                         else
                             EndDate1 = "1/" + thangsau1 + "/" + namHai.Text;
-                        
+
                         decimal money1 = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDate1, "d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd <= DateTime.ParseExact(EndDate1, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.ThanhTien).Sum();
-                        arrVal1[i - 1] = money1;    
+                        arrVal1[i - 1] = money1;
                     }
 
                     maxVal = arrVal2[0];
@@ -335,11 +302,15 @@ namespace MotoStore.Views.Pages
             else //SS 3 nam
             {
                 if (string.IsNullOrEmpty(namNhat.Text) || string.IsNullOrEmpty(namHai.Text) || string.IsNullOrEmpty(namBa.Text))
-                    MessageBox.Show("Có trường dữ liệu rỗng, vui lòng kiểm tra lại!");
+                    MessageBox.Show("Có trường dữ liệu rỗng\nVui lòng kiểm tra lại!");
+                else if (isValidYear(namNhat.Text) == false && isValidYear(namHai.Text) == false && isValidYear(namBa.Text) == false) //3 ô đã đầy đủ nhưng cần kiểm tra xem năm nhập vào có hợp lệ hay không
+                    MessageBox.Show("Có trường dữ liệu chứa năm KHÔNG HỢP LỆ\nVui lòng kiểm tra lại!");
                 else
                 {
+
                     lblSeries.Content = "         Tháng";
                     lblDTThgNay.Content = "     So Sánh Doanh Thu 3 Năm";
+                    CanClick = false;
                     while (dothi.Series.Count > 0)
                         dothi.Series.RemoveAt(0);
                     Labels.Clear();
@@ -462,7 +433,7 @@ namespace MotoStore.Views.Pages
 
         private void dothi_DataClick(object sender, ChartPoint chartPoint)
         {
-            if(CanClick)
+            if(CanClick) //Chỉ khi đồ thị là đồ thị theo NGÀY thì mới được phép click vào DataPoint!
             {
                 string getNgay = TrucHoanhX.Labels[(int)chartPoint.X];
                 WindowInformation wd = new WindowInformation(getNgay);
@@ -473,33 +444,26 @@ namespace MotoStore.Views.Pages
         // Dùng cho 2 textbox namNhat và namHai để giới hạn số năm nhập đc
         private void TextBoxNam_LostFocus(object sender, RoutedEventArgs e)
         {
+            //có VẤN ĐỀ Ở HÀM NÀY
             if (sender is TextBox tbx)
             {
-                if (int.TryParse(tbx.Text, NumberStyles.None, CultureInfo.InvariantCulture, out var i))
+                if (!isValidYear(tbx.Text))
                 {
-                    if (i < 1900)
-                    {
-                        MessageBox.Show("Năm nhỏ nhất là 1900!");
-                        e.Handled = true;
-                        tbx.Focus();
-                        return;
-                    }
-                    if (i > 2078)
-                    {
-                        MessageBox.Show("Năm lớn nhất là 2078!");
-                        e.Handled = true;
-                        tbx.Focus();
-                        return;
-                    }    
+                    tbx.Foreground = Brushes.Red;
+                    MessageBox.Show("Năm lớn nhất và nhỏ nhất được phép nhập lần lượt là 2078 và 1900!");
                 }
                 else
-                {
-                    MessageBox.Show("Năm lớn nhất là 2078!");
-                    e.Handled = true;
-                    tbx.Focus();
-                    return;
-                }
+                    tbx.Foreground = Brushes.Black;
             }
+        }
+
+        private bool isValidYear(string thamso)
+        {
+            if (int.Parse(thamso) < 1900)
+                return false;
+            if(int.Parse(thamso) > 2078)
+                return false;
+            return true; //Năm hợp lệ
         }
     }
 }
