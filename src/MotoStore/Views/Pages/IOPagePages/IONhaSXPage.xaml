@@ -1,4 +1,5 @@
 ﻿<Page x:Class="MotoStore.Views.Pages.IOPagePages.IONhaSXPage"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:helpers="clr-namespace:MotoStore.Helpers"     
@@ -11,6 +12,19 @@
       Title="IONhaSXPage">
 
     <Page.Resources>
+        <ControlTemplate x:Key="errormessNCC">
+            <!--errormessNCC là thông báo lỗi -->
+            <Grid>
+                <AdornedElementPlaceholder/>
+                <TextBlock Text="{Binding [0].ErrorContent}"
+                           Foreground="Red"
+                           FontSize="10"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0 35 15 0">
+                </TextBlock>
+            </Grid>
+        </ControlTemplate>
         <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -49,20 +63,6 @@
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <Label x:Name="lblThongBao" Height="20" FontSize="10" Width="195"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="0,0,380,400"
-                               Content="Tên Nhà Cung Cấp Không Được Để Trống"
-                               Visibility="Collapsed"
-                               />
-        <Label x:Name="lblThongBaoEmail" Height="20" FontSize="10"  Width="135"
-                               Foreground="red" 
-                               FontWeight="Medium" 
-                               Margin="0,0,440,175"
-                               Visibility="Collapsed"
-                               Content="Email Không Hợp Lệ"
-                               />
         <Label x:Name="lblDauSao" 
                Height="30"
                FontSize="15"
@@ -71,46 +71,121 @@
                Foreground="Red"
                FontWeight="Medium"
                Margin="0,0,700,450"/>
-        <TextBox x:Name="txtTenNCC" Margin="224,38,526,0" VerticalAlignment="Top" LostFocus="txtTenNCC_LostFocus">
+        <Label x:Name="lblDauSao1" 
+               Height="30"
+               FontSize="15"
+               Width="10"
+               Content="*"
+               Foreground="Red"
+               FontWeight="Medium"
+               Margin="0,0,850,230"/>
+
+        <ui:TextBox x:Name="txtTenNCC" Margin="100,41,293,0"
+                 VerticalAlignment="Top"
+                 Validation.ErrorTemplate="{StaticResource errormessNCC}"
+                 Height="35"
+                 Width="275"
+                 LostFocus="InputField_LostFocus">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="TenValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbSDTNSX"
                Content="Số Điện Thoại: " 
                Margin="24,105,635,310"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtSDTNSX" Margin="224,93,526,0" VerticalAlignment="Top">
+        <ui:TextBox x:Name="txtSDTNSX" 
+                 Margin="100,100,296,0"           
+                 Height="35"
+                 Validation.ErrorTemplate="{StaticResource errormessNCC}"
+                 Width="275"
+                 FontSize="15"
+                 LostFocus="InputField_LostFocus"
+                 VerticalAlignment="Top"
+                 >
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DigitInput"/>
             </i:Interaction.Behaviors>
-        </TextBox>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="SDTValidation" IsNullable="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbEmail"
                Content="Email: " 
                Margin="24,160,653,260"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtEmailNSX"
+        <ui:TextBox x:Name="txtEmailNSX"
                  Height="35"
+                 Validation.ErrorTemplate="{StaticResource errormessNCC}"
                  Width="275"
                  FontSize="15"
-                 Margin="0,0,305,230" 
-                 VerticalAlignment="Center" 
-                 LostFocus="txtEmailNSX_LostFocus"/>
+                 Margin="100,159,293,0" 
+                 LostFocus="InputField_LostFocus" VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <helpers:TextBoxInputBehavior InputMode="None"/>
+            </i:Interaction.Behaviors>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="EmailValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
         <Label x:Name="lbDiaChi"
                Content="Địa Chỉ: " 
                Margin="24,215,679,203"
                FontSize="15"
                Foreground="Black"
                FontWeight="Medium"/>
-        <TextBox x:Name="txtDiaChi" Margin="222,206,528,0" VerticalAlignment="Top">
+        <ui:TextBox x:Name="txtDiaChi"
+                 Margin="100,211,290,0"
+                 VerticalAlignment="Top"
+                 Height="35"
+                 Validation.ErrorTemplate="{StaticResource errormessNCC}"
+                 Width="275">
             <i:Interaction.Behaviors>
-                <helpers:TextBoxInputBehavior InputMode="WordsInput"/>
+                <helpers:TextBoxInputBehavior InputMode="None"/>
             </i:Interaction.Behaviors>
-        </TextBox>
-        <Button x:Name="btnAddNewNSX" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="0,30,300,0" VerticalAlignment="Center" Height="45" Width="135" FontSize="19" Click="btnAddNewNSX_Click" Background="LightGreen"/>
+            <ui:TextBox.Text>
+                <Binding Path="Text"
+                         RelativeSource="{RelativeSource Self}"
+                         UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="DiaChiValidation" IsNullable="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
+        </ui:TextBox>
+        <Button x:Name="btnAddNewNSX" 
+                FontWeight="UltraBlack" 
+                Content="THÊM MỚI" 
+                Margin="312,304,353,0" 
+                VerticalAlignment="Top" 
+                Height="45" Width="135" 
+                FontSize="19"
+                Click="btnAddNewNSX_Click" 
+                Background="LightGreen"/>
     </Grid>
 </Page>
