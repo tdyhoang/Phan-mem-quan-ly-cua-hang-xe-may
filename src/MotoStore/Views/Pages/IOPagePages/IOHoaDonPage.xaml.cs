@@ -78,29 +78,6 @@ namespace MotoStore.Views.Pages.IOPagePages
                 try
                 {
                     string ngayXuatHD = string.IsNullOrEmpty(txtNgayXuatHD.Text) ? "null" : $"'{txtNgayXuatHD.Text}'";
-                    SqlCommand cmd = new ("Set Dateformat dmy\n Insert into HoaDon values(@MaSP,@MaKH,@MaNV,@NgayHD,@SoLuongHD,@ThanhTien)", con,trans );                 
-                    cmd.Parameters.Add("@MaSP", System.Data.SqlDbType.VarChar);
-                    cmd.Parameters["@MaSP"].Value = cmbMaSPHD.Text;
-                    cmd.Parameters.Add("@MaKH", System.Data.SqlDbType.VarChar);
-                    cmd.Parameters["@MaKH"].Value = cmbMaKHHD.Text;
-                    cmd.Parameters.Add("@MaNV", System.Data.SqlDbType.VarChar);
-                    cmd.Parameters["@MaNV"].Value = PageChinh.getNV.MaNv;
-                    cmd.Parameters.Add("@NgayHD", System.Data.SqlDbType.SmallDateTime);
-                    cmd.Parameters["@NgayHD"].Value = txtNgayXuatHD.Text;
-                    cmd.Parameters.Add("@SoLuongHD", System.Data.SqlDbType.Int);
-                    cmd.Parameters["@SoLuongHD"].Value = txtSoLuongHD.Text;
-                    cmd.Parameters.Add("@ThanhTien", System.Data.SqlDbType.Money);
-                    cmd.Parameters["@ThanhTien"].Value = txtThanhTienHD.Text;                
-                    cmd.ExecuteNonQuery();
-
-                    cmd = new ("Select top(1) MaHD from HoaDon order by ID desc", con, trans );
-                    SqlDataReader sda = cmd.ExecuteReader();
-                    string HDMoi = "HD@";
-                    if (sda.Read())
-                    {
-                        HDMoi = (string)sda[0];
-                        sda.Close();
-                    }
                     SqlCommand cmd = new ("Set Dateformat dmy\n Insert into HoaDon values(@MaSP,@MaKH,@MaNV,@NgayHD,@SoLuongHD,@ThanhTien)", con,trans );
                     cmd.Parameters.Add("@MaSP", System.Data.SqlDbType.VarChar).Value = cmbMaSPHD.Text;
                     cmd.Parameters.Add("@MaKH", System.Data.SqlDbType.VarChar).Value = cmbMaKHHD.Text;
@@ -108,7 +85,15 @@ namespace MotoStore.Views.Pages.IOPagePages
                     cmd.Parameters.Add("@NgayHD", System.Data.SqlDbType.SmallDateTime).Value = DateTime.TryParseExact(txtNgayXuatHD.Text, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var ngayxuathd) ? ngayxuathd : DBNull.Value;
                     cmd.Parameters.Add("@SoLuongHD", System.Data.SqlDbType.Int).Value = int.Parse(txtSoLuongHD.Text);
                     cmd.Parameters.Add("@ThanhTien", System.Data.SqlDbType.Money).Value = decimal.Parse(txtThanhTienHD.Text);
-                    cmd.ExecuteNonQuery();      
+                    cmd.ExecuteNonQuery();
+                    cmd = new("Select top(1) MaHD from HoaDon order by ID desc", con, trans);
+                    SqlDataReader sda = cmd.ExecuteReader();
+                    string HDMoi = "HD@";
+                    if (sda.Read())
+                    {
+                        HDMoi = (string)sda[0];
+                        sda.Close();
+                    }
                     cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'thêm mới Hoá Đơn " + HDMoi + "')", con, trans);
                     cmd.ExecuteNonQuery();
                     trans.Commit();
