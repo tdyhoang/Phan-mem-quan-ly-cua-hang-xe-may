@@ -49,7 +49,6 @@ namespace MotoStore.Views.Pages
             };
             timer.Tick += timer_Tick;
             timer.Start();
-            //this.DataContext = this;
         }
 
         public class LichSuHoatDong
@@ -75,10 +74,6 @@ namespace MotoStore.Views.Pages
                     cbPhutKT.Items.Add(i);
                 foreach (var demngay in mdb.LenLichs.ToList())
                 {
-                    //Một tuần tới không có sự kiện gì đáng chú ý
-                    //Nếu có nhiều hơn 1 sự kiện thì Tuần này có > 1 sự kiện đáng chú ý, xem chi tiết ở lịch
-                    //Nếu chỉ có một: Nhắc Bạn: Còn n ngày, Hôm nay 
-                    //Tuần này có 3 sự kiện đáng chú ý, xem chi tiết ở Lịch
                     if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(demngay.NgLenLichBd))
                     {
                         soSuKien++;   //Vì nó là biến toàn cục nên cứ thế mà tăng 

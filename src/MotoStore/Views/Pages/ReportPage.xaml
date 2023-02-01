@@ -41,7 +41,7 @@
     <Grid Background="#151f2d">
         <Border>
             <Border x:Name="border6ThgTin"
-                    Height="500"
+                    Height="450"
                     Width="750"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
@@ -64,9 +64,9 @@
                 MouseMove="brdMHBanE_MouseMove"
                 MouseLeave="brdMHBanE_MouseLeave">
                         <Grid>
-                            <Label Content="Doanh Thu So Với&#10; Tháng  Trước"  
+                            <Label Content="Doanh Thu So Với&#10;    Tháng Trước"  
                         Foreground="Black"
-                        FontSize="20"
+                        FontSize="18"
                         FontWeight="Bold"
                         Margin="20,5,0,0">
                             </Label>
@@ -77,7 +77,7 @@
                         FontSize="18"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right"
-                        Margin="0,55,20,-15"
+                        Margin="0,55,20,0"
                         FontWeight="Bold"
                         TextWrapping="Wrap">
                             </TextBlock>
@@ -272,7 +272,7 @@
                         Width="120"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Margin="-20,0,0,20">
+                        Margin="-25,0,0,20">
                         <TextBlock.Background>
                             <ImageBrush ImageSource="/Views/Pages/Images/VIP-removebg-preview.png" 
                                     Stretch="Uniform"/>
@@ -280,7 +280,7 @@
                     </TextBlock>
                     <TextBlock x:Name="txtblThgTinKHVIP"
                            Height="90"
-                           Margin="80,35,0,0"
+                           Margin="75,35,0,0"
                            FontSize="18"
                            FontWeight="Bold"
                            TextWrapping="Wrap"/>

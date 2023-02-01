@@ -116,18 +116,16 @@ namespace MotoStore.Views.Pages
             if (Diff > 0)
             {
                 txtblThgTinMHBanE.Text = "Giảm\n" + Diff.ToString() + "$";
-                //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/IconLowSales.png"));
-            }
+                AnhMHBanE.ImageSource = new BitmapImage(new("pack://application:,,,/Views/Pages/Images/IconLowSales.png"));            }
             else if (Diff == 0)
             {
                 txtblThgTinMHBanE.Text = "Giữ Nguyên";
-                //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/stb-removebg-preview.png"));
+                AnhMHBanE.ImageSource = new BitmapImage(new("pack://application:,,,/Views/Pages/Images/stb-removebg-preview.png"));
             }
             else
             {
                 txtblThgTinMHBanE.Text = "Tăng\n" + Math.Abs(Diff).ToString() + "$";
-                //AnhMHBanE.ImageSource = new BitmapImage(new(@"pack://application:,,,/Images/highSaleIcon.png"));
-                AnhMHBanE.ImageSource = new BitmapImage(new Uri("C:\\Users\\ADMIN\\Documents\\Github\\Phan-mem-quan-ly-cua-hang-xe-may\\src\\MotoStore\\Views\\Pages\\Images\\highSaleIcon.png"));
+                AnhMHBanE.ImageSource = new BitmapImage(new("pack://application:,,,/Views/Pages/Images/highSaleIcon.png"));
             }
 
             var KhVIP = mdb.HoaDons.GroupBy(u => u.MaKh).Select(u => new { Tong = u.Sum(u => u.ThanhTien), IdKhach = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();

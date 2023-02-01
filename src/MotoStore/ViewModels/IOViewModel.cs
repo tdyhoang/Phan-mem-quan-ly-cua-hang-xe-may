@@ -24,7 +24,6 @@ namespace MotoStore.ViewModels
 
         public void OnNavigatedFrom()
         {
-            //MessageBox.Show("SIUUU FROM");
         }
     }
 }

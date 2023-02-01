@@ -29,7 +29,6 @@ namespace MotoStore.Views.Pages
             SrC = new();
             dothi.ChartLegend.Visibility = Visibility.Collapsed;
             gridChonNgay.Visibility = Visibility.Collapsed;
-            MenuTuChon.Visibility = Visibility.Collapsed;
 
             decimal[] arrDoanhThu = new decimal[1000];
             ChartValues<decimal> ListDoanhThu = new();
@@ -74,8 +73,8 @@ namespace MotoStore.Views.Pages
         {
             /*Mỗi lần nhấn menu Năm Trước này, ta sẽ clear hết các trường
               dữ liệu cũ, clear luôn thanh chọn ngày xem(Nếu có)
-              sau đó đổ lại dữ liệu vào.
-             */
+              sau đó đổ lại dữ liệu vào.*/
+
             gridChonNgay.Visibility = Visibility.Collapsed;
             lblZoomIn.Visibility = Visibility.Collapsed;
             lblNhapNam.Content = "Nhập 2 năm muốn so sánh:";
