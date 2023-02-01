@@ -189,7 +189,12 @@
                FontWeight="Medium"/>
         <ui:TextBox x:Name="txtGhiChu"
                      Margin="0,150,330,0"
-                 Height="35"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto"
+                    AcceptsReturn="True"
+                    MinLines="3"
+                    MaxLines="3"
+                 Height="100"
                  Width="240"
                  VerticalAlignment="Top" 
                  FontSize="15" FontWeight="Medium"
