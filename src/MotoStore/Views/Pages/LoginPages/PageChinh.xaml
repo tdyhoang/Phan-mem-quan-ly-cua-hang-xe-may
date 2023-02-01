@@ -61,7 +61,7 @@
                 </TextBlock.Background>
             </TextBlock>
             <TextBlock x:Name="txtSlogan"
-                       Text=" Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý"
+                       Text="Chúng tôi mang đến giải pháp tốt nhất cho nhà Quản Lý"
                        FontSize="13.15"
                        Foreground="White"
                        Margin="0,50,0,0"
