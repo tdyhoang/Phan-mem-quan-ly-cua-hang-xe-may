@@ -99,5 +99,11 @@ namespace MotoStore.Views.Windows
             }
             Close();
         }
+
+        private void UiWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+                ViewModel.VisibleChanged();
+        }
     }
 }

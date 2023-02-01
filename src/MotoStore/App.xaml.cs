@@ -48,13 +48,11 @@ namespace MotoStore
 
                 // Views and ViewModels
                 services.AddScoped<Views.Pages.DashboardPage>();
-                services.AddScoped<ViewModels.DashboardViewModel>();
                 services.AddScoped<Views.Pages.DataPage>();
                 services.AddScoped<ViewModels.DataViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
                 services.AddScoped<Views.Pages.ReportPage>();
-                services.AddScoped<ViewModels.ReportViewModel>();
                 services.AddScoped<Views.Pages.IOPage>();
                 services.AddScoped<ViewModels.IOViewModel>();
                 services.AddScoped<Views.Pages.DataPagePages.MotoListPage>();

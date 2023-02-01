@@ -13,10 +13,11 @@ namespace MotoStore.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public DataViewModel(INavigationService navigationService) => _navigationService = navigationService;
-
         [ObservableProperty]
         private ObservableCollection<INavigationControl> _navigationItems = new();
+
+        public DataViewModel(INavigationService navigationService)
+            => _navigationService = navigationService;
 
         public void OnNavigatedTo()
         {
@@ -143,8 +144,6 @@ namespace MotoStore.ViewModels
         }
 
         internal void VisibleChanged()
-        {
-            InitializeViewModel();
-        }
+            => InitializeViewModel();
     }
 }

@@ -16,7 +16,8 @@
              ResizeMode="NoResize"
              MouseDown="Window_MouseDown"
              WindowStyle="None"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             IsVisibleChanged="UiWindow_IsVisibleChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
