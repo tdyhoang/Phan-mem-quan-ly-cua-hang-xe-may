@@ -73,7 +73,7 @@ namespace MotoStore.Views.Pages.LoginPages
             else
             {
                 MainDatabase mdb = new();
-                if (!mdb.UserApps.Any(user => string.Compare(txtUsername.Text, user.UserName, StringComparison.OrdinalIgnoreCase) == 0))
+                if (!mdb.UserApps.Any(user => string.Equals(txtUsername.Text, user.UserName)))
                 {
                     lblThongBao.Content = "Tên tài khoản không tồn tại, hãy xem lại!";
                     timer.Interval = new(0, 0, 0, 0, 200);
