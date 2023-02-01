@@ -73,29 +73,65 @@
                 <helpers:TextBoxInputBehavior InputMode="DigitInput" />
             </i:Interaction.Behaviors>
         </ui:TextBox>
+        <Button x:Name="btnBack"
+                Content="Quay Lại"
+                FontSize="15"
+                FontWeight="Medium"
+                Height="35"
+                Width="90"
+                VerticalAlignment="Bottom"
+                Click="btnBack_Click"
+                Margin="120,0,0,150">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         <ui:Button x:Name="buttonXacNhanGuiMa"
                    Content="Xác Nhận"
                    FontWeight="Medium"
-                   FontSize="19"
-                   Height="40"
-                   Width="120"
-                   Margin="0,360,0,0"
+                   FontSize="15"
+                   Height="35"
+                   Width="90"
+                   Foreground="White"
+                   Margin="0,0,100,150"
+                   VerticalAlignment="Bottom"
                    Click="buttonXacNhanGuiMa_Click"
                    Background="#FF00BEFF"
-                   VerticalAlignment="Top"
                    HorizontalAlignment="Center">
                 <Button.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="19"/>
+                        <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </ui:Button>
-            <Label x:Name="lbl"
+        <ui:Button x:Name="buttonGuiLaiMa"
+                   Content="Không Nhận Được Mã?"
+                   FontWeight="Medium"
+                   FontSize="15"
+                   Height="35"
+                   Width="185"
+                   Foreground="White"
+                   Margin="0,0,0,50"
+                   VerticalAlignment="Bottom"
+                   Click="buttonGuiLaiMa_Click"
+                   Background="#FF00BEFF"
+                   HorizontalAlignment="Center">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </ui:Button>
+        <Label x:Name="lbl"
                    Height="35"
                    Width="600"
                    FontSize="20"
                    FontWeight="Medium"
                    Foreground="Red"
-                   Margin="100,340,100,27" />
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Margin="150,0,0,100" />
     </Grid>
 </ui:UiPage>

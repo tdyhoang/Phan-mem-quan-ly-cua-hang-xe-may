@@ -14,10 +14,12 @@ namespace MotoStore.Views.Pages.LoginPages
     public partial class PageGuiMa
     {
         private readonly PageChinh pgC;
-        public PageGuiMa(PageChinh pageChinh)
+        private readonly PageQuenMatKhau pgQMK;
+        public PageGuiMa(PageChinh pageChinh, PageQuenMatKhau pageQMK)
         {
             InitializeComponent();
             pgC = pageChinh;
+            pgQMK= pageQMK;
             timer.Tick += Timer_Tick;
         /*Giống như PageQuenMatKhau, dùng hàm khởi tạo cõng theo PageChinh để có thể Back về PageChinh*/
         }
@@ -55,7 +57,7 @@ namespace MotoStore.Views.Pages.LoginPages
                 con.Open();
                 if (string.IsNullOrEmpty(txtMa.Text))
                 {
-                    lbl.Content = "               Vui Lòng Nhập Mã!";
+                    lbl.Content = "                         Vui Lòng Nhập Mã!";
                     timer.Start();
                 }
                 else if (string.Equals(PageQuenMatKhau.ma.ToString("D6"), txtMa.Text))
@@ -79,7 +81,6 @@ namespace MotoStore.Views.Pages.LoginPages
                     lbl.Content = "Mật Mã Bạn Nhập Không Khớp, Hãy Kiểm Tra Lại";
                     timer.Interval = new(0, 0, 0, 0, 200);
                     timer.Start();
-                    txtMa.Clear();
                     txtMa.Focus();
                 }
             }
@@ -93,6 +94,16 @@ namespace MotoStore.Views.Pages.LoginPages
         {
             if (e.Key == System.Windows.Input.Key.Enter || e.Key == System.Windows.Input.Key.Return)
                 buttonXacNhanGuiMa_Click(sender, e);
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(pgQMK);
+        }
+
+        private void buttonGuiLaiMa_Click(object sender, RoutedEventArgs e)
+        {
+            pgQMK.GuiMail();
         }
     }
 }

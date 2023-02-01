@@ -16,11 +16,13 @@ namespace MotoStore.Views.Pages.LoginPages
     public partial class PageQuenMatKhau
     {
         static private PageChinh pgC; //Tạo biến kiểu PageChinh để có thể sử dụng trong class này
+        static private PageQuenMatKhau pgQMK;
         static public UserApp? getUser;
         public PageQuenMatKhau(PageChinh pageChinh)
         {
             InitializeComponent();
             pgC = pageChinh; //Gán biến pgC chính là tham số pageChinh được cõng theo
+            pgQMK = this;
             txtUsername.Focus();
             timer.Tick += Timer_Tick;
             //Hàm Khởi Tạo của trang QuenMatKhau có cõng theo tham số là pageChinh thuộc kiểu PageChinh
@@ -48,14 +50,14 @@ namespace MotoStore.Views.Pages.LoginPages
         }
 
         static public long ma;  //Đặt biến tĩnh để các PageGuiMa có thể truy cập*/
-        public PageGuiMa pgGM = new(pgC);
+        public PageGuiMa pgGM = new(pgC,pgQMK);
         static public string? strEmail;
         private readonly DispatcherTimer timer = new();
 
         private void buttonXacNhan_Click(object sender, RoutedEventArgs e)
         {
             dem = 0;
-            var pageGuiMa = new PageGuiMa(pgC);
+            var pageGuiMa = new PageGuiMa(pgC,this);
             if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtDoiPass.Password) || string.IsNullOrEmpty(txtXacNhanDoiPass.Password))
             {
                 lblThongBao.Content = "Vui Lòng Điền Đầy Đủ Thông Tin!";
@@ -67,8 +69,6 @@ namespace MotoStore.Views.Pages.LoginPages
                 lblThongBao.Content = "Mật Khẩu Xác Nhận Không Khớp Với Mật Khẩu Mới, Kiểm Tra Lại!";
                 timer.Interval = new(0, 0, 0, 0, 200);
                 timer.Start();
-                txtXacNhanDoiPass.Clear();
-                txtXacNhanDoiPass.Focus();
             }
             else
             {
@@ -101,7 +101,7 @@ namespace MotoStore.Views.Pages.LoginPages
             }
         }
 
-        private static void GuiMail()
+        public void GuiMail()
         {
             try
             {
@@ -113,7 +113,7 @@ namespace MotoStore.Views.Pages.LoginPages
                     Subject = "Mã Xác Nhận Thay Đổi Mật Khẩu",
                     Body = $"Mã Xác Nhận Của Bạn Là: {ma:000000}"
                 };
-                mess.To.Add(new(getUser.Email));   //Email nhận là của người Nhân Viên Quản Lý
+                mess.To.Add(new(getUser.Email));   //Email nhận là của người Nhân Viên 
                 SmtpClient smtpClient1 = new("smtp.gmail.com")
                 {
                     Port = 587,
