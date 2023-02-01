@@ -30,6 +30,7 @@ namespace MotoStore.Helpers
                 ValidationRules.None => new(true, default),
                 ValidationRules.ChucVuValidation => ChucVuValidation(value),
                 ValidationRules.DateValidation => DateValidation(value, cultureInfo),
+                ValidationRules.DecimalValidation => DecimalValidation(value),
                 ValidationRules.DiaChiValidation => DiaChiValidation(value),
                 ValidationRules.EmailValidation => EmailValidation(value),
                 ValidationRules.GhiChuValidation => GhiChuValidation(value),
@@ -71,6 +72,15 @@ namespace MotoStore.Helpers
                 return new(true, default);
             }
             return new(false, "Nhập ngày hợp lệ, có trên theo định dạng dd/MM/yyyy");
+        }
+
+        private static ValidationResult DecimalValidation(object value)
+        {
+            if (string.IsNullOrEmpty(value.ToString()))
+                return new(true, default);
+            if (decimal.TryParse(value.ToString(), out _))
+                return new(true, default);
+            return new(false, "Nhập số thập phân hợp lệ!");
         }
 
         private static ValidationResult DiaChiValidation(object value)
@@ -271,6 +281,7 @@ namespace MotoStore.Helpers
             None,
             ChucVuValidation,
             DateValidation,
+            DecimalValidation,
             DiaChiValidation,
             EmailValidation,
             GhiChuValidation,

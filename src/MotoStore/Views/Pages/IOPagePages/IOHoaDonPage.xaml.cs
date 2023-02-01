@@ -265,12 +265,5 @@ namespace MotoStore.Views.Pages.IOPagePages
                 };
             }
         }
-
-        private void txtThanhTienHD_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tbx)
-                if (tbx.Text.EndsWith('.'))
-                    tbx.Text = tbx.Text.Remove(tbx.Text.Length - 1);
-        }
     }
 }

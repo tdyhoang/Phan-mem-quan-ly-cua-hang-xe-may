@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
 
 namespace MotoStore.Helpers
 {
@@ -72,13 +73,11 @@ namespace MotoStore.Helpers
         private void AssociatedObjectPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
-            {
                 if (!IsValidInput(GetText(" ")))
                 {
                     System.Media.SystemSounds.Beep.Play();
                     e.Handled = true;
                 }
-            }
         }
 
         private void AssociatedObjectPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -157,11 +156,6 @@ namespace MotoStore.Helpers
 
         private bool CheckIsDecimal(string text)
         {
-            // Số thập phân chỉ có 1 dấu chấm
-            if (text.ToCharArray().Where(x => x == '.').Count() > 1)
-                return false;
-
-
             if (text.Contains('-'))
             {
                 if (JustPositiveDecimalInput)

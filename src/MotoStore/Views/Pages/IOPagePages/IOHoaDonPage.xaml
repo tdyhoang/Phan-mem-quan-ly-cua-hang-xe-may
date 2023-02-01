@@ -252,11 +252,24 @@
                Margin="614,216,97,183"
                FontSize="15"
                Foreground="Black"
-               FontWeight="Medium"/>
-        <ui:TextBox x:Name="txtThanhTienHD" Margin="754,209,12,0" VerticalAlignment="Top" Height="35" LostFocus="txtThanhTienHD_LostFocus">
+               FontWeight="Medium" />
+        <ui:TextBox
+            x:Name="txtThanhTienHD"
+            Margin="754,209,12,0"
+            VerticalAlignment="Top"
+            Height="35"
+            LostFocus="InputField_LostFocus"
+            Validation.ErrorTemplate="{StaticResource errormessHD}">
             <i:Interaction.Behaviors>
                 <helpers:TextBoxInputBehavior InputMode="DecimalInput" JustPositiveDecimalInput="True" />
             </i:Interaction.Behaviors>
+            <ui:TextBox.Text>
+                <Binding Path="Text" RelativeSource="{RelativeSource Self}" UpdateSourceTrigger="LostFocus">
+                    <Binding.ValidationRules>
+                        <helpers:CustomValidationRule ValidationMode="DecimalValidation" IsNullable="False" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </ui:TextBox.Text>
         </ui:TextBox>
         <Button x:Name="btnAddNewHoaDon" FontWeight="UltraBlack" Content="THÊM MỚI" Margin="100,300,0,0" VerticalAlignment="Top" Height="40" Width="100" Click="btnAddNewHoaDon_Click" FontSize="15"/>
         <ui:Button x:Name="btnRefresh" FontWeight="UltraBlack" Icon="ArrowClockwise24" Height="30" Width="40" Click="btnRefresh_Click" Margin="526,71,0,0" VerticalAlignment="Top" FontSize="15"/>
