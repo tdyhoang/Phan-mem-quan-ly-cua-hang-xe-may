@@ -15,6 +15,7 @@
 
 
     <Page.Resources>
+        <helpers:DateTimeConverter x:Key="DateTimeConverter"/>
         <ControlTemplate x:Key="errormessPBH">
             <!--errormessNCC là thông báo lỗi -->
             <Grid>

@@ -37,6 +37,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 txtThoiGian,
                 txtGhiChu
             };
+            PageRefresh();
         }
         private void PageRefresh()
         {
@@ -48,12 +49,10 @@ namespace MotoStore.Views.Pages.IOPagePages
         }
         public void RefreshHoaDon()
         {
-            //MainDatabase dtb = new();
-            //HoaDons = new(dtb.HoaDons);
-            //foreach (var khach in HoaDons.Where(hd => hd.DaXoa).ToList())
-            //    HoaDons.Remove(khach);
-            //cmbMaHD.ItemsSource = HoaDons;
-            //cmbMaHD.Text = string.Empty;
+            MainDatabase dtb = new();
+            HoaDons = new(dtb.HoaDons);
+            cmbMaHD.ItemsSource = HoaDons;
+            cmbMaHD.Text = string.Empty;
         }
 
         private void InputField_LostFocus(object sender, RoutedEventArgs e)
