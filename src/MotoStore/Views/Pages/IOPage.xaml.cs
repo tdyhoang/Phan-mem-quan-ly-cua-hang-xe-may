@@ -41,6 +41,10 @@ namespace MotoStore.Views.Pages
             IOMainFr.Content = ViewModel.iohoadonpage;
         }
 
+        private void btnAddPhieuBH_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            IOMainFr.Content = ViewModel.iophieubaohanhpage;
+        }
     }
 }
 

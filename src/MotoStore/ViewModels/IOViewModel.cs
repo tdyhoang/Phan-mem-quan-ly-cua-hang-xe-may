@@ -17,6 +17,7 @@ namespace MotoStore.ViewModels
         internal IOHoaDonPage iohoadonpage=new();
         internal IOKhachHangPage iokhachhangpage = new();
         internal IONhaSXPage ionhasxpage = new();
+        internal IOPhieuBaoHanhPage iophieubaohanhpage = new();
         public void OnNavigatedTo()
         {
               

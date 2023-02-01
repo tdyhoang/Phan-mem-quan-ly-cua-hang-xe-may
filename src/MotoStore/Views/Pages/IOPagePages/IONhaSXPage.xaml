@@ -162,7 +162,7 @@
         <ui:TextBox x:Name="txtDiaChi"
                  Margin="100,211,290,0"
                  VerticalAlignment="Top"
-                 Height="35"
+                 Height="35"              
                  Validation.ErrorTemplate="{StaticResource errormessNCC}"
                  Width="275">
             <i:Interaction.Behaviors>
@@ -187,5 +187,6 @@
                 FontSize="19"
                 Click="btnAddNewNSX_Click" 
                 Background="LightGreen"/>
+        
     </Grid>
 </Page>

@@ -59,7 +59,9 @@
 
     </Page.Resources>
     <Grid>
-        <Border Background="LightBlue" Height="580" VerticalAlignment="Center" />
+        <Border Background="LightBlue" 
+                Height="580" 
+                VerticalAlignment="Center" />
         <Label x:Name="lbMaSPHD"
                Content="Mã Sản Phẩm: " 
                Margin="35,72,664,345"
