@@ -66,7 +66,7 @@
                         </ui:Button.ContextMenu>
                     </ui:Button>
                 </StackPanel>
-                <ui:Button Content="Xuất file" Click="Export" Grid.Column="1" />
+                <ui:Button Content="Xuất excel" Click="Export" Grid.Column="1" />
             </Grid>
         </DockPanel>
 

@@ -50,7 +50,7 @@
                     <ui:Button Content="Lưu chỉnh sửa" Icon="Save24" Click="SaveToDatabase" IsVisibleChanged="UiPage_IsVisibleChanged" />
                     <ui:Button Content="Thêm dòng" Icon="Add24" Click="AddRow" IsVisibleChanged="UiPage_IsVisibleChanged" />
                 </StackPanel>
-                <ui:Button Content="Xuất file" Click="Export" Grid.Column="1" />
+                <ui:Button Content="Xuất excel" Click="Export" Grid.Column="1" />
             </Grid>
         </DockPanel>
 
