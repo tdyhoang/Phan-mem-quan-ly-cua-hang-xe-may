@@ -57,7 +57,7 @@
                                 MaxHeight="568"
                                 HorizontalScrollBarVisibility="Visible"
                                 VerticalScrollBarVisibility="Visible">
-            <ui:DataGrid Name="grdInvoice"
+            <ui:DataGrid Name="mainDataGrid"
                          HorizontalScrollBarVisibility="Disabled"
                          VerticalScrollBarVisibility="Disabled"
                          AutoGenerateColumns="False"
@@ -67,8 +67,8 @@
                          dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                          ItemsSource="{Binding Path=TableData, Mode=TwoWay}"
                          PreviewKeyDown="PreviewKeyDown"
-                         PreviewMouseWheel="grdInvoice_PreviewMouseWheel"
-                         CellEditEnding="grdInvoice_CellEditEnding">
+                         PreviewMouseWheel="mainDataGrid_PreviewMouseWheel"
+                         CellEditEnding="mainDataGrid_CellEditEnding">
 
                 <ui:DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">

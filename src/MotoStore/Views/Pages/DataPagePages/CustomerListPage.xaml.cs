@@ -36,12 +36,12 @@ namespace MotoStore.Views.Pages.DataPagePages
             TableData = new(con.KhachHangs);
             foreach (var khachHang in TableData.Where(kh => kh.DaXoa).ToList())
                 TableData.Remove(khachHang);
-            grdCustomer.ItemsSource = TableData;
+            mainDataGrid.ItemsSource = TableData;
         }
 
         private void SaveToDatabase(object sender, RoutedEventArgs e)
         {
-            if ((from c in from object i in grdCustomer.ItemsSource select grdCustomer.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
+            if ((from c in from object i in mainDataGrid.ItemsSource select mainDataGrid.ItemContainerGenerator.ContainerFromItem(i) where c != null select Validation.GetHasError(c)).FirstOrDefault(x => x))
             {
                 MessageBox.Show("Dữ liệu đang có lỗi, không thể lưu!");
                 return;
@@ -60,7 +60,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // Lý do cứ mỗi lần có cell sai là break:
                     // - Tránh trường hợp hiện MessageBox liên tục
                     // - Người dùng không thể nhớ hết các lỗi sai, mỗi lần chỉ hiện 1 lỗi sẽ dễ hơn với họ
-                    foreach (var obj in grdCustomer.Items)
+                    foreach (var obj in mainDataGrid.Items)
                     {
                         // Trường hợp gặp dòng trắng được người dùng thêm mà chưa chỉnh sửa
                         if (obj.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(string)).Select(pi => pi.GetValue(obj) as string).All(value => string.IsNullOrEmpty(value) || string.Equals(value, "Thường")))
@@ -181,7 +181,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             {
                 bool isQuanLy = string.Equals(PageChinh.getNV.ChucVu, "Quản Lý", StringComparison.OrdinalIgnoreCase);
 
-                grdCustomer.IsReadOnly = !isQuanLy;
+                mainDataGrid.IsReadOnly = !isQuanLy;
 
                 if (sender is Button button)
                     button.Visibility = isQuanLy ? Visibility.Visible : Visibility.Collapsed;
@@ -194,7 +194,7 @@ namespace MotoStore.Views.Pages.DataPagePages
             => TableData.Add(new() { LoaiKh = "Thường" });
 
         // Đẩy event mousewheel cho scrollviewer xử lý
-        private void grdCustomer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void mainDataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
             var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
@@ -237,17 +237,17 @@ namespace MotoStore.Views.Pages.DataPagePages
                     // merge các column lại từ column 1 đến số column header
                     // gán giá trị cho cell vừa merge là Danh sách khách hàng từ MotoStore
                     ws.Cells[1, 1].Value = "Danh sách khách hàng từ MotoStore";
-                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Merge = true;
+                    ws.Cells[1, 1, 1, mainDataGrid.Columns.Count].Merge = true;
                     // in đậm
-                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Style.Font.Bold = true;
+                    ws.Cells[1, 1, 1, mainDataGrid.Columns.Count].Style.Font.Bold = true;
                     // căn giữa
-                    ws.Cells[1, 1, 1, grdCustomer.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[1, 1, 1, mainDataGrid.Columns.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                     int colIndex = 1;
                     int rowIndex = 2;
 
                     //tạo các header từ column header đã tạo từ bên trên
-                    foreach (var item in grdCustomer.Columns)
+                    foreach (var item in mainDataGrid.Columns)
                     {
                         var cell = ws.Cells[rowIndex, colIndex];
 
@@ -275,7 +275,7 @@ namespace MotoStore.Views.Pages.DataPagePages
                     ObservableCollection<KhachHang> customerList = new(TableData);
 
                     // với mỗi kh trong danh sách sẽ ghi trên 1 dòng
-                    foreach (var kh in customerList.Where(kh => grdCustomer.Items.PassesFilter(kh)))
+                    foreach (var kh in customerList.Where(kh => mainDataGrid.Items.PassesFilter(kh)))
                     {
                         // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
                         colIndex = 1;

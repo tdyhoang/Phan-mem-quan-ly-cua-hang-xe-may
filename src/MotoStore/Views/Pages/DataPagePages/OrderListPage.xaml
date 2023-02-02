@@ -54,7 +54,7 @@
                                 MaxHeight="568"
                                 HorizontalScrollBarVisibility="Visible"
                                 VerticalScrollBarVisibility="Visible">
-            <ui:DataGrid Name="grdOrder"
+            <ui:DataGrid Name="mainDataGrid"
                          HorizontalScrollBarVisibility="Disabled"
                          VerticalScrollBarVisibility="Disabled"
                          AutoGenerateColumns="False"
@@ -64,7 +64,7 @@
                          dgx:DataGridFilter.StartFilteringKeyGesture="Ctrl+F"
                          ItemsSource="{Binding Path=TableData, Mode=TwoWay}"
                          PreviewKeyDown="PreviewKeyDown"
-                         PreviewMouseWheel="grdOrder_PreviewMouseWheel">
+                         PreviewMouseWheel="mainDataGrid_PreviewMouseWheel">
 
                 <ui:DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
