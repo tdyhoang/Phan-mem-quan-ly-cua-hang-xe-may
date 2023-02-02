@@ -129,49 +129,50 @@ namespace MotoStore.Views.Pages.DataPagePages
             // Kiểm tra xem key Delete có được bấm trong khi đang chỉnh sửa ô hay không
             DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(dg.SelectedIndex);
             if (e.Key == Key.Delete && !dgr.IsEditing)
-            {
-                // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
-                SqlCommand cmd;
-                using SqlConnection con = new(Settings.Default.ConnectionString);
-                try
+                if (MessageBox.Show("Bạn có chắc muốn xóa? Hành động này không thể hoàn tác!", "Xóa đơn hàng", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    con.Open();
-                    using var trans = con.BeginTransaction();
+                    // Nếu đáp ứng đủ điều kiện sẽ bắt đầu vòng lặp để xóa
+                    SqlCommand cmd;
+                    using SqlConnection con = new(Settings.Default.ConnectionString);
                     try
                     {
-                        cmd = new(" ", con, trans);
-
-                        foreach (var obj in dg.SelectedItems)
+                        con.Open();
+                        using var trans = con.BeginTransaction();
+                        try
                         {
-                            if (obj is not DonDatHang ddh)
-                                continue;
-                            // Trường hợp chưa thêm mới nên chưa có mã ddh
-                            if (string.IsNullOrEmpty(ddh.MaDdh))
-                                continue;
-                            // Xóa hàng
-                            else
-                                cmd.CommandText += $"Delete From DonDatHang Where MaDDH = '{ddh.MaDdh}';\n";
+                            cmd = new(" ", con, trans);
+
+                            foreach (var obj in dg.SelectedItems)
+                            {
+                                if (obj is not DonDatHang ddh)
+                                    continue;
+                                // Trường hợp chưa thêm mới nên chưa có mã ddh
+                                if (string.IsNullOrEmpty(ddh.MaDdh))
+                                    continue;
+                                // Xóa hàng
+                                else
+                                    cmd.CommandText += $"Delete From DonDatHang Where MaDDH = '{ddh.MaDdh}';\n";
+                            }
+                            cmd.ExecuteNonQuery();
+                            trans.Commit();
+                            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
+                            cmd.ExecuteNonQuery();
                         }
-                        cmd.ExecuteNonQuery();
-                        trans.Commit();
-                        cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DateTime.Now:dd-MM-yyyy HH:mm:ss}', N'chỉnh sửa database đơn đặt hàng')", con);
-                        cmd.ExecuteNonQuery();
+                        catch (Exception ex)
+                        {
+                            trans.Rollback();
+                            MessageBox.Show(ex.Message);
+                            // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
+                            e.Handled = true;
+                        }
                     }
                     catch (Exception ex)
                     {
-                        trans.Rollback();
                         MessageBox.Show(ex.Message);
                         // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
                         e.Handled = true;
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    // Báo đã thực hiện xong event để ngăn handler mặc định cho phím này hoạt động
-                    e.Handled = true;
-                }
-            }
         }
 
         private void RefreshView(object sender, RoutedEventArgs e)

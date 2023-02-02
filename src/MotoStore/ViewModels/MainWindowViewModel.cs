@@ -30,7 +30,7 @@ namespace MotoStore.ViewModels
                 {
                     new NavigationItem()
                     {
-                        Content = "Dashboard",
+                        Content = "Trang Đầu",
                         PageTag = "dashboard",
                         Icon = SymbolRegular.Home24,
                         PageType = typeof(Views.Pages.DashboardPage)
@@ -75,7 +75,7 @@ namespace MotoStore.ViewModels
                 {
                     new NavigationItem()
                     {
-                        Content = "Dashboard",
+                        Content = "Trang Đầu",
                         PageTag = "dashboard",
                         Icon = SymbolRegular.Home24,
                         PageType = typeof(Views.Pages.DashboardPage)

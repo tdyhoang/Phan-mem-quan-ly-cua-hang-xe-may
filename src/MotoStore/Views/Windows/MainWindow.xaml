@@ -71,7 +71,7 @@
                 </ui:Button.Resources>
             </ui:Button>
             
-            <!--  This is the main navigation of the application.  -->
+            <!--  Navigation chính của phần mềm.  -->
             <ui:NavigationStore x:Name="RootNavigation"
                                 Grid.Column="0"
                                 Margin="6,0,6,0"
@@ -79,7 +79,7 @@
                                 Frame="{Binding ElementName=RootFrame, Mode=OneWay}"
                                 Items="{Binding ViewModel.NavigationItems, Mode=TwoWay}" />
 
-            <!--  We display our pages inside this element.  -->
+            <!--  Các trang sẽ hiện trong border này.  -->
             <Border Grid.Column="1" CornerRadius="8,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -107,8 +107,5 @@
                 </Grid>
             </Border>
         </Grid>
-        <!--  The title bar contains window navigation elements and some Tray related extras.  -->
-        <!--  You can put additional controls in the header, such as a search bar.  -->
-        <!--  <ui:TitleBar.Header />  -->
     </Grid>
 </ui:UiWindow>
