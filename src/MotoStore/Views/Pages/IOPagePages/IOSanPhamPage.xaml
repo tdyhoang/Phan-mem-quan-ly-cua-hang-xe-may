@@ -241,7 +241,8 @@
                 HorizontalAlignment="Right"
                 Grid.Row="0"
                 Margin="0,11,0,0"
-                Visibility="Visible"></Button>
+                Visibility="Visible"
+                ToolTip="Hãy Chọn Điều Kiện Lọc, Nhập Giá Trị và Bấm Tìm"></Button>
         <Button x:Name="btnAddNewPageSP"
                 Content="Thêm Mới"
                 FontSize="19"

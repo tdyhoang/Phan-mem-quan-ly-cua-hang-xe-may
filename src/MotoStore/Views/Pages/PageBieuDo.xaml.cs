@@ -62,7 +62,7 @@ namespace MotoStore.Views.Pages
         public SeriesCollection SrC { get; set; }   
         public List<string> Labels { get; set; }
 
-        public Func<decimal,string>Values { get; set; }
+        public Func<decimal,string> Values { get; set; }
         
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
