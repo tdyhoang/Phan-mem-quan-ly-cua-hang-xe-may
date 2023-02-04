@@ -197,6 +197,7 @@ namespace MotoStore.Views.Windows
             {
                 anhSP.Source = mathang.Item2;
             }
+            txtMoTa.Text = mathang.Item1.MoTa;
             DataContext = this;
             isEdited = false;
         }

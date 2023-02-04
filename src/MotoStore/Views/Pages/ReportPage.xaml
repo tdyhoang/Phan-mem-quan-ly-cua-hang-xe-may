@@ -7,7 +7,8 @@
       xmlns:livechart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ReportPage">
+      Title="ReportPage"
+      Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="Template">
@@ -60,9 +61,7 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Margin="30,0,0,80"
-                Background="BlueViolet"
-                MouseMove="brdMHBanE_MouseMove"
-                MouseLeave="brdMHBanE_MouseLeave">
+                Background="BlueViolet">
                         <Grid>
                             <Label Content="Doanh Thu So Với&#10;    Tháng Trước"  
                         Foreground="Black"
@@ -101,9 +100,7 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     Margin="30"
-                    Background="NavajoWhite"
-                    MouseMove="brdMHBanChay_MouseMove"
-                    MouseLeave="brdMHBanChay_MouseLeave">
+                    Background="NavajoWhite">
                         <Grid>
                             <Label Content="Mặt Hàng Bán Chạy Nhất"
                        Foreground="Black"
@@ -111,10 +108,20 @@
                        FontWeight="Bold"
                        Margin="5,15,0,0"></Label>
 
+                            <Button x:Name="btnNextMHBanChay"
+                                    Height="20"
+                                    Width="30"
+                                    Content=">"
+                                    FontSize="15"
+                                    FontWeight="Medium"
+                                    VerticalAlignment="Top"
+                                    Click="btnNextMHBanChay_Click">
+                            </Button>
+                            
                             <TextBlock x:Name="txtblThgTinMHBanChay"
                            Height="75"
                            Margin="0,25,0,0"
-                           FontSize="19"
+                           FontSize="18"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"
                            FontWeight="Bold"
@@ -123,7 +130,8 @@
                             <TextBlock Height="125"
                                        Width="80"
                                        VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Left">
+                                       HorizontalAlignment="Left"
+                                       Margin="-10,0,0,0">
                                 <TextBlock.Background>
                                     <ImageBrush ImageSource="/Views/Pages/Images/IconTOP.png" 
                                     Stretch="Uniform"/>
@@ -138,15 +146,22 @@
              Width="200"
              VerticalAlignment="Top"   
              Margin="30"
-             Background="WhiteSmoke"
-             MouseMove="brdNVNgSuat_MouseMove"
-             MouseLeave="brdNVNgSuat_MouseLeave">
+             Background="WhiteSmoke">
                 <Grid>
                     <Label Content="Nhân Viên Năng Suất Nhất"
                        Foreground="Black"
                        FontSize="15"
                        FontWeight="Bold"
-                       Margin="5,10,0,0"></Label>
+                       Margin="5,20,0,0"></Label>
+                            <Button x:Name="btnNextNV"
+                                    Content=">"
+                                    Height="20"
+                                    Width="30"
+                                    FontSize="18"
+                                    FontWeight="Medium"
+                                    VerticalAlignment="Top"
+                                    Click="btnNextNV_Click">
+                            </Button>
                     <TextBlock
                         x:Name="txtblAnh"
                         FontWeight="Medium"
@@ -177,9 +192,7 @@
             VerticalAlignment="Top"
             HorizontalAlignment="Right"
             Margin="30"
-            Background="LightSkyBlue"
-            MouseMove="brdSoXeBanDcThgNay_MouseMove"
-            MouseLeave="brdSoXeBanDcThgNay_MouseLeave">
+            Background="LightSkyBlue">
                 <Grid>
                     <Label Content="Số Xe Bán Được Tháng Này"
                        Foreground="Black"
@@ -216,9 +229,7 @@
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right"
             Margin="0,0,30,80"
-            Background="LightGreen"
-            MouseMove="brdDoanhThuThgNay_MouseMove"
-            MouseLeave="brdDoanhThuThgNay_MouseLeave">
+            Background="LightGreen">
                 <Grid>
                     <Label Content="  Doanh Thu Tháng Này"
                        Foreground="Black"
@@ -255,16 +266,23 @@
             Width="200"
             VerticalAlignment="Bottom"
             Margin="0,0,0,80"
-            Background="LightPink"
-            MouseMove="brdKHVIP_MouseMove"
-            MouseLeave="brdKHVIP_MouseLeave">
+            Background="LightPink">
                 <Grid>
                     <Label Content="Khách Hàng Chi Nhiều Nhất"
                        Foreground="Black"
                        FontSize="15"
                        FontWeight="Bold"
-                       Margin="0,15,0,0"></Label>
-                    <TextBlock
+                       Margin="0,20,0,0"></Label>
+                            <Button x:Name="btnNextKH"
+                                    Content=">"
+                                    Height="20"
+                                    Width="30"
+                                    FontSize="18"
+                                    FontWeight="Medium"
+                                    VerticalAlignment="Top"
+                                    Click="btnNextKH_Click">
+                            </Button>
+                            <TextBlock
                         x:Name="txtblVip"
                         FontWeight="Medium"
                         FontSize="20"
