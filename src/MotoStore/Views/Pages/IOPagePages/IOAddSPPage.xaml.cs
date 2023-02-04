@@ -13,6 +13,8 @@ using MotoStore.Views.Pages.LoginPages;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Security.Cryptography;
 using MotoStore.Helpers;
+using MotoStore.Properties;
+using System.IO;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -28,6 +30,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             DataContext = this;
         }
         internal ObservableCollection<NhaCungCap> nhaCungCaps;
+        private string? fileAnh = null;
 
         public void RefreshMatHang()
         {
@@ -50,6 +53,7 @@ namespace MotoStore.Views.Pages.IOPagePages
             {
                 Uri fileUri = new(OFD.FileName);
                 ImageSP.Source = new BitmapImage(fileUri);
+                fileAnh = OFD.FileName;
             }
         }   
 
@@ -59,6 +63,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                 MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
             else
             {
+                using SqlConnection con = new(Settings.Default.ConnectionString);
                 con.Open();
                 try 
                 {
@@ -79,6 +84,8 @@ namespace MotoStore.Views.Pages.IOPagePages
                     DateTime dt = DateTime.Now;
                     cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mới Mặt Hàng " + MHMoi + " ')", con);
                     cmd.ExecuteNonQuery();
+                    if (fileAnh is not null)
+                        File.Copy(fileAnh, Path.Combine(Settings.Default.ProductFilePath, MHMoi));
                     MessageBox.Show("Thêm mới dữ liệu thành công");
                     PageRefresh();
                 }

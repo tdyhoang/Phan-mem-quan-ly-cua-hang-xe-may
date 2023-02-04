@@ -522,7 +522,6 @@ namespace MotoStore.Views.Pages
                         }
                     // File đích là tên file + đuôi file của ảnh được chọn
                     File.Copy(OFD.FileName, genericFilePath + Path.GetExtension(OFD.FileName));
-
                     anhNhanVien.ImageSource = BitmapConverter.FilePathToBitmapImage(genericFilePath + Path.GetExtension(OFD.FileName));
 
                     GC.Collect();

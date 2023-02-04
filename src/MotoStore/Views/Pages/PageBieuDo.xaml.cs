@@ -35,7 +35,6 @@ namespace MotoStore.Views.Pages
             using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             con.Open();
             //Nên đổi doanh thu Tháng Này thành doanh thu 30 ngày gần nhất
-            //để lúc nào nó cũng luôn có dữ liệu
             string lastdate = DateTime.Today.AddDays(-30.0).ToString("dd/MM/yyyy");
             for (DateTime date = DateTime.Today.AddDays(-29.0); date < DateTime.Now; date = date.AddDays(1.0))
             {
@@ -117,8 +116,10 @@ namespace MotoStore.Views.Pages
                 MessageBox.Show("Vui Lòng Nhập Đầy Đủ 2 Ngày");
             else if (isValidDate(txtTuNgay.Text) == false || isValidDate(txtDenNgay.Text) == false)
                 MessageBox.Show("Dữ liệu đầu vào có chứa ngày Không Hợp Lệ\nVui lòng kiểm tra lại!");
-            else if(DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
+            else if (DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) >= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture))
                 MessageBox.Show("Từ Ngày không được phép lớn hơn hoặc bằng Đến Ngày, Hãy Nhập Lại!");
+            else if ((DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture) - DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture)).TotalDays > 365)
+                MessageBox.Show("Phiên bản hiện tại chỉ cho phép khoảng thời gian xem không quá 1 năm, vui lòng nhập lại!");
             else //Thoả mãn hết các điều kiện => được phép xem 
             {
                 lblSeries.Content = "         Ngày";
