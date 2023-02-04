@@ -22,8 +22,6 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class ReportPage : Page
     {
-        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
-        private readonly MainDatabase mdb = new();
         static private int SoLgXeBanChay;
         static private int SoLgBanXeNVNgSuat;
 
@@ -48,11 +46,12 @@ namespace MotoStore.Views.Pages
         public ReportPage()
         {
             InitializeComponent();
-            //Refresh();
+            Refresh();
         }
 
         private void Refresh()
         {
+            MainDatabase mdb = new();
             /*Tìm Tên Xe Bán Chạy Nhất trên SQL:
             SELECT TENMH
             FROM MATHANG 
@@ -213,7 +212,6 @@ namespace MotoStore.Views.Pages
                 txtblThgTinMHBanE.Text = "Tăng\n" + string.Format("{0:C}", Math.Abs(Diff));
                 AnhMHBanE.ImageSource = new BitmapImage(new("pack://application:,,,/Views/Pages/Images/highSaleIcon.png"));
             }
-
         }
 
         private void btnBieuDo_Click(object sender, RoutedEventArgs e)

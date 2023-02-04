@@ -12,6 +12,7 @@ using System.Linq;
 using MotoStore.Views.Pages.LoginPages;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Security.Cryptography;
+using MotoStore.Helpers;
 
 namespace MotoStore.Views.Pages.IOPagePages
 {
@@ -26,8 +27,6 @@ namespace MotoStore.Views.Pages.IOPagePages
             RefreshMatHang();
             DataContext = this;
         }
-        private readonly MainDatabase mdb = new();
-        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         internal ObservableCollection<NhaCungCap> nhaCungCaps;
 
         public void RefreshMatHang()
@@ -48,33 +47,38 @@ namespace MotoStore.Views.Pages.IOPagePages
             CommonOpenFileDialog OFD = new();
             OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
             if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                Uri fileUri = new(OFD.FileName);
-                ImageSP.Source = new BitmapImage(fileUri);
-            }
+                ImageSP.Source = BitmapConverter.FilePathToBitmapImage(OFD.FileName);
         }
        
 
         private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
             SqlCommand cmd;
-            if (string.IsNullOrWhiteSpace(txtTenSP.Text)|| string.IsNullOrEmpty(txtGiaNhapSP.Text)|| string.IsNullOrWhiteSpace(txtXuatXuSP.Text)|| string.IsNullOrEmpty(txtPhanKhoiSP.Text)|| string.IsNullOrWhiteSpace(cmbMaNCC.Text))
-                MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
-            else
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+            try
             {
-                con.Open();
-                cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
-                cmd.ExecuteNonQuery();
-                cmd = new SqlCommand("Select top(1) MaMH from MatHang order by ID desc", con);
-                SqlDataReader sda = cmd.ExecuteReader();
-                string MHMoi = "MH@";
-                if (sda.Read())
-                    MHMoi = (string)sda[0];
-                DateTime dt = DateTime.Now;
-                cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mới Mặt Hàng " + MHMoi + " ')", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show("Thêm mới dữ liệu thành công");
+                if (string.IsNullOrWhiteSpace(txtTenSP.Text) || string.IsNullOrEmpty(txtGiaNhapSP.Text) || string.IsNullOrWhiteSpace(txtXuatXuSP.Text) || string.IsNullOrEmpty(txtPhanKhoiSP.Text) || string.IsNullOrWhiteSpace(cmbMaNCC.Text))
+                    MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
+                else
+                {
+                    con.Open();
+                    cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
+                    cmd.ExecuteNonQuery();
+                    cmd = new SqlCommand("Select top(1) MaMH from MatHang order by ID desc", con);
+                    SqlDataReader sda = cmd.ExecuteReader();
+                    string MHMoi = "MH@";
+                    if (sda.Read())
+                        MHMoi = (string)sda[0];
+                    DateTime dt = DateTime.Now;
+                    cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mới Mặt Hàng " + MHMoi + " ')", con);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    MessageBox.Show("Thêm mới dữ liệu thành công");
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 

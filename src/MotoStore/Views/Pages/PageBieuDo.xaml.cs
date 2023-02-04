@@ -19,8 +19,6 @@ namespace MotoStore.Views.Pages
     /// </summary>
     public partial class PageBieuDo : Page
     {
-        private readonly MainDatabase mdb = new();
-        private readonly SqlConnection con = new(Properties.Settings.Default.ConnectionString);
         private int luachon;
         private static bool CanClick = true;
         public PageBieuDo()
@@ -30,9 +28,11 @@ namespace MotoStore.Views.Pages
             dothi.ChartLegend.Visibility = Visibility.Collapsed;
             gridChonNgay.Visibility = Visibility.Collapsed;
 
+            MainDatabase mdb = new();
             decimal[] arrDoanhThu = new decimal[1000];
             ChartValues<decimal> ListDoanhThu = new();
             Labels = new();
+            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
             con.Open();
             //Nên đổi doanh thu Tháng Này thành doanh thu 30 ngày gần nhất
             //để lúc nào nó cũng luôn có dữ liệu
@@ -51,8 +51,7 @@ namespace MotoStore.Views.Pages
                 Stroke = Brushes.White,
                 StrokeThickness=2,
                 Fill = null
-            }); 
-            con.Close();  
+            });
             Values = value => value.ToString("N");
             dothi.AxisY[0].MinValue = 0;
             DataContext = this;
@@ -136,15 +135,16 @@ namespace MotoStore.Views.Pages
                 dothi.Pan = PanningOptions.X;  //Cho phép Lia trục hoành
                 dothi.FontSize = 15;
                 TrucHoanhX.FontSize = 12;
-                con.Open();
 
+                MainDatabase mdb = new();
+                using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
+                con.Open();
                 for (DateTime date = DateTime.ParseExact(txtTuNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture); date <= DateTime.ParseExact(txtDenNgay.Text, "d/M/yyyy", CultureInfo.InvariantCulture); date = date.AddDays(1.0))
                 {
                     decimal money = mdb.HoaDons.Where(u => u.NgayLapHd == date).Select(u => u.ThanhTien).Sum();
                     ChartVal.Add(money);
                     Labels.Add(date.ToString("d-M-yyyy"));
                 }
-                con.Close();
                 SrC.Add(new LineSeries
                 {
                     Title = "VNĐ",
@@ -241,6 +241,7 @@ namespace MotoStore.Views.Pages
                     dothi.Pan = PanningOptions.None;  //Không cho Pan(Lia đồ thị)
                     TrucHoanhX.Separator.Step = 1; //Set step Trục hoành = 1 để nhìn rõ 12 Tháng
 
+                    MainDatabase mdb = new();
                     decimal[] arrVal2 = new decimal[12];
                     decimal[] arrVal1 = new decimal[12];
                     decimal maxVal = 0;
@@ -324,6 +325,7 @@ namespace MotoStore.Views.Pages
                     dothi.Pan = PanningOptions.None;
                     TrucHoanhX.Separator.Step = 1;
 
+                    MainDatabase mdb = new();
                     decimal[] arrVal2 = new decimal[12];
                     decimal[] arrVal1 = new decimal[12];
                     decimal[] arrVal0 = new decimal[12];

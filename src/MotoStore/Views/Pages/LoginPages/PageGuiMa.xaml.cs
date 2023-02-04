@@ -98,7 +98,7 @@ namespace MotoStore.Views.Pages.LoginPages
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(pgQMK);
+            NavigationService.Navigate(pgQMK);
         }
 
         private void buttonGuiLaiMa_Click(object sender, RoutedEventArgs e)

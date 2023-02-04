@@ -196,10 +196,6 @@ namespace MotoStore.Views.Pages
             {
                 DashboardPage_Initialize();
             }
-            else
-            {
-                // Collapse code here, Ứng dụng bị ẩn                
-            }
 
             /*Hàm này nghĩa là mỗi lần Đăng Xuất sẽ ẩn Ứng dụng đi,
               chỉ hiện Form Đăng Nhập, cứ mỗi lần đăng nhập đúng TK, MK
@@ -443,9 +439,9 @@ namespace MotoStore.Views.Pages
             MainDatabase mdb = new();
             var seperatedHoTenNV = PageChinh.getNV.HoTenNv.Split(' ');
             var tenNV = seperatedHoTenNV[^1];
-            var filename = Settings.Default.AvatarFilePath + PageChinh.getNV.MaNv;
-            List<string> filepaths = new() { $"{filename}.png", $"{filename}.jpg", $"{filename}.jpeg" };
             //2 dòng trên lấy tên nhân viên và gán nó cho biến getTen (VD: Phan Tấn Trung => getTen = Trung)
+            var filename = Path.Combine(Settings.Default.AvatarFilePath, PageChinh.getNV.MaNv);
+            List<string> filepaths = new() { $"{filename}.png", $"{filename}.jpg", $"{filename}.jpeg" };
 
             if (PageChinh.getNV.GioiTinh == "Nữ")
                 anhNhanVien.ImageSource = new BitmapImage(new("pack://application:,,,/Avatars/userNu.png"));
@@ -505,7 +501,7 @@ namespace MotoStore.Views.Pages
             //sau If sẽ hiện lỗi messagebox
             //string backupFile = @$"/Avatars/{PageChinh.getNV.MaNv}.BackUp";
             //string genericFilePath = @$"/Avatars/{PageChinh.getNV.MaNv}";
-            string genericFilePath = Settings.Default.AvatarFilePath + PageChinh.getNV.MaNv;
+            string genericFilePath = Path.Combine(Settings.Default.AvatarFilePath, PageChinh.getNV.MaNv);
             // Tên của ảnh cũ có thể thuộc 1 trong 3 đuôi file này
             List<string> possiblePathsToOldFile = new() { $"{genericFilePath}.png", $"{genericFilePath}.jpg", $"{genericFilePath}.jpeg" };
             // Lấy tên của ảnh cũ (nhằm backup lại khi copy file thất bại)

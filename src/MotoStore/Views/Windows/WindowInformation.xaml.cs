@@ -23,20 +23,15 @@ namespace MotoStore.Views.Windows
     /// </summary>
     public partial class WindowInformation : Window
     {
-        private readonly SqlConnection con = new(Settings.Default.ConnectionString);
         static internal Tuple<MatHang, BitmapImage?> mathang;
         static bool isEdited = false;
 
-        private List<string> ListAnhSP = new();
-        private IOSanPhamPage IOSPpg = new();
-        private string destFile;
-        private string newPathToFile;
         private string? OFDFileName = null;
         private int loaiWD = 0;  //Phân Biệt loại WD
 
 
         //private static int index = 0; //Dùng cho Trang Biểu Đồ
-        List<string> listMaMH = new ();
+        List<string> listMaMH = new();
         List<string> listTenMH = new();
         List<string> listMaHD = new();
         List<string> listMaKH = new();
@@ -67,9 +62,8 @@ namespace MotoStore.Views.Windows
             txtTonKho.IsReadOnly = true;
             lblHangSanXuat.Content = "Nhân Viên Bán Hàng:";
             lblXX.Content = "Tên Nhân Viên:";
-            MainDatabase mdb = new();
-            SqlConnection con = new(Settings.Default.ConnectionString);
 
+            using SqlConnection con = new(Settings.Default.ConnectionString);
             con.Open();
             SqlCommand cmdSoSP = new("Select Count(*) from HoaDon where NgayLapHD = @Today", con);
             cmdSoSP.Parameters.Add("@Today", System.Data.SqlDbType.SmallDateTime);
@@ -160,8 +154,6 @@ namespace MotoStore.Views.Windows
                     if (sdaTenNV[0] != DBNull.Value)
                         listTenNV.Add((string)sdaTenNV[0]);
                 lblXuatXu.Content = listTenNV[0];
-
-                con.Close();
                 anhSP.Source = BitmapConverter.FilePathToBitmapImage(Path.Combine(Settings.Default.ProductFilePath, listMaMH[0]));
                 index = 0; //Cứ mỗi lần khởi tạo WI biểu đồ thì sẽ gán index = 0 để tránh lỗi index was out of range
             }
@@ -302,6 +294,7 @@ namespace MotoStore.Views.Windows
                         {
                             MainDatabase mdb = new();
                             SqlCommand cmd;
+                            using SqlConnection con = new(Settings.Default.ConnectionString);
                             con.Open();
                             cmd = new SqlCommand("Update MatHang\r\nset GiaBanMH=" + txtGiaBan.Text + ",Mau=N'" + txtMau.Text + "', SoLuongTonKho=" + txtTonKho.Text + " where MaMH='" + mathang.Item1.MaMh + "'", con);
                             cmd.ExecuteNonQuery();
@@ -332,7 +325,7 @@ namespace MotoStore.Views.Windows
                                 File.Delete(destFile); //Xoá file tạm đi
                             }
                             MessageBox.Show("Cập Nhật Dữ Liệu Thành Công!");
-                            this.Close();
+                            Close();
                         }
                         catch (Exception ex)
                         {
