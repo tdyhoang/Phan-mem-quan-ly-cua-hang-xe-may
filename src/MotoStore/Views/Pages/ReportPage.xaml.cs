@@ -59,6 +59,9 @@ namespace MotoStore.Views.Pages
             SELECT TENMH
             FROM MATHANG 
             WHERE MaMH = (SELECT TOP(1) MaMH FROM HOADON Group by MaMH Order by SUM(SoLuong) DESC)*/
+            index = 0;
+            indexNV = 0;
+            indexKH = 0;
             ListMaMH = new();
             ListSoLgBanRaTungXe = new();
             ListMaMHBanChay = new();
@@ -109,9 +112,8 @@ namespace MotoStore.Views.Pages
             var NVNgSuat = mdb.HoaDons.GroupBy(u => u.MaNv).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdNv = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
             SoLgBanXeNVNgSuat = NVNgSuat.Tong;
             foreach (var nv in mdb.NhanViens.ToList())
-                if (nv.ChucVu.ToLower() == "quản lý" || nv.ChucVu.ToLower() == "văn phòng")
-                    ListMaNV.Add(nv.MaNv);
-            for(int i=0;i<ListMaNV.Count;i++)
+                ListMaNV.Add(nv.MaNv);
+            for (int i=0;i<ListMaNV.Count;i++)
             {
                 ListSoLgBanRaTungNV.Add(0);
                 foreach (var nv in mdb.HoaDons.ToList())

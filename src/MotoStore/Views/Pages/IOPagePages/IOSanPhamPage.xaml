@@ -115,20 +115,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Margin="250,9,0,0"
-                ToolTip="Làm Mới Dữ Liệu Hiển Thị"></Button>
-        <Button x:Name="btnsiu"
-                Height="25"
-                Width="35"
-                FontSize="15"
-                FontWeight="Medium"
-                Content="?"
-                Click="btnLamMoi_Click"
-                Grid.Row="0"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Margin="200,15,0,0"
-                ToolTip="Bộ Lọc Có Thể Lọc 1 Trong 3 Thuộc Tính: Mã, Tên và Màu Mặt Hàng">
-        </Button>
+                ToolTip="Làm Mới Dữ Liệu Hiển Thị" />
         <Label Content="Lọc"
                FontSize="19"
                FontWeight="Medium"
@@ -145,7 +132,8 @@
                  TextChanged="txtTimKiem_TextChanged" 
                  Grid.Row="0" 
                  VerticalAlignment="Top"
-                 Margin="0,9,100,0"></TextBox>
+                 Margin="0,9,100,0"
+                 ToolTip="Bộ Lọc Có Thể Lọc 1 Trong 3 Thuộc Tính: Mã, Tên và Màu Mặt Hàng" />
         <Menu x:Name="menuLoc"
               Height="36"
               Width="100"

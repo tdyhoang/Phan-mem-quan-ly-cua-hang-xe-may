@@ -2,8 +2,6 @@
 CREATE DATABASE QLYCHBANXEMAY
 GO
 
-select top(10) mamh, sum(soluong) from HoaDon group by MaMH order by sum(soluong) desc
-
 use QLYCHBANXEMAY
 set dateformat dmy
 
@@ -291,5 +289,3 @@ Create Table LichSuHoatDong
 	CONSTRAINT PK_LshdID primary key(LshdID)
 )
 alter table LichSuHoatDong add constraint FKLSHD_MaNV foreign key(MaNV) references NhanVien(MaNV)
-
-Select top(1) MaMH from MatHang order by ID desc

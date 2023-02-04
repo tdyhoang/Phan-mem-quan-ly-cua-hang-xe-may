@@ -40,7 +40,7 @@ namespace MotoStore.Views.Pages
             {
                 decimal money = mdb.HoaDons.Where(u => u.NgayLapHd == date).Select(u => u.ThanhTien).Sum();
                 ListDoanhThu.Add(money);
-                Labels.Add(date.ToString("d-M-yyyy"));
+                Labels.Add(date.ToString("d/M/yyyy"));
             }
                     
             SrC.Add(new LineSeries
@@ -144,7 +144,7 @@ namespace MotoStore.Views.Pages
                 {
                     decimal money = mdb.HoaDons.Where(u => u.NgayLapHd == date).Select(u => u.ThanhTien).Sum();
                     ChartVal.Add(money);
-                    Labels.Add(date.ToString("d-M-yyyy"));
+                    Labels.Add(date.ToString("d/M/yyyy"));
                 }
                 SrC.Add(new LineSeries
                 {
