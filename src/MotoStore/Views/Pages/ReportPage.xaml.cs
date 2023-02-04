@@ -174,36 +174,26 @@ namespace MotoStore.Views.Pages
             if (ListMaKHVip.Count > 0)
                 txtblThgTinKHVIP.Text = $"{ListTenKHVip[0]}\nMã Khách Hàng: {ListMaKHVip[0]}";
 
-            string StartDate = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
-            string EndDate;
-            if (DateTime.Now.Month == 12)
-            {
-                int namsau = DateTime.Now.Year + 1;
-                EndDate = "1/" + 1 + "/" + namsau;
-            }
-            else
-            {
-                int thangsau = DateTime.Now.Month + 1;
-                EndDate = "1/" + thangsau + "/" + DateTime.Now.Year;
-            }
+            DateTime StartDate = new(DateTime.Today.Year, DateTime.Today.Month, 1);
+            DateTime EndDate = DateTime.Today;
 
             int soxebandc;
-            soxebandc = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDate, "d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd < DateTime.ParseExact(EndDate, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.SoLuong).Sum();
+            soxebandc = mdb.HoaDons.Where(u => u.NgayLapHd >= StartDate && u.NgayLapHd < EndDate).Select(u => u.SoLuong).Sum();
             txtblThgTinSoXeBanDc.Text = soxebandc.ToString();
 
             decimal sotien;
-            sotien = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDate, "d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd < DateTime.ParseExact(EndDate, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.ThanhTien).Sum();
+            sotien = mdb.HoaDons.Where(u => u.NgayLapHd >= StartDate && u.NgayLapHd < EndDate).Select(u => u.ThanhTien).Sum();
             txtblDoanhThu.Text = string.Format("{0:C}", sotien);
 
-            int prevMonth = DateTime.Now.AddMonths(-1).Month;
-            int Year = DateTime.Now.Year;
+            int prevMonth = DateTime.Today.AddMonths(-1).Month;
+            int Year = DateTime.Today.Year;
             decimal DTThgTrc = 0;
             if (prevMonth == 12)
                 Year -= 1;
-            string StartDateThangTrc = "1/" + prevMonth + "/" + Year;
-            string EndDateThangTrc = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+            DateTime StartDateThangTrc = new(Year, prevMonth, 1);
+            DateTime EndDateThangTrc = new(Year, prevMonth, DateTime.DaysInMonth(Year, prevMonth));
 
-            DTThgTrc = mdb.HoaDons.Where(u => u.NgayLapHd >= DateTime.ParseExact(StartDateThangTrc, "d/M/yyyy", CultureInfo.InvariantCulture) && u.NgayLapHd < DateTime.ParseExact(EndDateThangTrc, "d/M/yyyy", CultureInfo.InvariantCulture)).Select(u => u.ThanhTien).Sum();
+            DTThgTrc = mdb.HoaDons.Where(u => u.NgayLapHd >= StartDateThangTrc && u.NgayLapHd < EndDateThangTrc).Select(u => u.ThanhTien).Sum();
             decimal Diff = DTThgTrc - sotien;
             if (Diff > 0)
             {
