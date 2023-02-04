@@ -25,28 +25,31 @@ namespace MotoStore.Views.Pages
         static private int SoLgXeBanChay;
         static private int SoLgBanXeNVNgSuat;
 
+        //4 dòng dưới phục vụ cho việc tìm NHỮNG mặt hàng bán chạy (cùng số lượng bán ra và số lượng bán ra cao nhất)
         private List<string> ListMaMH;
         private List<int> ListSoLgBanRaTungXe;
         private List<string> ListMaMHBanChay;
         private List<string> ListTenMHBanChay;
 
+        //4 dòng dưới phục vụ cho việc tìm NHỮNG Nhân Viên năng suất
         private List<string> ListMaNV;
         private List<int> ListSoLgBanRaTungNV;
         private List<string> ListMaNVNgSuat;
         private List<string> ListTenNVNgSuat;
 
+        //4 dòng dưới phục vụ cho việc tìm NHỮNG KH VIP
         private List<string> ListMaKH;
         private List<decimal> ListSoTienBoRaTungKH;
         private List<string> ListMaKHVip;
         private List<string> ListTenKHVip;
 
-        static private int index = 0;
-        static private int indexNV = 0;
-        static private int indexKH = 0;
+        static private int index = 0; //của MH Bán chạy
+        static private int indexNV = 0; //của NV NgSuat
+        static private int indexKH = 0; //Của Khách VIP
+
         public ReportPage()
         {
             InitializeComponent();
-            Refresh();
         }
 
         private void Refresh()
@@ -60,9 +63,12 @@ namespace MotoStore.Views.Pages
             ListSoLgBanRaTungXe = new();
             ListMaMHBanChay = new();
             ListTenMHBanChay = new();
+            index = 0;
+            indexNV = 0;
+            indexKH = 0;
 
             var XeBanChay = mdb.HoaDons.GroupBy(u => u.MaMh).Select(u => new { Tong = u.Sum(u => u.SoLuong), IdXe = u.Key }).OrderByDescending(u => u.Tong).FirstOrDefault();
-            SoLgXeBanChay = XeBanChay.Tong; //Tìm số lượng xe của sp bán chạy nhất
+            SoLgXeBanChay = XeBanChay.Tong; //Tìm số lượng bán ra của sp bán chạy nhất
 
             foreach (var xe in mdb.MatHangs.ToList())
                 ListMaMH.Add(xe.MaMh); //Tạo List Mã MH, add từng mặt hàng vào List
@@ -72,7 +78,7 @@ namespace MotoStore.Views.Pages
                 ListSoLgBanRaTungXe.Add(0);
                 foreach (var xe in mdb.HoaDons.ToList())
                 {
-                    if (xe.MaMh == ListMaMH[i]) //listma[0] tương ứng với listsolgbanra[0]
+                    if (xe.MaMh == ListMaMH[i]) //listmamh[i] tương ứng với listsolgbanra[i]
                         ListSoLgBanRaTungXe[i] += xe.SoLuong;
                 }
                 //Tìm số lượng bán ra mỗi xe
@@ -237,37 +243,46 @@ namespace MotoStore.Views.Pages
 
         private void btnNextMHBanChay_Click(object sender, RoutedEventArgs e)
         {
-            index++;
-            if (index < ListMaMHBanChay.Count)
-                txtblThgTinMHBanChay.Text = $"{ListTenMHBanChay[index]}\nMã Mặt Hàng:\n{ListMaMHBanChay[index]}";
-            else
+            if(ListMaMHBanChay.Count>0) //Nếu có tồn tại sản phẩm bán chạy, 0 thì 0 hiện gì cả
             {
-                index = 0;
-                txtblThgTinMHBanChay.Text = $"{ListTenMHBanChay[index]}\nMã Mặt Hàng:\n{ListMaMHBanChay[index]}";
+                index++;
+                if (index < ListMaMHBanChay.Count)
+                    txtblThgTinMHBanChay.Text = $"{ListTenMHBanChay[index]}\nMã Mặt Hàng:\n{ListMaMHBanChay[index]}";
+                else
+                {
+                    index = 0;
+                    txtblThgTinMHBanChay.Text = $"{ListTenMHBanChay[index]}\nMã Mặt Hàng:\n{ListMaMHBanChay[index]}";
+                }
             }
         }
 
         private void btnNextNV_Click(object sender, RoutedEventArgs e)
         {
-            indexNV++;
-            if (indexNV < ListMaNVNgSuat.Count)
-                txtblThgTinNVNgSuat.Text = $"{ListTenNVNgSuat[indexNV]}\nMã Nhân Viên:\n{ListMaNVNgSuat[indexNV]}";
-            else
+            if(ListMaNVNgSuat.Count>0)
             {
-                indexNV = 0;
-                txtblThgTinNVNgSuat.Text = $"{ListTenNVNgSuat[indexNV]}\nMã Nhân Viên:\n{ListMaNVNgSuat[indexNV]}";
+                indexNV++;
+                if (indexNV < ListMaNVNgSuat.Count)
+                    txtblThgTinNVNgSuat.Text = $"{ListTenNVNgSuat[indexNV]}\nMã Nhân Viên:\n{ListMaNVNgSuat[indexNV]}";
+                else
+                {
+                    indexNV = 0;
+                    txtblThgTinNVNgSuat.Text = $"{ListTenNVNgSuat[indexNV]}\nMã Nhân Viên:\n{ListMaNVNgSuat[indexNV]}";
+                }
             }
         }
 
         private void btnNextKH_Click(object sender, RoutedEventArgs e)
         {
-            indexKH++;
-            if (indexKH < ListMaKHVip.Count)
-                txtblThgTinKHVIP.Text = $"{ListTenKHVip[indexKH]}\nMã Khách Hàng: {ListMaKHVip[indexKH]}";
-            else
+            if(ListMaKHVip.Count>0)
             {
-                indexKH = 0;
-                txtblThgTinKHVIP.Text = $"{ListTenKHVip[indexKH]}\nMã Khách Hàng: {ListMaKHVip[indexKH]}";
+                indexKH++;
+                if (indexKH < ListMaKHVip.Count)
+                    txtblThgTinKHVIP.Text = $"{ListTenKHVip[indexKH]}\nMã Khách Hàng: {ListMaKHVip[indexKH]}";
+                else
+                {
+                    indexKH = 0;
+                    txtblThgTinKHVIP.Text = $"{ListTenKHVip[indexKH]}\nMã Khách Hàng: {ListMaKHVip[indexKH]}";
+                }
             }
         }
     }

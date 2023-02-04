@@ -47,22 +47,29 @@ namespace MotoStore.Views.Pages.IOPagePages
             CommonOpenFileDialog OFD = new();
             OFD.Filters.Add(new("Image File", "jpg,jpeg,png"));
             if (OFD.ShowDialog() == CommonFileDialogResult.Ok)
-                ImageSP.Source = BitmapConverter.FilePathToBitmapImage(OFD.FileName);
-        }
-       
+            {
+                Uri fileUri = new(OFD.FileName);
+                ImageSP.Source = new BitmapImage(fileUri);
+            }
+        }   
 
         private void btnAddNewSP_Click(object sender, RoutedEventArgs e)
         {
-            SqlCommand cmd;
-            using SqlConnection con = new(Properties.Settings.Default.ConnectionString);
-            try
+            if (string.IsNullOrWhiteSpace(txtTenSP.Text)|| string.IsNullOrEmpty(txtGiaNhapSP.Text)|| string.IsNullOrWhiteSpace(txtXuatXuSP.Text)|| string.IsNullOrEmpty(txtPhanKhoiSP.Text)|| string.IsNullOrWhiteSpace(cmbMaNCC.Text))
+                MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
+            else
             {
-                if (string.IsNullOrWhiteSpace(txtTenSP.Text) || string.IsNullOrEmpty(txtGiaNhapSP.Text) || string.IsNullOrWhiteSpace(txtXuatXuSP.Text) || string.IsNullOrEmpty(txtPhanKhoiSP.Text) || string.IsNullOrWhiteSpace(cmbMaNCC.Text))
-                    MessageBox.Show("Các trường dữ liệu có dấu * không được để trống!");
-                else
+                con.Open();
+                try 
                 {
-                    con.Open();
-                    cmd = new("Set Dateformat dmy\nInsert into MatHang values('" + txtTenSP.Text + "', " + txtPhanKhoiSP.Text + ", null, '" + txtGiaNhapSP.Text + "', null, 0, '" + cmbMaNCC.Text + "', '" + txtHangSXSP.Text + "', N'" + txtXuatXuSP.Text + "', N'" + txtMoTaSP.Text + "', 0)", con);
+                    SqlCommand cmd = new("Set Dateformat dmy\nInsert into MatHang values(@TenSP,@PhanKhoi,null,@GiaNhap,null,0,@MaNCC,@HangSX,@XuatXu,@MoTa,0)", con);
+                    cmd.Parameters.Add("@TenSP", System.Data.SqlDbType.NVarChar).Value = txtTenSP.Text;
+                    cmd.Parameters.Add("@PhanKhoi", System.Data.SqlDbType.Int).Value = txtPhanKhoiSP.Text;
+                    cmd.Parameters.Add("@GiaNhap", System.Data.SqlDbType.Money).Value = txtGiaNhapSP.Text;
+                    cmd.Parameters.Add("@MaNCC", System.Data.SqlDbType.VarChar).Value = cmbMaNCC.Text;
+                    cmd.Parameters.Add("@HangSX", System.Data.SqlDbType.NVarChar).Value = txtHangSXSP.Text;
+                    cmd.Parameters.Add("@XuatXu", System.Data.SqlDbType.NVarChar).Value = txtXuatXuSP.Text;
+                    cmd.Parameters.Add("@MoTa", System.Data.SqlDbType.NVarChar).Value = txtMoTaSP.Text;
                     cmd.ExecuteNonQuery();
                     cmd = new SqlCommand("Select top(1) MaMH from MatHang order by ID desc", con);
                     SqlDataReader sda = cmd.ExecuteReader();
@@ -72,14 +79,27 @@ namespace MotoStore.Views.Pages.IOPagePages
                     DateTime dt = DateTime.Now;
                     cmd = new("Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(), '" + PageChinh.getNV.MaNv + "', '" + dt.ToString("dd-MM-yyyy HH:mm:ss") + "', N'thêm mới Mặt Hàng " + MHMoi + " ')", con);
                     cmd.ExecuteNonQuery();
-                    con.Close();
                     MessageBox.Show("Thêm mới dữ liệu thành công");
+                    PageRefresh();
                 }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Thêm mới sản phẩm thất bại, Lỗi: " + ex.Message);
+                }
+                con.Close();
             }
-            catch (Exception ex)
-            {
+        }
 
-            }
+        private void PageRefresh()
+        {
+            txtTenSP.Clear();
+            txtHangSXSP.Clear();
+            txtGiaNhapSP.Clear();
+            txtPhanKhoiSP.Clear();
+            txtMoTaSP.Clear();
+            txtXuatXuSP.Clear();
+            ImageSP.Source = null;
+            RefreshMatHang();
         }
 
         private void txtTenSP_LostFocus(object sender, RoutedEventArgs e)
