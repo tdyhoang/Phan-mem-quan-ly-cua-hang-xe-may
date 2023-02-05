@@ -109,7 +109,7 @@ namespace MotoStore.Views.Pages
 
         void timer_Tick(object sender, EventArgs e)
         {
-            lblGioHeThong.Content = $"Bây giờ là: {DateTime.Now:HH:mm:ss}";
+            lblGioHeThong.Content = $"Bây giờ là: {DateTime.Now:H:m:ss}";
         }
 
         private void btnDgXuat_Click(object sender, RoutedEventArgs e)
@@ -124,7 +124,7 @@ namespace MotoStore.Views.Pages
             using SqlConnection con = new(Settings.Default.ConnectionString);
             con.Open();
             DateTime DT = DateTime.Now;
-            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'đăng xuất')", con);
+            cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(newid(), '{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy H:m:ss}', N'đăng xuất')", con);
             cmd.ExecuteNonQuery();
 
             Application.Current.MainWindow.Visibility = Visibility.Collapsed;  //Ẩn Màn hình chính đi
@@ -213,7 +213,7 @@ namespace MotoStore.Views.Pages
 
             if (enableLenLich)
             {
-                DateTime ngaylenlich = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                DateTime ngaylenlich = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy H:m:ss", CultureInfo.InvariantCulture);
                 //if có ngày được select
                 if (Lich.SelectedDate.HasValue)
                 {
@@ -241,8 +241,8 @@ namespace MotoStore.Views.Pages
                             {
                                 if (item.NgLenLichBd == Lich.SelectedDate.Value)
                                 {
-                                    DateTime gioBD = DateTime.ParseExact($"{cbGioBD.Text}:{cbPhutBD.Text}:00", "HH:mm:ss", CultureInfo.InvariantCulture);
-                                    DateTime gioKT = DateTime.ParseExact($"{cbGioKT.Text}:{cbPhutKT.Text}:00", "HH:mm:ss", CultureInfo.InvariantCulture);
+                                    DateTime gioBD = DateTime.ParseExact($"{cbGioBD.Text}:{cbPhutBD.Text}:00", "H:m:ss", CultureInfo.InvariantCulture);
+                                    DateTime gioKT = DateTime.ParseExact($"{cbGioKT.Text}:{cbPhutKT.Text}:00", "H:m:ss", CultureInfo.InvariantCulture);
                                     if (item.NgLenLichBd <= gioBD && gioBD <= item.NgLenLichKt || item.NgLenLichBd <= gioKT && gioKT <= item.NgLenLichKt || item.NgLenLichBd >= gioBD && gioKT >= item.NgLenLichKt)
                                     {
                                         valid = false;
@@ -261,7 +261,7 @@ namespace MotoStore.Views.Pages
                                 SqlCommand cmd = new($"set dateformat dmy\nInsert into LenLich values(NewID(),'{PageChinh.getNV.MaNv}', '{lich} {cbGioBD.Text}:{cbPhutBD.Text}:00', '{lich} {cbGioKT.Text}:{cbPhutKT.Text}:00', N'{richText}')", con);
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'lên lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NewID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy H:m:ss}', N'lên lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 MessageBox.Show("Lên lịch thành công!");
                                 if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
@@ -307,7 +307,7 @@ namespace MotoStore.Views.Pages
                     }
                     else
                     {
-                        DateTime giomuonxoa = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                        DateTime giomuonxoa = DateTime.ParseExact($"{Lich.SelectedDate:dd/MM/yyyy} {cbGioBD.Text}:{cbPhutBD.Text}:00", "dd/MM/yyyy H:m:ss", CultureInfo.InvariantCulture);
                         bool Deleted = false;
                         foreach (var gio in mdb.LenLichs.ToList())
                         {
@@ -320,7 +320,7 @@ namespace MotoStore.Views.Pages
                                 cmd.Parameters.Add("@NgayLenLichBD", System.Data.SqlDbType.SmallDateTime).Value = giomuonxoa;
                                 cmd.ExecuteNonQuery();
                                 DateTime DT = DateTime.Now;
-                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy HH:mm:ss}', N'xoá lịch cho ngày {lich}')", con);
+                                cmd = new($"Set Dateformat dmy\nInsert into LichSuHoatDong values(NEWID(),'{PageChinh.getNV.MaNv}', '{DT:dd-MM-yyyy H:m:ss}', N'xoá lịch cho ngày {lich}')", con);
                                 cmd.ExecuteNonQuery();
                                 MessageBox.Show("Xoá Sự Kiện thành công");
                                 if (GetIso8601WeekOfYear(DateTime.Now) == GetIso8601WeekOfYear(Lich.SelectedDate.Value))
