@@ -1,17 +1,13 @@
 ﻿using MotoStore.Database;
 using System.Windows;
 using System.Windows.Input;
-using MotoStore.Views.Pages.IOPagePages;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using Microsoft.Win32;
 using MotoStore.Views.Pages.LoginPages;
 using System.IO;
-using System.Collections.ObjectModel;
-using System.Security.Cryptography;
 using MotoStore.Helpers;
 using MotoStore.Properties;
 using Microsoft.WindowsAPICodePack.Dialogs;

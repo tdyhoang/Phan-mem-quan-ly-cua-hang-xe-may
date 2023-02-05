@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
-using System.Threading;
 
 namespace MotoStore.Helpers
 {

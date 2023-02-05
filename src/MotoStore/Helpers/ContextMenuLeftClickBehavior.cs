@@ -45,9 +45,6 @@ namespace MotoStore.Helpers
             Debug.Print("OnMouseLeftButtonUp");
             if (sender is FrameworkElement fe)
             {
-                // if we use binding in our context menu, then it's DataContext won't be set when we show the menu on left click
-                // (it seems setting DataContext for ContextMenu is hardcoded in WPF when user right clicks on a control, although I'm not sure)
-                // so we have to set up ContextMenu.DataContext manually here
                 if (fe.ContextMenu.DataContext == null)
                 {
                     fe.ContextMenu.SetBinding(FrameworkElement.DataContextProperty, new Binding { Source = fe.DataContext });

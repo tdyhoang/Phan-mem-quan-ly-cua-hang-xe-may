@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Net;
 using System;
 using System.Windows;
@@ -10,11 +9,8 @@ using Microsoft.Data.SqlClient;
 using MotoStore.Views.Pages.LoginPages;
 using System.Windows.Documents;
 using System.Net.Mime;
-using System.IO;
-using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Windows.Shapes;
 using MotoStore.Properties;
 using Path = System.IO.Path;
 

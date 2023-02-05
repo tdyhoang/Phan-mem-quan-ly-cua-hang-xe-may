@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Microsoft.Data.SqlClient;
 using System.Globalization;
-using System.Windows.Threading;
 using MotoStore.Views.Pages.LoginPages;
 using System.Collections.Generic;
 using System.Linq;

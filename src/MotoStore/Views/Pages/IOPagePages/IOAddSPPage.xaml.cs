@@ -1,18 +1,13 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Data.SqlClient;
 using MotoStore.Database;
-using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MotoStore.Views.Pages.LoginPages;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Security.Cryptography;
-using MotoStore.Helpers;
 using MotoStore.Properties;
 using System.IO;
 

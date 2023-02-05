@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using MotoStore.Database;
+﻿using MotoStore.Database;
 using System;
 using System.Globalization;
 using System.Linq;
