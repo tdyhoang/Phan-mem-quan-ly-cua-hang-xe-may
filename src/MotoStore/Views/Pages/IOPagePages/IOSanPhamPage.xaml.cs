@@ -134,7 +134,7 @@ namespace MotoStore.Views.Pages.IOPagePages
                     case "Gia":
                         foreach (var xe in matHangs.ToList())
                         {
-                            if (xe.Item1.GiaBanMh >= int.Parse(txtTu.Text) && xe.Item1.GiaBanMh.Value <= int.Parse(txtDen.Text))
+                            if (xe.Item1.GiaBanMh >= decimal.Parse(txtTu.Text) && xe.Item1.GiaBanMh.Value <= decimal.Parse(txtDen.Text))
                                 ListItems.Add(new(xe.Item1, xe.Item2));
                         }
                         ListViewProduct.ItemsSource = ListItems;
